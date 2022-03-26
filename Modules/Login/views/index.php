@@ -29,7 +29,7 @@
                 </div>
 
               <div class="card-body">
-                <form method="POST" action="#" class="needs-validation" novalidate="">
+                <form method="POST" action="<?php echo base_url('/login/auth'); ?>" class="needs-validation" novalidate="">
                   <div class="form-group">
                     <label for="Username">Username</label>
                     <input id="Username" type="text" class="form-control" name="Username" tabindex="1" required autofocus>

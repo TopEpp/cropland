@@ -26,7 +26,7 @@
       <?=$this->include("layouts/header")?>
       <!-- Main Content -->
       <div class="main-content">
-            ss
+        <?= $this->renderSection("content"); ?>
       </div>
     </div>
   </div>
