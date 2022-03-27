@@ -1,3 +1,7 @@
+body {
+	font-family: "Sarabun", sans-serif;
+}
+
 .layout-3 {
 	background-image: url("../img/bg.jpg");
 	background-position: center; /* Center the image */
@@ -61,4 +65,11 @@ body.layout-3 .main-content {
 	color: #666;
 	text-align: center;
 	font-weight: 700;
+}
+
+.table:not(.table-sm):not(.table-md):not(.dataTable) td,
+.table:not(.table-sm):not(.table-md):not(.dataTable) th {
+	padding: 0 10px;
+	height: 60px;
+	vertical-align: middle;
 }

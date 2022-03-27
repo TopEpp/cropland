@@ -9,7 +9,7 @@ class Login extends BaseController
 {
     public function index(){
       if(session()->get('logged_in')){
-        return redirect()->to('/main');
+        return redirect()->to('/house');
       }
       return view('Modules\Login\Views\index.php');
     }
@@ -19,7 +19,7 @@ class Login extends BaseController
       $username = $this->request->getVar('user_name');
       $password = $this->request->getVar('password');
 
-      return redirect()->to('/main');
+      return redirect()->to('/house');
       // if($this->loginAD($username,$password)){
       //   // $session->set($ses_data);
       //   return redirect()->to('/main');
