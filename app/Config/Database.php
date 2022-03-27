@@ -32,10 +32,10 @@ class Database extends Config
      */
     public $default = [
         'DSN'      => '',
-        'hostname' => 'DESKTOP-7JQO8OA',
-        'username' => 'sa',
-        'password' => '1234567890',
-        'database' => 'test',
+        'hostname' => 'db01.hrdi.or.th',
+        'username' => 'giapp',
+        'password' => 'h2Ekn9T',
+        'database' => 'HRDI_croplandGIS',
         'DBDriver' => 'SQLSRV',
         'DBPrefix' => '',
         'pConnect' => false,
