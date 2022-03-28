@@ -16,7 +16,7 @@ if (file_exists(SYSTEMPATH . 'Config/Routes.php')) {
  * Router Setup
  * --------------------------------------------------------------------
  */
-$routes->setDefaultNamespace('App\Controllers');
+$routes->setDefaultNamespace('Modules\Login\Controllers');
 $routes->setDefaultController('Login');
 $routes->setDefaultMethod('index');
 $routes->setTranslateURIDashes(false);
@@ -31,7 +31,10 @@ $routes->setAutoRoute(true);
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'Login::index');
+
+$routes->get('/login', 'Login::index');
+$routes->get('/logout', 'Login::logout');
+$routes->get('/login/auth', 'Login::auth');
 
 /*
  * --------------------------------------------------------------------
@@ -51,29 +54,7 @@ if (file_exists(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php')) {
 }
 
 
-$routes->group("test", ["namespace" => "Modules\Test\Controllers"], function ($routes) {
-
-	// welcome page - URL: /test
-	$routes->get("/", "TestController::index");
-
+$routes->group("main", ["namespace" => "Modules\Main\Controllers"], function ($routes) {
+	$routes->get("/", "Main::index");
 });
 
-
-
-// $modules_path = ROOTPATH . 'Modules/';
-// $modules = scandir($modules_path);
-
-// foreach ($modules as $module) {
-// 	if ($module === '.' || $module === '..') {
-// 		continue;
-// 	}
-
-// 	if (is_dir($modules_path) . '/' . $module) {
-// 		$routes_path = $modules_path . $module . '/Config/Routes.php';
-// 		if (file_exists($routes_path)) {
-// 			require $routes_path;
-// 		} else {
-// 			continue;
-// 		}
-// 	}
-// }
