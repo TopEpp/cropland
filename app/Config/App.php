@@ -26,7 +26,6 @@ class App extends BaseConfig
 
     public $baseURL = 'http://localhost/cropland';
 
-
     /**
      * --------------------------------------------------------------------------
      * Index File

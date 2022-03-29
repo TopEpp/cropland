@@ -12,14 +12,12 @@
 
     <title>สวพส. สถาบันวิจัยและพัฒนาพื้นที่สูง (องค์การมหาชน)</title>
 
-    <!-- Custom fonts for this template-->
-    <link href="public/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
-    <link rel="stylesheet" href="public/css/sweetalert2.css">
-    <!-- Custom styles for this template-->
-    <link href="public/css/sb-admin-2.css" rel="stylesheet">
+
+  <!-- Template CSS -->
+  <?= link_tag('public/assets/css/style.css') ?>
+  <?= link_tag('public/assets/css/components.css') ?>
+  <?= link_tag('public/assets/css/custom.css') ?>
+
 
 </head>
 
@@ -70,26 +68,26 @@
 
         </div>
 
-    </div>
+      </div>
+    </section>
+  </div>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="public/vendor/jquery/jquery.min.js"></script>
-    <script src="public/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- Core plugin JavaScript-->
-    <script src="public/vendor/jquery-easing/jquery.easing.min.js"></script>
-    <!-- Custom scripts for all pages-->
-    <script src="public/js/sb-admin-2.min.js"></script>
-    <script src="public/js/sweetalert2.js"></script>
-    <?php if (!empty(@$session->getFlashdata('error'))): ?>
-    <script>
-    $(document).ready(function() {
-      swal({
-      title: "<p style='font-size:18px;'><?php echo @$session->getFlashdata('error');  ?><p>",
-      type: 'error'
-      });
-    });
-    </script>
-    <?php endif; ?>
+  <!-- General JS Scripts -->
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+
+    <!-- JS Libraies -->
+   
+
+   <!-- Page Specific JS File -->
+
+  <!-- Template JS File -->
+  <?= script_tag('public/assets/js/stisla.js') ?>
+  <?= script_tag('public/assets/js/scripts.js') ?>
+  <?= script_tag('public/assets/js/custom.js') ?>
 
 </body>
 
