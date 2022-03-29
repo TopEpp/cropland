@@ -125,5 +125,4 @@ nb-configuration.xml
 /phpunit*.xml
 /.phpunit.*.cache
 
-index.php
 app/Config/*
