@@ -10,9 +10,9 @@
   <!-- CSS Libraries -->
 
   <!-- Template CSS -->
-  <?= link_tag('assets/css/style.css') ?>
-  <?= link_tag('assets/css/components.css') ?>
-  <?= link_tag('assets/css/custom.css') ?>
+  <?= link_tag('public/assets/css/style.css') ?>
+  <?= link_tag('public/assets/css/components.css') ?>
+  <?= link_tag('public/assets/css/custom.css') ?>
 
 </head>
 
@@ -88,8 +88,8 @@
    <!-- Page Specific JS File -->
 
   <!-- Template JS File -->
-  <?= script_tag('assets/js/stisla.js') ?>
-  <?= script_tag('assets/js/scripts.js') ?>
-  <?= script_tag('assets/js/custom.js') ?>
+  <?= script_tag('public/assets/js/stisla.js') ?>
+  <?= script_tag('public/assets/js/scripts.js') ?>
+  <?= script_tag('public/assets/js/custom.js') ?>
 </body>
 </html>
