@@ -1,73 +1,76 @@
-<?php $session = session(); ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+  <title>Admin</title>
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>สวพส. สถาบันวิจัยและพัฒนาพื้นที่สูง (องค์การมหาชน)</title>
-
+  <!-- General CSS Files -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <!-- CSS Libraries -->
 
   <!-- Template CSS -->
   <?= link_tag('public/assets/css/style.css') ?>
   <?= link_tag('public/assets/css/components.css') ?>
   <?= link_tag('public/assets/css/custom.css') ?>
 
-
 </head>
 
-<body class="bg-primary">
-
-    <div class="container">
-
-        <!-- Outer Row -->
-        <div class="row justify-content-center">
-
-            <div class="col-xl-10 col-lg-12 col-md-9">
-
-                <div class="card o-hidden border-0 shadow-lg my-5">
-                    <div class="card-body p-0">
-                        <!-- Nested Row within Card Body -->
-                        <div class="row">
-                            <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
-                            <div class="col-lg-6">
-                              <br><br>
-                                <div class="p-5">
-                                    <div class="text-center">
-                                        <img src="<?php echo base_url('/public/img/logohrdi.png')?>"><br>
-                                        <h6 class="h6 text-gray-900 mb-2 mt-2" style="line-height: 0.7">สวพส. สถาบันวิจัยและพัฒนาพื้นที่สูง </h6>
-                                        <h6 class="h6 text-gray-900 mb-2 mt-2" style="line-height: 0.7">(องค์การมหาชน)</h6>
-                                    </div>
-                                    <form class="user" action="<?php echo base_url('/login/auth'); ?>" method="post">
-                                        <div class="form-group mt-3">
-                                            <input type="text" class="form-control form-control-user <?php if (!empty(@$session->getFlashdata('error'))): ?>
-                                              <?php echo 'border-danger'; ?>
-                                            <?php endif; ?>" id="user_name" name="user_name" value="<?= old('user_name');?>"  aria-describedby="" placeholder="Username">
-                                        </div>
-                                        <div class="form-group mt-3">
-                                            <input type="password" id="password" name="password" value="<?= old('password');?>" class="form-control form-control-user <?php if (!empty(@$session->getFlashdata('error'))): ?>
-                                              <?php echo 'border-danger'; ?>
-                                            <?php endif; ?>" placeholder="Password">
-                                        </div>
-                                        <button type="submit" class="btn btn-orange btn-block">
-                                            เข้าสู่ระบบ
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+<body class="layout-3">
+  <div id="app">
+  <section class="section">
+      <div class="container mt-5">
+        <div class="row">
+          <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
+            <div class="card">
+                <div class="login-brand">
+                    <img src="https://www.hrdi.or.th/public/images/about/logos/Hrdi-logo-a.png" alt="logo" width="120" class="shadow-light rounded-circle">
+                    <p class="text-dark">ระบบศูนย์กลางข้อมูลชุมชนต้นแบบ<br/>เพื่อการจัดการบนพื้นที่สูง</p>
                 </div>
 
+              <div class="card-body">
+                <form method="POST" action="<?php echo base_url('/login/auth'); ?>" class="needs-validation" novalidate="">
+                  <div class="form-group">
+                    <label for="Username">Username</label>
+                    <input id="Username" type="text" class="form-control" name="Username" tabindex="1" required autofocus>
+                    <div class="invalid-feedback">
+                      Please fill in your Username
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="d-block">
+                    	<label for="password" class="control-label">Password</label>
+                      <!-- <div class="float-right">
+                        <a href="auth-forgot-password.html" class="text-small">
+                          Forgot Password?
+                        </a>
+                      </div> -->
+                    </div>
+                    <input id="password" type="password" class="form-control" name="password" tabindex="2" required>
+                    <div class="invalid-feedback">
+                      please fill in your password
+                    </div>
+                  </div>
+
+                  <!-- <div class="form-group">
+                    <div class="custom-control custom-checkbox">
+                      <input type="checkbox" name="remember" class="custom-control-input" tabindex="3" id="remember-me">
+                      <label class="custom-control-label" for="remember-me">Remember Me</label>
+                    </div>
+                  </div> -->
+
+                  <div class="form-group">
+                    <button type="submit" class="btn btn-info btn-lg btn-block" tabindex="4">
+                      Login
+                    </button>
+                  </div>
+                </form>
+
+              </div>
             </div>
-
+          </div>
         </div>
-
       </div>
     </section>
   </div>
@@ -88,7 +91,5 @@
   <?= script_tag('public/assets/js/stisla.js') ?>
   <?= script_tag('public/assets/js/scripts.js') ?>
   <?= script_tag('public/assets/js/custom.js') ?>
-
 </body>
-
 </html>
