@@ -184,14 +184,25 @@
                 <img alt="image" src="<?= base_url('assets/img/avatar/avatar-1.png');?>" class="rounded-circle mr-1">
                 <div class="d-sm-none d-lg-inline-block">Admin</div></a>
                 <div class="dropdown-menu dropdown-menu-right">
-                    <a href="features-profile.html" class="dropdown-item has-icon">
-                    <i class="far fa-user"></i> Profile
+                    <a href="<?=base_url('house');?>" class="dropdown-item has-icon">
+                    <!-- <i class="far fa-user"></i> Profile -->
+                    ข้อมูลครัวเรือน
                     </a>
-                    <a href="features-activities.html" class="dropdown-item has-icon">
-                    <i class="fas fa-bolt"></i> Activities
+                    <a href="<?=base_url('land');?>" class="dropdown-item has-icon">
+                    <!-- <i class="far fa-user"></i> Profile -->
+                    ข้อมูลที่ดินรายแปลง
                     </a>
-                    <a href="features-settings.html" class="dropdown-item has-icon">
-                    <i class="fas fa-cog"></i> Settings
+                    <a href="<?=base_url('survay');?>" class="dropdown-item has-icon">
+                    <!-- <i class="far fa-user"></i> Profile -->
+                    ข้อมูลแบบสอบถาม
+                    </a>
+                    <a href="<?=base_url('member');?>" class="dropdown-item has-icon">
+                    <!-- <i class="fas fa-bolt"></i> Activities -->
+                    ข้อมูลผู้ใช้งาน
+                    </a>
+                    <a href="<?=base_url('dashboard');?>" class="dropdown-item has-icon">
+                    <!-- <i class="fas fa-cog"></i> Settings -->
+                    รายงานสรุปโครงสร้างประชากร
                     </a>
                     <div class="dropdown-divider"></div>
                     <a href="<?=base_url('/logout');?>" class="dropdown-item has-icon text-danger">

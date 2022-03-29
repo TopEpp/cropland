@@ -62,6 +62,36 @@ $routes->group("house", ["namespace" => "Modules\House\Controllers"], function (
     $routes->get("manage/benefits", "House::benefits");
     $routes->get("manage/accounts", "House::accounts");
     
-    
 });
 
+$routes->group("land", ["namespace" => "Modules\Land\Controllers"], function ($routes) {
+	$routes->get("/", "Land::index");
+});
+
+$routes->group("survay", ["namespace" => "Modules\Survay\Controllers"], function ($routes) {
+	$routes->get("/", "Survay::index");
+    $routes->get("manage", "Survay::manage");
+    $routes->get("manage/land", "Survay::land");
+    $routes->get("manage/promote", "Survay::promote");
+    $routes->get("manage/promote-other", "Survay::promoteOther");
+    $routes->get("manage/problem", "Survay::problem");
+    $routes->get("manage/need", "Survay::need");
+});
+
+
+$routes->group("member", ["namespace" => "Modules\User\Controllers"], function ($routes) {
+	$routes->get("/", "User::index");
+});
+
+
+$routes->group("dashboard", ["namespace" => "Modules\Dashboard\Controllers"], function ($routes) {
+	$routes->get("/", "Dashboard::index");
+    $routes->get("index1", "Dashboard::index1");
+    $routes->get("index2", "Dashboard::index2");
+    $routes->get("index3", "Dashboard::index3");
+    $routes->get("index4", "Dashboard::index4");
+    $routes->get("index5", "Dashboard::index5");
+    $routes->get("index6", "Dashboard::index6");
+    $routes->get("index7", "Dashboard::index7");
+
+});

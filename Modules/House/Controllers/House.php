@@ -6,6 +6,11 @@ use App\Controllers\BaseController;
 
 class House extends BaseController
 {
+    public function __construct()
+    {
+    
+    }
+
     public function index(){
 
         return view('Modules\House\Views\index');
