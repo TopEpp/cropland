@@ -56,11 +56,14 @@ if (file_exists(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php')) {
 
 $routes->group("house", ["namespace" => "Modules\House\Controllers"], function ($routes) {
 	$routes->get("/", "House::index");
-    $routes->get("manage", "House::manage");
-    $routes->get("manage/members", "House::members");
-    $routes->get("manage/jobs", "House::jobs");
-    $routes->get("manage/benefits", "House::benefits");
-    $routes->get("manage/accounts", "House::accounts");
+    $routes->get("manage(:any)", "House::manage$1");
+    $routes->get("members/(:num)(:any)", "House::members/$1$2");
+    $routes->get("jobs/(:num)(:any)", "House::jobs/$1$2");
+    $routes->get("benefits/(:num)(:any)", "House::benefits/$1$2");
+    $routes->get("accounts(:num)(:any)", "House::accounts/$1$2");
+
+    //save data
+    $routes->post("save_manage", "House::saveManage");
     
 });
 
@@ -71,11 +74,11 @@ $routes->group("land", ["namespace" => "Modules\Land\Controllers"], function ($r
 $routes->group("survay", ["namespace" => "Modules\Survay\Controllers"], function ($routes) {
 	$routes->get("/", "Survay::index");
     $routes->get("manage", "Survay::manage");
-    $routes->get("manage/land", "Survay::land");
-    $routes->get("manage/promote", "Survay::promote");
-    $routes->get("manage/promote-other", "Survay::promoteOther");
-    $routes->get("manage/problem", "Survay::problem");
-    $routes->get("manage/need", "Survay::need");
+    $routes->get("land", "Survay::land");
+    $routes->get("promote", "Survay::promote");
+    $routes->get("promote-other", "Survay::promoteOther");
+    $routes->get("problem", "Survay::problem");
+    $routes->get("need", "Survay::need");
 });
 
 

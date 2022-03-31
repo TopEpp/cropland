@@ -12,11 +12,11 @@
                     <div class="card-body">
                         <div class="btn-group" role="group" aria-label="menu-nabbar">
                             <button type="button" class="btn btn-secondary" onclick="location.href='<?=base_url('survay/manage');?>';">ข้อมูลพื้นฐาน</button>
-                            <button type="button" class="btn btn-secondary" onclick="location.href='<?=base_url('survay/manage/land');?>';">ข้อมูลการใช้ที่ดิน</button>
-                            <button type="button" class="btn btn-secondary" onclick="location.href='<?=base_url('survay/manage/promote');?>';">ข้อมูลการส่งเสริมของ สวพส</button>
-                            <button type="button" class="btn btn-secondary" onclick="location.href='<?=base_url('survay/manage/promote-other');?>';">ข้อมูลการส่งเสริมของหน่วยงานอื่น</button>
-                            <button type="button" class="btn btn-info" onclick="location.href='<?=base_url('survay/manage/problem');?>';">ปัญหาด้านการเกษตร</button>
-                            <button type="button" class="btn btn-secondary" onclick="location.href='<?=base_url('survay/manage/need');?>';">ความต้องการส่งเสริม</button>
+                            <button type="button" class="btn btn-secondary" onclick="location.href='<?=base_url('survay/land');?>';">ข้อมูลการใช้ที่ดิน</button>
+                            <button type="button" class="btn btn-secondary" onclick="location.href='<?=base_url('survay/promote');?>';">ข้อมูลการส่งเสริมของ สวพส</button>
+                            <button type="button" class="btn btn-secondary" onclick="location.href='<?=base_url('survay/promote-other');?>';">ข้อมูลการส่งเสริมของหน่วยงานอื่น</button>
+                            <button type="button" class="btn btn-info" onclick="location.href='<?=base_url('survay/problem');?>';">ปัญหาด้านการเกษตร</button>
+                            <button type="button" class="btn btn-secondary" onclick="location.href='<?=base_url('survay/need');?>';">ความต้องการส่งเสริม</button>
                         </div>
                         
                         <div class="p-2 border">
