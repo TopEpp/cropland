@@ -55,15 +55,15 @@
                                     </div>    
                                     <div class="form-group col-md-4">
                                         <label>ชื่อหมู่บ้าน</label>
-                                        <input type="text" class="form-control" name="house_moo_name">
+                                        <input type="text" class="form-control" name="house_moo_name" value="<?=@$house_moo_name;?>">
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>บ้านเลขที่</label>
-                                        <input type="text" class="form-control" name="house_number">
+                                        <input type="text" class="form-control" name="house_number" value="<?=@$house_number;?>">
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>หมู่ที่</label>
-                                        <input type="text" class="form-control" name="house_moo">
+                                        <input type="text" class="form-control" name="house_moo" value="<?=@$house_moo;?>">
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>จังหวัด</label>                                        
@@ -91,7 +91,7 @@
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>กลุ่มบ้าน</label>
-                                        <input type="text" class="form-control" name="house_label">
+                                        <input type="text" class="form-control" name="house_label" value="<?=@$house_label;?>">
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>ประเภทที่พักอาศัย</label>

@@ -18,9 +18,10 @@ class House extends BaseController
     }
 
     public function index(){
+        $data = [];
+        $data['data'] = $this->model_interview_house->getAllInterViewHouse();
 
-        $data = $this->model_interview_house->getAllInterViewHouse();
-        return view('Modules\House\Views\index');
+        return view('Modules\House\Views\index',$data);
     }
     
     public function manage($id = null){
@@ -66,14 +67,31 @@ class House extends BaseController
             }
             
         }
-
      
         return redirect()->to('house/manage/'.$house_id);
     }
 
     public function members($house_id ,$id = null){
         $data['house_id'] = $house_id;
+        $data['data'] = $this->model_house->getAllHouseMembers($house_id,$id);
+
         return view('Modules\House\Views\members', $data);
+    }
+
+    public function saveMembers($house_id){
+        $input = $this->request->getVar();
+        $session = session();
+        $input['house_id'] = $house_id;
+        $person_id = $this->model_house->saveHouseMember($input);
+
+        if (!empty($input['person_id'])){
+            $session->setFlashdata("message", "แก้ไขข้อมูลเรียบร้อย");
+        }else{
+            $session->setFlashdata("message", "บันทึกข้อมูลเรียบร้อย");
+        }
+
+        return redirect()->to('house/members/'.$house_id);
+        
     }
 
     public function jobs($house_id ,$id = null){

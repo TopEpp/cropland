@@ -60,10 +60,11 @@ $routes->group("house", ["namespace" => "Modules\House\Controllers"], function (
     $routes->get("members/(:num)(:any)", "House::members/$1$2");
     $routes->get("jobs/(:num)(:any)", "House::jobs/$1$2");
     $routes->get("benefits/(:num)(:any)", "House::benefits/$1$2");
-    $routes->get("accounts(:num)(:any)", "House::accounts/$1$2");
+    $routes->get("accounts/(:num)(:any)", "House::accounts/$1$2");
 
     //save data
     $routes->post("save_manage", "House::saveManage");
+    $routes->post("save_members/(:num)", "House::saveMembers/$1");
     
 });
 

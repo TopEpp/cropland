@@ -55,6 +55,39 @@ class House_model extends Model
       
     }
 
+    public function getAllHouseMembers($house_id,$person_id,$data = array()){    
+        $builder = $this->db->table('LH_house_person');
+        $builder->select('*');
+        $builder->where('house_id',$house_id);
+        $query = $builder->get()->getResultArray();
+        
+        foreach ($query as $key => $value) {
+          $data[$value['family_id']][$value['person_id']] = $value;          
+        }
+        return $data;
+      
+    }
+
+    public function saveHouseMember($data){
+
+      $db = \Config\Database::connect();
+      $builder = $db->table('LH_house_person');
+      if (!empty($data['person_id'])){
+        $person_id = $data['person_id'];
+        $builder->where('person_id',$data['person_id']);
+        unset($data['person_id']);
+        $builder->update($data);
+      
+      }else{
+        unset($data['person_id']);
+        $builder->insert($data);
+        $person_id = $db->insertID();
+      }
+
+      return $person_id;
+
+    }
+
 }
 
  ?>
