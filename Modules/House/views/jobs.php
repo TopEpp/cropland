@@ -14,8 +14,8 @@
                             <button type="button" class="btn btn-secondary" onclick="location.href='<?=base_url('house/manage/'.@$house_id);?>';">ข้อมูลพื้นฐาน</button>
                             <button type="button" class="btn btn-secondary" <?=@$house_id ? '':'disabled' ?> onclick="location.href='<?=base_url('house/members/'.@$house_id);?>';">ข้อมูลสมาชิกในครัวเรือน</button>
                             <button type="button" class="btn btn-info" <?=@$house_id ? '':'disabled' ?> onclick="location.href='<?=base_url('house/jobs/'.@$house_id);?>';">ข้อมูลด้านอาชีพ</button>
-                            <button type="button" class="btn btn-secondary" <?=@$house_id ? '':'disabled' ?> onclick="location.href='<?=base_url('house/benefits/'.@$house_id);?>';">ข้อมูลด้านรายได้จากสวัสดิการ</button>
-                            <button type="button" class="btn btn-secondary" <?=@$house_id ? '':'disabled' ?>  onclick="location.href='<?=base_url('house/accounts/'.@$house_id);?>';">ข้อมูลด้ายรายจ่าย</button>
+                            <button type="button" class="btn btn-secondary" <?=@$house_id ? '':'disabled' ?> onclick="location.href='<?=base_url('house/income/'.@$house_id);?>';">ข้อมูลด้านรายได้จากสวัสดิการ</button>
+                            <button type="button" class="btn btn-secondary" <?=@$house_id ? '':'disabled' ?>  onclick="location.href='<?=base_url('house/outcome/'.@$house_id);?>';">ข้อมูลด้ายรายจ่าย</button>
                         </div>
                         
                         <div class="p-2 border">
@@ -33,18 +33,20 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>
-                                            <a href="">ชาญชัย วหคชลชี</a>
-                                        </td>
-                                        <td>เกษตรกร</td>
-                                        <td>ในภาคการเกษตร</td>
-                                        <td>62000 บาท</td>
-                                        <td>
-                                            หมู่บ้านตนเอง
-                                        </td>
-                                    </tr>
+                                    <?php foreach ($data as $key => $value) :?>
+                                        <tr>
+                                            <th scope="row"><?=$key+1;?></th>
+                                            <td>
+                                                <a class="text-info" onclick="addJobs(<?=$value['person_id'];?>)" style="cursor: pointer;"><?=$value['person_name'].' '.$value['person_lastname'];?></a>
+                                            </td>
+                                            <td>เกษตรกร</td>
+                                            <td>ในภาคการเกษตร</td>
+                                            <td>62000 บาท</td>
+                                            <td>
+                                                หมู่บ้านตนเอง
+                                            </td>
+                                        </tr>
+                                    <?php endforeach;?>
 
                                 </tbody>
                             </table>
@@ -56,9 +58,39 @@
         </div>
     </div>
 </section>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="JobModal">
+    <div class="modal-dialog modal-xl" role="document">
+        <form action="<?=base_url('house/save_jobs/'.@$house_id);?>" method="post">
+            <input type="hidden" name="interview_id" id="interview_id">
+            <input type="hidden" name="person_id" id="person_id">
+            <input type="hidden" name="job_id" id="job_id">
+            <div class="modal-content outer-repeater">
+                <div id="item_modal" />
+            </div>
+        </form>
+    </div>
+</div>
+
 <?=$this->endSection()?>
 
 <?=$this->section("scripts")?>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.repeater/1.2.1/jquery.repeater.min.js"></script>
+<script>
+
+    function addJobs(id){
+        
+        $.ajax({
+            type: "GET",
+            url: domain+'house/load-jobs',
+            success : function(response){
+                $("#item_modal").html(response)
+            }
+        });
+        
+        $("#JobModal").modal();
+    }
+</script>
 
 <?=$this->endSection()?>
   

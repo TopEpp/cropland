@@ -88,6 +88,97 @@ class House_model extends Model
 
     }
 
+    public function getAllHouseJob($house_id,$person_id,$data = array()){
+
+      $builder = $this->db->table('LH_house_person');
+      $builder->select('*');
+      $builder->where('house_id',$house_id);
+      $query = $builder->get()->getResultArray();
+
+      return $query;
+    }
+
+    public function saveHouseJobs($data){
+      $db = \Config\Database::connect();
+      $builder = $db->table('LH_person_job');
+      if (!empty($data['job_id'])){
+        $job_id = $data['job_id'];
+        $builder->where('job_id',$data['job_id']);
+        unset($data['job_id']);
+        $builder->update($data);
+      
+      }else{
+        
+        unset($data['job_id']);
+        if (!empty($data['jobs'])){
+          $jobs = $data['jobs'];
+          foreach ($jobs as $key => $job) {
+            $data_set = [
+              'interview_id'=>$data['interview_id'],
+              'person_id '=>$data['person_id'],
+              'job_type' => $job['job_type'],
+              'job_cal_type' => $job['job_cal_type'],
+              'job_salary' => $job['job_salary'],
+              'job_salary_month' => $job['job_salary_month'],
+              'job_address' => $job['job_address'],
+              'job_descript'=> $job['job_descript'],
+            ];
+            
+            $builder->insert($data_set);
+            $job_id = $db->insertID();
+
+            // insert detail
+            if (!empty($job['job-detail'])){
+              $job_detail = $job['job-detail'];
+              foreach ($job_detail as $key => $detail) {
+
+                $data_detail = [
+                  'interview_id'=>$data['interview_id'],
+                  'person_id '=>$data['person_id'],
+                  'job_id '=>$job_id,
+                  'type_id' => $detail['type_id'],
+                  'detail_value' => $detail['detail_value'],
+                  'detail_unit' => $detail['detail_unit'],
+                  'detail_cost' => $detail['detail_cost'],
+                  'detail_income' => $detail['detail_income'],
+                  'detail_remark'=> $detail['detail_remark'],
+                ];
+                
+                $builder_detail = $db->table('LH_person_job_detail');
+                $builder_detail->insert($data_detail);
+              }
+            }
+          }
+
+        }
+     
+      }
+
+      return $job_id;
+    }
+    
+
+    public function getAllHouseIncome($house_id,$person_id,$data = array()){
+
+      $builder = $this->db->table('LH_house_person');
+      $builder->select('*');
+      $builder->where('house_id',$house_id);
+      $query = $builder->get()->getResultArray();
+
+      return $query;
+    }
+
+
+    public function getAllHouseOutcome($house_id,$person_id,$data = array()){
+
+      $builder = $this->db->table('LH_house_person');
+      $builder->select('*');
+      $builder->where('house_id',$house_id);
+      $query = $builder->get()->getResultArray();
+
+      return $query;
+    }
+
 }
 
  ?>
