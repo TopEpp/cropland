@@ -2,10 +2,11 @@
 
 namespace Modules\House\Controllers;
 
+use App\Models\Common_model;
+use CodeIgniter\API\ResponseTrait;
 use App\Controllers\BaseController;
 use App\Models\InterViewHouse_model;
 use Modules\House\Models\House_model;
-use CodeIgniter\API\ResponseTrait;
 
 class House extends BaseController
 {
@@ -29,9 +30,14 @@ class House extends BaseController
     
     public function manage($id = null){
         
+        $common = new Common_model();
         $data = [];
+        
+        $data['province'] = $common->getProvince();
+    
+       
         if ($id){
-            $data = $this->model_house->getAllHouse($id);
+            $data['data'] = $this->model_house->getAllHouse($id);
         }
 
         return view('Modules\House\Views\manage',$data);
@@ -132,16 +138,16 @@ class House extends BaseController
         $input = $this->request->getVar();
         $session = session();
         $input['house_id'] = $house_id;
-        dd($input);
-        // $person_id = $this->model_house->saveHouseMember($input);
+        
+        $person_id = $this->model_house->saveHouseIncome($input);
 
-        // if (!empty($input['person_id'])){
-        //     $session->setFlashdata("message", "แก้ไขข้อมูลเรียบร้อย");
-        // }else{
-        //     $session->setFlashdata("message", "บันทึกข้อมูลเรียบร้อย");
-        // }
+        if (!empty($input['person_id'])){
+            $session->setFlashdata("message", "แก้ไขข้อมูลเรียบร้อย");
+        }else{
+            $session->setFlashdata("message", "บันทึกข้อมูลเรียบร้อย");
+        }
 
-        // return redirect()->to('house/members/'.$house_id);
+        return redirect()->to('house/income/'.$house_id);
         
     }
 
@@ -157,16 +163,16 @@ class House extends BaseController
         $input = $this->request->getVar();
         $session = session();
         $input['house_id'] = $house_id;
-        dd($input);
-        // $person_id = $this->model_house->saveHouseMember($input);
+       
+        $person_id = $this->model_house->saveHouseOutcome($input);
 
-        // if (!empty($input['person_id'])){
-        //     $session->setFlashdata("message", "แก้ไขข้อมูลเรียบร้อย");
-        // }else{
-        //     $session->setFlashdata("message", "บันทึกข้อมูลเรียบร้อย");
-        // }
+        if (!empty($input['person_id'])){
+            $session->setFlashdata("message", "แก้ไขข้อมูลเรียบร้อย");
+        }else{
+            $session->setFlashdata("message", "บันทึกข้อมูลเรียบร้อย");
+        }
 
-        // return redirect()->to('house/members/'.$house_id);
+        return redirect()->to('house/outcome/'.$house_id);
         
     }
 

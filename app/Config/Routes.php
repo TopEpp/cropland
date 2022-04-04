@@ -108,3 +108,9 @@ $routes->group("dashboard", ["namespace" => "Modules\Dashboard\Controllers"], fu
     $routes->get("index7", "Dashboard::index7");
 
 });
+
+// common
+$routes->group("common", ["namespace" => "App\Controllers"], function ($routes) {
+    $routes->get("get-amphur", "Common::amphur");
+    $routes->get("get-tambon", "Common::tambon");
+});

@@ -11,6 +11,16 @@
                         <h4 class="text-dark">จัดการข้อมูลครัวเรือน</h4>
                     </div>
                     <div class="card-body">
+                    <?php if (session()->getFlashdata("message")):?>
+                            <div class="alert alert-success alert-dismissible show fade">
+                                <div class="alert-body">
+                                    <button class="close" data-dismiss="alert">
+                                    <span>×</span>
+                                    </button>
+                                    <?= session()->getFlashdata("message");?>
+                                </div>
+                            </div>
+                        <?php endif;?>
                         <div class="btn-group" role="group" aria-label="menu-nabbar">
                             <button type="button" class="btn btn-secondary" onclick="location.href='<?=base_url('house/manage/'.@$house_id);?>';">ข้อมูลพื้นฐาน</button>
                             <button type="button" class="btn btn-secondary" <?=@$house_id ? '':'disabled' ?> onclick="location.href='<?=base_url('house/members/'.@$house_id);?>';">ข้อมูลสมาชิกในครัวเรือน</button>
@@ -85,11 +95,11 @@
                     <div class="row">                               
                         <div class="form-group col-md-6">
                             <label>เงินผู้สูงอายุ/เดือน</label>                                        
-                            <input type="text" class="form-control" name="income[1]['income_value']">
+                            <input type="text" class="form-control" name="income[1][income_value]">
                         </div>
                         <div class="form-group col-md-6">
                             <label>จำนวนเดือน</label>
-                            <select name="income[1]['income_month']" id="income[1]['income_month']" class="form-control">
+                            <select name="income[1][income_month]" id="income[1][income_month]" class="form-control">
                                 <?php foreach ($month as $key => $value) :?>
                                     <option value="<?=$value;?>"><?=$value;?></option>
                                 <?php endforeach;?>                                
@@ -97,11 +107,11 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label>บัตรประชารัฐ/เดือน</label>                                        
-                            <input type="text" class="form-control" name="income[2]['income_value']">
+                            <input type="text" class="form-control" name="income[2][income_value]">
                         </div>
                         <div class="form-group col-md-6">
                             <label>จำนวนเดือน</label>
-                            <select name="income[2]['income_month']" id="income[2]['income_month']" class="form-control">
+                            <select name="income[2][income_month]" id="income[2][income_month]" class="form-control">
                                 <?php foreach ($month as $key => $value) :?>
                                     <option value="<?=$value;?>"><?=$value;?></option>
                                 <?php endforeach;?>                                
@@ -109,11 +119,11 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label>บุตรส่งเงิน</label>                                        
-                            <input type="text" class="form-control" name="income[3]['income_value']">
+                            <input type="text" class="form-control" name="income[3][income_value]">
                         </div>
                         <div class="form-group col-md-6">
                             <label>จำนวนเดือน</label>
-                            <select name="income[3]['income_month']" id="income[3]['income_month']" class="form-control">
+                            <select name="income[3][income_month]" id="income[3][income_month]" class="form-control">
                                 <?php foreach ($month as $key => $value) :?>
                                     <option value="<?=$value;?>"><?=$value;?></option>
                                 <?php endforeach;?>                                
@@ -121,11 +131,11 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label>บัตรผู้พิการ/เดือน</label>                                        
-                            <input type="text" class="form-control" name="income[4]['income_value']">
+                            <input type="text" class="form-control" name="income[4][income_value]">
                         </div>
                         <div class="form-group col-md-6">
                             <label>จำนวนเดือน</label>
-                            <select name="income[4]['income_month']" id="income[4]['income_month']" class="form-control">
+                            <select name="income[4][income_month]" id="income[4][income_month]" class="form-control">
                                 <?php foreach ($month as $key => $value) :?>
                                     <option value="<?=$value;?>"><?=$value;?></option>
                                 <?php endforeach;?>                                
@@ -133,24 +143,24 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label>เงินช่วยเหลือภัยพิบัติ/ปี</label>                                        
-                            <input type="text" class="form-control" name="income[5]['income_value']">
+                            <input type="text" class="form-control" name="income[5][income_value]">
                         </div>
                         <div class="form-group col-md-6">
-                            <input type="hidden" class="form-control" name="income[5]['income_month']" value="1">
+                            <input type="hidden" class="form-control" name="income[5][income_month]" value="1">
                         </div>
                         <div class="form-group col-md-6">
                             <label>เงินค่าประกันสินค้าเกษตร/ปี</label>                                        
-                            <input type="text" class="form-control" name="income[6]['income_value']">
+                            <input type="text" class="form-control" name="income[6][income_value]">
                         </div>
                         <div class="form-group col-md-6">
-                        <input type="hidden" class="form-control" name="income[6]['income_month']" value="1">
+                        <input type="hidden" class="form-control" name="income[6][income_month]" value="1">
                         </div>
                         <div class="form-group col-md-6">
                             <label>อื่นๆ</label>                                        
-                            <input type="text" class="form-control" name="income[7]['income_value']">
+                            <input type="text" class="form-control" name="income[7][income_value]">
                         </div>
                         <div class="form-group col-md-6">
-                        <input type="hidden" class="form-control" name="income[7]['income_month']" value="1">
+                        <input type="hidden" class="form-control" name="income[7][income_month]" value="1">
                         </div>
                     </div>
                 </div>

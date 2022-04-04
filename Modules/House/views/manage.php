@@ -68,19 +68,22 @@
                                     <div class="form-group col-md-4">
                                         <label>จังหวัด</label>                                        
                                         <select name="house_province" id="house_province" class="form-control">
-                                            <option value="2565">2565</option>
+                                            <option value="">เลือก</option>
+                                            <?php foreach ($province as $key => $value) :?>
+                                                <option value="<?=$value['prov_code'];?>"><?=$value['pro_name_t'];?></option>
+                                            <?php endforeach?>
                                         </select>
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>อำเภอ</label>                                        
                                         <select name="house_district" id="house_district" class="form-control">
-                                            <option value="2565">2565</option>
+                                            <option value="">เลือก</option>
                                         </select>
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>ตำบล</label>                                        
                                         <select name="house_subdistrict" id="house_subdistrict" class="form-control">
-                                            <option value="2565">2565</option>
+                                            <option value="">เลือก</option>
                                         </select>
                                     </div>
                                     <div class="form-group col-md-4">
@@ -118,5 +121,30 @@
 
 <?=$this->section("scripts")?>
 
+<script>
+    $(function(){
+        $("#house_province").change(function(){
+            var province = $(this).val();
+            $.ajax({
+                type: "GET",
+                url: domain+'common/get-amphur?province='+province,
+                success : function(options){
+                    $("#house_district").html(options)
+                }
+            });
+        })
+
+        $("#house_district").change(function(){
+            var amphur = $(this).val();
+            $.ajax({
+                type: "GET",
+                url: domain+'common/get-tambon?amphur='+amphur,
+                success : function(options){
+                    $("#house_subdistrict").html(options)
+                }
+            });
+        })
+    })
+</script>
 <?=$this->endSection()?>
   
