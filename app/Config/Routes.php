@@ -59,16 +59,26 @@ $routes->group("house", ["namespace" => "Modules\House\Controllers"], function (
     $routes->get("manage(:any)", "House::manage$1");
     $routes->get("members/(:num)(:any)", "House::members/$1$2");
     $routes->get("jobs/(:num)(:any)", "House::jobs/$1$2");
-    $routes->get("benefits/(:num)(:any)", "House::benefits/$1$2");
-    $routes->get("accounts(:num)(:any)", "House::accounts/$1$2");
+    $routes->get("income/(:num)(:any)", "House::income/$1$2");
+    $routes->get("outcome/(:num)(:any)", "House::outcome/$1$2");
+
+    //load data
+    $routes->get("load-jobs", "House::loadJobs");
 
     //save data
     $routes->post("save_manage", "House::saveManage");
+    $routes->post("save_members/(:num)", "House::saveMembers/$1");
+    $routes->post("save_jobs/(:num)", "House::saveJobs/$1");
+    $routes->post("save_income/(:num)", "House::saveIncome/$1");
+    $routes->post("save_outcome/(:num)", "House::saveOutcome/$1");
     
 });
 
 $routes->group("land", ["namespace" => "Modules\Land\Controllers"], function ($routes) {
 	$routes->get("/", "Land::index");
+
+    //save data
+    $routes->post("save_land", "Land::saveLand");
 });
 
 $routes->group("survay", ["namespace" => "Modules\Survay\Controllers"], function ($routes) {

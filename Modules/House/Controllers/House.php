@@ -5,9 +5,12 @@ namespace Modules\House\Controllers;
 use App\Controllers\BaseController;
 use App\Models\InterViewHouse_model;
 use Modules\House\Models\House_model;
+use CodeIgniter\API\ResponseTrait;
 
 class House extends BaseController
 {
+    use ResponseTrait;
+
     protected $model_house;
     protected $model_interview_house;
 
@@ -18,9 +21,10 @@ class House extends BaseController
     }
 
     public function index(){
+        $data = [];
+        $data['data'] = $this->model_interview_house->getAllInterViewHouse();
 
-        $data = $this->model_interview_house->getAllInterViewHouse();
-        return view('Modules\House\Views\index');
+        return view('Modules\House\Views\index',$data);
     }
     
     public function manage($id = null){
@@ -66,28 +70,109 @@ class House extends BaseController
             }
             
         }
-
      
         return redirect()->to('house/manage/'.$house_id);
     }
 
     public function members($house_id ,$id = null){
         $data['house_id'] = $house_id;
+        $data['data'] = $this->model_house->getAllHouseMembers($house_id,$id);
+
         return view('Modules\House\Views\members', $data);
+    }
+
+    public function saveMembers($house_id){
+        $input = $this->request->getVar();
+        $session = session();
+        $input['house_id'] = $house_id;
+        $person_id = $this->model_house->saveHouseMember($input);
+
+        if (!empty($input['person_id'])){
+            $session->setFlashdata("message", "แก้ไขข้อมูลเรียบร้อย");
+        }else{
+            $session->setFlashdata("message", "บันทึกข้อมูลเรียบร้อย");
+        }
+
+        return redirect()->to('house/members/'.$house_id);
+        
     }
 
     public function jobs($house_id ,$id = null){
         $data['house_id'] = $house_id;
+
+        $data['data'] = $this->model_house->getAllHouseJob($house_id,$id);
         return view('Modules\House\Views\jobs', $data);
     }
+    
+    public function saveJobs($house_id){
+        $input = $this->request->getVar();
+        $session = session();
+        $input['house_id'] = $house_id;
+        
+        $person_id = $this->model_house->saveHouseJobs($input);
 
-    public function benefits($house_id ,$id = null){
-        $data['house_id'] = $house_id;
-        return view('Modules\House\Views\benefits', $data);
+        if (!empty($input['job_id'])){
+            $session->setFlashdata("message", "แก้ไขข้อมูลเรียบร้อย");
+        }else{
+            $session->setFlashdata("message", "บันทึกข้อมูลเรียบร้อย");
+        }
+
+        return redirect()->to('house/jobs/'.$house_id);
+        
     }
 
-    public function accounts($house_id ,$id = null){
+    public function income($house_id ,$id = null){
         $data['house_id'] = $house_id;
-        return view('Modules\House\Views\accounts', $data);
+        $data['data'] = $this->model_house->getAllHouseIncome($house_id,$id);
+        
+        return view('Modules\House\Views\income', $data);
+    }
+
+    public function saveIncome($house_id){
+        $input = $this->request->getVar();
+        $session = session();
+        $input['house_id'] = $house_id;
+        dd($input);
+        // $person_id = $this->model_house->saveHouseMember($input);
+
+        // if (!empty($input['person_id'])){
+        //     $session->setFlashdata("message", "แก้ไขข้อมูลเรียบร้อย");
+        // }else{
+        //     $session->setFlashdata("message", "บันทึกข้อมูลเรียบร้อย");
+        // }
+
+        // return redirect()->to('house/members/'.$house_id);
+        
+    }
+
+    public function outcome($house_id ,$id = null){
+        $data['house_id'] = $house_id;
+
+        $data['data'] = $this->model_house->getAllHouseOutcome($house_id,$id);
+
+        return view('Modules\House\Views\outcome', $data);
+    }
+
+    public function saveOutcome($house_id){
+        $input = $this->request->getVar();
+        $session = session();
+        $input['house_id'] = $house_id;
+        dd($input);
+        // $person_id = $this->model_house->saveHouseMember($input);
+
+        // if (!empty($input['person_id'])){
+        //     $session->setFlashdata("message", "แก้ไขข้อมูลเรียบร้อย");
+        // }else{
+        //     $session->setFlashdata("message", "บันทึกข้อมูลเรียบร้อย");
+        // }
+
+        // return redirect()->to('house/members/'.$house_id);
+        
+    }
+
+    public function loadJobs(){
+        $data = [];
+        $html =  view('Modules\House\Views\modal\jobs', $data);
+        return $this->respond($html);
     }
 }
