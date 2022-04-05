@@ -108,3 +108,7 @@ $routes->group("dashboard", ["namespace" => "Modules\Dashboard\Controllers"], fu
     $routes->get("index7", "Dashboard::index7");
 
 });
+
+$routes->group("api", ["namespace" => "Modules\Api\Controllers"], function ($routes) {
+    $routes->get("/", "Api::index");
+});
