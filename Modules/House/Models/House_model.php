@@ -168,6 +168,38 @@ class House_model extends Model
       return $query;
     }
 
+    public function saveHouseIncome($data){
+
+      $db = \Config\Database::connect();
+      $builder = $db->table('LH_person_income');
+      if (!empty($data['income_id'])){
+        $income_id = $data['income_id'];
+        $builder->where('income_id',$data['income_id']);
+        unset($data['income_id']);
+        $builder->update($data);
+      
+      }else{
+        unset($data['income_id']);
+        $tmp = [];
+  
+        foreach ($data['income'] as $key => $value) {
+          
+          $tmp['person_id'] = $data['person_id'];
+          $tmp['interview_id'] = $data['interview_id'];
+          $tmp['income_type'] = $key;
+          $tmp['income_value'] = $value['income_value']?$value['income_value']:0;
+          $tmp['income_month'] = $value['income_month'];
+          
+          $builder->insert($tmp);
+          $income_id = $db->insertID();
+        }
+  
+      }
+
+      return $income_id;
+
+    }
+
 
     public function getAllHouseOutcome($house_id,$person_id,$data = array()){
 
@@ -177,6 +209,38 @@ class House_model extends Model
       $query = $builder->get()->getResultArray();
 
       return $query;
+    }
+
+    public function saveHouseOutcome($data){
+
+      $db = \Config\Database::connect();
+      $builder = $db->table('LH_person_outcome');
+      if (!empty($data['outcome_id'])){
+        $outcome_id = $data['outcome_id'];
+        $builder->where('outcome_id',$data['outcome_id']);
+        unset($data['outcome_id']);
+        $builder->update($data);
+      
+      }else{
+        unset($data['outcome_id']);
+        $tmp = [];
+  
+        foreach ($data['outcome'] as $key => $value) {
+          
+          $tmp['person_id'] = $data['person_id'];
+          $tmp['interview_id'] = $data['interview_id'];
+          $tmp['outcome_type'] = $key;
+          $tmp['outcome_value'] = $value['outcome_value']?$value['outcome_value']:0;
+          $tmp['outcome_month'] = $value['outcome_month'];
+          
+          $builder->insert($tmp);
+          $outcome_id = $db->insertID();
+        }
+  
+      }
+
+      return $outcome_id;
+
     }
 
 }

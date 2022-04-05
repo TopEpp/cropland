@@ -10,6 +10,17 @@
                         <h4 class="text-dark">จัดการข้อมูลครัวเรือน</h4>
                     </div>
                     <div class="card-body">
+                    <?php if (session()->getFlashdata("message")):?>
+                            <div class="alert alert-success alert-dismissible show fade">
+                                <div class="alert-body">
+                                    <button class="close" data-dismiss="alert">
+                                    <span>×</span>
+                                    </button>
+                                    <?= session()->getFlashdata("message");?>
+                                </div>
+                            </div>
+                        <?php endif;?>
+                        
                         <div class="btn-group" role="group" aria-label="menu-nabbar">
                             <button type="button" class="btn btn-secondary" onclick="location.href='<?=base_url('house/manage/'.@$house_id);?>';">ข้อมูลพื้นฐาน</button>
                             <button type="button" class="btn btn-secondary" <?=@$house_id ? '':'disabled' ?> onclick="location.href='<?=base_url('house/members/'.@$house_id);?>';">ข้อมูลสมาชิกในครัวเรือน</button>
