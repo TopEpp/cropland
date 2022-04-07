@@ -99,7 +99,10 @@
                                     <div class="form-group col-md-4">
                                         <label>ประเภทที่พักอาศัย</label>
                                         <select name="house_type" id="house_type" class="form-control">
-                                            <option value="2565">2565</option>
+                                            <option value="">เลือก</option>
+                                            <?php foreach ($landomner as $key => $value) :?>
+                                                <option value="<?=$value['landowner_id'];?>"><?=$value['name'];?></option>
+                                            <?php endforeach?>
                                         </select>
                                     </div>          
                                 </div>

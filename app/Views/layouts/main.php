@@ -19,6 +19,8 @@
   <?= link_tag('public/assets/css/components.css') ?>
   <?= link_tag('public/assets/css/custom.css') ?>
 
+  <?= $this->renderSection("css"); ?>
+
 </head>
 
 <body class="layout-3">

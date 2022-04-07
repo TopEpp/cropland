@@ -34,7 +34,6 @@ class Common extends BaseController
 
     public function tambon(){
         $amphur = $this->request->getVar('amphur');
-        
         $tambon = $this->model_common->getTambon($amphur);
      
         $data = '';

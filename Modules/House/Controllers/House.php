@@ -3,6 +3,7 @@
 namespace Modules\House\Controllers;
 
 use App\Models\Common_model;
+use Modules\Api\Models\Api_model;
 use CodeIgniter\API\ResponseTrait;
 use App\Controllers\BaseController;
 use App\Models\InterViewHouse_model;
@@ -14,10 +15,12 @@ class House extends BaseController
 
     protected $model_house;
     protected $model_interview_house;
+    protected $model_api;
 
     public function __construct()
     {
         $this->model_house = new House_model();
+        $this->model_api = new Api_model();
         $this->model_interview_house = new InterViewHouse_model();
     }
 
@@ -32,6 +35,8 @@ class House extends BaseController
         
         $common = new Common_model();
         $data = [];
+        $data['house_id'] = $id;
+        $data['landomner'] = $this->model_api->getLandOwner();
         
         $data['province'] = $common->getProvince();
     
@@ -81,7 +86,15 @@ class House extends BaseController
     }
 
     public function members($house_id ,$id = null){
+        $data = [];
         $data['house_id'] = $house_id;
+        $data['tribes'] = $this->model_api->getTribe();
+        $data['educations'] = $this->model_api->getEducation();
+        $data['religion'] = $this->model_api->getReligion();
+        $data['publichealth'] = $this->model_api->getPublicHealth();
+        $data['hospital'] = $this->model_api->getHospital();
+        
+
         $data['data'] = $this->model_house->getAllHouseMembers($house_id,$id);
 
         return view('Modules\House\Views\members', $data);
@@ -178,6 +191,7 @@ class House extends BaseController
 
     public function loadJobs(){
         $data = [];
+      
         $html =  view('Modules\House\Views\modal\jobs', $data);
         return $this->respond($html);
     }

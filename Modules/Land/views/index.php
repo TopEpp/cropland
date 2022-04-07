@@ -1,5 +1,6 @@
 <?=$this->extend("layouts/main")?>
 
+
 <?=$this->section("content")?>
 <section class="section">
     <div class="section-body">
@@ -96,32 +97,44 @@
                                 <div class="form-group col-md-12">
                                     <label>การใช้ประโยชน์ที่ดิน</label>                                        
                                     <select name="land_use" id="land_use" class="form-control">
-                                        <option value="1">1</option>
+                                        <option value="">เลือก</option>
+                                        <?php foreach ($landuse as $key => $value) :?>
+                                            <option value="<?=$value['landuse_id'];?>"><?=$value['name'];?></option>
+                                        <?php endforeach?>
                                     </select>
                                 </div>
                                 <div class="form-group col-md-12">
                                     <label>พื้นที่ตั้ง</label>                                        
                                     <select name="land_address" id="land_address" class="form-control">
-                                        <option value="1">1</option>
+                                        <option value="">เลือก</option>
+                                        <?php foreach ($location as $key => $value) :?>
+                                            <option value="<?=$value['location_id'];?>"><?=$value['name'];?></option>
+                                        <?php endforeach?>
                                     </select>
                                 </div>
                                 <div class="form-group col-md-12">
                                     <label>สิทธิถือครอง</label>                                        
                                     <select name="land_ownership" id="land_ownership" class="form-control">
-                                        <option value="1">1</option>
+                                        <option value="">เลือก</option>
+                                        <?php foreach ($landprivilege as $key => $value) :?>
+                                            <option value="<?=$value['landprivilege_id'];?>"><?=$value['name'];?></option>
+                                        <?php endforeach?>
                                     </select>
                                 </div>
                                 <div class="form-group col-md-12">
                                     <label>ลักษณะการถือครอง</label>                                        
                                     <select name="land_holding" id="land_holding" class="form-control">
-                                        <option value="1">1</option>
+                                        <option value="">เลือก</option>
+                                        <?php foreach ($landowner as $key => $value) :?>
+                                            <option value="<?=$value['landowner_id'];?>"><?=$value['name'];?></option>
+                                        <?php endforeach?>
                                     </select>
                                 </div>
                             </div>
                         </div>      
                         
                         <div class="col-md-6">
-
+                            <div id="map"></div>
                         </div>
                        
                         
@@ -139,8 +152,48 @@
 
 <?=$this->endSection()?>
 
+<?=$this->section("css")?>
+<style>
+    #map {
+  height: 100%;
+}
+</style>
+<?=$this->endSection()?>
+
 <?=$this->section("scripts")?>
-<script>
+
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCl2s_jaG7f21ZhyUGobio7B5-dbvO1v3A"></script>
+
+<script type="text/javascript">
+
+let map;
+let marker;
+let markers = [];
+let drawingManager;
+var default_color = '#1E90FF';
+var itemPath;
+$(document).ready(function() {
+    initMap();
+});
+
+function initMap() {
+    const myLatLng = { lat: 18.8026962, lng: 98.9555348 };
+    map = new google.maps.Map(document.getElementById("map"), {
+        center: myLatLng,
+        zoom: 7,
+    });
+
+
+
+    //     // The marker, positioned at Uluru
+    const marker = new google.maps.Marker({
+        position: myLatLng,
+        map: map,
+    });
+
+}
+
     function addLand(id = ''){
         $("#land_id").val(id)
         $("#LandModal").modal();

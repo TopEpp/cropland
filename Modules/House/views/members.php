@@ -197,13 +197,16 @@
                         <div class="form-group col-md-4">
                             <label>ประเภทบัตร</label>                                        
                             <select name="person_type_number" id="person_type_number" class="form-control">
-                                <option value="1">1</option>
+                                <option value="1">บัตรประชาชน</option>
+                                <option value="2">บัตรต่างดาว</option>
                             </select>
                         </div>
                         <div class="form-group col-md-4">
                             <label>สถานภาพ</label>                                        
                             <select name="person_status" id="person_status" class="form-control">
-                                <option value="1">1</option>
+                                <option value="1">โสด</option>
+                                <option value="2">แต่งงาน</option>
+                                <option value="3">อย่าล้าง</option>
                             </select>
                         </div>
                         <div class="form-group col-md-4">
@@ -222,7 +225,10 @@
                         <div class="form-group col-md-4">
                             <label>ศาสนา</label>                                        
                              <select name="person_religion" id="person_religion" class="form-control">
-                                <option value="1">1</option>
+                                <option value="">เลือก</option>
+                                <?php foreach ($religion as $key => $value) :?>
+                                    <option value="<?=$value['religion_id'];?>"><?=$value['name'];?></option>
+                                <?php endforeach?>
                             </select>
                         </div>
                         <div class="form-group col-md-4">
@@ -235,13 +241,19 @@
                         <div class="form-group col-md-4">
                             <label>ชนเผ่า</label>                                        
                              <select name="person_tribe" id="person_tribe" class="form-control">
-                                <option value="1">1</option>
+                                <option value="">เลือก</option>
+                                <?php foreach ($tribes as $key => $value) :?>
+                                    <option value="<?=$value['tribe_id'];?>"><?=$value['name'];?></option>
+                                <?php endforeach?>
                             </select>
                         </div>
                         <div class="form-group col-md-4">
                             <label>การศึกษา</label>                                        
                              <select name="person_educate" id="person_educate" class="form-control">
-                                <option value="1">1</option>
+                                <option value="">เลือก</option>
+                                <?php foreach ($educations as $key => $value) :?>
+                                    <option value="<?=$value['education_id'];?>"><?=$value['name'];?></option>
+                                <?php endforeach?>
                             </select>
                         </div>
                         <div class="form-group col-md-4">
@@ -259,6 +271,7 @@
                             <label>ช่วยเหลือตัวเอง</label>                                        
                              <select name="person_helpyourslef" id="person_helpyourslef" class="form-control">
                                 <option value="1">ได้</option>
+                                <option value="2">ไม่ได้</option>
                             </select>
                         </div>
                         <div class="form-group col-md-4">
@@ -279,19 +292,26 @@
                         <div class="form-group col-md-4">
                             <label>สิทธิการรักษาพยาบาล</label>                                        
                              <select name="person_medical" id="person_medical" class="form-control">
-                                <option value="1">1</option>
+                                <option value="">เลือก</option>
+                                <?php foreach ($publichealth as $key => $value) :?>
+                                    <option value="<?=$value['publichealth_id'];?>"><?=$value['name'];?></option>
+                                <?php endforeach?>                                
                             </select>
                         </div>
                         <div class="form-group col-md-4">
                             <label>สถานพยาบาล</label>                                        
                              <select name="person_medical" id="person_medical" class="form-control">
-                                <option value="1">1</option>
+                                <option value="">เลือก</option>
+                                <?php foreach ($hospital as $key => $value) :?>
+                                    <option value="<?=$value['hospital_id'];?>"><?=$value['name'];?></option>
+                                <?php endforeach?>           
                             </select>
                         </div>
                         <div class="form-group col-md-4">
                             <label>ได้รับวัคซีนโควิด-19</label>                                        
                              <select name="person_vac_covid" id="person_vac_covid" class="form-control">
-                                <option value="1">1</option>
+                                <option value="1">ได้รับ</option>
+                                <option value="2">ยังไม่ได้รับ</option>
                             </select>
                         </div>
                         <div class="form-group col-md-12">

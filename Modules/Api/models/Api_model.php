@@ -260,6 +260,52 @@ class Api_model extends Model
         return $query;
     }
 
+    public function getLandUse($id = '')
+    { 
+        
+        $builder = $this->db->table('LH_landuse');
+        $builder->select('*');
+        if ($id){
+          $builder = $builder->where('landuse_id',$id);
+          $query = $builder->get()->getRowArray();
+          return $query;
+        }
+        
+        $query = $builder->get()->getResultArray();
+        return $query;
+    }
+
+    public function getLandprivilege($id = '')
+    { 
+        
+        $builder = $this->db->table('LH_landprivilege');
+        $builder->select('*');
+        if ($id){
+          $builder = $builder->where('landprivilege_id',$id);
+          $query = $builder->get()->getRowArray();
+          return $query;
+        }
+        
+        $query = $builder->get()->getResultArray();
+        return $query;
+    }
+
+    public function getLocation($id = '')
+    { 
+        
+        $builder = $this->db->table('LH_location');
+        $builder->select('*');
+        if ($id){
+          $builder = $builder->where('location_id',$id);
+          $query = $builder->get()->getRowArray();
+          return $query;
+        }
+        
+        $query = $builder->get()->getResultArray();
+        return $query;
+    }
+
+
   
 }
 
