@@ -196,6 +196,10 @@
                     <!-- <i class="far fa-user"></i> Profile -->
                     ข้อมูลแบบสอบถาม
                     </a>
+                    <a href="<?=base_url('api');?>" class="dropdown-item has-icon">
+                    <!-- <i class="fas fa-bolt"></i> Activities -->
+                    ข้อมูลอ้างอิงแบบสอบถาม
+                    </a>
                     <a href="<?=base_url('member');?>" class="dropdown-item has-icon">
                     <!-- <i class="fas fa-bolt"></i> Activities -->
                     ข้อมูลผู้ใช้งาน

@@ -117,5 +117,22 @@ $routes->group("common", ["namespace" => "App\Controllers"], function ($routes) 
 
 $routes->group("api", ["namespace" => "Modules\Api\Controllers"], function ($routes) {
     $routes->get("/", "Api::index");
+    $routes->get("agriWork", "Api::agriWork");
+    $routes->get("areaTarget", "Api::areaTarget");
+    $routes->get("diseaseGroup", "Api::diseaseGroup");
+    $routes->get("education", "Api::education");
+    $routes->get("expenses", "Api::expenses");
+    $routes->get("hospital", "Api::hospital");
+    $routes->get("jobs", "Api::jobs");
+    $routes->get("jobsGroup", "Api::jobsGroup");
+    $routes->get("landOwner", "Api::landOwner");
+    $routes->get("problemType", "Api::problemType");
+    $routes->get("product", "Api::product");
+    $routes->get("publicHealth", "Api::publicHealth");
+    $routes->get("religion", "Api::religion");
+    $routes->get("tribe", "Api::tribe");
+    $routes->get("landUse", "Api::landUse");
+    $routes->get("landprivilege", "Api::landprivilege");
+    $routes->get("location", "Api::location");
 });
 

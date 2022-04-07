@@ -15,8 +15,12 @@ class Api extends BaseController
     }
 
     public function index(){
-        $data = $this->model_api->getAgriWork();
-        print_r($data);
+        return view('Modules\Api\Views\index');
+    }
+
+    public function agriWork(){
+        $data['data'] =  $this->model_api->getAgriWork();
+        return view('Modules\Api\Views\agriWork',$data);
     }
 
 
