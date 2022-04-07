@@ -37,8 +37,8 @@ class House_model extends Model
 
     public function saveHouseManage($data)
     {
-      $db = \Config\Database::connect();
-      $builder = $db->table('LH_house');
+      
+      $builder = $this->db->table('LH_house');
       if (!empty($data['house_id'])){
         $house_id = $data['house_id'];
         $builder->where('house_id',$data['house_id']);
@@ -48,7 +48,7 @@ class House_model extends Model
       }else{
         unset($data['house_id']);
         $builder->insert($data);
-        $house_id = $db->insertID();
+        $house_id = $this->db->insertID();
       }
 
       return $house_id;
