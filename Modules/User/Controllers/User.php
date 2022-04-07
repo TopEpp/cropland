@@ -8,15 +8,27 @@ class User extends BaseController
 
   protected $template;
   use ResponseTrait;
+  protected $model_user;
+
+  public function __construct()
+  {
+      $this->model_user = new User_model();
+  }
 
   public function index()
   {
-    $User = new User_model();
-    $data['user'] = $User->getUserGroupOrg();
-    $data['org'] = $User->getTreeOrg();
-    $User->updateERPUser();
-    // $data = array();
-    echo view("Modules\Setting\Views\menu",$data);
+    // $data['users'] = $this->model_user->getAllUsers();
+
+    // $userModel = new UserModel();
+ 
+    $data = [
+        'users' => $this->model_user->paginate(10,'group1'),
+        'pager' => $this->model_user->pager
+    ];    
+    // $data['user'] = $User->getUserGroupOrg();
+    // $data['org'] = $User->getTreeOrg();
+    // $User->updateERPUser();
+    // // $data = array();
     return view("Modules\User\Views\index",$data);
   }
 

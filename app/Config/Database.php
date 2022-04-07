@@ -50,6 +50,26 @@ class Database extends Config
         'port'     => 1433,
     ];
 
+    public $user_db = [
+        'DSN'      => '',
+        'hostname' => 'db01.hrdi.or.th',
+        'username' => 'giapp',
+        'password' => 'h2Ekn9T',
+        'database' => 'highland_info',
+        'DBDriver' => 'SQLSRV',
+        'DBPrefix' => '',
+        'pConnect' => false,
+        'DBDebug'  => (ENVIRONMENT !== 'production'),
+        'charset'  => 'utf8',
+        'DBCollat' => 'utf8_general_ci',
+        'swapPre'  => '',
+        // 'encrypt'  => false,
+        'compress' => false,
+        'strictOn' => false,
+        'failover' => [],
+        'port'     => 1433,
+    ];
+
     /**
      * This database connection is used when
      * running PHPUnit database tests.

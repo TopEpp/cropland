@@ -6,15 +6,18 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 class User_model extends Model
 {
-  protected $table = 'users';
-  protected $primaryKey = 'user_id';
-  protected $allowedFields = [
-    'user_id','user_name','password','name','email','phone','status','user_type','user_img'
-  ];
+  protected $DBGroup = 'user_db';
+  
+  protected $table = 'vLoadDetailStaff';
+  protected $primaryKey = 'emp_id';
+  // protected $allowedFields = [
+  //   'user_id','user_name','password','name','email','phone','status','user_type','user_img'
+  // ];
 
   public function getAllUsers()
   {
-    $builder = $this->db->table('users');
+    $db = \Config\Database::connect('user_db', false); 
+    $builder = $db->table('vLoadDetailStaff');
     $builder->select('*');
     $query = $builder->get()->getResultArray();
     return $query;
