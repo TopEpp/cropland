@@ -23,5 +23,16 @@ class Api extends BaseController
         return view('Modules\Api\Views\agriWork',$data);
     }
 
+    public function saveArgiwork(){
+        $input = $this->request->getVar();
+        $res =  $this->model_api->saveArgiwork($input);
+        return $res;
+    }
+
+    public function deleteArgiwork($id){
+        $res =  $this->model_api->deleteArgiwork($id);
+        return $res;
+    }
+
 
 }

@@ -118,6 +118,9 @@ $routes->group("common", ["namespace" => "App\Controllers"], function ($routes) 
 $routes->group("api", ["namespace" => "Modules\Api\Controllers"], function ($routes) {
     $routes->get("/", "Api::index");
     $routes->get("agriWork", "Api::agriWork");
+    $routes->post("saveArgiwork", "Api::saveArgiwork");
+    $routes->get("deleteArgiwork/(:num)", "Api::deleteArgiwork/$1");
+
     $routes->get("areaTarget", "Api::areaTarget");
     $routes->get("diseaseGroup", "Api::diseaseGroup");
     $routes->get("education", "Api::education");
@@ -134,5 +137,7 @@ $routes->group("api", ["namespace" => "Modules\Api\Controllers"], function ($rou
     $routes->get("landUse", "Api::landUse");
     $routes->get("landprivilege", "Api::landprivilege");
     $routes->get("location", "Api::location");
+
+
 });
 

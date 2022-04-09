@@ -4,12 +4,15 @@ use CodeIgniter\Model;
 
 class Api_model extends Model
 {
+
+    protected $useAutoIncrement = true;
     
     public function getAgriWork($id = '')
     { 
         
         $builder = $this->db->table('LH_agriwork');
         $builder->select('*');
+         $builder = $builder->where('active',1);
         if ($id){
           $builder = $builder->where('agriwork_id',$id);
           $query = $builder->get()->getRowArray();
@@ -18,6 +21,34 @@ class Api_model extends Model
         
         $query = $builder->get()->getResultArray();
         return $query;
+    }
+
+    public function saveArgiwork($data){
+      $builder = $this->db->table('LH_agriwork');
+      if (!empty($data['agriwork_id'])){
+        $id = $data['agriwork_id'];
+        $builder->where('agriwork_id',$data['agriwork_id']);
+        unset($data['agriwork_id']);
+        $builder->update($data);
+      
+      }else{
+        unset($data['agriwork_id']);
+        $builder->insert($data);
+        $id = $this->db->insertID();
+      }
+
+      return $id;
+    }
+
+    public function deleteArgiwork($id){
+      $builder = $this->db->table('LH_agriwork');
+      $builder->set('active',0);
+      if($id){
+        $builder->where('agriwork_id',$id);
+        $builder->update();
+      }
+
+      return true;
     }
 
     public function getAreaTarget($id = '')
