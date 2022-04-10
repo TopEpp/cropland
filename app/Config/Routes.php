@@ -117,30 +117,12 @@ $routes->group("common", ["namespace" => "App\Controllers"], function ($routes) 
 
 $routes->group("api", ["namespace" => "Modules\Api\Controllers"], function ($routes) {
     $routes->get("/", "Api::index");
-    $routes->get("agriWork", "Api::agriWork");
-    $routes->post("saveArgiwork", "Api::saveArgiwork");
-    $routes->get("deleteArgiwork/(:num)", "Api::deleteArgiwork/$1");
-
-    $routes->get("areaTarget", "Api::areaTarget");
-    $routes->get("diseaseGroup", "Api::diseaseGroup");
-    $routes->get("education", "Api::education");
-    $routes->get("expenses", "Api::expenses");
-    $routes->get("hospital", "Api::hospital");
-    $routes->get("jobs", "Api::jobs");
-    $routes->get("jobsGroup", "Api::jobsGroup");
-    $routes->get("landOwner", "Api::landOwner");
-    $routes->get("problemType", "Api::problemType");
-    $routes->get("product", "Api::product");
-    $routes->get("publicHealth", "Api::publicHealth");
-    $routes->get("religion", "Api::religion");
-    $routes->get("tribe", "Api::tribe");
-    $routes->get("landUse", "Api::landUse");
-    $routes->get("landprivilege", "Api::landprivilege");
-    $routes->get("location", "Api::location");
-
     $routes->get("manage/(:any)", "Api::manage/$1");
     $routes->post("saveData", "Api::saveData");
     $routes->get("deleteData/(:any)/(:any)/(:num)", "Api::deleteData/$1/$2/$3");
+
+    $routes->get("areaTarget", "Api::areaTarget");
+    $routes->get("jobs", "Api::jobs");
 
 
 });

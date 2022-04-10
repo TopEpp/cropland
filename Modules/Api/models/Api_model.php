@@ -28,6 +28,7 @@ class Api_model extends Model
         
         $builder = $this->db->table('LH_area_target');
         $builder->select('*');
+        $builder->where('active',1);
         if ($id){
           $builder = $builder->where('target_id',$id);
           $query = $builder->get()->getRowArray();
@@ -121,8 +122,10 @@ class Api_model extends Model
     { 
         
         $builder = $this->db->table('LH_jobs');
-        $builder->select('*');
-        $builder->where('active',1);
+        $builder->select('LH_jobs.*, LH_jobsgroup.jobs_group_name ');
+        $builder->where('LH_jobs.active',1);
+        $builder->join('LH_jobsgroup','LH_jobsgroup.jobs_group_id = LH_jobs.jobs_group_id ');
+        $builder->orderBy('jobs_group_id,name');
         if ($id){
           $builder = $builder->where('jobs_id',$id);
           $query = $builder->get()->getRowArray();

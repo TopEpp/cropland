@@ -67,10 +67,10 @@
           <div class="col-md-12">
             <div class="form-group">
               <label for="name" >ชื่อ<?php echo $label?></label>
-              <input class="form-control act_data" type="text" name="<?php echo $input_name?>" id="<?php echo $input_name?>">
+              <input class="form-control " type="text" name="<?php echo $input_name?>" id="<?php echo $input_name?>">
             </div>
           </div>
-        
+        </div>
       </div>
 
       <input class="form-control" type="hidden" name="<?php echo $input_id?>" id="<?php echo $input_id?>" value="">
@@ -99,8 +99,8 @@
             var id = $('#id_'+id).val();
             var name = $('#name_'+id).val();
 
-            $('#name').val(name);
-            $('#id').val(id);
+            $('#<?php echo $input_name?>').val(name);
+            $('#<?php echo $input_id?>').val(id);
         }
 
         $('#modal_form').modal('show');

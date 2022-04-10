@@ -95,10 +95,6 @@ class Api extends BaseController
             $data['input_id'] = 'location_id';
             $data['input_name'] = 'name';
         }
-        
-
-
-
 
          $data['data'] =  $this->model_api->getData( $data['table'],$data['input_id']);
 
@@ -118,21 +114,22 @@ class Api extends BaseController
     }
 
 
-    // public function agriWork(){
-    //     $data['data'] =  $this->model_api->getAgriWork();
-    //     return view('Modules\Api\Views\agriWork',$data);
-    // }
+    public function areaTarget(){
+        $data['data'] =  $this->model_api->getAreaTarget();
+        return view('Modules\Api\Views\areaTarget',$data);
+    }
 
-    // public function saveArgiwork(){
-    //     $input = $this->request->getVar();
-    //     $res =  $this->model_api->saveArgiwork($input);
-    //     return $res;
-    // }
+    public function jobs(){
+        $data['data'] =  $this->model_api->getJobs();
+        $data['group'] =  $this->model_api->getJobsGroup();
+        $data['label'] = 'ประเภทอาชีพ';
+        $data['table'] = 'LH_jobs';
+        $data['input_id'] = 'jobs_id';
+        $data['input_name'] = 'name';
+        
+        return view('Modules\Api\Views\jobs',$data);
+    }
 
-    // public function deleteArgiwork($id){
-    //     $res =  $this->model_api->deleteArgiwork($id);
-    //     return $res;
-    // }
 
 
 }

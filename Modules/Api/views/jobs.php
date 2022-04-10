@@ -7,7 +7,7 @@
             <div class="col-12 col-md-12 col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="text-dark">ประเภทแรงงาน</h4>
+                        <h4 class="text-dark"><a href="<?php echo base_url('api')?>">ข้อมูลอ้างอิงแบบสอบถาม</a> > <?php echo $label?></h4>
                         <div class="card-header-action">
                             <a href="#" class="btn btn-info" onclick="openForm()">
                                 เพิ่มข้อมูล
@@ -19,7 +19,8 @@
                             <thead>
                                 <tr>
                                 <th scope="col" width="5%" style="text-align: center;">ลำดับ</th>
-                                <th scope="col" style="text-align: center;">ประเภท</th>
+                                <th scope="col" style="text-align: center;"><?php echo $label?></th>
+                                <th scope="col" style="text-align: center;">กลุ่มอาชีพ</th>
                                 <th scope="col" width="15%" style="text-align: center;">เครื่องมือ</th>
                                 </tr>
                             </thead>
@@ -27,16 +28,18 @@
                                 <?php foreach ($data as $key => $value) :?>
                                     <tr>
                                         <th scope="row" style="text-align: center;"><?=$key+1;?></th>
-                                        <td><?php echo $value['name']?></td>
+                                        <td><?php echo $value[$input_name]?></td>
+                                        <td><?php echo $value['jobs_group_name']?></td>
                                         <td style="text-align: center;">
                                             <div class="buttons">
-                                                <a href="#" onclick="openForm(<?php echo $value['agriwork_id']?>)" class="btn btn-icon btn-primary" ><i class="far fa-edit"></i></a>
-                                                <a href="#" onclick="delData(<?php echo $value['agriwork_id']?>)" class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></a>
+                                                <a href="#" onclick="openForm(<?php echo $value[$input_id]?>)" class="btn btn-icon btn-primary" ><i class="far fa-edit"></i></a>
+                                                <a href="#" onclick="delData('<?php echo $table?>','<?php echo $input_id?>',<?php echo $value[$input_id]?>)" class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></a>
                                             </div>
                                         </td>
                                     </tr>
-                                    <input type="hidden" id="id_<?php echo $value['agriwork_id']?>" value="<?php echo $value['agriwork_id']?>">
-                                    <input type="hidden" id="name_<?php echo $value['agriwork_id']?>" value="<?php echo $value['name']?>">
+                                    <input type="hidden" id="id_<?php echo $value[$input_id]?>" value="<?php echo $value[$input_id]?>">
+                                    <input type="hidden" id="name_<?php echo $value[$input_id]?>" value="<?php echo $value[$input_name]?>">
+                                    <input type="hidden" id="group_<?php echo $value[$input_id]?>" value="<?php echo $value['jobs_group_id']?>">
                                 <?php endforeach;?>
                                
 
@@ -56,7 +59,7 @@
     <div class="modal-content">
       <!-- Modal Header -->
       <div class="modal-header">
-        <h5 class="modal-title">จัดการประเภทแรงงาน</h5>
+        <h5 class="modal-title">จัดการ<?php echo $label?></h5>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <form id="form_data">
@@ -66,14 +69,28 @@
         <div class="row">
           <div class="col-md-12">
             <div class="form-group">
-              <label for="name" >ชื่อประเภทแรงงาน</label>
-              <input class="form-control act_data" type="text" name="name" id="name">
+              <label for="name" >กลุ่มอาชีพ</label>
+              <select class="form-control " name="jobs_group_id" id="jobs_group_id">
+              <?php foreach ($group as $key => $g) { ?>
+                <option value="<?php echo $g['jobs_group_id']?>" ><?php echo $g['jobs_group_name']?></option>
+              <?php } ?>
+              </select>
             </div>
           </div>
-        
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="name" >ชื่อ<?php echo $label?></label>
+              <input class="form-control " type="text" name="<?php echo $input_name?>" id="<?php echo $input_name?>">
+            </div>
+          </div>
+        </div>
       </div>
 
-      <input class="form-control" type="hidden" name="agriwork_id" id="agriwork_id" value="">
+      <input class="form-control" type="hidden" name="<?php echo $input_id?>" id="<?php echo $input_id?>" value="">
+      <input class="form-control" type="hidden" name="table" id="table" value="<?php echo $table?>">
+      <input class="form-control" type="hidden" name="key" id="key" value="<?php echo $input_id?>">
       <!-- Modal footer -->
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-ban"></i> ยกเลิก</button>
@@ -96,9 +113,11 @@
         if(id){
             var id = $('#id_'+id).val();
             var name = $('#name_'+id).val();
+            var group = $('#group_'+id).val();
 
-            $('#name').val(name);
-            $('#id').val(id);
+            $('#<?php echo $input_name?>').val(name);
+            $('#<?php echo $input_id?>').val(id);
+            $('#jobs_group_id').val(group);
         }
 
         $('#modal_form').modal('show');
@@ -118,7 +137,7 @@
 
 
         $.ajax({
-          url: domain+"api/saveArgiwork",
+          url: domain+"api/saveData",
           type: "POST",
           data:$('#form_data').serialize(),
           success: function (data) {
@@ -135,7 +154,7 @@
         });
       }
 
-    function delData(id) {
+    function delData(table,key,id) {
         swal({
           title: "ยืนยันการลบข้อมูล?",
           text: "คุณต้องการลบข้อมูลนี้หรือไม่!",
@@ -147,7 +166,7 @@
           cancelButtonText: "ยกเลิก ",
         }).then(function () {
           $.ajax({
-            url: domain+"api/deleteArgiwork/"+id,
+            url: domain+"api/deleteData/"+table+'/'+key+'/'+id,
             type: "GET",
             success: function (data) {
               $.toast({
