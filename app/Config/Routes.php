@@ -83,12 +83,20 @@ $routes->group("land", ["namespace" => "Modules\Land\Controllers"], function ($r
 
 $routes->group("survay", ["namespace" => "Modules\Survay\Controllers"], function ($routes) {
 	$routes->get("/", "Survay::index");
-    $routes->get("manage", "Survay::manage");
-    $routes->get("land", "Survay::land");
-    $routes->get("promote", "Survay::promote");
-    $routes->get("promote-other", "Survay::promoteOther");
-    $routes->get("problem", "Survay::problem");
-    $routes->get("need", "Survay::need");
+    $routes->get("manage(:any)", "Survay::manage$1");
+    $routes->get("land/(:num)(:any)", "Survay::land/$1$2");
+    $routes->get("support/(:num)(:any)", "Survay::support/$1$2");
+    $routes->get("support-other/(:num)(:any)", "Survay::supportOther/$1$2");
+    $routes->get("problem/(:num)(:any)", "Survay::problem/$1$2");
+    $routes->get("need/(:num)(:any)", "Survay::need/$1$2");
+
+      //save data
+      $routes->post("save_manage", "Survay::saveManage");
+      $routes->post("save_land/(:num)", "Survay::saveLand/$1");
+      $routes->post("save_support/(:num)", "Survay::saveSupport/$1");
+      $routes->post("save_support_other/(:num)", "Survay::saveSupportOther/$1");
+      $routes->post("save_problem/(:num)", "Survay::saveSurvayProblem/$1");
+      $routes->post("save_need/(:num)", "Survay::saveSurvayNeed/$1");
 });
 
 

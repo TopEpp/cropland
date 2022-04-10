@@ -22,7 +22,7 @@ class User extends BaseController
     // $userModel = new UserModel();
  
     $data = [
-        'users' => $this->model_user->paginate(10,'group1'),
+        'users' => $this->model_user->paginate(10,'page'),
         'pager' => $this->model_user->pager
     ];    
     // $data['user'] = $User->getUserGroupOrg();

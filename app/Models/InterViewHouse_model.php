@@ -19,6 +19,9 @@ class InterViewHouse_model extends Model
 
       $builder = $this->db->table('LH_interview_house');
       $builder->select('*');
+      $builder->join('LH_house', 'LH_house.house_id = LH_interview_house.interview_house');
+      // $builder->join('LH_house_person', 'LH_house.house_id = LH_house_person.house_id');
+      // $builder->groupBy('LH_interview_house.interview_house');
       $query = $builder->get()->getResultArray();
       return $query;
       

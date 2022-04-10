@@ -27,7 +27,7 @@ class House extends BaseController
     public function index(){
         $data = [];
         $data['data'] = $this->model_interview_house->getAllInterViewHouse();
-
+        
         return view('Modules\House\Views\index',$data);
     }
     

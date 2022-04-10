@@ -22,7 +22,7 @@
                                 <th scope="col">ชื่อ-นามสกุล</th>
                                 <th scope="col">ตำแหน่ง</th>
                                 <th scope="col">เบอร์โทรศัพท์</th>                            
-                                <th scope="col">เครื่องมือ</th>
+                                <!-- <th scope="col">เครื่องมือ</th> -->
                                 </tr>
                             </thead>
                             <tbody>
@@ -32,12 +32,12 @@
                                         <td><?=$value['fullname'];?></td>
                                         <td><?=$value['department'];?></td>
                                         <td><?=$value['mbl_phn'];?></td>                                        
-                                        <td>
+                                        <!-- <td>
                                             <div class="buttons">
                                                 <a href="#" class="btn btn-icon btn-primary"><i class="far fa-edit"></i></a>                                    
                                                 <a href="#" class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></a>
                                             </div>
-                                        </td>
+                                        </td> -->
                                     </tr>
                                 <?php endforeach;?>
                                
@@ -50,7 +50,7 @@
                             <?php if ($pager) :?>
                             <?php $pagi_path='member'; ?>
                             <?php $pager->setPath($pagi_path); ?>               
-                            <?= $pager->links('group1','front_full'); ?>
+                            <?= $pager->links('page','default_pagination'); ?>
                             <?php endif ?>
                         </div>
                     </div>

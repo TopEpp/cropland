@@ -27,20 +27,22 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>11636 - บ้านเทอคี</td>
-                                    <td>พื้นที่โครงการขยายผลโครงการหลวงเพื่อแก้ปัญหาพื้นที่ปลูกฝิ่นอย่างยั่งยืน </td>
-                                    <td>นายปราณต์เซธญ์ แสนใหม่	</td>
-                                    <td>19 ก.พ. 2564</td>
-                                    <td>
-                                        <div class="buttons">
-                                            <a href="#" class="btn btn-icon btn-primary"><i class="far fa-edit"></i></a>                                    
-                                            <a href="#" class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></a>
-                                        </div>
-                                    </td>
-                                </tr>
-
+                                <?php foreach ($data as $key => $value) :?>
+                                    <tr>
+                                        <th scope="row"><?=$key+1;?></th>
+                                        <td><?=$value['interview_code'];?></td>
+                                        <td><?=$value['interview_project'];?></td>
+                                        <td><?=$value['interview_user'];?></td>
+                                        <td><?=$value['interview_date'];?>4</td>
+                                        <td>
+                                            <div class="buttons">
+                                                <a href="<?=base_url('survay/manage/'.$value['interview_id']);?>" class="btn btn-icon btn-primary"><i class="far fa-edit"></i></a>                                    
+                                                <a href="#" class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <?php endforeach;?>
+                            
                             </tbody>
                         </table>
                     </div>
