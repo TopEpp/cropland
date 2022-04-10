@@ -11,23 +11,23 @@
                     </div>
                     <div class="card-body">
                         <ul>
-                            <li><a href="<?php echo base_url('api/agriWork')?>">ประเภทแรงงาน</a></li>
+                            <li><a href="<?php echo base_url('api/manage/agriWork')?>">ประเภทแรงงาน</a></li>
                             <li><a href="<?php echo base_url('api/areaTarget')?>">พื้นที่เป้าหมาย</a></li>
-                            <li><a href="<?php echo base_url('api/diseaseGroup')?>">ประเภทโรคประจำตัว</a></li>
-                            <li><a href="<?php echo base_url('api/education')?>">ระดับการศึกษา</a></li>
-                            <li><a href="<?php echo base_url('api/expenses')?>">ประเภทรายจ่าย</a></li>
-                            <li><a href="<?php echo base_url('api/hospital')?>">สถานพยาบาล</a></li>
+                            <li><a href="<?php echo base_url('api/manage/diseaseGroup')?>">ประเภทโรคประจำตัว</a></li>
+                            <li><a href="<?php echo base_url('api/manage/education')?>">ระดับการศึกษา</a></li>
+                            <li><a href="<?php echo base_url('api/manage/expenses')?>">ประเภทรายจ่าย</a></li>
+                            <li><a href="<?php echo base_url('api/manage/hospital')?>">สถานพยาบาล</a></li>
                             <li><a href="<?php echo base_url('api/jobs')?>">ประเภทอาชีพ</a></li>
-                            <li><a href="<?php echo base_url('api/jobsGroup')?>">ประเภทกลุ่มอาชีพ</a></li>
-                            <li><a href="<?php echo base_url('api/landOwner')?>">ประเภทที่พักอาศัย</a></li>
-                            <li><a href="<?php echo base_url('api/problemType')?>">ประเภทปัญหา</a></li>
-                            <li><a href="<?php echo base_url('api/product')?>">ประเภทผลผลิต</a></li>
-                            <li><a href="<?php echo base_url('api/publicHealth')?>">ประเภทสิทธิ์การรักษาพยาบาล</a></li>
-                            <li><a href="<?php echo base_url('api/religion')?>">ศาสนา</a></li>
-                            <li><a href="<?php echo base_url('api/tribe')?>">ชนเผ่า</a></li>
-                            <li><a href="<?php echo base_url('api/landUse')?>">ประเภทการใช้ประโยชน์ที่ดิน</a></li>
-                            <li><a href="<?php echo base_url('api/landprivilege')?>">ประเภทเอกสิทธิ์ที่ดิน</a></li>
-                            <li><a href="<?php echo base_url('api/location')?>">พื้นที่</a></li>
+                            <li><a href="<?php echo base_url('api/manage/jobsGroup')?>">ประเภทกลุ่มอาชีพ</a></li>
+                            <li><a href="<?php echo base_url('api/manage/landOwner')?>">ประเภทที่พักอาศัย</a></li>
+                            <li><a href="<?php echo base_url('api/manage/problemType')?>">ประเภทปัญหา</a></li>
+                            <li><a href="<?php echo base_url('api/manage/product')?>">ประเภทผลผลิต</a></li>
+                            <li><a href="<?php echo base_url('api/manage/publicHealth')?>">ประเภทสิทธิ์การรักษาพยาบาล</a></li>
+                            <li><a href="<?php echo base_url('api/manage/religion')?>">ศาสนา</a></li>
+                            <li><a href="<?php echo base_url('api/manage/tribe')?>">ชนเผ่า</a></li>
+                            <li><a href="<?php echo base_url('api/manage/landUse')?>">ประเภทการใช้ประโยชน์ที่ดิน</a></li>
+                            <li><a href="<?php echo base_url('api/manage/landprivilege')?>">ประเภทเอกสิทธิ์ที่ดิน</a></li>
+                            <li><a href="<?php echo base_url('api/manage/location')?>">พื้นที่</a></li>
                         </ul>
                     </div>
                 </div>

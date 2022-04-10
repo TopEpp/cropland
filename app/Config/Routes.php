@@ -138,6 +138,10 @@ $routes->group("api", ["namespace" => "Modules\Api\Controllers"], function ($rou
     $routes->get("landprivilege", "Api::landprivilege");
     $routes->get("location", "Api::location");
 
+    $routes->get("manage/(:any)", "Api::manage/$1");
+    $routes->post("saveData", "Api::saveData");
+    $routes->get("deleteData/(:any)/(:any)/(:num)", "Api::deleteData/$1/$2/$3");
+
 
 });
 

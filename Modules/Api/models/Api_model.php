@@ -12,7 +12,7 @@ class Api_model extends Model
         
         $builder = $this->db->table('LH_agriwork');
         $builder->select('*');
-         $builder = $builder->where('active',1);
+        $builder->where('active',1);
         if ($id){
           $builder = $builder->where('agriwork_id',$id);
           $query = $builder->get()->getRowArray();
@@ -21,34 +21,6 @@ class Api_model extends Model
         
         $query = $builder->get()->getResultArray();
         return $query;
-    }
-
-    public function saveArgiwork($data){
-      $builder = $this->db->table('LH_agriwork');
-      if (!empty($data['agriwork_id'])){
-        $id = $data['agriwork_id'];
-        $builder->where('agriwork_id',$data['agriwork_id']);
-        unset($data['agriwork_id']);
-        $builder->update($data);
-      
-      }else{
-        unset($data['agriwork_id']);
-        $builder->insert($data);
-        $id = $this->db->insertID();
-      }
-
-      return $id;
-    }
-
-    public function deleteArgiwork($id){
-      $builder = $this->db->table('LH_agriwork');
-      $builder->set('active',0);
-      if($id){
-        $builder->where('agriwork_id',$id);
-        $builder->update();
-      }
-
-      return true;
     }
 
     public function getAreaTarget($id = '')
@@ -71,6 +43,7 @@ class Api_model extends Model
         
         $builder = $this->db->table('LH_diseasegroup');
         $builder->select('*');
+        $builder->where('active',1);
         if ($id){
           $builder = $builder->where('disease_group_id',$id);
           $query = $builder->get()->getRowArray();
@@ -101,6 +74,7 @@ class Api_model extends Model
         
         $builder = $this->db->table('LH_education');
         $builder->select('*');
+        $builder->where('active',1);
         if ($id){
           $builder = $builder->where('education_id',$id);
           $query = $builder->get()->getRowArray();
@@ -116,6 +90,7 @@ class Api_model extends Model
         
         $builder = $this->db->table('LH_expenses');
         $builder->select('*');
+        $builder->where('active',1);
         if ($id){
           $builder = $builder->where('expenses_id',$id);
           $query = $builder->get()->getRowArray();
@@ -131,6 +106,7 @@ class Api_model extends Model
         
         $builder = $this->db->table('LH_hospital');
         $builder->select('*');
+        $builder->where('active',1);
         if ($id){
           $builder = $builder->where('hospital_id',$id);
           $query = $builder->get()->getRowArray();
@@ -146,6 +122,7 @@ class Api_model extends Model
         
         $builder = $this->db->table('LH_jobs');
         $builder->select('*');
+        $builder->where('active',1);
         if ($id){
           $builder = $builder->where('jobs_id',$id);
           $query = $builder->get()->getRowArray();
@@ -161,6 +138,7 @@ class Api_model extends Model
         
         $builder = $this->db->table('LH_jobsgroup');
         $builder->select('*');
+        $builder->where('active',1);
         if ($id){
           $builder = $builder->where('jobs_group_id',$id);
           $query = $builder->get()->getRowArray();
@@ -176,6 +154,7 @@ class Api_model extends Model
         
         $builder = $this->db->table('LH_landowner');
         $builder->select('*');
+        $builder->where('active',1);
         if ($id){
           $builder = $builder->where('landowner_id',$id);
           $query = $builder->get()->getRowArray();
@@ -206,6 +185,7 @@ class Api_model extends Model
         
         $builder = $this->db->table('LH_problemtype');
         $builder->select('*');
+        $builder->where('active',1);
         if ($id){
           $builder = $builder->where('problemtype_id',$id);
           $query = $builder->get()->getRowArray();
@@ -221,6 +201,7 @@ class Api_model extends Model
         
         $builder = $this->db->table('LH_product');
         $builder->select('*');
+        $builder->where('active',1);
         if ($id){
           $builder = $builder->where('product_id',$id);
           $query = $builder->get()->getRowArray();
@@ -236,6 +217,7 @@ class Api_model extends Model
         
         $builder = $this->db->table('LH_publichealth');
         $builder->select('*');
+        $builder->where('active',1);
         if ($id){
           $builder = $builder->where('publichealth_id',$id);
           $query = $builder->get()->getRowArray();
@@ -251,6 +233,7 @@ class Api_model extends Model
         
         $builder = $this->db->table('LH_religion');
         $builder->select('*');
+        $builder->where('active',1);
         if ($id){
           $builder = $builder->where('religion_id',$id);
           $query = $builder->get()->getRowArray();
@@ -281,6 +264,7 @@ class Api_model extends Model
         
         $builder = $this->db->table('LH_tribe');
         $builder->select('*');
+        $builder->where('active',1);
         if ($id){
           $builder = $builder->where('tribe_id',$id);
           $query = $builder->get()->getRowArray();
@@ -296,6 +280,7 @@ class Api_model extends Model
         
         $builder = $this->db->table('LH_landuse');
         $builder->select('*');
+        $builder->where('active',1);
         if ($id){
           $builder = $builder->where('landuse_id',$id);
           $query = $builder->get()->getRowArray();
@@ -311,6 +296,7 @@ class Api_model extends Model
         
         $builder = $this->db->table('LH_landprivilege');
         $builder->select('*');
+        $builder->where('active',1);
         if ($id){
           $builder = $builder->where('landprivilege_id',$id);
           $query = $builder->get()->getRowArray();
@@ -326,6 +312,7 @@ class Api_model extends Model
         
         $builder = $this->db->table('LH_location');
         $builder->select('*');
+        $builder->where('active',1);
         if ($id){
           $builder = $builder->where('location_id',$id);
           $query = $builder->get()->getRowArray();
@@ -336,6 +323,53 @@ class Api_model extends Model
         return $query;
     }
 
+    public function getData($table,$key,$id = '')
+    { 
+        
+        $builder = $this->db->table($table);
+        $builder->select('*');
+        $builder->where('active',1);
+        if ($id){
+          $builder = $builder->where($key,$id);
+          $query = $builder->get()->getRowArray();
+          return $query;
+        }
+        
+        $query = $builder->get()->getResultArray();
+        return $query;
+    }
+
+    public function saveData($data){
+
+      $builder = $this->db->table($data['table']);
+      unset($data['table']);
+
+      if (!empty($data[$data['key']])){
+        $id = $data[$data['key']];
+        $builder->where($data['key'],$data[$data['key']]);
+        unset($data[$data['key']]);
+        unset($data['key']);
+        $builder->update($data);
+      }else{
+        unset($data[$data['key']]);
+        unset($data['key']);
+        $builder->insert($data);
+        $id = $this->db->insertID();
+      }
+
+      return $id;
+    }
+
+    public function deleteData($table,$key,$id){
+      $builder = $this->db->table($table);
+      $builder->set('active',0);
+      if($id){
+        $builder->where($key,$id);
+        $builder->update();
+      }
+
+      return true;
+    }
 
   
 }
