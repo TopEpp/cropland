@@ -98,9 +98,9 @@
                                                                          <tr>
                                                                             <th scope="row"><?=$key+1;?></th>
                                                                             <td><?=$val['person_number'];?></td>
-                                                                            <td><?=$val['person_prename'].' '.$val['person_name'].$val['person_lastname'];?></td>
-                                                                            <td><?=$val['person_educate'];?></td>
-                                                                            <td><?=$val['person_header'];?></td>
+                                                                            <td><?=$val['name'].' '.$val['person_name'].$val['person_lastname'];?></td>
+                                                                            <td><?=$val['education_name'];?></td>
+                                                                            <td><?=$val['person_header'] ? 'หัวหน้าครอบครัว':'';?></td>
                                                                             <td>
                                                                                 <div class="buttons">
                                                                                     <button data-id="<?=$keys;?>" onclick="editFimaly($(this),<?=$val['person_id'];?>)" class="btn btn-icon btn-primary btn-sm"><i class="far fa-edit"></i></button>                                    
@@ -183,8 +183,13 @@
                             <input type="text" class="form-control" name="person_number">
                         </div>
                         <div class="form-group col-md-2">
-                            <label>ชื่อ</label>
-                            <input type="text" class="form-control" name="person_prename">                         
+                            <label>ชื่อ</label>      
+                            <select name="person_prename" id="person_prename" class="form-control">
+                                <option value="">เลือก</option>
+                                <?php foreach ($prename as $key => $value) :?>
+                                    <option value="<?=$value['prefix_id'];?>"><?=$value['name'];?></option>
+                                <?php endforeach?>
+                            </select>                
                         </div>
                         <div class="form-group col-md-2">
                             <label>&nbsp;</label>

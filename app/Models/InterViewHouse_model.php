@@ -1,6 +1,7 @@
 <?php
 namespace app\Models;
 use CodeIgniter\Model;
+use CodeIgniter\Database\BaseBuilder;
 
 class InterViewHouse_model extends Model
 {
@@ -17,11 +18,18 @@ class InterViewHouse_model extends Model
     public function getAllInterViewHouse()
     {
 
+
       $builder = $this->db->table('LH_interview_house');
-      $builder->select('*');
+      $builder->select("    
+      LH_house.house_id,  
+      LH_house_person.family_id,
+      max(LH_house_person.person_name) as person_name,
+      max(LH_house_person.person_lastname) as person_lastname,
+      ");
       $builder->join('LH_house', 'LH_house.house_id = LH_interview_house.interview_house');
-      // $builder->join('LH_house_person', 'LH_house.house_id = LH_house_person.house_id');
-      // $builder->groupBy('LH_interview_house.interview_house');
+      $builder->join('LH_house_person', 'LH_house_person.house_id = LH_house.house_id and person_header = 1','left');
+      $builder->groupBy('LH_house.house_id,LH_house_person.family_id');
+     
       $query = $builder->get()->getResultArray();
       return $query;
       

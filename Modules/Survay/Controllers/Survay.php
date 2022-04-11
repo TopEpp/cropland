@@ -2,9 +2,10 @@
 
 namespace Modules\Survay\Controllers;
 
+use Modules\Api\Models\Api_model;
+use CodeIgniter\API\ResponseTrait;
 use App\Controllers\BaseController;
 use Modules\Survay\Models\Survay_model;
-use CodeIgniter\API\ResponseTrait;
 
 class Survay extends BaseController
 {
@@ -12,9 +13,11 @@ class Survay extends BaseController
     use ResponseTrait;
 
     protected $model_survay;
+    protected $model_api;
 
     public function __construct()
     {
+        $this->model_api = new Api_model();
         $this->model_survay = new Survay_model();
     }
 
@@ -76,6 +79,7 @@ class Survay extends BaseController
 
     public function land($interview_id,$id = ''){
         $data['interview_id'] = $interview_id;
+        $data['landuse'] =  $this->model_api->getLandUse();
         $data['data'] = $this->model_survay->getSurvayLand($interview_id);
         
         return view('Modules\Survay\Views\land',$data);

@@ -45,9 +45,9 @@
                                         <td><?=$value['land_number'];?></td>
                                         <td><?=$value['land_no'];?></td>
                                         <td><?=$value['land_area'];?> ไร่</td>
-                                        <td><?=$value['land_use'];?></td>
+                                        <td><?=$value['name'];?></td>
                                         <td><?=$value['land_ownership'];?></td>
-                                        <td><?=$value['land_address'];?></td>
+                                        <td><?=$value['location_name'];?></td>
                                         <td>
                                             <div class="buttons">
                                                 <button  onclick="addLand(<?=$value['land_id'];?>)" class="btn btn-icon btn-primary"><i class="far fa-edit"></i></button>                                    

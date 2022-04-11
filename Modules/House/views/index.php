@@ -30,13 +30,13 @@
                                 <?php foreach ($data as $key => $value) :?>
                                     <tr>
                                         <th scope="row"><?=$key+1;?></th>
-                                        <td>ชาญชัย วหคชลชี</td>
+                                        <td><?=$value['person_name'].' '.$value['person_lastname'] ?></td>
                                         <td>บ้านเลขที่ 39/1 หมู่ 8 ต.แม่ตื่น อ.แม่ระมาด จ.ตาก 63140</td>
                                         <td>5 คน</td>
                                         <td>2 แปลง</td>
                                         <td>
                                             <div class="buttons">
-                                                <a href="<?=base_url('house/manage/'.$value['interview_house']);?>" class="btn btn-icon btn-primary"><i class="far fa-edit"></i></a>                                    
+                                                <a href="<?=base_url('house/manage/'.$value['house_id']);?>" class="btn btn-icon btn-primary"><i class="far fa-edit"></i></a>                                    
                                                 <a href="#" class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></a>
                                             </div>
                                         </td>

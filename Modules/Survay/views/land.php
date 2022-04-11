@@ -111,7 +111,10 @@
                             <label>การใช้ประโยชน์ที่ดิน</label>     
                             <input type="hidden" name="detail_use_type">                                   
                             <select name="detail_use" id="detail_use" class="form-control">
-                                <option value="">เลือก</option>                             
+                                <option value="">เลือก</option>
+                                <?php foreach ($landuse as $key => $value) :?>
+                                    <option value="<?=$value['landuse_id'];?>"><?=$value['name'];?></option>
+                                <?php endforeach?>              
                             </select>
                         </div>
                         <div class="form-group col-md-4">

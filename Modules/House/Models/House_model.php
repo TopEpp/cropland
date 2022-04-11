@@ -57,8 +57,10 @@ class House_model extends Model
 
     public function getAllHouseMembers($house_id,$person_id,$data = array()){    
         $builder = $this->db->table('LH_house_person');
-        $builder->select('*');
+        $builder->select('LH_house_person.*,LH_prefix.name,LH_education.name as education_name');
         $builder->where('house_id',$house_id);
+        $builder->join('LH_prefix', 'LH_prefix.prefix_id = LH_house_person.person_prename','left');
+        $builder->join('LH_education', 'LH_education.education_id = LH_house_person.person_educate','left');
         $query = $builder->get()->getResultArray();
         
         foreach ($query as $key => $value) {

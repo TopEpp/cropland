@@ -93,6 +93,7 @@ class House extends BaseController
         $data['religion'] = $this->model_api->getReligion();
         $data['publichealth'] = $this->model_api->getPublicHealth();
         $data['hospital'] = $this->model_api->getHospital();
+        $data['prename'] = $this->model_api->getPrefix();
         
 
         $data['data'] = $this->model_house->getAllHouseMembers($house_id,$id);
