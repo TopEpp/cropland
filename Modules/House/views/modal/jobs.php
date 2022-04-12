@@ -12,7 +12,7 @@
         <div class="col-md-12">
         <h6>ข้อมูลด้านอาชีพ</h6>
             <table class="table table-bordered">
-                <thead>
+                <thead class="bg-info">
                     <tr>
                     <th scope="col">ลำดับ</th>
                     <th scope="col">อาชีพ</th>
@@ -24,6 +24,17 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <?php foreach ($data as $key => $value) :?>
+                       <tr>
+                           <td><?=$key+1;?></td>
+                           <td><?=$value['job_type'];?></td>
+                           <td><?=$value['job_descript'];?></td>
+                           <td><?=$value['job_cal_type'];?></td>
+                           <td><?=$value['job_salary'];?></td>
+                           <td><?=$value['job_address'];?></td>
+                           <td><?=$value['job_remark'];?></td>
+                       </tr> 
+                    <?php endforeach;?>
                 </tbody>
             </table>
         </div>
@@ -39,8 +50,11 @@
                     <div class="row">                               
                         <div class="form-group col-md-4">
                             <label>อาชีพ</label>                                        
-                            <select name="job_type" id="job_type" class="form-control">
-                                <option value="1">1</option>
+                            <select name="job_type" id="job_type" class="form-control" onchange="selectJobs($(this))">
+                                <option value="">เลือก</option>
+                                <?php foreach ($jobs as $key => $value) :?>
+                                    <option value="<?=$value['jobs_id'];?>"><?=$value['name'];?></option>
+                                <?php endforeach;?>
                             </select>
                         </div>
                         <div class="form-group col-md-4">
@@ -54,8 +68,9 @@
                         </div>
                         <div class="form-group col-md-4">
                             <label>&nbsp;</label>                                        
-                            <p>ประเภท : ในภาคการเกษตร</p>
-                            <input type="hidden" name="job_cal_type" value="1">
+                            <div id="text_cal_type"></div>
+                            <!-- <p>ประเภท : ในภาคการเกษตร</p> -->
+                            <input type="hidden" name="job_cal_type" id="job_cal_type">
                         </div>
 
                         <div class="form-group col-md-4">
@@ -76,7 +91,7 @@
                         </div>
                     </div>
                     
-                    <div class="row inner-repeater">
+                    <div class="row inner-repeater" style="display:none">
                         <div class="col-md-6">
                             รายละเอียด
                         </div>
@@ -99,9 +114,22 @@
                                 <tbody data-repeater-list="job-detail">
                                     <tr data-repeater-item>
                                         <th>1</th>
-                                        <td> <input type="text" class="form-control" name="type_id"></td>
+                                        <td>                                             
+                                            <select name="type_id" id="type_id" class="form-control">
+                                                <option value="">เลือก</option>
+                                                <?php foreach ($products as $key => $value) :?>
+                                                    <option value="<?=$value['product_id'];?>"><?=$value['name'];?></option>
+                                                <?php endforeach;?>
+                                            </select>
+                                        </td>
                                         <td> <input type="text" class="form-control" name="detail_value"></td>
-                                        <td> <input type="text" class="form-control" name="detail_unit"></td>
+                                        <td>                                             
+                                            <select name="detail_unit" id="detail_unit" class="form-control">
+                                                <option value="">เลือก</option>
+                                                <option value="ไร่">ไร่</option>
+                                                <option value="โรงเรือน">โรงเรือน</option>
+                                            </select>
+                                        </td>
                                         <td> <input type="text" class="form-control" name="detail_cost"></td>
                                         <td> <input type="text" class="form-control" name="detail_income"></td>
                                         <td> <input type="text" class="form-control" name="detail_remark"></td>
@@ -195,4 +223,19 @@
             // });
 
     });
+
+    function selectJobs(elm){
+        var id = elm.val();
+
+        if (id == 1 || id == 2 || id == 3){
+            $("#job_cal_type").val(1)
+            $("#text_cal_type").html('<p>ประเภท : ในภาคการเกษตร</p>')
+
+            $(".inner-repeater").show();
+        }else{
+            $("#job_cal_type").val(2)
+            $("#text_cal_type").html('<p>ประเภท : นอกภาคการเกษตร</p>')
+            $(".inner-repeater").hide();
+        }
+    }
 </script>

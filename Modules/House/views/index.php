@@ -31,7 +31,7 @@
                                     <tr>
                                         <th scope="row"><?=$key+1;?></th>
                                         <td><?=$value['person_name'].' '.$value['person_lastname'] ?></td>
-                                        <td>บ้านเลขที่ 39/1 หมู่ 8 ต.แม่ตื่น อ.แม่ระมาด จ.ตาก 63140</td>
+                                        <td>บ้านเลขที่ <?=$value['house_number'] .' หมู่ '. $value['house_moo'];?></td>
                                         <td>5 คน</td>
                                         <td>2 แปลง</td>
                                         <td>

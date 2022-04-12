@@ -56,22 +56,42 @@
                                 </thead>
                                 <tbody>
                                     <?php foreach ($data as $key => $value) :?>
-                                        <tr>
-                                            <th scope="row"><?=$key+1;?></th>
-                                            <td>
-                                                <a class="text-info" onclick="addOutcome(<?=$value['person_id'];?>)" style="cursor: pointer;"><?=$value['person_name'].' '.$value['person_lastname'];?></a>
-                                            </td>
-                                            <td>-</td>
-                                            <td>-</td>
-                                            <td>-</td>
-                                            <td> - </td>
-                                            <td>-</td>
-                                            <td> - </td>
-                                            <td> - </td>
-                                            <td> - </td>
-                                            <td> - </td>
-                                            <td> - </td>
-                                        </tr>
+                                        <?php if (!empty($value['person_id'])):?>
+                                            <tr>
+                                                <th scope="row"><?=$key;?></th>
+                                                <td>
+                                                    <a class="text-info" onclick="addOutcome(<?=$value['person_id'];?>)" style="cursor: pointer;"><?=$value['person_name'].' '.$value['person_lastname'];?></a>
+                                                </td>
+                                                <td><?=$value[1]['outcome_value'] * $value[1]['outcome_month'];?></td>
+                                                <td><?=$value[2]['outcome_value'] * $value[2]['outcome_month'];;?></td>
+                                                <td><?=$value[3]['outcome_value'] * $value[3]['outcome_month'];;?></td>
+                                                <td><?=$value[4]['outcome_value'] * $value[4]['outcome_month'];;?></td>
+                                                <td><?=$value[5]['outcome_value'] * $value[5]['outcome_month'];;?></td>
+                                                <td><?=$value[6]['outcome_value'] * $value[6]['outcome_month'];;?></td>
+                                                <td><?=$value[7]['outcome_value'] * $value[7]['outcome_month'];;?></td>
+                                                <td><?=$value[8]['outcome_value'] * $value[8]['outcome_month'];;?></td>
+                                                <td><?=$value[9]['outcome_value'] * $value[9]['outcome_month'];;?></td>
+                                                <td><?=$value[10]['outcome_value'] * $value[10]['outcome_month'];;?></td>
+                                            </tr>
+                                        <?php else:?>
+                                            <tr>
+                                                <th scope="row"><?=$key;?></th>
+                                                <td>
+                                                    <a class="text-info" onclick="addOutcome(<?=$value['person_id'];?>)" style="cursor: pointer;"><?=$value['person_name'].' '.$value['person_lastname'];?></a>
+                                                </td>
+                                                <td>-</td>
+                                                <td>-</td>
+                                                <td>-</td>
+                                                <td>-</td>
+                                                <td>-</td>
+                                                <td>-</td>
+                                                <td>-</td>
+                                                <td>-</td>
+                                                <td>-</td>
+                                                <td>-</td>
+                                                
+                                            </tr>
+                                        <?php endif;?>
                                     <?php endforeach;?>
 
                                 </tbody>
@@ -235,6 +255,22 @@
 <?=$this->section("scripts")?>
 <script>
     function addOutcome(id){
+        $("#person_id").val(id)
+
+        $.ajax({
+            type: "GET",
+            url: domain+'house/load-outcome/'+id,
+            success : function(response){
+                const data = response.data
+                data.forEach(async (val) => {
+                    
+                    $("input[name='outcome["+val.outcome_type+"][outcome_value]']").val(val.outcome_value)
+                    $("select[name='outcome["+val.outcome_type+"][outcome_month]']").val(val.outcome_month)
+                });
+                // $("#item_modal").html(response)
+            }
+        });
+
         $("#OutComeModal").modal();
     }
 </script>

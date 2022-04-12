@@ -93,10 +93,12 @@ class House_model extends Model
     public function getAllHouseJob($house_id,$person_id,$data = array()){
 
       $builder = $this->db->table('LH_house_person');
-      $builder->select('*');
-      $builder->where('house_id',$house_id);
+      $builder->select('LH_person_job.*,LH_jobs.name,LH_house_person.person_id,LH_house_person.person_name,LH_house_person.person_lastname');
+      $builder->where('LH_house_person.house_id',$house_id);
+      $builder->join('LH_person_job', 'LH_person_job.person_id = LH_house_person.person_id');
+      $builder->join('LH_jobs', 'LH_jobs.jobs_id = LH_person_job.job_type');
       $query = $builder->get()->getResultArray();
-
+      
       return $query;
     }
 
@@ -119,6 +121,7 @@ class House_model extends Model
               'interview_id'=>$data['interview_id'],
               'person_id '=>$data['person_id'],
               'job_type' => $job['job_type'],
+              'job_main' => !empty($job['job_main'][0]) ? $job['job_main'][0]:null,
               'job_cal_type' => $job['job_cal_type'],
               'job_salary' => $job['job_salary'],
               'job_salary_month' => $job['job_salary_month'],
@@ -163,11 +166,21 @@ class House_model extends Model
     public function getAllHouseIncome($house_id,$person_id,$data = array()){
 
       $builder = $this->db->table('LH_house_person');
-      $builder->select('*');
-      $builder->where('house_id',$house_id);
+      $builder->select('LH_person_income.*,LH_house_person.person_id as person,LH_house_person.person_name,LH_house_person.person_lastname');
+      $builder->where('LH_house_person.house_id',$house_id);
+      $builder->join('LH_person_income', 'LH_person_income.person_id = LH_house_person.person_id','left');
       $query = $builder->get()->getResultArray();
-
-      return $query;
+        // dd($query);
+      $tmp = [];
+      foreach ($query as $key => $value) {
+        $tmp[$value['person']]['person_id'] = $value['person_id'];
+        $tmp[$value['person']]['person_name'] = $value['person_name'];
+        $tmp[$value['person']]['person_lastname'] = $value['person_lastname'];
+        $tmp[$value['person']][$value['income_type']]['income_value'] = $value['income_value'];
+        $tmp[$value['person']][$value['income_type']]['income_month'] = $value['income_month'];
+      }
+      
+      return $tmp;
     }
 
     public function saveHouseIncome($data){
@@ -206,11 +219,25 @@ class House_model extends Model
     public function getAllHouseOutcome($house_id,$person_id,$data = array()){
 
       $builder = $this->db->table('LH_house_person');
-      $builder->select('*');
+      $builder->select('LH_person_outcome.*,LH_house_person.person_id as person,LH_house_person.person_name,LH_house_person.person_lastname');
       $builder->where('house_id',$house_id);
+      $builder->join('LH_person_outcome', 'LH_person_outcome.person_id = LH_house_person.person_id','left');
       $query = $builder->get()->getResultArray();
+        
+      $tmp = [];
+      foreach ($query as $key => $value) {
+        
+        $tmp[$value['person']]['person_id'] = $value['person_id'];
+        $tmp[$value['person']]['person_name'] = $value['person_name'];
+        $tmp[$value['person']]['person_lastname'] = $value['person_lastname'];
+        $tmp[$value['person']][$value['outcome_type']]['outcome_value'] = $value['outcome_value'];
+        $tmp[$value['person']][$value['outcome_type']]['outcome_month'] = $value['outcome_month'];
+      }
+    
+      return $tmp;
+      // $query = $builder->get()->getResultArray();
 
-      return $query;
+      // return $query;
     }
 
     public function saveHouseOutcome($data){
@@ -243,6 +270,35 @@ class House_model extends Model
 
       return $outcome_id;
 
+    }
+
+    public function getPersonJobs($person_id){
+      $builder = $this->db->table('LH_person_job');
+      $builder->select('*');
+      $builder->where('person_id',$person_id);
+      $query = $builder->get()->getResultArray();
+
+      return $query;
+    }
+
+    public function getPersonIncome($person_id){
+
+      $builder = $this->db->table('LH_person_income');
+      $builder->select('*');
+      $builder->where('person_id',$person_id);
+      $query = $builder->get()->getResultArray();
+
+      return $query;
+    }
+
+    public function getPersonOutcome($person_id){
+
+      $builder = $this->db->table('LH_person_outcome');
+      $builder->select('*');
+      $builder->where('person_id',$person_id);
+      $query = $builder->get()->getResultArray();
+
+      return $query;
     }
 
 }

@@ -34,8 +34,8 @@
 
                             <h6>ข้อมูลพื้นฐาน</h6>
                             <form action="<?=base_url('house/save_manage');?>"  method="post" id="form_manage">
-                                <input type="hidden" name="house_id" value="<?=@$house_id;?>">
-                                <input type="hidden" name="interview_id" value="<?=@$interview_id;?>">                                
+                                <input type="hidden" name="house_id" value="<?=@$data['house_id'];?>">
+                                <input type="hidden" name="interview_id" value="<?=@$data['interview_id'];?>">                                
                                 <div class="row">                               
                                     <div class="form-group col-md-4">
                                         <label>ประเภทโครงการ</label>                                        
@@ -45,7 +45,7 @@
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>ชื่อโครงการ</label>
-                                        <input type="text" class="form-control" name="interview_project_name">
+                                        <input type="text" class="form-control" name="interview_project_name" value="<?=@$data['interview_project_name'];?>">
                                     </div>     
                                     <div class="form-group col-md-4">
                                         <label>ปีที่สำรวจ</label>                                        
@@ -55,15 +55,15 @@
                                     </div>    
                                     <div class="form-group col-md-4">
                                         <label>ชื่อหมู่บ้าน</label>
-                                        <input type="text" class="form-control" name="house_moo_name" value="<?=@$house_moo_name;?>">
+                                        <input type="text" class="form-control" name="house_moo_name" value="<?=@$data['house_moo_name'];?>">
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>บ้านเลขที่</label>
-                                        <input type="text" class="form-control" name="house_number" value="<?=@$house_number;?>">
+                                        <input type="text" class="form-control" name="house_number" value="<?=@$data['house_number'];?>">
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>หมู่ที่</label>
-                                        <input type="text" class="form-control" name="house_moo" value="<?=@$house_moo;?>">
+                                        <input type="text" class="form-control" name="house_moo" value="<?=@$data['house_moo'];?>">
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>จังหวัด</label>                                        
@@ -94,14 +94,14 @@
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>กลุ่มบ้าน</label>
-                                        <input type="text" class="form-control" name="house_label" value="<?=@$house_label;?>">
+                                        <input type="text" class="form-control" name="house_label" value="<?=@$data['house_label'];?>">
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>ประเภทที่พักอาศัย</label>
                                         <select name="house_type" id="house_type" class="form-control">
                                             <option value="">เลือก</option>
                                             <?php foreach ($landomner as $key => $value) :?>
-                                                <option value="<?=$value['landowner_id'];?>"><?=$value['name'];?></option>
+                                                <option <?=$data['house_type'] == $value['landowner_id'] ? 'selected':'';?>  value="<?=$value['landowner_id'];?>"><?=$value['name'];?></option>
                                             <?php endforeach?>
                                         </select>
                                     </div>          

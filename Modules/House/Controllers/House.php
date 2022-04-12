@@ -42,7 +42,8 @@ class House extends BaseController
     
        
         if ($id){
-            $data['data'] = $this->model_house->getAllHouse($id);
+            $data['data'] = $this->model_house->getAllHouse($id);     
+              
         }
 
         return view('Modules\House\Views\manage',$data);
@@ -118,14 +119,14 @@ class House extends BaseController
     }
 
     public function jobs($house_id ,$id = null){
-        $data['house_id'] = $house_id;
-
+        $data['house_id'] = $house_id;        
         $data['data'] = $this->model_house->getAllHouseJob($house_id,$id);
         return view('Modules\House\Views\jobs', $data);
     }
     
     public function saveJobs($house_id){
         $input = $this->request->getVar();
+       
         $session = session();
         $input['house_id'] = $house_id;
         
@@ -190,10 +191,25 @@ class House extends BaseController
         
     }
 
-    public function loadJobs(){
+    public function loadJobs($id){
         $data = [];
-      
+        
+        $data['jobs'] = $this->model_api->getJobs();
+        $data['products'] = $this->model_api->getproduct();
+        $data['data'] = $this->model_house->getPersonJobs($id);
         $html =  view('Modules\House\Views\modal\jobs', $data);
         return $this->respond($html);
     }
+
+    public function loadIncome($id){
+        $data['data'] = $this->model_house->getPersonIncome($id);
+        return $this->respond($data);
+    }
+
+    public function loadOutcome($id){
+        $data['data'] = $this->model_house->getPersonOutcome($id);
+        return $this->respond($data);
+    }
+
+    
 }

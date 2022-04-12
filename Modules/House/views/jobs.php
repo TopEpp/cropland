@@ -1,6 +1,9 @@
 <?=$this->extend("layouts/main")?>
 
 <?=$this->section("content")?>
+<?php 
+    $cal_type = ['1'=>'ในภาคการเกษตร','2'=>'นอกภาคการเกษตร'];
+?>
 <section class="section">
     <div class="section-body">
         <div class="row">
@@ -50,11 +53,11 @@
                                             <td>
                                                 <a class="text-info" onclick="addJobs(<?=$value['person_id'];?>)" style="cursor: pointer;"><?=$value['person_name'].' '.$value['person_lastname'];?></a>
                                             </td>
-                                            <td>เกษตรกร</td>
-                                            <td>ในภาคการเกษตร</td>
-                                            <td>62000 บาท</td>
+                                            <td><?=$value['name'];?></td>
+                                            <td><?=$cal_type[$value['job_cal_type']];?></td>
+                                            <td><?=$value['job_salary'];?> บาท</td>
                                             <td>
-                                                หมู่บ้านตนเอง
+                                                <?=$value['job_address'];?>
                                             </td>
                                         </tr>
                                     <?php endforeach;?>
@@ -90,10 +93,10 @@
 <script>
 
     function addJobs(id){
-        
+        $("#person_id").val(id)
         $.ajax({
             type: "GET",
-            url: domain+'house/load-jobs',
+            url: domain+'house/load-jobs/'+id,
             success : function(response){
                 $("#item_modal").html(response)
             }

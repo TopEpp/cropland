@@ -63,7 +63,9 @@ $routes->group("house", ["namespace" => "Modules\House\Controllers"], function (
     $routes->get("outcome/(:num)(:any)", "House::outcome/$1$2");
 
     //load data
-    $routes->get("load-jobs", "House::loadJobs");
+    $routes->get("load-jobs/(:num)", "House::loadJobs/$1");
+    $routes->get("load-income/(:num)", "House::loadIncome/$1");
+    $routes->get("load-outcome/(:num)", "House::loadOutcome/$1");
 
     //save data
     $routes->post("save_manage", "House::saveManage");

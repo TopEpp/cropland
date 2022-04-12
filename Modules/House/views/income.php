@@ -39,6 +39,7 @@
                                     <th scope="col">ชื่อ-นามสกุล</th>
                                     <th scope="col">เงินผู้สูงอายุ/เดือน</th>
                                     <th scope="col">บัตรประชารัฐ/เดือน</th>
+                                    <th scope="col">บุตรส่งเงิน/เดือน</th>
                                     <th scope="col">บัตรผู้พิการ/เดือน</th>
                                     <th scope="col">เงินช่วยเหลือภัยพิบัติ/ปี</th>
                                     <th scope="col">เงินค่าประกันสินค้าเกษตร/ปี</th>
@@ -47,19 +48,37 @@
                                 </thead>
                                 <tbody>
                                     <?php foreach ($data as $key => $value) :?>
-                                        <tr>
-                                            <th scope="row"><?=$key+1;?></th>
-                                            <td>
-                                                <a class="text-info" onclick="addIncome(<?=$value['person_id'];?>)" style="cursor: pointer;"><?=$value['person_name'].' '.$value['person_lastname'];?></a>
-                                            </td>
-                                            <td>-</td>
-                                            <td>-</td>
-                                            <td>-</td>
-                                            <td>-</td>
-                                            <td>-</td>
-                                            <td>-</td>
-                                            
-                                        </tr>
+                                        <?php if (!empty($value['person_id'])):?>
+                                            <tr>
+                                                <th scope="row"><?=$key+1;?></th>
+                                                <td>
+                                                    <a class="text-info" onclick="addIncome(<?=$value['person_id'];?>)" style="cursor: pointer;"><?=$value['person_name'].' '.$value['person_lastname'];?></a>
+                                                </td>
+                                                <td><?=$value[1]['income_value'] * $value[1]['income_month'];?></td>
+                                                <td><?=$value[2]['income_value'] * $value[2]['income_month'];;?></td>
+                                                <td><?=$value[3]['income_value'] * $value[3]['income_month'];;?></td>
+                                                <td><?=$value[4]['income_value'] * $value[4]['income_month'];;?></td>
+                                                <td><?=$value[5]['income_value'] * $value[5]['income_month'];;?></td>
+                                                <td><?=$value[6]['income_value'] * $value[6]['income_month'];;?></td>
+                                                <td><?=$value[7]['income_value'] * $value[7]['income_month'];;?></td>
+                                                
+                                            </tr>
+                                        <?php else:?>
+
+                                            <tr>
+                                                <th scope="row"><?=$key+1;?></th>
+                                                <td>
+                                                    <a class="text-info" onclick="addIncome(<?=$value['person_id'];?>)" style="cursor: pointer;"><?=$value['person_name'].' '.$value['person_lastname'];?></a>
+                                                </td>
+                                                <td>-</td>
+                                                <td>-</td>
+                                                <td>-</td>
+                                                <td>-</td>
+                                                <td>-</td>
+                                                <td>-</td>
+                                                <td>-</td>                                                
+                                            </tr>
+                                        <?php endif;?>
                                     <?php endforeach;?>
                                   
 
@@ -179,6 +198,22 @@
 
 <script>
     function addIncome(id){
+        $("#person_id").val(id);
+
+        $.ajax({
+            type: "GET",
+            url: domain+'house/load-income/'+id,
+            success : function(response){
+                const data = response.data
+                data.forEach(async (val) => {
+                    
+                    $("input[name='income["+val.income_type+"][income_value]']").val(val.income_value)
+                    $("select[name='income["+val.income_type+"][income_month]']").val(val.income_month)
+                });
+                // $("#item_modal").html(response)
+            }
+        });
+
         $("#IncomeModal").modal();
     }
 </script>
