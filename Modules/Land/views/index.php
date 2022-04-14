@@ -46,7 +46,7 @@
                                         <td><?=$value['land_no'];?></td>
                                         <td><?=$value['land_area'];?> ไร่</td>
                                         <td><?=$value['name'];?></td>
-                                        <td><?=$value['land_ownership'];?></td>
+                                        <td></td>
                                         <td><?=$value['location_name'];?></td>
                                         <td>
                                             <div class="buttons">

@@ -23,6 +23,15 @@ class User_model extends Model
     return $query;
   }
 
+  public function getSelectUsers()
+  {
+    $db = \Config\Database::connect('user_db', false); 
+    $builder = $db->table('vLoadDetailStaff');
+    $builder->select('emp_id,fullname');
+    $query = $builder->get()->getResultArray();
+    return $query;
+  }
+
   public function getUserGroupOrg()
   {
     $builder = $this->db->table('users');

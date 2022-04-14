@@ -123,6 +123,8 @@ $routes->group("dashboard", ["namespace" => "Modules\Dashboard\Controllers"], fu
 $routes->group("common", ["namespace" => "App\Controllers"], function ($routes) {
     $routes->get("get-amphur", "Common::amphur");
     $routes->get("get-tambon", "Common::tambon");
+    $routes->get("get-house", "Common::House");
+    $routes->get("get-person", "Common::Person");
 });
 
 $routes->group("api", ["namespace" => "Modules\Api\Controllers"], function ($routes) {

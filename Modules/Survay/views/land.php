@@ -129,21 +129,21 @@
                         </div>
                         <div class="form-group col-md-4">
                             <label>ช่วงเวลาปลูก</label>                                        
-                            <input type="text" class="form-control" name="detail_start_date">
+                            <input type="text" class="form-control datepicker" name="detail_start_date">
                         </div>
                         <div class="form-group col-md-4">
                             <label>&nbsp;</label>                                        
-                            <input type="text" class="form-control" name="detail_finish_date">
+                            <input type="text" class="form-control datepicker" name="detail_finish_date">
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-md-4">
                             <label>ช่วงเวลาเก็บเกี่ยว</label>                                        
-                            <input type="text" class="form-control" name="detail_keep_start_date">
+                            <input type="text" class="form-control datepicker" name="detail_keep_start_date">
                         </div>
                         <div class="form-group col-md-4">
                             <label>&nbsp;</label>                                        
-                            <input type="text" class="form-control" name="detail_keep_finish_date">
+                            <input type="text" class="form-control datepicker" name="detail_keep_finish_date">
                         </div>
                     </div>
                     <p>รายจ่าย (บาท)</p>
@@ -221,8 +221,25 @@
 
 <?=$this->endSection()?>
 
+<?=$this->section("css")?>
+<?= link_tag('public/assets/datepicker/css/datepicker.css') ?>
+<?=$this->endSection()?>
+
 <?=$this->section("scripts")?>
+<?= script_tag('public/assets/datepicker/js/bootstrap-datepicker.js') ?>
+<?= script_tag('public/assets/datepicker/js/bootstrap-datepicker-thai.js') ?>
+<?= script_tag('public/assets/datepicker/js/locales/bootstrap-datepicker.th.js') ?>
+
 <script>
+    $(function () {
+        $(".datepicker").datepicker({
+            language: "th-th",
+            format: "dd/mm/yyyy",
+            autoclose: true,
+
+            // daysOfWeekDisabled: [0, 6],
+        });
+    });
     function addLand(elm){
         $("#LandModal").modal();
     }

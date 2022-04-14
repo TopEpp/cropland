@@ -48,6 +48,7 @@
                                             </tr>
                                         </thead>
                                         <tbody data-repeater-list="needs">
+                                        <?php if(empty($data)):?>
                                             <tr data-repeater-item>
                                                 <th scope="row">
                                                     1
@@ -65,8 +66,31 @@
                                                     <div class="buttons">                                            
                                                         <a href="#" class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></a>
                                                     </div>
-                                                </td>                                     
+                                                </td>                                      
                                             </tr>
+                                            <?php else:?>
+                                                <?php foreach ($data as $key => $value) :?>
+                                                    <tr data-repeater-item>
+                                                        <th scope="row">
+                                                            1
+                                                            <input type="hidden" name="need_id" value="<?=$value['need_id'];?>">
+                                                        </th>
+                                                        <td>
+                                                            <select name="need_type" id="need_type" class="form-control">
+                                                                <option value="">เลือก</option>
+                                                            </select>
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" name="need_detail" value="<?=$value['need_detail'];?>"> 
+                                                        </td>
+                                                        <td>
+                                                            <div class="buttons">                                            
+                                                                <a href="#" class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></a>
+                                                            </div>
+                                                        </td>                                      
+                                                    </tr>
+                                                <?php endforeach;?>
+                                            <?php endif;?>
 
                                         </tbody>
                                     </table>

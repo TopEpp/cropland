@@ -5,6 +5,10 @@ namespace Modules\Survay\Controllers;
 use Modules\Api\Models\Api_model;
 use CodeIgniter\API\ResponseTrait;
 use App\Controllers\BaseController;
+use Modules\Land\Models\Land_model;
+use Modules\User\Models\User_model;
+use App\Models\InterViewHouse_model;
+use Modules\House\Models\House_model;
 use Modules\Survay\Models\Survay_model;
 
 class Survay extends BaseController
@@ -14,11 +18,11 @@ class Survay extends BaseController
 
     protected $model_survay;
     protected $model_api;
-
     public function __construct()
     {
         $this->model_api = new Api_model();
         $this->model_survay = new Survay_model();
+        
     }
 
     public function index(){
@@ -29,8 +33,20 @@ class Survay extends BaseController
     
     public function manage($interview_id = ''){
 
+        $model_user = new User_model();
+        $model_land = new Land_model();
+        $model_house = new House_model();
+        $model_interview = new InterViewHouse_model();
+          
+
+
         $data['interview_id'] = $interview_id;
     
+        $data['lands'] = $model_land->getAllLand();
+        $data['users']= $model_user->getSelectUsers();
+        $data['projects'] = $model_interview->getAllInterViews();  
+        // $data['projects'] = $this->model_api->getProject();
+        
        
         if ($interview_id){
             $data['data'] = $this->model_survay->getAllSurvay($interview_id);
@@ -47,6 +63,7 @@ class Survay extends BaseController
         if (!empty($input)){
             // insert house
             $data_survay = $input;
+            $data_survay['interview_date'] = $this->date_thai->date_thai2eng($input['interview_date'],-543);
             
             // unset($data_survay['interview_project']);
             // unset($data_survay['interview_project_name']);
@@ -104,6 +121,7 @@ class Survay extends BaseController
 
     public function support($interview_id,$id = ''){
         $data['interview_id'] = $interview_id;
+        $data['data'] = $this->model_survay->getSupports($interview_id);
         return view('Modules\Survay\Views\support',$data);
     }
 
@@ -126,6 +144,7 @@ class Survay extends BaseController
 
     public function supportOther($interview_id,$id = ''){
         $data['interview_id'] = $interview_id;
+        $data['data'] = $this->model_survay->getSupportsOther($interview_id);
         return view('Modules\Survay\Views\support_other',$data);
     }
 
@@ -149,6 +168,8 @@ class Survay extends BaseController
 
     public function problem($interview_id,$id = ''){
         $data['interview_id'] = $interview_id;
+        $data['data'] = $this->model_survay->getProblem($interview_id);
+        
         return view('Modules\Survay\Views\problem',$data);
     }
 
@@ -171,6 +192,7 @@ class Survay extends BaseController
 
     public function need($interview_id,$id = ''){
         $data['interview_id'] = $interview_id;
+        $data['data'] = $this->model_survay->getNeed($interview_id);
         return view('Modules\Survay\Views\need',$data);
     }
 

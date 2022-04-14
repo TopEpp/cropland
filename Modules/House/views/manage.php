@@ -101,7 +101,7 @@
                                         <select name="house_type" id="house_type" class="form-control">
                                             <option value="">เลือก</option>
                                             <?php foreach ($landomner as $key => $value) :?>
-                                                <option <?=$data['house_type'] == $value['landowner_id'] ? 'selected':'';?>  value="<?=$value['landowner_id'];?>"><?=$value['name'];?></option>
+                                                <option <?=@$data['house_type'] == $value['landowner_id'] ? 'selected':'';?>  value="<?=$value['landowner_id'];?>"><?=$value['name'];?></option>
                                             <?php endforeach?>
                                         </select>
                                     </div>          

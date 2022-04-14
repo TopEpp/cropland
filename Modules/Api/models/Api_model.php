@@ -374,6 +374,22 @@ class Api_model extends Model
       return true;
     }
 
+    public function getProject($id = '')
+    { 
+        
+        $builder = $this->db->table('LH_project');
+        $builder->select('*');
+   
+        if ($id){
+          $builder = $builder->where('location_id',$id);
+          $query = $builder->get()->getRowArray();
+          return $query;
+        }
+        
+        $query = $builder->get()->getResultArray();
+        return $query;
+    }
+
   
 }
 

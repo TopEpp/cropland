@@ -30,7 +30,7 @@ class House_model extends Model
           $query = $builder->get()->getRowArray();
           return $query;
         }
-        
+        // $builder->groupBy('LH_house.house_id');
         $query = $builder->get()->getResultArray();
         return $query;
     }
@@ -55,7 +55,7 @@ class House_model extends Model
       
     }
 
-    public function getAllHouseMembers($house_id,$person_id,$data = array()){    
+    public function getAllHouseMembers($house_id,$person_id = '',$data = array()){    
         $builder = $this->db->table('LH_house_person');
         $builder->select('LH_house_person.*,LH_prefix.name,LH_education.name as education_name');
         $builder->where('house_id',$house_id);

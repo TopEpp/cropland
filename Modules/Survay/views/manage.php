@@ -39,11 +39,14 @@
                                         <label>ชื่อผู้สัมภาษณ์</label>                                       
                                         <select name="interview_user" id="interview_user" class="form-control">
                                             <option value="">เลือก</option>
+                                            <?php foreach ($users as $key => $value) :?>
+                                                <option value="<?=$value['emp_id'];?>"><?=$value['fullname'];?></option>
+                                            <?php endforeach;?>
                                         </select>
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>วันที่สัมภาษณ์</label>
-                                        <input type="text" class="form-control" name="interview_date">
+                                        <input type="text" class="form-control" name="interview_date" id="datepicker">
                                     </div>     
                                     <div class="form-group col-md-4">
                                         <label>เลขที่แบบสัมภาษณ์</label>
@@ -52,19 +55,26 @@
                                     <div class="form-group col-md-4">
                                         <label>โครงการ</label>
                                         <input type="hidden" name="interview_year">
-                                        <select name="interview_project" id="interview_project" class="form-control">
+                                        <select name="interview_project" id="interview_project" class="form-control" onchange="selectProject($(this))">
                                             <option value="">เลือก</option>
+                                            <?php foreach ($projects as $key => $value) :?>
+                                                <option value="<?=$value['interview_project'];?>"><?=$value['interview_project_name'];?></option>
+                                            <?php endforeach;?>
+                                            
                                         </select>
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>พื้นที่</label>
                                         <select name="interview_area" id="interview_area" class="form-control">
                                             <option value="">เลือก</option>
+                                            <?php foreach ($lands as $key => $value) :?>
+                                                <option value="<?=$value['land_id'];?>"><?=$value['land_number'].' '.$value['land_no'];?></option>
+                                            <?php endforeach;?>
                                         </select>                                      
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>ครัวเรือน เลขที่</label>
-                                         <select name="interview_house_id" id="interview_house_id" class="form-control">
+                                         <select name="interview_house_id" id="interview_house_id" class="form-control" onchange="selectHouse($(this))">
                                             <option value="">เลือก</option>
                                         </select>  
                                     </div>
@@ -237,7 +247,51 @@
 </section>
 <?=$this->endSection()?>
 
+<?=$this->section("css")?>
+<?= link_tag('public/assets/datepicker/css/datepicker.css') ?>
+<?=$this->endSection()?>
+
+
 <?=$this->section("scripts")?>
+<?= script_tag('public/assets/datepicker/js/bootstrap-datepicker.js') ?>
+<?= script_tag('public/assets/datepicker/js/bootstrap-datepicker-thai.js') ?>
+<?= script_tag('public/assets/datepicker/js/locales/bootstrap-datepicker.th.js') ?>
+
+<script>
+
+    $(function () {
+        $("#datepicker").datepicker({
+            language: "th-th",
+            format: "dd/mm/yyyy",
+            autoclose: true,
+
+            // daysOfWeekDisabled: [0, 6],
+        });
+    });
+    function selectProject(elm){
+        var value = elm.val();
+        $.ajax({
+            type: "GET",
+            url: domain+'common/get-house?interview='+value,
+            success : function(options){
+                $("#interview_house_id").html(options)
+            }
+        });
+    }
+
+    function selectHouse(elm){
+        var value = elm.val();
+        $.ajax({
+            type: "GET",
+            url: domain+'common/get-person?house='+value,
+            success : function(options){
+                $("#interview_person_id").html(options)
+            }
+        });
+    }
+
+    
+</script>
 
 <?=$this->endSection()?>
   

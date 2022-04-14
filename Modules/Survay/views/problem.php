@@ -40,66 +40,71 @@
                                 <div class="row mb-2">
                                     <div class="col-md-3">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="problem_type_1" name="problem_type[1][type]" value="1">
+                                            <input class="form-check-input" type="checkbox" id="problem_type_1" name="problem_type[1][type]" value="1" <?=@$data[1]['problem_type'] == 1 ? 'checked':'';?>>
                                             <label class="form-check-label" for="problem_type_1">
                                             โครงสร้างปัจจัยพื้นฐาน
                                             </label>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <input type="text" class="form-control" name="problem_type[1][detail]">
+                                        <input type="text" class="form-control" name="problem_type[1][detail]" value="<?=@$data[1]['problem_detail'];?>">
+                                        <input type="hidden" class="form-control" name="problem_type[1][id]" value="<?=@$data[1]['problem_id'];?>">
                                     </div>
                                 </div>
                                 <div class="row  mb-2">
                                     <div class="col-md-3">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="problem_type_2" name="problem_type[2][type]" value="1">
+                                            <input class="form-check-input" type="checkbox" id="problem_type_2" name="problem_type[2][type]" value="1" value="1" <?=@$data[2]['problem_type'] == 2 ? 'checked':'';?>>
                                             <label class="form-check-label" for="problem_type_2">
                                             ทรัพยากรธรรมชาติและสิ่งแวดล้อม
                                             </label>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <input type="text" class="form-control" name="problem_type[2][detail]">
+                                        <input type="text" class="form-control" name="problem_type[2][detail]" value="<?=@$data[2]['problem_detail'];?>">
+                                        <input type="hidden" class="form-control" name="problem_type[2][id]" value="<?=@$data[2]['problem_id'];?>">
                                     </div>
                                 </div>
                                 <div class="row  mb-2">
                                     <div class="col-md-3">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="problem_type_3" name="problem_type[3][type]" value="1">
+                                            <input class="form-check-input" type="checkbox" id="problem_type_3" name="problem_type[3][type]" value="1" value="1" <?=@$data[3]['problem_type'] == 3 ? 'checked':'';?>>
                                             <label class="form-check-label" for="problem_type_3">
                                             ตลาด
                                             </label>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <input type="text" class="form-control" name="problem_type[3][detail]">
+                                        <input type="text" class="form-control" name="problem_type[3][detail]" value="<?=@$data[3]['problem_detail'];?>">
+                                        <input type="hidden" class="form-control" name="problem_type[3][id]" value="<?=@$data[3]['problem_id'];?>">
                                     </div>
                                 </div>
                                 <div class="row  mb-2">
                                     <div class="col-md-3">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="problem_type_4" name="problem_type[4][type]" value="1">
+                                            <input class="form-check-input" type="checkbox" id="problem_type_4" name="problem_type[4][type]" value="1" value="1" <?=@$data[4]['problem_type'] == 4 ? 'checked':'';?>>
                                             <label class="form-check-label" for="problem_type_4">
                                             เศรษฐกิจ
                                             </label>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <input type="text" class="form-control" name="problem_type[4][detail]">
+                                        <input type="text" class="form-control" name="problem_type[4][detail]" value="<?=@$data[4]['problem_detail'];?>">
+                                        <input type="hidden" class="form-control" name="problem_type[4][id]" value="<?=@$data[4]['problem_id'];?>">
                                     </div>
                                 </div>
                                 <div class="row  mb-2">
                                     <div class="col-md-3">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="problem_type_5" name="problem_type[5][type]" value="1">
+                                            <input class="form-check-input" type="checkbox" id="problem_type_5" name="problem_type[5][type]" value="1" value="1" <?=@$data[5]['problem_type'] == 5 ? 'checked':'';?>>
                                             <label class="form-check-label" for="problem_type_5">
                                             สังคม
                                             </label>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <input type="text" class="form-control" name="problem_type[5][detail]">
+                                        <input type="text" class="form-control" name="problem_type[5][detail]" value="<?=@$data[5]['problem_detail'];?>">
+                                        <input type="hidden" class="form-control" name="problem_type[5][id]" value="<?=@$data[5]['problem_id'];?>">
                                     </div>
                                 </div>
                                 <br>

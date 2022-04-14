@@ -55,6 +55,26 @@ class InterViewHouse_model extends Model
       
     }
 
+    public function getAllInterViews()
+    {
+      $builder = $this->db->table('LH_interview_house');
+      $builder->select("*"); 
+      $query = $builder->get()->getResultArray();
+      return $query;
+      
+    }
+
+    public function getAllInterViewsProject($project)
+    {
+      $builder = $this->db->table('LH_interview_house');
+      $builder->select("*"); 
+      $builder->where('interview_project',$project);
+      $builder->join('LH_house', 'LH_house.house_id = LH_interview_house.interview_house');
+      $query = $builder->get()->getResultArray();
+      return $query;
+      
+    }
+
 }
 
  ?>

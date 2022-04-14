@@ -49,6 +49,7 @@
                                             </tr>
                                         </thead>
                                         <tbody data-repeater-list="supports">
+                                        <?php if(empty($data)):?>
                                             <tr data-repeater-item>
                                                 <th scope="row">
                                                     1
@@ -66,8 +67,32 @@
                                                     <div class="buttons">                                            
                                                         <a href="#" class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></a>
                                                     </div>
-                                                </td>                                     
+                                                </td>                                      
                                             </tr>
+                                            <?php else:?>
+                                                <?php foreach ($data as $key => $value) :?>
+                                                    <tr data-repeater-item>
+                                                        <th scope="row">
+                                                            1
+                                                            <input type="hidden" name="support_id" value="<?=$value['support_id'];?>">
+                                                        </th>
+                                                        <td>
+                                                            <select name="org_id" id="org_id" class="form-control">
+                                                                <option value="">เลือก</option>
+                                                            </select>
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" name="support_detail" value="<?=$value['support_detail'];?>"> 
+                                                        </td>
+                                                        <td>
+                                                            <div class="buttons">                                            
+                                                                <a href="#" class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></a>
+                                                            </div>
+                                                        </td>                                      
+                                                    </tr>
+                                                <?php endforeach;?>
+                                            <?php endif;?>
+                                            
 
                                         </tbody>
                                     </table>

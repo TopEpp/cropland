@@ -103,6 +103,15 @@ class Survay_model extends Model
   
     }
 
+    public function getSupports($interview_id){    
+        $builder = $this->db->table('LH_interview_land_support');
+        $builder->select('*');    
+        $builder->where('interview_id',$interview_id);
+        $query = $builder->get()->getResultArray();
+        return $query;
+
+    }
+
     public function saveSurvaySupport($data){
 
         $db = \Config\Database::connect();
@@ -136,6 +145,15 @@ class Survay_model extends Model
         }
 
         return null;
+
+    }
+
+    public function getSupportsOther($interview_id){    
+        $builder = $this->db->table('LH_interview_land_support_org');
+        $builder->select('*');    
+        $builder->where('interview_id',$interview_id);
+        $query = $builder->get()->getResultArray();
+        return $query;
 
     }
 
@@ -173,6 +191,19 @@ class Survay_model extends Model
         return null;
     }
 
+    public function getProblem($interview_id){
+        $builder = $this->db->table('LH_interview_land_problem');
+        $builder->select('*');    
+        $builder->where('interview_id',$interview_id);
+        $query = $builder->get()->getResultArray();
+        
+        $tmp = [];
+        foreach ($query as $key => $value) {
+            $tmp[$value['problem_type']] = $value;
+        }
+        return $tmp;
+    }
+
     public function saveSurvayProblem($data){
 
         $db = \Config\Database::connect();
@@ -185,16 +216,29 @@ class Survay_model extends Model
         
         // }else{
         //   unset($data['income_id']);
-          $tmp = [];
+        
     
           foreach ($data['problem_type'] as $key => $value) {
-            if (!empty($value['type'])){
-                $tmp['interview_id'] = $data['interview_id'];
-                $tmp['land_id'] = $data['land_id'];
-                $tmp['problem_type'] = $key;
-                $tmp['problem_detail'] = $value['detail'];
-                $builder->insert($tmp);
-                $problem_id = $db->insertID();
+            $tmp = [];
+            if (!empty($value['id'])){
+                if (!empty($value['type'])){
+                    $tmp['interview_id'] = $data['interview_id'];
+                    $tmp['land_id'] = $data['land_id'];
+                    $tmp['problem_type'] = $key;
+                    $tmp['problem_detail'] = $value['detail'];
+                    $builder->where('problem_id',$value['id']);
+                    $builder->update($tmp);
+                }
+            }else{
+                if (!empty($value['type'])){
+                    $tmp['interview_id'] = $data['interview_id'];
+                    $tmp['land_id'] = $data['land_id'];
+                    $tmp['problem_type'] = $key;
+                    $tmp['problem_detail'] = $value['detail'];
+                    $builder->insert($tmp);
+                    $problem_id = $db->insertID();
+                }
+              
             }
           
           }
@@ -202,6 +246,15 @@ class Survay_model extends Model
         // }
   
         return true;
+
+    }
+
+    public function getNeed($interview_id){    
+        $builder = $this->db->table('LH_interview_land_need');
+        $builder->select('*');    
+        $builder->where('interview_id',$interview_id);
+        $query = $builder->get()->getResultArray();
+        return $query;
 
     }
 
