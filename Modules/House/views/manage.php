@@ -6,8 +6,8 @@
         <div class="row">
             <div class="col-12 col-md-12 col-lg-12">
                 <div class="card">
-                    <div class="card-header">
-                        <h4 class="text-dark">จัดการข้อมูลครัวเรือน</h4>
+                    <div class="card-header">                        
+                        <h4 class="text-dark"><a href="<?php echo base_url('house')?>">ข้อมูลครัวเรือน</a> > จัดการข้อมูลครัวเรือน</h4>
                     </div>
                     <div class="card-body">
                         <?php if (session()->getFlashdata("message")):?>
@@ -51,6 +51,8 @@
                                         <label>ปีที่สำรวจ</label>                                        
                                         <select name="interview_year" id="interview_year" class="form-control">
                                             <option value="2565">2565</option>
+                                            <option value="2564">2564</option>
+                                            <option value="2563">2563</option>
                                         </select>
                                     </div>    
                                     <div class="form-group col-md-4">
@@ -70,7 +72,7 @@
                                         <select name="house_province" id="house_province" class="form-control">
                                             <option value="">เลือก</option>
                                             <?php foreach ($province as $key => $value) :?>
-                                                <option value="<?=$value['prov_code'];?>"><?=$value['pro_name_t'];?></option>
+                                                <option <?=@$data['house_province'] == $value['prov_code'] ? 'selected':'';?> value="<?=$value['prov_code'];?>"><?=$value['pro_name_t'];?></option>
                                             <?php endforeach?>
                                         </select>
                                     </div>
@@ -78,12 +80,18 @@
                                         <label>อำเภอ</label>                                        
                                         <select name="house_district" id="house_district" class="form-control">
                                             <option value="">เลือก</option>
+                                            <?php foreach ($amphurs as $key => $value) :?>
+                                                <option <?=@$data['house_district'] == $value['amp_code'] ? 'selected':'';?>  value="<?=$value['amp_code'];?>"><?=$value['amp_name_t'];?></option>
+                                            <?php endforeach?>
                                         </select>
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>ตำบล</label>                                        
                                         <select name="house_subdistrict" id="house_subdistrict" class="form-control">
                                             <option value="">เลือก</option>
+                                            <?php foreach ($tambons as $key => $value) :?>
+                                                <option <?=@$data['house_subdistrict'] == $value['tam_code'] ? 'selected':'';?>  value="<?=$value['tam_code'];?>"><?=$value['tam_name_t'];?></option>
+                                            <?php endforeach?>
                                         </select>
                                     </div>
                                     <div class="form-group col-md-4">

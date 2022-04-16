@@ -10,7 +10,7 @@
             <div class="col-12 col-md-12 col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="text-dark">จัดการข้อมูลครัวเรือน</h4>
+                    <h4 class="text-dark"><a href="<?php echo base_url('house')?>">ข้อมูลครัวเรือน</a> > จัดการข้อมูลครัวเรือน</h4>
                     </div>
                     <div class="card-body">
                     <?php if (session()->getFlashdata("message")):?>
@@ -49,13 +49,13 @@
                                 <tbody>
                                     <?php foreach ($data as $key => $value) :?>
                                         <tr>
-                                            <th scope="row"><?=$key+1;?></th>
+                                            <th scope="row" class="text-center"><?=$key+1;?></th>
                                             <td>
                                                 <a class="text-info" onclick="addJobs(<?=$value['person_id'];?>)" style="cursor: pointer;"><?=$value['person_name'].' '.$value['person_lastname'];?></a>
                                             </td>
                                             <td><?=$value['name'];?></td>
-                                            <td><?=$cal_type[$value['job_cal_type']];?></td>
-                                            <td><?=$value['job_salary'];?> บาท</td>
+                                            <td><?=@$cal_type[$value['job_cal_type']];?></td>
+                                            <td class="text-right"><?=$value['job_salary'];?> บาท</td>
                                             <td>
                                                 <?=$value['job_address'];?>
                                             </td>

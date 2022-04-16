@@ -64,6 +64,7 @@ $routes->group("house", ["namespace" => "Modules\House\Controllers"], function (
 
     //load data
     $routes->get("load-jobs/(:num)", "House::loadJobs/$1");
+    $routes->get("load-members/(:num)(:any)", "House::loadmembers/$1$2");
     $routes->get("load-income/(:num)", "House::loadIncome/$1");
     $routes->get("load-outcome/(:num)", "House::loadOutcome/$1");
 

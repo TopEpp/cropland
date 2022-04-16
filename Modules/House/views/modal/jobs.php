@@ -1,3 +1,7 @@
+<?php 
+    $cal_type = ['1'=>'ในภาคการเกษตร','2'=>'นอกภาคการเกษตร'];
+?>
+
 <div class="modal-header">
     <h5 class="modal-title">ข้อมูลด้านอาชีพ</h5>
     <button type="button" class="btn btn-info" data-repeater-create value="Add Inner" onclick="">เพิ่มอาชีพ</button>
@@ -26,11 +30,11 @@
                 <tbody>
                     <?php foreach ($data as $key => $value) :?>
                        <tr>
-                           <td><?=$key+1;?></td>
-                           <td><?=$value['job_type'];?></td>
+                           <td class="text-center"><?=$key+1;?></td>
+                           <td><?=$value['name'];?></td>
                            <td><?=$value['job_descript'];?></td>
-                           <td><?=$value['job_cal_type'];?></td>
-                           <td><?=$value['job_salary'];?></td>
+                           <td><?=@$cal_type[$value['job_cal_type']];?></td>
+                           <td class="text-right"><?=$value['job_salary'];?></td>
                            <td><?=$value['job_address'];?></td>
                            <td><?=$value['job_remark'];?></td>
                        </tr> 

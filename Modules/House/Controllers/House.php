@@ -16,12 +16,14 @@ class House extends BaseController
     protected $model_house;
     protected $model_interview_house;
     protected $model_api;
+    protected $model_common;
 
     public function __construct()
     {
         $this->model_house = new House_model();
         $this->model_api = new Api_model();
         $this->model_interview_house = new InterViewHouse_model();
+        $this->model_common = new Common_model();
     }
 
     public function index(){
@@ -33,16 +35,18 @@ class House extends BaseController
     
     public function manage($id = null){
         
-        $common = new Common_model();
         $data = [];
         $data['house_id'] = $id;
         $data['landomner'] = $this->model_api->getLandOwner();
-        
-        $data['province'] = $common->getProvince();
-    
+        $data['province'] = $this->model_common->getProvince();
+        $data['amphurs'] = [];
+        $data['tambons'] = [];
        
         if ($id){
-            $data['data'] = $this->model_house->getAllHouse($id);     
+            $data['data'] = $this->model_house->getAllHouse($id);            
+            $data['amphurs'] = $this->model_common->getAmphur($data['data']['house_province']);
+            $data['tambons'] = $this->model_common->getTambon($data['data']['house_district']);
+            
               
         }
 
@@ -88,13 +92,7 @@ class House extends BaseController
 
     public function members($house_id ,$id = null){
         $data = [];
-        $data['house_id'] = $house_id;
-        $data['tribes'] = $this->model_api->getTribe();
-        $data['educations'] = $this->model_api->getEducation();
-        $data['religion'] = $this->model_api->getReligion();
-        $data['publichealth'] = $this->model_api->getPublicHealth();
-        $data['hospital'] = $this->model_api->getHospital();
-        $data['prename'] = $this->model_api->getPrefix();
+        $data['house_id'] = $house_id;    
         
 
         $data['data'] = $this->model_house->getAllHouseMembers($house_id,$id);
@@ -106,6 +104,7 @@ class House extends BaseController
         $input = $this->request->getVar();
         $session = session();
         $input['house_id'] = $house_id;
+        $input['person_birthdate'] = $this->date_thai->date_thai2eng($input['person_birthdate'],-543);
         $person_id = $this->model_house->saveHouseMember($input);
 
         if (!empty($input['person_id'])){
@@ -198,6 +197,26 @@ class House extends BaseController
         $data['products'] = $this->model_api->getproduct();
         $data['data'] = $this->model_house->getPersonJobs($id);
         $html =  view('Modules\House\Views\modal\jobs', $data);
+        return $this->respond($html);
+    }
+
+    public function loadmembers($house_id,$id = ''){
+        $data = [];
+        
+        $data['tribes'] = $this->model_api->getTribe();
+        $data['educations'] = $this->model_api->getEducation();
+        $data['religion'] = $this->model_api->getReligion();
+        $data['publichealth'] = $this->model_api->getPublicHealth();
+        $data['hospital'] = $this->model_api->getHospital();
+        $data['prename'] = $this->model_api->getPrefix();
+        
+        if ($id != ''){
+            $data['data'] = $this->model_house->getHouseMembers($id);
+            $data['data']['person_birthdate'] = $this->date_thai->date_eng2thai($data['data']['person_birthdate'],543,'','','/');            
+        }
+        
+
+        $html =  view('Modules\House\Views\modal\member', $data);
         return $this->respond($html);
     }
 

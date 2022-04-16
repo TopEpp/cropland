@@ -70,6 +70,15 @@ class House_model extends Model
       
     }
 
+    public function getHouseMembers($person_id = '',$data = array()){    
+      $builder = $this->db->table('LH_house_person');
+      $builder->select('LH_house_person.*');
+      $builder->where('person_id',$person_id);    
+      $query = $builder->get()->getRowArray();
+      return $query;
+    
+  }
+
     public function saveHouseMember($data){
 
       $db = \Config\Database::connect();
@@ -93,10 +102,18 @@ class House_model extends Model
     public function getAllHouseJob($house_id,$person_id,$data = array()){
 
       $builder = $this->db->table('LH_house_person');
-      $builder->select('LH_person_job.*,LH_jobs.name,LH_house_person.person_id,LH_house_person.person_name,LH_house_person.person_lastname');
+      $builder->select('
+      max(LH_person_job.job_cal_type) as job_cal_type,
+      max(LH_person_job.job_salary) as job_salary,
+      max(LH_person_job.job_address) as job_address,
+      max(LH_jobs.name) as name,
+      max(LH_house_person.person_id) as person_id,
+      max(LH_house_person.person_name) as person_name,
+      max(LH_house_person.person_lastname) as person_lastname');
       $builder->where('LH_house_person.house_id',$house_id);
-      $builder->join('LH_person_job', 'LH_person_job.person_id = LH_house_person.person_id');
+      $builder->join('LH_person_job', 'LH_person_job.person_id = LH_house_person.person_id and job_main = 1');
       $builder->join('LH_jobs', 'LH_jobs.jobs_id = LH_person_job.job_type');
+      $builder->groupBy('LH_house_person.house_id, LH_house_person.person_id');
       $query = $builder->get()->getResultArray();
       
       return $query;
@@ -276,6 +293,7 @@ class House_model extends Model
       $builder = $this->db->table('LH_person_job');
       $builder->select('*');
       $builder->where('person_id',$person_id);
+      $builder->join('LH_jobs', 'LH_jobs.jobs_id = LH_person_job.job_type','left');
       $query = $builder->get()->getResultArray();
 
       return $query;
