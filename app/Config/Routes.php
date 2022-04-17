@@ -110,13 +110,13 @@ $routes->group("member", ["namespace" => "Modules\User\Controllers"], function (
 
 $routes->group("dashboard", ["namespace" => "Modules\Dashboard\Controllers"], function ($routes) {
 	$routes->get("/", "Dashboard::index");
-    $routes->get("index1", "Dashboard::index1");
-    $routes->get("index2", "Dashboard::index2");
-    $routes->get("index3", "Dashboard::index3");
-    $routes->get("index4", "Dashboard::index4");
-    $routes->get("index5", "Dashboard::index5");
-    $routes->get("index6", "Dashboard::index6");
-    $routes->get("index7", "Dashboard::index7");
+    $routes->get("house-type", "Dashboard::houseType");
+    $routes->get("house-economy", "Dashboard::houseEconomy");
+    $routes->get("house-health", "Dashboard::houseHealth");
+    $routes->get("house-society", "Dashboard::houseSociety");
+    $routes->get("house-land", "Dashboard::houseLand");
+    $routes->get("house-problem", "Dashboard::houseProblem");
+    $routes->get("house-activity", "Dashboard::houseActivity");
 
 });
 

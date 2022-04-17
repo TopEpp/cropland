@@ -2,48 +2,56 @@
 
 namespace Modules\Dashboard\Controllers;
 
+use Modules\Api\Models\Api_model;
 use App\Controllers\BaseController;
 
 class Dashboard extends BaseController
 {
+    protected $model_api;
+
+    public function __construct()
+    {
+        $this->model_api = new Api_model();        
+    }
+
     public function index(){
-
-        return view('Modules\Dashboard\Views\index');
+        $data['prefix'] = $this->model_api->getPrefix();
+        return view('Modules\Dashboard\Views\index',$data);
     }
 
-    public function index1(){
+    public function houseType(){
 
-        return view('Modules\Dashboard\Views\index1');
+        return view('Modules\Dashboard\Views\house_type');
     }
 
-    public function index2(){
+    public function houseEconomy(){
 
-        return view('Modules\Dashboard\Views\index2');
+        return view('Modules\Dashboard\Views\house_economy');
     }
 
-    public function index3(){
+    public function houseHealth(){
 
-        return view('Modules\Dashboard\Views\index3');
+        return view('Modules\Dashboard\Views\house_health');
     }
 
-    public function index4(){
+    public function houseSociety(){
 
-        return view('Modules\Dashboard\Views\index4');
+        return view('Modules\Dashboard\Views\house_society');
     }
 
-    public function index5(){
+    public function houseLand(){
 
-        return view('Modules\Dashboard\Views\index5');
+        return view('Modules\Dashboard\Views\house_land');
     }
 
-    public function index6(){
+    public function houseProblem(){
 
-        return view('Modules\Dashboard\Views\index6');
+        return view('Modules\Dashboard\Views\house_problem');
     }
 
-    public function index7(){
+    public function houseActivity(){
 
-        return view('Modules\Dashboard\Views\index7');
+        return view('Modules\Dashboard\Views\house_activity');
     }
 
 }
