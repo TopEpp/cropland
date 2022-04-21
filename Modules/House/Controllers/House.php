@@ -120,6 +120,7 @@ class House extends BaseController
     public function jobs($house_id ,$id = null){
         $data['house_id'] = $house_id;        
         $data['data'] = $this->model_house->getAllHouseJob($house_id,$id);
+  
         return view('Modules\House\Views\jobs', $data);
     }
     

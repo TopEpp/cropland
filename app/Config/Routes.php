@@ -82,6 +82,9 @@ $routes->group("land", ["namespace" => "Modules\Land\Controllers"], function ($r
 
     //save data
     $routes->post("save_land", "Land::saveLand");
+
+     //load data
+     $routes->get("load-lands/(:num)", "Land::loadLands/$1");
 });
 
 $routes->group("survay", ["namespace" => "Modules\Survay\Controllers"], function ($routes) {

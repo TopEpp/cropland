@@ -50,6 +50,11 @@ class Survay extends BaseController
        
         if ($interview_id){
             $data['data'] = $this->model_survay->getAllSurvay($interview_id);
+            $data['data']['interview_date'] = $this->date_thai->date_eng2thai($data['data']['interview_date'],543,'','','/');
+            
+            $data['houses'] = $model_interview->getAllInterViewsProject($data['data']['interview_project']);
+            $data['persons']= $model_house->getAllHouseMembers($data['data']['interview_house_id']);
+    
         }
         
         return view('Modules\Survay\Views\manage',$data);

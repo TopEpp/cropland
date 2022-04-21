@@ -197,45 +197,45 @@
                     ข้อมูลแบบสอบถาม
                     </a>
                     <a href="<?=base_url('api');?>" class="dropdown-item has-icon">
-                    <!-- <i class="fas fa-bolt"></i> Activities -->
+                 
                     ข้อมูลอ้างอิงแบบสอบถาม
                     </a>
                     <a href="<?=base_url('member');?>" class="dropdown-item has-icon">
-                    <!-- <i class="fas fa-bolt"></i> Activities -->
+                 
                     ข้อมูลผู้ใช้งาน
                     </a>
                     <a href="<?=base_url('dashboard');?>" class="dropdown-item has-icon">
-                    <!-- <i class="fas fa-cog"></i> Settings -->
+                   
                     รายงานสรุปโครงสร้างประชากร
                     </a>
-                    <a href="<?=base_url('dashboard/house-type');?>" class="dropdown-item has-icon">
-                    <!-- <i class="fas fa-cog"></i> Settings -->
+                    <!-- <a href="<?=base_url('dashboard/house-type');?>" class="dropdown-item has-icon">
+                   
                     รายงานสรุปลักษณะของครัวเรือน
                     </a>
                     <a href="<?=base_url('dashboard/house-economy');?>" class="dropdown-item has-icon">
-                    <!-- <i class="fas fa-cog"></i> Settings -->
+                   
                     รายงานสรุปข้อมูลด้านเศรฐกิจ<br/>ในครัวเรือน
                     </a>
                     <a href="<?=base_url('dashboard/house-health');?>" class="dropdown-item has-icon">
-                    <!-- <i class="fas fa-cog"></i> Settings -->
+                   
                     รายงานสรุปข้อมูลด้านสาธารณสุข
                     </a>
                     <a href="<?=base_url('dashboard/house-society');?>" class="dropdown-item has-icon">
-                    <!-- <i class="fas fa-cog"></i> Settings -->
+                   
                     รายงานสรุปข้อมูลด้านสังคม
                     </a>
                     <a href="<?=base_url('dashboard/house-land');?>" class="dropdown-item has-icon">
-                    <!-- <i class="fas fa-cog"></i> Settings -->
+                   
                     รายงานข้อมูลด้านการเกษตร<br/>และการถือครองที่ดิน
                     </a>
                     <a href="<?=base_url('dashboard/house-problem');?>" class="dropdown-item has-icon">
-                    <!-- <i class="fas fa-cog"></i> Settings -->
+                   
                     รายงานสรุปข้อมูลปัญหาทาง<br/>ด้านการเกษตร
                     </a>
                     <a href="<?=base_url('dashboard/house-activity');?>" class="dropdown-item has-icon">
-                    <!-- <i class="fas fa-cog"></i> Settings -->
+                   
                     รายงานสรุปการเข้าร่วมกิจกรรม<br/>และรวมกลุ่ม
-                    </a>
+                    </a> -->
                     
                     <div class="dropdown-divider"></div>
                     <a href="<?=base_url('/logout');?>" class="dropdown-item has-icon text-danger">

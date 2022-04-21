@@ -53,11 +53,11 @@
                                             <td>
                                                 <a class="text-info" onclick="addJobs(<?=$value['person_id'];?>)" style="cursor: pointer;"><?=$value['person_name'].' '.$value['person_lastname'];?></a>
                                             </td>
-                                            <td><?=$value['name'];?></td>
-                                            <td><?=@$cal_type[$value['job_cal_type']];?></td>
-                                            <td class="text-right"><?=$value['job_salary'];?> บาท</td>
+                                            <td><?=$value['name']?$value['name']:'-';?></td>
+                                            <td><?=@$cal_type[$value['job_cal_type']] ? $cal_type[$value['job_cal_type']] :'-';?></td>
+                                            <td class="text-right"><?=$value['job_salary'] ? $value['job_salary'].'บาท':'-';?></td>
                                             <td>
-                                                <?=$value['job_address'];?>
+                                                <?=$value['job_address']?$value['job_address']:'-';?>
                                             </td>
                                         </tr>
                                     <?php endforeach;?>

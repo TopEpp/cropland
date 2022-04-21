@@ -10,7 +10,7 @@
                     <div class="card-header">
                         <h4 class="text-dark">ข้อมูลที่ดินรายแปลง</h4>
                         <div class="card-header-action">
-                            <button onclick="addLand()" class="btn btn-info">เพิ่มข้อมูล</button>
+                            <button onclick="landModal()" class="btn btn-info">เพิ่มข้อมูล</button>
                         </div>
                     </div>
                     <div class="card-body">
@@ -50,7 +50,7 @@
                                         <td><?=$value['location_name'];?></td>
                                         <td>
                                             <div class="buttons">
-                                                <button  onclick="addLand(<?=$value['land_id'];?>)" class="btn btn-icon btn-primary"><i class="far fa-edit"></i></button>                                    
+                                                <button  onclick="landModal(<?=$value['land_id'];?>)" class="btn btn-icon btn-primary"><i class="far fa-edit"></i></button>                                    
                                                 <a href="#" class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></a>
                                             </div>
                                         </td>
@@ -84,15 +84,15 @@
                             <div class="row">
                                 <div class="form-group col-md-12">
                                     <label>แปลงที่</label>                                        
-                                    <input type="text" class="form-control" name="land_number">
+                                    <input type="text" class="form-control" name="land_number" id="land_number">
                                 </div>
                                 <div class="form-group col-md-12">
                                     <label>เลขที่แปลง</label>
-                                    <input type="text" class="form-control" name="land_no">                         
+                                    <input type="text" class="form-control" name="land_no" id="land_no">                         
                                 </div>
                                 <div class="form-group col-md-12">
                                     <label>พื้นที่</label>
-                                    <input type="text" class="form-control" name="land_area">                            
+                                    <input type="text" class="form-control" name="land_area" id="land_area">                 
                                 </div>                     
                                 <div class="form-group col-md-12">
                                     <label>การใช้ประโยชน์ที่ดิน</label>                                        
@@ -194,8 +194,33 @@ function initMap() {
 
 }
 
-    function addLand(id = ''){
+    function landModal(id = ''){
         $("#land_id").val(id)
+        if (id != ''){
+
+            $.ajax({
+                type: "GET",
+                url: domain+'land/load-lands/'+id,
+                success : function(response){
+                    if (response){
+                        const data = response.data;
+
+                        $("#land_number").val(data.land_number)
+                        $("#land_no").val(data.land_no)
+                        $("#land_area").val(data.land_area)
+
+                        $("#land_use").val(data.land_use)
+                        $("#land_address").val(data.land_address)
+                        $("#land_ownership").val(data.land_ownership)
+                        $("#land_holding").val(data.land_holding)
+                        
+                    }
+                    // $("#item_modal").html(response)
+                }
+            });
+        }
+      
+
         $("#LandModal").modal();
     }
 

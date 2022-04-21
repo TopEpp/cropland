@@ -4,10 +4,12 @@ namespace Modules\Land\Controllers;
 
 use Modules\Api\Models\Api_model;
 use App\Controllers\BaseController;
+use CodeIgniter\API\ResponseTrait;
 use Modules\Land\Models\Land_model;
 
 class Land extends BaseController
 {
+    use ResponseTrait;
     protected $model_land;
     protected $model_api;
 
@@ -42,6 +44,11 @@ class Land extends BaseController
 
         return redirect()->to('land');
         
+    }
+
+    public function loadLands($id){
+        $data['data'] = $this->model_land->getAllLand($id);
+        return $this->respond($data);
     }
 
 }

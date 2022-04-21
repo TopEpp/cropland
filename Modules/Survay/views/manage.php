@@ -40,17 +40,17 @@
                                         <select name="interview_user" id="interview_user" class="form-control">
                                             <option value="">เลือก</option>
                                             <?php foreach ($users as $key => $value) :?>
-                                                <option value="<?=$value['emp_id'];?>"><?=$value['fullname'];?></option>
+                                                <option <?=@$data['interview_user'] == $value['emp_id']?'selected':'';?> value="<?=$value['emp_id'];?>"><?=$value['fullname'];?></option>
                                             <?php endforeach;?>
                                         </select>
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>วันที่สัมภาษณ์</label>
-                                        <input type="text" class="form-control" name="interview_date" id="datepicker">
+                                        <input type="text" class="form-control" name="interview_date" id="datepicker" value="<?=@$data['interview_date'];?>">
                                     </div>     
                                     <div class="form-group col-md-4">
                                         <label>เลขที่แบบสัมภาษณ์</label>
-                                        <input type="text" class="form-control" name="interview_code">
+                                        <input type="text" class="form-control" name="interview_code" value="<?=@$data['interview_code'];?>">
                                     </div>    
                                     <div class="form-group col-md-4">
                                         <label>โครงการ</label>
@@ -58,7 +58,7 @@
                                         <select name="interview_project" id="interview_project" class="form-control" onchange="selectProject($(this))">
                                             <option value="">เลือก</option>
                                             <?php foreach ($projects as $key => $value) :?>
-                                                <option value="<?=$value['interview_project'];?>"><?=$value['interview_project_name'];?></option>
+                                                <option <?=@$data['interview_project'] == $value['interview_project']?'selected':'';?> value="<?=$value['interview_project'];?>"><?=$value['interview_project_name'];?></option>
                                             <?php endforeach;?>
                                             
                                         </select>
@@ -68,7 +68,7 @@
                                         <select name="interview_area" id="interview_area" class="form-control">
                                             <option value="">เลือก</option>
                                             <?php foreach ($lands as $key => $value) :?>
-                                                <option value="<?=$value['land_id'];?>"><?=$value['land_number'].' '.$value['land_no'];?></option>
+                                                <option <?=@$data['interview_area'] == $value['land_id']?'selected':'';?>  value="<?=$value['land_id'];?>"><?=$value['land_number'].' '.$value['land_no'];?></option>
                                             <?php endforeach;?>
                                         </select>                                      
                                     </div>
@@ -76,17 +76,27 @@
                                         <label>ครัวเรือน เลขที่</label>
                                          <select name="interview_house_id" id="interview_house_id" class="form-control" onchange="selectHouse($(this))">
                                             <option value="">เลือก</option>
+                                            <?php foreach ($houses as $key => $value) :?>
+                                                <option <?=@$data['interview_house_id'] == $value['house_id']?'selected':'';?>  value="<?=$value['house_id'];?>"><?=$value['house_number'];?></option>
+                                            <?php endforeach;?>
                                         </select>  
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>ชื่อเจ้าของแปลง</label>
                                          <select name="interview_person_id" id="interview_person_id" class="form-control">
                                             <option value="">เลือก</option>
+                                            <?php   foreach ($persons as $key => $person) :?>
+                                                <?php foreach ($person as $key => $value) :?>
+                                                    <?php if ($value['person_header'] == 1):?>
+                                                        <option  <?=$data['interview_person_id'] == $value['person_id'] ? 'selected':'' ;?> value="<?=$value['person_id'];?>"><?=$value['person_name'].' '.$value['person_lastname'];?></option>
+                                                    <?php endif;?>                                                    
+                                                <?php endforeach;?>
+                                            <?php endforeach;?>
                                         </select>  
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>เอกสารสิทธิ์ที่ดิน</label>
-                                        <input type="text" class="form-control" name="interview_land_holding">
+                                        <input type="text" class="form-control" name="interview_land_holding"  value="<?=@$data['interview_land_holding'];?>">
                                     </div>       
                                 </div>
                                 <div class="row">
