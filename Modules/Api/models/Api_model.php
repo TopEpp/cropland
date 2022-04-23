@@ -186,11 +186,11 @@ class Api_model extends Model
     public function getProblemType($id = '')
     { 
         
-        $builder = $this->db->table('LH_problemtype');
+        $builder = $this->db->table('CODE_PROBLEMTYPE');
         $builder->select('*');
-        $builder->where('active',1);
+        // $builder->where('active',1);
         if ($id){
-          $builder = $builder->where('problemtype_id',$id);
+          $builder = $builder->where('Code',$id);
           $query = $builder->get()->getRowArray();
           return $query;
         }
@@ -199,21 +199,7 @@ class Api_model extends Model
         return $query;
     }
 
-    public function getProduct($id = '')
-    { 
-        
-        $builder = $this->db->table('LH_product');
-        $builder->select('*');
-        $builder->where('active',1);
-        if ($id){
-          $builder = $builder->where('product_id',$id);
-          $query = $builder->get()->getRowArray();
-          return $query;
-        }
-        
-        $query = $builder->get()->getResultArray();
-        return $query;
-    }
+   
 
     public function getPublicHealth($id = '')
     { 
@@ -294,12 +280,12 @@ class Api_model extends Model
         return $query;
     }
 
-    public function getLandprivilege($id = '')
+    public function getLandprivilege($id = '') #เอกสิทธิที่ดิน
     { 
         
         $builder = $this->db->table('LH_landprivilege');
         $builder->select('*');
-        $builder->where('active',1);
+        // $builder->where('active',1);
         if ($id){
           $builder = $builder->where('landprivilege_id',$id);
           $query = $builder->get()->getRowArray();
@@ -390,7 +376,7 @@ class Api_model extends Model
         return $query;
     }
 
-    public function getProject($type,$id = '') #โครงการ
+    public function getProject($type,$id = '') #โครงการ , พื้นที่
     { 
         
         $builder = $this->db->table('CODE_PROJECT');
@@ -594,6 +580,52 @@ class Api_model extends Model
         $builder = $this->db->table('CODE_SUPPORT_WANTEDTYPE');
         $builder->select('*');
    
+        if ($id){
+          $builder = $builder->where('Code',$id);
+          $query = $builder->get()->getRowArray();
+          return $query;
+        }
+        
+        $query = $builder->get()->getResultArray();
+        return $query;
+    }
+
+    public function getProductGroup($id = '') #ประเภทการใช้ประโยชน์ที่ดิน
+    { 
+        
+        $builder = $this->db->table('CODE_PRODUCTGROUP');
+        $builder->select('*');
+        if ($id){
+          $builder = $builder->where('Code',$id);
+          $query = $builder->get()->getRowArray();
+          return $query;
+        }
+        
+        $query = $builder->get()->getResultArray();
+        return $query;
+    }
+
+    public function getProductType($id = '') #การใช้ประโยชน์ที่ดิน
+    { 
+        
+        $builder = $this->db->table('CODE_PRODUCTTYPE');
+        $builder->select('*');
+        if ($id){
+          $builder = $builder->where('Code',$id);
+          $query = $builder->get()->getRowArray();
+          return $query;
+        }
+        
+        $query = $builder->get()->getResultArray();
+        return $query;
+    }
+
+    public function getProduct($type,$id = '') #พันธุ์
+    { 
+        
+        $builder = $this->db->table('CODE_PRODUCT');
+        $builder->select('*');
+        $builder = $builder->where('Type_Code',$type);
         if ($id){
           $builder = $builder->where('Code',$id);
           $query = $builder->get()->getRowArray();
