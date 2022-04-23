@@ -44,11 +44,14 @@ class Survay extends BaseController
     
         $data['lands'] = $model_land->getAllLand();
         $data['users']= $model_user->getSelectUsers();
-        $data['projects'] = $model_interview->getAllInterViews();  
-        // $data['projects'] = $this->model_api->getProject();
+        // $data['projects'] = $model_interview->getAllInterViews();  
+        $data['projects'] = $this->model_api->getProject();
         
+        $data['houses'] = [];
+        $data['persons'] = [];
        
         if ($interview_id){
+            
             $data['data'] = $this->model_survay->getAllSurvay($interview_id);
             $data['data']['interview_date'] = $this->date_thai->date_eng2thai($data['data']['interview_date'],543,'','','/');
             
@@ -216,5 +219,11 @@ class Survay extends BaseController
         }
 
         return redirect()->to('survay/need/'.$interview_id);
+    }
+
+    public function picture($interview_id){
+        $data['interview_id'] = $interview_id;
+        // $data['data'] = $this->model_survay->getNeed($interview_id);
+        return view('Modules\Survay\Views\picture',$data);
     }
 }

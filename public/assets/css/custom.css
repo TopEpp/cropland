@@ -2,6 +2,12 @@ body {
 	font-family: "Sarabun", sans-serif;
 }
 
+@media (min-width: 1200px) {
+	.container {
+		max-width: 1440px;
+	}
+}
+
 .layout-3 {
 	background-image: url("../img/bg.jpg");
 	background-position: center; /* Center the image */

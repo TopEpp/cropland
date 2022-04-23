@@ -376,7 +376,7 @@ class Api_model extends Model
         return $query;
     }
 
-    public function getProject($type,$id = '') #โครงการ , พื้นที่
+    public function getProject($type = '',$id = '') #โครงการ , พื้นที่
     { 
         
         $builder = $this->db->table('CODE_PROJECT');

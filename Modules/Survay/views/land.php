@@ -11,15 +11,16 @@
                     </div>
                     <div class="card-body">
                         <div class="btn-group" role="group" aria-label="menu-nabbar">
-                            <button type="button" class="btn btn-secondary" onclick="location.href='<?=base_url('survay/manage/'.@$interview_id);?>';">ข้อมูลพื้นฐาน</button>
+                            <button type="button" class="btn btn-secondary" onclick="location.href='<?=base_url('survay/manage/'.@$interview_id);?>';">ข้อมูลเบื้องต้น</button>
                             <button type="button" class="btn btn-info" <?=@$interview_id ? '':'disabled' ?> onclick="location.href='<?=base_url('survay/land/'.@$interview_id);?>';">ข้อมูลการใช้ที่ดิน</button>
                             <button type="button" class="btn btn-secondary" <?=@$interview_id ? '':'disabled' ?> onclick="location.href='<?=base_url('survay/support/'.@$interview_id);?>';">ข้อมูลการส่งเสริมของ สวพส</button>
                             <button type="button" class="btn btn-secondary" <?=@$interview_id ? '':'disabled' ?> onclick="location.href='<?=base_url('survay/support-other/'.@$interview_id);?>';" >ข้อมูลการส่งเสริมของหน่วยงานอื่น</button>
                             <button type="button" class="btn btn-secondary" <?=@$interview_id ? '':'disabled' ?> onclick="location.href='<?=base_url('survay/problem/'.@$interview_id);?>';">ปัญหาด้านการเกษตร</button>
                             <button type="button" class="btn btn-secondary" <?=@$interview_id ? '':'disabled' ?> onclick="location.href='<?=base_url('survay/need/'.@$interview_id);?>';">ความต้องการส่งเสริม</button>
+                            <button type="button" class="btn btn-secondary" <?=@$interview_id ? '':'disabled' ?> onclick="location.href='<?=base_url('survay/picture/'.@$interview_id);?>';">รูปภาพ</button>
                         </div>
                         
-                        <div class="p-2 border">
+                        <div class="p-1 border">
                             <br>
                                 <div class="card">
                                     <div class="card-header">
@@ -30,54 +31,60 @@
                                         </div>
                                     </div>
                                     <div class="collapse show" id="mycard-collapse">
-                                        <div class="card-body">
+                                        <div class="card-body p-0">
                                             <table class="table table-bordered">
-                                                <thead >
+                                                <thead class="bg-info">
                                                     <tr>
-                                                    <th rowspan="2" scope="col">การใช้ประโยชน์ที่ดิน</th>
-                                                    <th rowspan="2" scope="col">พันธุ์</th>
-                                                    <th rowspan="2" scope="col">อายุ (ปี)</th>
-                                                    <th rowspan="2" scope="col">ช่วงเวลา ปลูก-เก็บเกี่ยว</th>
-                                                    <th colspan="6" scope="col" class="text-center">รายจ่าย (บาท)</th>
-                                                    <th colspan="2" scope="col" class="text-center">ผลผลิต</th>
-                                                    <th rowspan="2" scope="col">ราคาขายต่อหน่วย(บาท/กก.)</th>
-                                                    <th rowspan="2" scope="col">รวมรายได้ บาท/ปี</th>
-                                                    <th rowspan="2" scope="col">ตลาด</th>
-                                                    <th rowspan="2" scope="col">การส่งเสริมจากสถาบันฯ</th>
+                                                        <th rowspan="2">ลำดับ</th>
+                                                        <th rowspan="2" scope="col">การใช้ประโยชน์ที่ดิน</th>
+                                                        <th rowspan="2" scope="col">พันธุ์</th>
+                                                        <th rowspan="2" scope="col">พื้นที่ปลูก<br/>(ไร่)</th>
+                                                        <th rowspan="2" scope="col">อายุ<br/>(ปี)</th>
+                                                        <th rowspan="2" scope="col">จำนวนปลูกต่อหน่วย</th>
+                                                        <th rowspan="2" scope="col">ช่วงเวลา ปลูก-เก็บเกี่ยว</th>
+                                                        <th rowspan="2" scope="col">การส่งเสริมจากสถาบันฯ</th>
+                                                        <th rowspan="2" scope="col">ไม่รับผลผลิต</th>
+                                                        <th colspan="7" scope="col" class="text-center">รายจ่าย (บาท)/รอบการปลูก</th>
+                                                        <th colspan="2" scope="col" class="text-center">รวมรายจ่าย(บาท/รอบ)</th>
+                                                        <th colspan="6" scope="col" class="text-center">ผลผลิต/รอบการปลูก</th>                                
                                                     </tr>
                                                     <tr>
                                                         <th>เมล็ด/กล้าพันธ์ุ</th>
                                                         <th>ปุ๋ย</th>
                                                         <th>ยา</th>
+                                                        <th>ฮอร์โมน</th>
                                                         <th>แรงงาน</th>
                                                         <th>น้ำมัน</th>
                                                         <th>อื่นๆ</th>
-                                                        <th>บริโภค</th>
-                                                        <th>ขาย</th>
+
+                                                        <th>ผลผลิตบริโภค</th>
+                                                        <th>ลักษณะการขาย</th>
+                                                        <th>ผลผลิต</th>
+                                                        <th>ราคาขายต่อหน่วย<br/>(บาท)</th>
+                                                        <th>รวมรายได้<br/>(บาท)</th>
+                                                        <th>ตลาด</th>                                                       
                                                     </tr>
                                                 </thead>
                                                 <tbody>     
                                                     <?php foreach ($data as $key => $value) :?>
-                                                        <tr>                                                            
+                                                        
+                                                        <!-- <tr>                                                            
                                                             <td><?=$value['detail_use'];?></td>
                                                             <td><?=$value['detail_type'];?></td>
                                                             <td><?=$value['detail_age'];?></td>
                                                             <td><?=$value['detail_start_date'];?></td>                                                         
-                                                            <td><?=$value['cost_seed'];?></td>
-                                                            <td><?=$value['cost_fertilizer'];?></td>
-                                                            <td><?=$value['cost_drug'];?></td>
-                                                            <td><?=$value['cost_labor'];?></td>
-                                                            <td><?=$value['cost_oil'];?></td>
-                                                            <td><?=$value['cost_other'];?></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
 
-                                                            <td><?=$value['detail_product'];?></td>
-                                                            <td><?=$value['detail_sell'];?></td>
-                                                            <td><?=$value['detail_price'];?></td>
-                                                            <td><?=$value['detail_price_year'];?></td>
-                                                            <td><?=$value['detail_market'];?></td>
-                                                            <td><?=$value['detail_hrdi'];?></td>
+
                                                             
-                                                        </tr>
+                                                        </tr> -->
                                                     <?php endforeach;?>                                 
                                                 </tbody>
                                             </table>
@@ -107,7 +114,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">                               
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-3">
                             <label>การใช้ประโยชน์ที่ดิน</label>     
                             <input type="hidden" name="detail_use_type">                                   
                             <select name="detail_use" id="detail_use" class="form-control">
@@ -117,98 +124,230 @@
                                 <?php endforeach?>              
                             </select>
                         </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-3">
                             <label>พันธุ์</label>
                             <select name="detail_type" id="detail_type" class="form-control">
                                 <option value="">เลือก</option>                             
                             </select>                      
                         </div>                      
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-3">
                             <label>อายุ (ปี)</label>                                        
                             <input type="text" class="form-control" name="detail_age">
                         </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-3">
+                            <label>พื้นที่ปลูก (ไร่)</label>                                        
+                            <input type="text" class="form-control" name="detail_age">
+                        </div>
+                        <div class="form-group col-md-3">
                             <label>ช่วงเวลาปลูก</label>                                        
-                            <input type="text" class="form-control datepicker" name="detail_start_date">
+                            <input type="text" class="form-control" name="detail_start_date">
                         </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-3">
                             <label>&nbsp;</label>                                        
-                            <input type="text" class="form-control datepicker" name="detail_finish_date">
+                            <input type="text" class="form-control" name="detail_finish_date">
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-3">
                             <label>ช่วงเวลาเก็บเกี่ยว</label>                                        
-                            <input type="text" class="form-control datepicker" name="detail_keep_start_date">
+                            <input type="text" class="form-control" name="detail_keep_start_date">
                         </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-3">
                             <label>&nbsp;</label>                                        
-                            <input type="text" class="form-control datepicker" name="detail_keep_finish_date">
+                            <input type="text" class="form-control" name="detail_keep_finish_date">
                         </div>
                     </div>
-                    <p>รายจ่าย (บาท)</p>
+                    <p>เมล็ด/กล้าพันธุ์</p>
                     <div class="row">
-                        <div class="form-group col-md-4">
-                            <label>เมล็ด/กล้าพันธุ์</label>                                        
-                            <input type="text" class="form-control" name="cost_seed">
+                        <div class="form-group col-md-3">
+                            <label>จำนวน</label>                                        
+                            <input type="text" class="form-control" name="detail_start_date">
                         </div>
-                        <div class="form-group col-md-4">
-                            <label>ปุ๋ย</label>                                        
-                            <input type="text" class="form-control" name="cost_fertilizer">
+                        <div class="form-group col-md-3">
+                            <label>หน่วยนับ</label>                                        
+                            <input type="text" class="form-control" name="detail_finish_date">
                         </div>
-                        <div class="form-group col-md-4">
-                            <label>ยา</label>                                        
-                            <input type="text" class="form-control" name="cost_drug">
+                        <div class="form-group col-md-3">
+                            <label>ราคาต่อหน่วย (บาท)</label>                                        
+                            <input type="text" class="form-control" name="detail_keep_start_date">
                         </div>
-                        <div class="form-group col-md-4">
-                            <label>แรงงาน</label>                                        
-                            <input type="text" class="form-control" name="cost_labor">
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label>น้ำมัน</label>                                        
-                            <input type="text" class="form-control" name="cost_oil">
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label>อื่นๆ</label>                                        
-                            <input type="text" class="form-control" name="cost_other">
-                        </div>
-                    </div>
-                    <p>รายจ่าย (บาท)</p>
-                    <div class="row">
-                        <div class="form-group col-md-4">
-                            <label>บริโภค</label>                                        
-                            <input type="text" class="form-control" name="detail_product">
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label>ขาย</label>                                        
-                            <input type="text" class="form-control" name="detail_sell">
-                        </div>
-                        <div class="form-group col-md-4">
-                           &nbsp;
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label>ราคาขายต่อหน่วย (บาท/กก.)</label>                                        
-                            <input type="text" class="form-control" name="detail_price">
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label>รวมรายได้บาท/ปี</label>                                        
-                            <input type="text" class="form-control" name="detail_price_year">
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label>ตลาด</label>                                        
-                            <input type="text" class="form-control" name="detail_market">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="detail_hrdi" name="detail_hrdi" value="1">
-                                <label class="form-check-label" for="detail_hrdi">
-                                การส่งเสริมจากสถาบันฯ
-                                </label>
+                        <div class="form-group col-md-3">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" id="interview_land_utilization_type2" name="interview_land_utilization_type" value="3">
+                                        <label class="form-check-label" for="interview_land_utilization_type2">
+                                        การส่งเสริมจากสถาบันฯ
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" id="interview_land_utilization_type2" name="interview_land_utilization_type" value="3">
+                                        <label class="form-check-label" for="interview_land_utilization_type2">
+                                        ได้รับผลผลิต
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
+                          
+                         
                         </div>
                     </div>
+                    <h5>รายจ่าย/รอบการปลูก</h5>
+                    <p>ปุ๋ย</p>
+                    <div class="row repeater-dressing">
+                        <div class="col-md-12">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>ลำดับ</th>
+                                        <th>ประเภท</th>
+                                        <th>ยี่ห้อ</th>
+                                        <th>จำนวน</th>
+                                        <th>หน่วยนับ</th>
+                                        <th>ราคาต่อหน่วย</th>
+                                        <th>ราคารวม</th>
+                                        <th><button class="btn btn-info btn-sm" type="button" data-repeater-create>เพิ่มข้อมูล</button></th>
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody data-repeater-list="dressing">
+                                    <tr data-repeater-item>
+                                        <td><input type="text" name="type" class="form-control"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+
+                    <p>ยา</p>
+                    <div class="row repeater-drug">
+                        <div class="col-md-12">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>ลำดับ</th>
+                                        <th>ประเภท</th>
+                                        <th>ยี่ห้อ</th>
+                                        <th>จำนวน</th>
+                                        <th>หน่วยนับ</th>
+                                        <th>ราคาต่อหน่วย</th>
+                                        <th>ราคารวม</th>
+                                        <th><button class="btn btn-info btn-sm"  type="button" data-repeater-create>เพิ่มข้อมูล</button></th>
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody data-repeater-list="drug">
+                                    <tr data-repeater-item>
+                                        <td><input type="text" name="type" class="form-control"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <p>ฮอร์โมน</p>
+                    <div class="row repeater-hormone">
+                        <div class="col-md-12">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>ลำดับ</th>                                        
+                                        <th>ยี่ห้อ</th>
+                                        <th>จำนวน</th>
+                                        <th>หน่วยนับ</th>
+                                        <th>ราคาต่อหน่วย</th>
+                                        <th>ราคารวม</th>
+                                        <th><button class="btn btn-info btn-sm" type="button" data-repeater-create>เพิ่มข้อมูล</button></th>
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody data-repeater-list="hormone">
+                                    <tr data-repeater-item>
+                                        <td><input type="text" name="type" class="form-control"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <p>แรงงาน</p>
+                    <div class="row repeater-staff">
+                        <div class="col-md-12">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>ลำดับ</th>
+                                        <th>ลักษณะการจ้าง</th>
+                                        <th>การจ้างแรงงาน</th>
+                                        <th>จำนวนคน</th>
+                                        <th>จำนวนวันจ้าง</th>
+                                        <th>บาท/วัน</th>
+                                        <th>ค่าจ้างรวม</th>
+                                        <th><button class="btn btn-info btn-sm" type="button" data-repeater-create>เพิ่มข้อมูล</button></th>
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody data-repeater-list="staff">
+                                    <tr data-repeater-item>
+                                        <td><input type="text" name="type" class="form-control"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <p>รายจ่ายอื่นๆ</p>
+                    <div class="row">
+                        <div class="form-group col-md-3">
+                            <label>น้ำมัน</label>                                        
+                            <input type="text" class="form-control" name="detail_start_date">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>อื่นๆ</label>                                        
+                            <input type="text" class="form-control" name="detail_start_date">
+                        </div>
+                    </div>
+
+                    <p>ผลผลิต</p>
+                    <div class="row repeater-product">
+                        <div class="col-md-12">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>ลำดับ</th>
+                                        <th>ลักษณะการขาย</th>                                        
+                                        <th>จำนวนการขาย</th>
+                                        <th>หน่วยนับ</th>
+                                        <th>ราคาต่อหน่วย</th>
+                                        <th>รวมรายได้(บาท)</th>
+                                        <th>ตลาด</th>
+                                        <th><button class="btn btn-info btn-sm" type="button" data-repeater-create>เพิ่มข้อมูล</button></th>
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody data-repeater-list="product">
+                                    <tr data-repeater-item>
+                                        <td><input type="text" name="type" class="form-control"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-3">
+                            <label>จำนวนบริโภค</label>                                        
+                            <input type="text" class="form-control" name="detail_start_date">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>หน่วยนับ</label>                                        
+                            <select name="" id="" class="form-control">
+                                <option value=""></option>
+                            </select>
+                        </div>
+                    </div>
+
+                 
                 </div>
                 <div class="modal-footer bg-whitesmoke br">
                     <button type="sumbit" class="btn btn-primary">บันทึก</button>
@@ -226,12 +365,145 @@
 <?=$this->endSection()?>
 
 <?=$this->section("scripts")?>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.repeater/1.2.1/jquery.repeater.min.js"></script>
 <?= script_tag('public/assets/datepicker/js/bootstrap-datepicker.js') ?>
 <?= script_tag('public/assets/datepicker/js/bootstrap-datepicker-thai.js') ?>
 <?= script_tag('public/assets/datepicker/js/locales/bootstrap-datepicker.th.js') ?>
 
 <script>
+
     $(function () {
+
+        var $repeaterDressing = $('.repeater-dressing').repeater({
+            initEmpty: false,
+            defaultValues: {
+                // 'family': '1'
+            },
+
+            show: function () {
+                $(this).slideDown();
+                // $('#myTable tr:last').remove();
+                
+            },
+
+            hide: function (deleteElement) {
+                if(confirm('Are you sure you want to delete this element?')) {
+                    $(this).slideUp(deleteElement);
+                }
+            },
+            ready: function (setIndexes) {
+                
+                // console.log(setIndexes);
+                // $dragAndDrop.on('drop', setIndexes);
+            },
+            isFirstItemUndeletable: false
+        });
+
+        var $repeaterDrug = $('.repeater-drug').repeater({
+            initEmpty: false,
+            defaultValues: {
+                // 'family': '1'
+            },
+
+            show: function () {
+                $(this).slideDown();
+                // $('#myTable tr:last').remove();
+                
+            },
+
+            hide: function (deleteElement) {
+                if(confirm('Are you sure you want to delete this element?')) {
+                    $(this).slideUp(deleteElement);
+                }
+            },
+            ready: function (setIndexes) {
+                
+                // console.log(setIndexes);
+                // $dragAndDrop.on('drop', setIndexes);
+            },
+            isFirstItemUndeletable: false
+        });
+
+        var $repeaterHormone = $('.repeater-hormone').repeater({
+            initEmpty: false,
+            defaultValues: {
+                // 'family': '1'
+            },
+
+            show: function () {
+                $(this).slideDown();
+                // $('#myTable tr:last').remove();
+                
+            },
+
+            hide: function (deleteElement) {
+                if(confirm('Are you sure you want to delete this element?')) {
+                    $(this).slideUp(deleteElement);
+                }
+            },
+            ready: function (setIndexes) {
+                
+                // console.log(setIndexes);
+                // $dragAndDrop.on('drop', setIndexes);
+            },
+            isFirstItemUndeletable: false
+        });
+
+
+        var $repeaterStaff = $('.repeater-staff').repeater({
+            initEmpty: false,
+            defaultValues: {
+                // 'family': '1'
+            },
+
+            show: function () {
+                $(this).slideDown();
+                // $('#myTable tr:last').remove();
+                
+            },
+
+            hide: function (deleteElement) {
+                if(confirm('Are you sure you want to delete this element?')) {
+                    $(this).slideUp(deleteElement);
+                }
+            },
+            ready: function (setIndexes) {
+                
+                // console.log(setIndexes);
+                // $dragAndDrop.on('drop', setIndexes);
+            },
+            isFirstItemUndeletable: false
+        });
+
+        var $repeaterProduct = $('.repeater-product').repeater({
+            initEmpty: false,
+            defaultValues: {
+                // 'family': '1'
+            },
+
+            show: function () {
+                $(this).slideDown();
+                // $('#myTable tr:last').remove();
+                
+            },
+
+            hide: function (deleteElement) {
+                if(confirm('Are you sure you want to delete this element?')) {
+                    $(this).slideUp(deleteElement);
+                }
+            },
+            ready: function (setIndexes) {
+                
+                // console.log(setIndexes);
+                // $dragAndDrop.on('drop', setIndexes);
+            },
+            isFirstItemUndeletable: false
+        });
+
+
+        
+
+
         $(".datepicker").datepicker({
             language: "th-th",
             format: "dd/mm/yyyy",

@@ -95,6 +95,7 @@ $routes->group("survay", ["namespace" => "Modules\Survay\Controllers"], function
     $routes->get("support-other/(:num)(:any)", "Survay::supportOther/$1$2");
     $routes->get("problem/(:num)(:any)", "Survay::problem/$1$2");
     $routes->get("need/(:num)(:any)", "Survay::need/$1$2");
+    $routes->get("picture/(:num)(:any)", "Survay::picture/$1$2");
 
       //save data
       $routes->post("save_manage", "Survay::saveManage");

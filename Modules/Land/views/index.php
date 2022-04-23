@@ -29,10 +29,10 @@
                             <thead>
                                 <tr>
                                 <th scope="col">ลำดับ</th>
-                                <th scope="col">แปลงที่</th>
+                                <th scope="col">รหัสแปลง</th>
                                 <th scope="col">เลขที่แปลง</th>
                                 <th scope="col">พื้นที่</th>
-                                <th scope="col">การใช้ประโยชน์</th>
+                                <th scope="col">การใช้ประโยชน์ที่ดิน</th>
                                 <th scope="col">ผู้ถือคลอง</th>
                                 <th scope="col">ที่ตั้ง</th>
                                 <th scope="col">เครื่องมือ</th>
@@ -42,12 +42,12 @@
                                 <?php foreach ($data as $key => $value) :?>
                                     <tr>
                                         <th scope="row"><?=$key+1;?></th>
-                                        <td><?=$value['land_number'];?></td>
+                                        <td><?=$value['land_code'];?></td>
                                         <td><?=$value['land_no'];?></td>
                                         <td><?=$value['land_area'];?> ไร่</td>
                                         <td><?=$value['name'];?></td>
-                                        <td></td>
-                                        <td><?=$value['location_name'];?></td>
+                                        <td>-</td>
+                                        <td>-</td>
                                         <td>
                                             <div class="buttons">
                                                 <button  onclick="landModal(<?=$value['land_id'];?>)" class="btn btn-icon btn-primary"><i class="far fa-edit"></i></button>                                    
@@ -83,6 +83,10 @@
                         <div class="col-md-6 border-right">
                             <div class="row">
                                 <div class="form-group col-md-12">
+                                    <label>รหัสแปลง</label>                                        
+                                    <input type="text" class="form-control" name="land_code" id="land_code">
+                                </div>
+                                <div class="form-group col-md-12">
                                     <label>แปลงที่</label>                                        
                                     <input type="text" class="form-control" name="land_number" id="land_number">
                                 </div>
@@ -104,32 +108,10 @@
                                     </select>
                                 </div>
                                 <div class="form-group col-md-12">
-                                    <label>พื้นที่ตั้ง</label>                                        
-                                    <select name="land_address" id="land_address" class="form-control">
-                                        <option value="">เลือก</option>
-                                        <?php foreach ($location as $key => $value) :?>
-                                            <option value="<?=$value['location_id'];?>"><?=$value['name'];?></option>
-                                        <?php endforeach?>
-                                    </select>
+                                    <label>พื้นที่แปลงรวม (ไร่)</label>          
+                                    <input type="text" class="form-control" name="land_address" id="land_address">                                 
                                 </div>
-                                <div class="form-group col-md-12">
-                                    <label>สิทธิถือครอง</label>                                        
-                                    <select name="land_ownership" id="land_ownership" class="form-control">
-                                        <option value="">เลือก</option>
-                                        <?php foreach ($landprivilege as $key => $value) :?>
-                                            <option value="<?=$value['landprivilege_id'];?>"><?=$value['name'];?></option>
-                                        <?php endforeach?>
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-12">
-                                    <label>ลักษณะการถือครอง</label>                                        
-                                    <select name="land_holding" id="land_holding" class="form-control">
-                                        <option value="">เลือก</option>
-                                        <?php foreach ($landowner as $key => $value) :?>
-                                            <option value="<?=$value['landowner_id'];?>"><?=$value['name'];?></option>
-                                        <?php endforeach?>
-                                    </select>
-                                </div>
+                                                            
                             </div>
                         </div>      
                         
@@ -204,15 +186,15 @@ function initMap() {
                 success : function(response){
                     if (response){
                         const data = response.data;
-
+                        $("#land_code").val(data.land_code)
                         $("#land_number").val(data.land_number)
                         $("#land_no").val(data.land_no)
                         $("#land_area").val(data.land_area)
 
                         $("#land_use").val(data.land_use)
                         $("#land_address").val(data.land_address)
-                        $("#land_ownership").val(data.land_ownership)
-                        $("#land_holding").val(data.land_holding)
+                        // $("#land_ownership").val(data.land_ownership)
+                        // $("#land_holding").val(data.land_holding)
                         
                     }
                     // $("#item_modal").html(response)

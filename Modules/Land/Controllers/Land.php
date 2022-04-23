@@ -23,9 +23,9 @@ class Land extends BaseController
 
         $data = [];
         $data['landuse'] =  $this->model_api->getLandUse();
-        $data['location'] =  $this->model_api->getlocation();
-        $data['landprivilege'] =  $this->model_api->getLandprivilege();
-        $data['landowner'] =  $this->model_api->getLandOwner();
+        // $data['location'] =  $this->model_api->getlocation();
+        // $data['landprivilege'] =  $this->model_api->getLandprivilege();
+        // $data['landowner'] =  $this->model_api->getLandOwner();
         
         $data['data'] = $this->model_land->getAllLand();
         return view('Modules\Land\Views\index',$data);
