@@ -588,6 +588,22 @@ class Api_model extends Model
         return $query;
     }
 
+    public function getWantSupport($id = '') #ความต้องการ การสนับสนุนจากหน่วยงาน
+    { 
+        
+        $builder = $this->db->table('CODE_SUPPORT_WANTEDTYPE');
+        $builder->select('*');
+   
+        if ($id){
+          $builder = $builder->where('Code',$id);
+          $query = $builder->get()->getRowArray();
+          return $query;
+        }
+        
+        $query = $builder->get()->getResultArray();
+        return $query;
+    }
+
   
 }
 
