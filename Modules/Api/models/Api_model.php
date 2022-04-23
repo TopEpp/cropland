@@ -183,7 +183,7 @@ class Api_model extends Model
         return $query;
     }
 
-    public function getProblemType($id = '')
+    public function getProblemType($id = '') #ปัญหาทางด้านการเกษตร
     { 
         
         $builder = $this->db->table('CODE_PROBLEMTYPE');
@@ -283,11 +283,11 @@ class Api_model extends Model
     public function getLandprivilege($id = '') #เอกสิทธิที่ดิน
     { 
         
-        $builder = $this->db->table('LH_landprivilege');
+        $builder = $this->db->table('CODE_POSSESSRIGHT');
         $builder->select('*');
         // $builder->where('active',1);
         if ($id){
-          $builder = $builder->where('landprivilege_id',$id);
+          $builder = $builder->where('Code',$id);
           $query = $builder->get()->getRowArray();
           return $query;
         }
