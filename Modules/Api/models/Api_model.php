@@ -374,14 +374,212 @@ class Api_model extends Model
       return true;
     }
 
-    public function getProject($id = '')
+    public function getProjectType($id = '')  #ประเภทโครงการ
     { 
         
-        $builder = $this->db->table('LH_project');
+        $builder = $this->db->table('CODE_PROJECTTYPE');
         $builder->select('*');
    
         if ($id){
-          $builder = $builder->where('location_id',$id);
+          $builder = $builder->where('Runno',$id);
+          $query = $builder->get()->getRowArray();
+          return $query;
+        }
+        
+        $query = $builder->get()->getResultArray();
+        return $query;
+    }
+
+    public function getProject($type,$id = '') #โครงการ
+    { 
+        
+        $builder = $this->db->table('CODE_PROJECT');
+        $builder->select('*');
+        $builder = $builder->where('TypeCode',$type);
+   
+        if ($id){
+          $builder = $builder->where('Runno',$id);
+          $query = $builder->get()->getRowArray();
+          return $query;
+        }
+        
+        $query = $builder->get()->getResultArray();
+        return $query;
+    }
+
+   
+
+    public function getDepartment($id = '') #หน่วยงาน
+    { 
+        
+        $builder = $this->db->table('CODE_DEPARTMENT');
+        $builder->select('*');
+   
+        if ($id){
+          $builder = $builder->where('Code',$id);
+          $query = $builder->get()->getRowArray();
+          return $query;
+        }
+        
+        $query = $builder->get()->getResultArray();
+        return $query;
+    }
+
+    public function getChemical($id = '') #ยี่ห้อปุ๋ย
+    { 
+        
+        $builder = $this->db->table('CODE_CHEMICALBRAND');
+        $builder->select('*');
+   
+        if ($id){
+          $builder = $builder->where('Code',$id);
+          $query = $builder->get()->getRowArray();
+          return $query;
+        }
+        
+        $query = $builder->get()->getResultArray();
+        return $query;
+    }
+
+    public function getChemicalFormula($id = '') #สูตรปุ๋ย
+    { 
+        
+        $builder = $this->db->table('CODE_CHEMICALFORMULAR');
+        $builder->select('*');
+   
+        if ($id){
+          $builder = $builder->where('Code',$id);
+          $query = $builder->get()->getRowArray();
+          return $query;
+        }
+        
+        $query = $builder->get()->getResultArray();
+        return $query;
+    }
+
+    public function getMedicalType($id = '') #ประเภทยา
+    { 
+        
+        $builder = $this->db->table('CODE_MEDICALTYPE');
+        $builder->select('*');
+   
+        if ($id){
+          $builder = $builder->where('Code',$id);
+          $query = $builder->get()->getRowArray();
+          return $query;
+        }
+        
+        $query = $builder->get()->getResultArray();
+        return $query;
+    }
+
+    public function getMedica($id = '') #ยี่ห้อยา
+    { 
+        
+        $builder = $this->db->table('CODE_MEDICALBRAND');
+        $builder->select('*');
+   
+        if ($id){
+          $builder = $builder->where('Code',$id);
+          $query = $builder->get()->getRowArray();
+          return $query;
+        }
+        
+        $query = $builder->get()->getResultArray();
+        return $query;
+    }
+
+    public function getUnit($id = '') #หน่วยนับ
+    { 
+        
+        $builder = $this->db->table('CODE_UNIT');
+        $builder->select('*');
+   
+        if ($id){
+          $builder = $builder->where('Code',$id);
+          $query = $builder->get()->getRowArray();
+          return $query;
+        }
+        
+        $query = $builder->get()->getResultArray();
+        return $query;
+    }
+
+    public function getEmployType($id = '') #ลักษณธการจ้าง
+    { 
+        
+        $builder = $this->db->table('CODE_EMPLOYTYPE');
+        $builder->select('*');
+   
+        if ($id){
+          $builder = $builder->where('Code',$id);
+          $query = $builder->get()->getRowArray();
+          return $query;
+        }
+        
+        $query = $builder->get()->getResultArray();
+        return $query;
+    }
+
+    public function getLaborType($id = '') #การจ้างแรงงาน
+    { 
+        
+        $builder = $this->db->table('CODE_LABORTYPE');
+        $builder->select('*');
+   
+        if ($id){
+          $builder = $builder->where('Code',$id);
+          $query = $builder->get()->getRowArray();
+          return $query;
+        }
+        
+        $query = $builder->get()->getResultArray();
+        return $query;
+    }
+
+    public function getMarket($id = '') #ตลาด
+    { 
+        
+        $builder = $this->db->table('CODE_MARKET');
+        $builder->select('*');
+   
+        if ($id){
+          $builder = $builder->where('Code',$id);
+          $query = $builder->get()->getRowArray();
+          return $query;
+        }
+        
+        $query = $builder->get()->getResultArray();
+        return $query;
+    }
+
+    public function getVillage($provice,$district,$subdistrict,$id = '') #กลุ่มบ้าน
+    { 
+        
+        $builder = $this->db->table('CODE_PROJECTVILLAGE');
+        $builder->select('*');
+        $builder = $builder->where('ProvinceId',$provice);
+        $builder = $builder->where('AmphurId',$district);
+        $builder = $builder->where('TamBonId',$subdistrict);
+   
+        if ($id){
+          $builder = $builder->where('Code',$id);
+          $query = $builder->get()->getRowArray();
+          return $query;
+        }
+        
+        $query = $builder->get()->getResultArray();
+        return $query;
+    }
+
+    public function getHrdiSupport($id = '') #การสนับสนุนของ สวพส
+    { 
+        
+        $builder = $this->db->table('CODE_HRDI_SUPPORTTYPE');
+        $builder->select('*');
+   
+        if ($id){
+          $builder = $builder->where('Code',$id);
           $query = $builder->get()->getRowArray();
           return $query;
         }
