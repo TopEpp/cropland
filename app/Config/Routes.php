@@ -130,6 +130,7 @@ $routes->group("common", ["namespace" => "App\Controllers"], function ($routes) 
     $routes->get("get-tambon", "Common::tambon");
     $routes->get("get-house", "Common::House");
     $routes->get("get-person", "Common::Person");
+    $routes->get("get-village", "Common::Village"); //กลุ่มบ้าน
 });
 
 $routes->group("api", ["namespace" => "Modules\Api\Controllers"], function ($routes) {

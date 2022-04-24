@@ -23,10 +23,36 @@ class Survay_model extends Model
     public function getAllSurvay($id = ''){
 
         $builder = $this->db->table('LH_interview_land');
-        $builder->select('*');
-        // $builder->join('LH_interview_house', 'LH_house.house_id = LH_interview_house.interview_house');
+        $builder->select("LH_interview_land.*,
+            VIEW_agriculturist_name.name as user_name,
+            CODE_PROJECT.name as project_area,
+            CODE_PROJECT.Description as project_name,
+            CODE_PROJECTVILLAGE.Name as project_village,
+            LH_land.land_address,
+            LH_landuse.name as land_use,
+            CONCAT(LH_prefix.name,LH_house_person.person_name,' ',LH_house_person.person_lastname) as person_name,
+            LH_house.house_label,
+            CONCAT('บ้านเลขที่ ',LH_house.house_number,' หมู่ที่ ',
+                    LH_house.house_moo,' ตำบล ',tambon.tam_name_t,' อำเภอ ',amphoe.amp_name_t,' จังหวัด ',province.pro_name_t
+                    ) 
+                as person_address,
+        ");
+        $builder->join('LH_land', 'LH_land.land_code = LH_interview_land.interview_code');
+        $builder->join('LH_landuse', 'LH_landuse.landuse_id = LH_land.land_use');
+
+        $builder->join('LH_house_person', 'LH_house_person.person_id = LH_interview_land.interview_person_id');
+        $builder->join('LH_house', 'LH_house.house_id = LH_house_person.house_id');
+        $builder->join('LH_prefix', 'LH_prefix.prefix_id = LH_house_person.person_prename');
+
+        $builder->join('amphoe', 'amphoe.amp_code = LH_house.house_district');
+        $builder->join('province', 'province.prov_code = LH_house.house_province');
+        $builder->join('tambon', 'tambon.tam_code = LH_house.house_subdistrict');
+        
+        $builder->join('CODE_PROJECT', 'CODE_PROJECT.Code = LH_interview_land.interview_project');
+        $builder->join('CODE_PROJECTVILLAGE', 'CODE_PROJECTVILLAGE.Code = LH_interview_land.interview_house_id and CODE_PROJECTVILLAGE.projectId = LH_interview_land.interview_project');
+        $builder->join('VIEW_agriculturist_name','VIEW_agriculturist_name.id_card = LH_interview_land.interview_user','left');
         if ($id){
-          $builder = $builder->where('interview_id',$id);
+          $builder = $builder->where('LH_interview_land.interview_id',$id);
           $query = $builder->get()->getRowArray();
           return $query;
         }

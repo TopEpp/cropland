@@ -166,6 +166,51 @@ class Common_model extends Model
       return $query;
     }
 
+    public function getVillage($id = '',$project = '') #กลุ่มบ้าน
+    { 
+        
+        $builder = $this->db->table('CODE_PROJECTVILLAGE');
+        $builder->select('*');
+   
+        if ($project){
+          $builder = $builder->where('projectId',$project);
+          $query = $builder->get()->getResultArray();
+          return $query;
+        }
+
+        if ($id){
+          $builder = $builder->where('Code',$id);
+          $query = $builder->get()->getRowArray();
+          return $query;
+        }
+        
+        $query = $builder->get()->getResultArray();
+        return $query;
+    }
+
+    public function getAllPersons($house,$data = array()){    
+      
+      $village = $this->getVillage($house);
+
+      if ($village){
+        // $village['ProvinceId'],$village['AmphurId'],$village['TamBonId']
+        $builder = $this->db->table('LH_house_person');
+        $builder->select('LH_house_person.*,LH_prefix.name');
+        $builder->where('LH_house.house_province',$village['ProvinceId']);
+        $builder->join('LH_house', 'LH_house.house_id = LH_house_person.house_id','left');      
+        $builder->join('LH_prefix', 'LH_prefix.prefix_id = LH_house_person.person_prename','left');
+    
+        $query = $builder->get()->getResultArray();
+        
+        foreach ($query as $key => $value) {
+          $data[$value['family_id']][$value['person_id']] = $value;          
+        }
+      }
+     
+      return $data;
+    
+  }
+
 }
 
  ?>

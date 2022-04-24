@@ -381,7 +381,10 @@ class Api_model extends Model
         
         $builder = $this->db->table('CODE_PROJECT');
         $builder->select('*');
-        $builder = $builder->where('TypeCode',$type);
+        if ($type != ''){
+          $builder = $builder->where('TypeCode',$type);
+        }
+      
    
         if ($id){
           $builder = $builder->where('Runno',$id);

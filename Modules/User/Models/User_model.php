@@ -27,7 +27,7 @@ class User_model extends Model
   {
     $db = \Config\Database::connect('user_db', false); 
     $builder = $db->table('vLoadDetailStaff');
-    $builder->select('emp_id,fullname');
+    $builder->select('emp_id,fullname,prs_id');
     $query = $builder->get()->getResultArray();
     return $query;
   }

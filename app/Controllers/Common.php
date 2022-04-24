@@ -61,20 +61,35 @@ class Common extends BaseController
 
     public function Person(){
         $house = $this->request->getVar('house');
-        $model_house = new House_model();
-        $persons = $model_house->getAllHouseMembers($house);
-        
+   
         $data ='';
-        foreach ($persons as $key => $person) {
-            foreach ($person as $key => $value) {
-                if ($value['person_header'] == 1){
-                    $data .= "<option value='".$value['person_id']."'>".$value['person_name'].' '.$value['person_lastname']."</option>";
+        if ($house){            
+            $persons = $this->model_common->getAllPersons($house);
+            foreach ($persons as $key => $person) {
+                foreach ($person as $key => $value) {
+                    // if ($value['person_header'] == 1){
+                        $data .= "<option value='".$value['person_id']."'>".$value['name'].$value['person_name'].' '.$value['person_lastname']."</option>";
+                    // }s 
                 }
-                
             }
-         }
-         
-         return   $this->respond($data);
+            
+            return   $this->respond($data);
+        }
+        return   $this->respond($data);
+        
+      
 
+    }
+
+    public function Village(){
+        $project = $this->request->getVar('project');
+        $village = $this->model_common->getVillage('',$project);
+        
+        $data = '';
+        foreach ($village as $key => $value) {
+           $data .= "<option value='".$value['Code']."'>".$value['Name']."</option>";
+        }
+        
+        return   $this->respond($data);
     }
 }

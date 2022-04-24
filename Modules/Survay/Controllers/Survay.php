@@ -2,6 +2,7 @@
 
 namespace Modules\Survay\Controllers;
 
+use App\Models\Common_model;
 use Modules\Api\Models\Api_model;
 use CodeIgniter\API\ResponseTrait;
 use App\Controllers\BaseController;
@@ -26,6 +27,13 @@ class Survay extends BaseController
     }
 
     public function index(){
+        $model_user = new User_model();
+        $model_land = new Land_model();
+        // /search
+
+        $data['lands'] = $model_land->getAllLand();
+        $data['users']= $model_user->getSelectUsers();
+        $data['projects'] = $this->model_api->getProject();
 
         $data['data'] = $this->model_survay->getAllSurvay();
         return view('Modules\Survay\Views\index',$data);
@@ -37,6 +45,7 @@ class Survay extends BaseController
         $model_land = new Land_model();
         $model_house = new House_model();
         $model_interview = new InterViewHouse_model();
+        $model_common = new Common_model();
           
 
 
@@ -44,19 +53,19 @@ class Survay extends BaseController
     
         $data['lands'] = $model_land->getAllLand();
         $data['users']= $model_user->getSelectUsers();
-        // $data['projects'] = $model_interview->getAllInterViews();  
         $data['projects'] = $this->model_api->getProject();
+        $data['privileges'] = $this->model_api->getLandprivilege();
         
-        $data['houses'] = [];
+        $data['villages'] = [];
         $data['persons'] = [];
        
         if ($interview_id){
             
             $data['data'] = $this->model_survay->getAllSurvay($interview_id);
-            $data['data']['interview_date'] = $this->date_thai->date_eng2thai($data['data']['interview_date'],543,'','','/');
             
-            $data['houses'] = $model_interview->getAllInterViewsProject($data['data']['interview_project']);
-            $data['persons']= $model_house->getAllHouseMembers($data['data']['interview_house_id']);
+            $data['data']['interview_date'] = $this->date_thai->date_eng2thai($data['data']['interview_date'],543,'','','/');            
+            $data['villages'] = $model_common->getVillage('',$data['data']['interview_project']);            
+            $data['persons']= $model_common->getAllPersons($data['data']['interview_house_id']);
     
         }
         
