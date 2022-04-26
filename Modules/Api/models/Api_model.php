@@ -414,10 +414,10 @@ class Api_model extends Model
         return $query;
     }
 
-    public function getChemical($id = '') #ยี่ห้อปุ๋ย
+    public function getChemicalType($id = '') #ประเภทปุ๋ย
     { 
         
-        $builder = $this->db->table('CODE_CHEMICALBRAND');
+        $builder = $this->db->table('CODE_CHEMICALTYPE');
         $builder->select('*');
    
         if ($id){
@@ -430,12 +430,36 @@ class Api_model extends Model
         return $query;
     }
 
-    public function getChemicalFormula($id = '') #สูตรปุ๋ย
+    public function getChemical($type='',$id = '') #ยี่ห้อปุ๋ย
+    { 
+        
+        $builder = $this->db->table('CODE_CHEMICALBRAND');
+        $builder->select('*');
+
+        if($type){
+          $builder = $builder->where('Type_id',$type);
+        }
+   
+        if ($id){
+          $builder = $builder->where('Code',$id);
+          $query = $builder->get()->getRowArray();
+          return $query;
+        }
+        
+        $query = $builder->get()->getResultArray();
+        return $query;
+    }
+
+    public function getChemicalFormula($chem_id='',$id = '') #สูตรปุ๋ย
     { 
         
         $builder = $this->db->table('CODE_CHEMICALFORMULAR');
         $builder->select('*');
-   
+        
+        if($chem_id){
+          $builder = $builder->where('Chem_id',$chem_id);
+        }
+
         if ($id){
           $builder = $builder->where('Code',$id);
           $query = $builder->get()->getRowArray();
@@ -462,11 +486,15 @@ class Api_model extends Model
         return $query;
     }
 
-    public function getMedica($id = '') #ยี่ห้อยา
+    public function getMedica($type='',$id = '') #ยี่ห้อยา
     { 
         
         $builder = $this->db->table('CODE_MEDICALBRAND');
         $builder->select('*');
+
+        if($type){
+          $builder = $builder->where('Type_id',$type);
+        }
    
         if ($id){
           $builder = $builder->where('Code',$id);
