@@ -45,11 +45,11 @@
                                                         <th rowspan="2" scope="col">การส่งเสริมจากสถาบันฯ</th>
                                                         <th rowspan="2" scope="col">ไม่รับผลผลิต</th>
                                                         <th colspan="7" scope="col" class="text-center">รายจ่าย (บาท)/รอบการปลูก</th>
-                                                        <th colspan="2" scope="col" class="text-center">รวมรายจ่าย(บาท/รอบ)</th>
+                                                        <th rowspan="2" scope="col" class="text-center">รวมรายจ่าย<br/>(บาท/รอบ)</th>
                                                         <th colspan="6" scope="col" class="text-center">ผลผลิต/รอบการปลูก</th>                                
                                                     </tr>
                                                     <tr>
-                                                        <th>เมล็ด/กล้าพันธ์ุ</th>
+                                                        <th>เมล็ด<br/>/กล้าพันธ์ุ</th>
                                                         <th>ปุ๋ย</th>
                                                         <th>ยา</th>
                                                         <th>ฮอร์โมน</th>
@@ -57,7 +57,7 @@
                                                         <th>น้ำมัน</th>
                                                         <th>อื่นๆ</th>
 
-                                                        <th>ผลผลิตบริโภค</th>
+                                                        <th>ผลผลิต<br/>บริโภค</th>
                                                         <th>ลักษณะการขาย</th>
                                                         <th>ผลผลิต</th>
                                                         <th>ราคาขายต่อหน่วย<br/>(บาท)</th>
