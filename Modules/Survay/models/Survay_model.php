@@ -223,56 +223,48 @@ class Survay_model extends Model
         $builder->where('interview_id',$interview_id);
         $query = $builder->get()->getResultArray();
         
-        $tmp = [];
-        foreach ($query as $key => $value) {
-            $tmp[$value['problem_type']] = $value;
-        }
-        return $tmp;
+        // $tmp = [];
+        // foreach ($query as $key => $value) {
+        //     $tmp[$value['problem_type']] = $value;
+        // }
+        return $query;
     }
 
     public function saveSurvayProblem($data){
 
         $db = \Config\Database::connect();
         $builder = $db->table('LH_interview_land_problem');
-        // if (!empty($data['income_id'])){
-        //   $income_id = $data['income_id'];
-        //   $builder->where('income_id',$data['income_id']);
-        //   unset($data['income_id']);
-        //   $builder->update($data);
-        
-        // }else{
-        //   unset($data['income_id']);
-        
-    
-          foreach ($data['problem_type'] as $key => $value) {
-            $tmp = [];
-            if (!empty($value['id'])){
-                if (!empty($value['type'])){
-                    $tmp['interview_id'] = $data['interview_id'];
-                    $tmp['land_id'] = $data['land_id'];
-                    $tmp['problem_type'] = $key;
-                    $tmp['problem_detail'] = $value['detail'];
-                    $builder->where('problem_id',$value['id']);
-                    $builder->update($tmp);
-                }
-            }else{
-                if (!empty($value['type'])){
-                    $tmp['interview_id'] = $data['interview_id'];
-                    $tmp['land_id'] = $data['land_id'];
-                    $tmp['problem_type'] = $key;
-                    $tmp['problem_detail'] = $value['detail'];
-                    $builder->insert($tmp);
-                    $problem_id = $db->insertID();
-                }
-              
-            }
-          
-          }
-    
-        // }
-  
-        return true;
+       
+        if (!empty($data['problems'])){
+            foreach ($data['problems'] as $key => $value) {
 
+                $tmp = [];
+                $tmp['interview_id'] = $data['interview_id'];
+                $tmp['land_id'] = $data['land_id'];
+                $tmp['problem_id'] = $value['problem_id'];
+                $tmp['problem_type'] = $value['problem_type']?$value['problem_type']:0;
+                $tmp['problem_detail'] = $value['problem_detail'];
+
+                if (!empty($tmp['problem_id'])){                
+                    $problem_id = $tmp['problem_id'];
+                    $builder->where('problem_id',$tmp['problem_id']);
+                    unset($tmp['problem_id']);
+                    $builder->update($tmp);
+                    
+                }else{
+                    unset($tmp['problem_id']);
+                    $builder->insert($tmp);
+                    $need_id = $db->insertID();
+                }
+
+            
+            }
+            return $need_id;
+    
+        }
+
+        return null;
+        
     }
 
     public function getNeed($interview_id){    

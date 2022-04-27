@@ -493,7 +493,7 @@ class Api_model extends Model
         $builder->select('*');
 
         if($type){
-          $builder = $builder->where('Type_id',$type);
+          $builder = $builder->where('Description',$type);
         }
    
         if ($id){
@@ -651,12 +651,15 @@ class Api_model extends Model
         return $query;
     }
 
-    public function getProduct($type,$id = '') #พันธุ์
+    public function getProduct($type = '',$id = '') #พันธุ์
     { 
         
         $builder = $this->db->table('CODE_PRODUCT');
         $builder->select('*');
-        $builder = $builder->where('Type_Code',$type);
+        if ($type != ''){
+          $builder = $builder->where('Type_Code',$type);
+        }
+    
         if ($id){
           $builder = $builder->where('Code',$id);
           $query = $builder->get()->getRowArray();

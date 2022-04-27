@@ -38,77 +38,73 @@
                             <form action="<?=base_url('survay/save_problem/'.@$interview_id);?>"  method="post" id="form_problem">
                                 <input type="hidden" name="interview_id">
                                 <input type="hidden" name="land_id">  
-                                <div class="row mb-2">
-                                    <div class="col-md-3">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="problem_type_1" name="problem_type[1][type]" value="1" <?=@$data[1]['problem_type'] == 1 ? 'checked':'';?>>
-                                            <label class="form-check-label" for="problem_type_1">
-                                            โครงสร้างปัจจัยพื้นฐาน
-                                            </label>
-                                        </div>
+                                <div class="row repeater">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                            <th scope="col">ลำดับ</th>
+                                            <th scope="col">ประเภท</th>
+                                            <th scope="col">รายละเอียด</th>
+                                            <th scope="col">
+                                                <a href="#" class="btn btn-info" data-repeater-create>เพิ่มข้อมูล</a>
+                                            </th>                                 
+                                            </tr>
+                                        </thead>
+                                        <tbody data-repeater-list="problems">
+                                        <?php if(empty($data)):?>
+                                            <tr data-repeater-item>
+                                                <th scope="row">
+                                                    1
+                                                    <input type="hidden" name="problem_id">
+                                                </th>
+                                                <td>
+                                                    <select name="problem_type" id="problem_type" class="form-control">
+                                                        <option value="">เลือก</option>
+                                                        <?php foreach ($problem as $key => $value) :?>
+                                                            <option value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
+                                                        <?php endforeach?> 
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" name="problem_detail">
+                                                </td>
+                                                <td>
+                                                    <div class="buttons">                                            
+                                                        <a href="#" class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></a>
+                                                    </div>
+                                                </td>                                      
+                                            </tr>
+                                            <?php else:?>
+                                                <?php foreach ($data as $key => $value) :?>
+                                                    <tr data-repeater-item>
+                                                        <th scope="row" class="text-center">
+                                                            <?=$key+1;?>
+                                                            <input type="hidden" name="problem_id" value="<?=$value['problem_id'];?>">
+                                                        </th>
+                                                        <td>
+                                                            <select name="problem_type" id="problem_type" class="form-control">
+                                                                <option value="">เลือก</option>
+                                                                <?php foreach ($problem as $key => $val) :?>
+                                                                    <option <?=$value['problem_type']  == $val['Code'] ? "selected":'';?> value="<?=$val['Code'];?>"><?=$val['Name'];?></option>
+                                                                <?php endforeach?> 
+                                                            </select>
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" name="problem_detail" value="<?=$value['problem_detail'];?>"> 
+                                                        </td>
+                                                        <td>
+                                                            <div class="buttons">                                            
+                                                                <a href="#" class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></a>
+                                                            </div>
+                                                        </td>                                      
+                                                    </tr>
+                                                <?php endforeach;?>
+                                            <?php endif;?>
+
+                                        </tbody>
+                                    </table>
                                     </div>
-                                    <div class="col-md-6">
-                                        <input type="text" class="form-control" name="problem_type[1][detail]" value="<?=@$data[1]['problem_detail'];?>">
-                                        <input type="hidden" class="form-control" name="problem_type[1][id]" value="<?=@$data[1]['problem_id'];?>">
-                                    </div>
-                                </div>
-                                <div class="row  mb-2">
-                                    <div class="col-md-3">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="problem_type_2" name="problem_type[2][type]" value="1" value="1" <?=@$data[2]['problem_type'] == 2 ? 'checked':'';?>>
-                                            <label class="form-check-label" for="problem_type_2">
-                                            ทรัพยากรธรรมชาติและสิ่งแวดล้อม
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <input type="text" class="form-control" name="problem_type[2][detail]" value="<?=@$data[2]['problem_detail'];?>">
-                                        <input type="hidden" class="form-control" name="problem_type[2][id]" value="<?=@$data[2]['problem_id'];?>">
-                                    </div>
-                                </div>
-                                <div class="row  mb-2">
-                                    <div class="col-md-3">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="problem_type_3" name="problem_type[3][type]" value="1" value="1" <?=@$data[3]['problem_type'] == 3 ? 'checked':'';?>>
-                                            <label class="form-check-label" for="problem_type_3">
-                                            ตลาด
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <input type="text" class="form-control" name="problem_type[3][detail]" value="<?=@$data[3]['problem_detail'];?>">
-                                        <input type="hidden" class="form-control" name="problem_type[3][id]" value="<?=@$data[3]['problem_id'];?>">
-                                    </div>
-                                </div>
-                                <div class="row  mb-2">
-                                    <div class="col-md-3">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="problem_type_4" name="problem_type[4][type]" value="1" value="1" <?=@$data[4]['problem_type'] == 4 ? 'checked':'';?>>
-                                            <label class="form-check-label" for="problem_type_4">
-                                            เศรษฐกิจ
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <input type="text" class="form-control" name="problem_type[4][detail]" value="<?=@$data[4]['problem_detail'];?>">
-                                        <input type="hidden" class="form-control" name="problem_type[4][id]" value="<?=@$data[4]['problem_id'];?>">
-                                    </div>
-                                </div>
-                                <div class="row  mb-2">
-                                    <div class="col-md-3">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="problem_type_5" name="problem_type[5][type]" value="1" value="1" <?=@$data[5]['problem_type'] == 5 ? 'checked':'';?>>
-                                            <label class="form-check-label" for="problem_type_5">
-                                            สังคม
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <input type="text" class="form-control" name="problem_type[5][detail]" value="<?=@$data[5]['problem_detail'];?>">
-                                        <input type="hidden" class="form-control" name="problem_type[5][id]" value="<?=@$data[5]['problem_id'];?>">
-                                    </div>
-                                </div>
-                                <br>
+
                                 <div class="row">
                                     <div class="col-md-12 text-right">
                                         <button type="submit" class="btn btn-info">บันทึก</button>
@@ -126,6 +122,48 @@
 <?=$this->endSection()?>
 
 <?=$this->section("scripts")?>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.repeater/1.2.1/jquery.repeater.min.js"></script>
+<script>
+    // var $repeater = '';
+    $(document).ready(function () {
+
+        var $repeater = $('.repeater').repeater({
+            initEmpty: false,
+            defaultValues: {
+                // 'family': '1'
+            },
+            show: function () {
+                $(this).slideDown();
+                // $('#myTable tr:last').remove();
+                
+            },
+            hide: function (deleteElement) {
+                if(confirm('Are you sure you want to delete this element?')) {
+                    $(this).slideUp(deleteElement);
+                }
+            },
+            ready: function (setIndexes) {
+                
+                // console.log(setIndexes);
+                // $dragAndDrop.on('drop', setIndexes);
+            },
+            isFirstItemUndeletable: false
+        })
+
+        $("#add-family").click(function () {
+			$repeater.repeaterVal()["problems"].map(function (fields, row) {
+                
+				$(".key_data:last").text(row);
+                $(".family_key:last").attr('data-id', (row));               
+                $(`input[name='problems[${row}][family]']`).val((row))
+                // $('[data-repeater-list]').empty();
+                // $('[data-repeater-item]').slice(1).empty();
+			});
+		});
+        
+    });
+</script>
 
 <?=$this->endSection()?>
   

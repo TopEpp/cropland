@@ -121,7 +121,7 @@ class Survay extends BaseController
 
     public function saveLand($interview_id){
         $input = $this->request->getVar();
-        
+        dd($input);
         $session = session();
         $input['interview_id'] = $interview_id;
         $detail_id = $this->model_survay->saveSurvayLand($input);
@@ -138,6 +138,9 @@ class Survay extends BaseController
 
     public function support($interview_id,$id = ''){
         $data['interview_id'] = $interview_id;
+
+        $data['support'] = $this->model_api->getWantSupport();
+
         $data['data'] = $this->model_survay->getSupports($interview_id);
         return view('Modules\Survay\Views\support',$data);
     }
@@ -185,7 +188,11 @@ class Survay extends BaseController
 
     public function problem($interview_id,$id = ''){
         $data['interview_id'] = $interview_id;
+
+        $data['problem'] = $this->model_api->getProblemType();
+
         $data['data'] = $this->model_survay->getProblem($interview_id);
+        
         
         return view('Modules\Survay\Views\problem',$data);
     }
@@ -209,6 +216,7 @@ class Survay extends BaseController
 
     public function need($interview_id,$id = ''){
         $data['interview_id'] = $interview_id;
+        $data['support'] = $this->model_api->getWantSupport();
         $data['data'] = $this->model_survay->getNeed($interview_id);
         return view('Modules\Survay\Views\need',$data);
     }
@@ -234,5 +242,30 @@ class Survay extends BaseController
         $data['interview_id'] = $interview_id;
         // $data['data'] = $this->model_survay->getNeed($interview_id);
         return view('Modules\Survay\Views\picture',$data);
+    }
+
+    public function loadland($id = ''){
+        $data = [];
+        $data['landuse'] =  $this->model_api->getLandUse();
+        $data['products'] = $this->model_api->getproduct();
+        $data['units'] = $this->model_api->getUnit();
+
+        $data['chemical_type'] = $this->model_api->getChemicalType();
+        $data['chemical'] = $this->model_api->getChemical();
+
+        $data['medical_type'] = $this->model_api->getMedicalType();
+        $data['medical'] = $this->model_api->getMedica(1); //1,2,3
+
+        $data['hormone'] = $this->model_api->getMedica(4);
+
+        $data['employ_type'] = $this->model_api->getEmployType();
+        $data['labor_type'] = $this->model_api->getLaborType();
+
+        $data['markets'] = $this->model_api->getMarket();
+
+        
+        // $data['data'] = $this->model_house->getPersonJobs($id);
+        $html =  view('Modules\Survay\Views\modal\land', $data);
+        return $this->respond($html);
     }
 }

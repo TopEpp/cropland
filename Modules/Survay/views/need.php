@@ -58,6 +58,9 @@
                                                 <td>
                                                     <select name="need_type" id="need_type" class="form-control">
                                                         <option value="">เลือก</option>
+                                                        <?php foreach ($support as $key => $val) :?>
+                                                            <option value="<?=$val['Code'];?>"><?=$val['Name'];?></option>
+                                                        <?php endforeach?> 
                                                     </select>
                                                 </td>
                                                 <td>
@@ -79,6 +82,9 @@
                                                         <td>
                                                             <select name="need_type" id="need_type" class="form-control">
                                                                 <option value="">เลือก</option>
+                                                                <?php foreach ($support as $key => $val) :?>
+                                                                    <option value="<?=$val['Code'];?>"><?=$val['Name'];?></option>
+                                                                <?php endforeach?> 
                                                             </select>
                                                         </td>
                                                         <td>
@@ -97,12 +103,12 @@
                                     </table>
                                     </div>
 
-                                    <div class="row">
-                                        <div class="col-md-12 text-right">
-                                            <button type="submit" class="btn btn-info">บันทึก</button>
-                                            <button type="button" class="btn btn-danger" onclick="location.href='<?=base_url('survay');?>';" >ยกเลิก</button>
-                                        </div>
+                                <div class="row">
+                                    <div class="col-md-12 text-right">
+                                        <button type="submit" class="btn btn-info">บันทึก</button>
+                                        <button type="button" class="btn btn-danger" onclick="location.href='<?=base_url('survay');?>';" >ยกเลิก</button>
                                     </div>
+                                </div>
                             </form>
                           
                         </div>

@@ -57,7 +57,10 @@
                                                 </th>
                                                 <td>
                                                     <select name="support_type" id="support_type" class="form-control">
-                                                        <option value="">เลือก</option>
+                                                        <option value="">เลือก</option>                                                        
+                                                        <?php foreach ($support as $key => $val) :?>
+                                                            <option value="<?=$val['Code'];?>"><?=$val['Name'];?></option>
+                                                        <?php endforeach?> 
                                                     </select>
                                                 </td>
                                                 <td>
@@ -79,6 +82,9 @@
                                                         <td>
                                                             <select name="support_type" id="support_type" class="form-control">
                                                                 <option value="">เลือก</option>
+                                                                <?php foreach ($support as $key => $val) :?>
+                                                                    <option value="<?=$val['Code'];?>"><?=$val['Name'];?></option>
+                                                                <?php endforeach?> 
                                                             </select>
                                                         </td>
                                                         <td>

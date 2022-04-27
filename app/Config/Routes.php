@@ -97,6 +97,9 @@ $routes->group("survay", ["namespace" => "Modules\Survay\Controllers"], function
     $routes->get("need/(:num)(:any)", "Survay::need/$1$2");
     $routes->get("picture/(:num)(:any)", "Survay::picture/$1$2");
 
+     //load data
+     $routes->get("load-land(:any)", "Survay::loadland$1");
+
       //save data
       $routes->post("save_manage", "Survay::saveManage");
       $routes->post("save_land/(:num)", "Survay::saveLand/$1");
