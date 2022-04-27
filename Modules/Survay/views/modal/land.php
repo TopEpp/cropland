@@ -86,7 +86,7 @@
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" id="detail_hrdi2" name="detail_hrdi" value="2">
                                         <label class="form-check-label" for="detail_hrdi2">
-                                        ได้รับผลผลิต
+                                        ไม่รับผลผลิต
                                         </label>
                                     </div>
                                 </div>

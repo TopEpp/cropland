@@ -66,13 +66,16 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>     
-                                                    <?php foreach ($data as $key => $value) :?>
-                                                        
-                                                        <!-- <tr>                                                            
-                                                            <td><?=$value['detail_use'];?></td>
-                                                            <td><?=$value['detail_type'];?></td>
+                                                    <?php foreach ($data as $key => $value) :?>                                                        
+                                                        <tr>    
+                                                            <td><?=$key+1;?></td>                                                        
+                                                            <td><?=$value['landuse'];?></td>
+                                                            <td><?=$value['product_name'];?></td>
+                                                            <td><?=$value['detail_area'];?></td>                                                                                                                
                                                             <td><?=$value['detail_age'];?></td>
-                                                            <td><?=$value['detail_start_date'];?></td>                                                         
+                                                            <td><?=$value['seed_value'];?></td>
+                                                            <td><?=$value['detail_start_date'];?></td>
+                                                            <td><?=$value['detail_hrdi'];?></td>
                                                             <td></td>
                                                             <td></td>
                                                             <td></td>
@@ -81,10 +84,14 @@
                                                             <td></td>
                                                             <td></td>
                                                             <td></td>
-
-
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
                                                             
-                                                        </tr> -->
+                                                        </tr>
                                                     <?php endforeach;?>                                 
                                                 </tbody>
                                             </table>

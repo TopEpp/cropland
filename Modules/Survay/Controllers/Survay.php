@@ -115,15 +115,26 @@ class Survay extends BaseController
         $data['interview_id'] = $interview_id;
         $data['landuse'] =  $this->model_api->getLandUse();
         $data['data'] = $this->model_survay->getSurvayLand($interview_id);
+        if (!empty($data['data'])){     
+            foreach ($data['data'] as $key => $value) {
+                $data['data'][$key]['detail_start_date'] = $this->date_thai->date_eng2thai($value['detail_start_date'],543,'','','/');            
+            }
+            
+        }
         
         return view('Modules\Survay\Views\land',$data);
     }
 
     public function saveLand($interview_id){
         $input = $this->request->getVar();
-        dd($input);
+       
         $session = session();
         $input['interview_id'] = $interview_id;
+        $input['detail_start_date'] = $this->date_thai->date_thai2eng($input['detail_start_date'],-543);
+        $input['detail_finish_date'] = $this->date_thai->date_thai2eng($input['detail_finish_date'],-543);
+        $input['detail_keep_start_date'] = $this->date_thai->date_thai2eng($input['detail_keep_start_date'],-543);
+        $input['detail_keep_finish_date'] = $this->date_thai->date_thai2eng($input['detail_keep_finish_date'],-543);
+       
         $detail_id = $this->model_survay->saveSurvayLand($input);
 
         if (!empty($input['detail_id'])){
