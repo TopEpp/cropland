@@ -14,7 +14,7 @@
                             <select name="detail_use" id="detail_use" class="form-control select2">
                                 <option value="">เลือก</option>
                                 <?php foreach ($landuse as $key => $value) :?>
-                                    <option value="<?=$value['landuse_id'];?>"><?=$value['name'];?></option>
+                                    <option <?=@$result['data']['detail_use'] == $value['landuse_id'] ? 'selected':'';?> value="<?=$value['landuse_id'];?>"><?=$value['name'];?></option>
                                 <?php endforeach?>              
                             </select>
                         </div>
@@ -23,60 +23,60 @@
                             <select name="detail_type" id="detail_type" class="form-control select2">
                                 <option value="">เลือก</option>       
                                 <?php foreach ($products as $key => $value) :?>
-                                    <option value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
+                                    <option <?=@$result['data']['detail_type'] == $value['Code'] ? 'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                 <?php endforeach?>         
                                                       
                             </select>                      
                         </div>                      
                         <div class="form-group col-md-3">
                             <label>อายุ (ปี)</label>                                        
-                            <input type="text" class="form-control" name="detail_age">
+                            <input type="text" class="form-control" name="detail_age" value="<?=@$result['data']['detail_age'];?>">
                         </div>
                         <div class="form-group col-md-3">
                             <label>พื้นที่ปลูก (ไร่)</label>                                        
-                            <input type="text" class="form-control" name="">
+                            <input type="text" class="form-control" name="detail_area" value="<?=@$result['data']['detail_area'];?>" >
                         </div>
                         <div class="form-group col-md-3">
                             <label>ช่วงเวลาปลูก</label>                                        
-                            <input type="text" class="form-control datepicker" name="detail_start_date">
+                            <input type="text" class="form-control datepicker" name="detail_start_date" value="<?=@$result['data']['detail_start_date'];?>">
                         </div>
                         <div class="form-group col-md-3">
                             <label>&nbsp;</label>                                        
-                            <input type="text" class="form-control datepicker" name="detail_finish_date">
+                            <input type="text" class="form-control datepicker" name="detail_finish_date" value="<?=@$result['data']['detail_finish_date'];?>">
                         </div>
                         <div class="form-group col-md-3">
                             <label>ช่วงเวลาเก็บเกี่ยว</label>                                        
-                            <input type="text" class="form-control datepicker" name="detail_keep_start_date">
+                            <input type="text" class="form-control datepicker" name="detail_keep_start_date" value="<?=@$result['data']['detail_keep_start_date'];?>">
                         </div>
                         <div class="form-group col-md-3">
                             <label>&nbsp;</label>                                        
-                            <input type="text" class="form-control datepicker" name="detail_keep_finish_date">
+                            <input type="text" class="form-control datepicker" name="detail_keep_finish_date" value="<?=@$result['data']['detail_keep_finish_date'];?>">
                         </div>
                     </div>
                     <p>เมล็ด/กล้าพันธุ์</p>
                     <div class="row">
                         <div class="form-group col-md-3">
                             <label>จำนวน</label>                                        
-                            <input type="text" class="form-control" name="seed_value">
+                            <input type="text" class="form-control" name="seed_value" value="<?=@$result['data']['seed_value'];?>">
                         </div>
                         <div class="form-group col-md-3">
                             <label>หน่วยนับ</label>                                                                    
                             <select name="seed_unit" id="seed_unit" class="form-control">
                                 <option value="">เลือก</option>                                
                                 <?php foreach ($units as $key => $value) :?>
-                                    <option value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
+                                    <option <?=@$result['data']['seed_unit'] == $value['Code'] ? 'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                 <?php endforeach?> 
                             </select>
                         </div>
                         <div class="form-group col-md-3">
                             <label>ราคาต่อหน่วย (บาท)</label>                                        
-                            <input type="text" class="form-control" name="cost_seed">
+                            <input type="text" class="form-control" name="cost_seed" value="<?=@$result['data']['cost_seed'];?>">
                         </div>
                         <div class="form-group col-md-3">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" id="detail_hrdi1" name="detail_hrdi" value="1">
+                                        <input class="form-check-input" type="radio" id="detail_hrdi1" name="detail_hrdi" value="1" <?=@$result['data']['detail_hrdi'] == '1' ?'checked':"";?>"  >
                                         <label class="form-check-label" for="detail_hrdi1">
                                         การส่งเสริมจากสถาบันฯ
                                         </label>
@@ -84,7 +84,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" id="detail_hrdi2" name="detail_hrdi" value="2">
+                                        <input class="form-check-input" type="radio" id="detail_hrdi2" name="detail_hrdi" value="2" <?=@$result['data']['detail_hrdi'] == '2' ?'checked':"";?>">
                                         <label class="form-check-label" for="detail_hrdi2">
                                         ไม่รับผลผลิต
                                         </label>
@@ -109,51 +109,106 @@
                                         <th width="10%">หน่วยนับ</th>
                                         <th width="10%">ราคาต่อหน่วย</th>
                                         <th width="10%">ราคารวม</th>
-                                        <th width="10%"><button class="btn btn-info btn-sm" type="button" data-repeater-create>เพิ่มข้อมูล</button></th>
-                                        
+                                        <th width="10%"><button class="btn btn-info btn-sm" type="button" data-repeater-create>เพิ่มข้อมูล</button></th>                                        
                                     </tr>
                                 </thead>
                                 <tbody data-repeater-list="dressing">
-                                    <tr data-repeater-item>
-                                        <td>1</td>
-                                        <td>                                            
-                                            <select name="product_type" id="product_type" class="form-control ">
-                                                <option value=""></option>
-                                                 
-                                                <?php foreach ($chemical_type as $key => $value) :?>
-                                                    <option value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
-                                                <?php endforeach?>                                          
-                                            </select>
-                                        </td>
-                                        <td>                                            
-                                            <select name="product_branch" id="product_branch" class="form-control">
-                                                <option value=""></option>
-                                                <?php foreach ($chemical as $key => $value) :?>
-                                                    <option value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
-                                                <?php endforeach?> 
-                                            </select>
-                                        </td>
-                                        <td>                                            
-                                            <input type="text" name="product_value" class="form-control">
-                                        </td>
-                                        <td>                                            
-                                            <select name="product_unit"  class="form-control">
-                                                <option value=""></option>
-                                                <?php foreach ($units as $key => $value) :?>
-                                                    <option value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
-                                                <?php endforeach?> 
-                                            </select>
-                                        </td>
-                                        <td>                                            
-                                            <input type="text" name="product_price" class="form-control">
-                                        </td>
-                                        <td>                                            
-                                           -
-                                        </td>
-                                        <td>
-                                            <button data-repeater-delete class="btn btn-danger" type="button">ลบ</button>
-                                        </td>
-                                    </tr>
+                                    <?php if (empty($result['dressing'])):?>
+                                        <tr data-repeater-item>
+                                            <td>
+                                                1
+                                                <input type="hidden" name="rec_id">
+                                            </td>
+                                            <td data-id="1">                                            
+                                                <select name="product_type" id="product_type" class="form-control" onchange="selecttype($(this))">
+                                                    <option value=""></option>
+                                                    
+                                                    <?php foreach ($chemical_type as $key => $value) :?>
+                                                        <option value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
+                                                    <?php endforeach?>                                          
+                                                </select>
+                                                <input class="label_type" type="hidden" name="product_type_label">
+                                            </td>
+                                            <td>                                            
+                                                <select name="product_branch" id="product_branch" class="form-control" onchange="selecttype($(this))">
+                                                    <option value=""></option>
+                                                    <?php foreach ($chemical as $key => $value) :?>
+                                                        <option value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
+                                                    <?php endforeach?> 
+                                                </select>
+                                                <input class="label_type" type="hidden" name="product_branch_label">
+                                            </td>
+                                            <td>                                            
+                                                <input type="text" name="product_value" class="form-control">
+                                            </td>
+                                            <td>                                            
+                                                <select name="product_unit"  class="form-control" onchange="selecttype($(this))">
+                                                    <option value=""></option>
+                                                    <?php foreach ($units as $key => $value) :?>
+                                                        <option value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
+                                                    <?php endforeach?> 
+                                                </select>
+                                                <input class="label_type" type="hidden" name="product_unit_label">
+                                            </td>
+                                            <td>                                            
+                                                <input type="text" name="product_price" class="form-control">
+                                            </td>
+                                            <td>                                            
+                                            -
+                                            </td>
+                                            <td>
+                                                <button data-repeater-delete class="btn btn-danger" type="button">ลบ</button>
+                                            </td>
+                                        </tr>
+                                    <?php else:?>
+                                        <?php foreach ($result['dressing'] as $key => $product) :?>
+                                            <tr data-repeater-item>
+                                            <td>
+                                                <?=$key+1;?>
+                                                <input type="hidden" name="rec_id" value="<?=$product['rec_id'];?>">
+                                            </td>
+                                            <td>                                            
+                                                <select name="product_type" id="product_type" class="form-control " onchange="selecttype($(this))">
+                                                    <option value=""></option>                                                    
+                                                    <?php foreach ($chemical_type as $key => $value) :?>
+                                                        <option <?=$product['product_type'] == $value['Code']? 'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
+                                                    <?php endforeach?>                                          
+                                                </select>
+                                                <input class="label_type" type="hidden" name="product_type_label" value="<?=@$value['product_type_label'];?>">
+                                            </td>
+                                            <td>                                            
+                                                <select name="product_branch" id="product_branch" class="form-control" onchange="selecttype($(this))">
+                                                    <option value=""></option>
+                                                    <?php foreach ($chemical as $key => $value) :?>
+                                                        <option <?=$product['product_branch'] == $value['Code']? 'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
+                                                    <?php endforeach?> 
+                                                </select>
+                                                <input class="label_type" type="hidden" name="product_branch_label" value="<?=@$value['product_branch_label'];?>">
+                                            </td>
+                                            <td>                                            
+                                                <input type="text" name="product_value" class="form-control" value="<?=$product['product_value'];?>">
+                                            </td>
+                                            <td>                                            
+                                                <select name="product_unit"  class="form-control" onchange="selecttype($(this))">
+                                                    <option value=""></option>
+                                                    <?php foreach ($units as $key => $value) :?>
+                                                        <option <?=$product['product_unit'] == $value['Code']? 'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
+                                                    <?php endforeach?> 
+                                                </select>
+                                                <input class="label_type" type="hidden" name="product_unit_label">
+                                            </td>
+                                            <td>                                            
+                                                <input type="text" name="product_price" class="form-control" value="<?=$product['product_price'];?>">
+                                            </td>
+                                            <td>                                            
+                                            -
+                                            </td>
+                                            <td>
+                                                <button data-repeater-delete class="btn btn-danger" type="button">ลบ</button>
+                                            </td>
+                                            </tr>
+                                        <?php endforeach;?>
+                                    <?php endif;?>
                                 </tbody>
                             </table>
                         </div>
@@ -178,34 +233,40 @@
                                     </tr>
                                 </thead>
                                 <tbody data-repeater-list="drug">
-                                <tr data-repeater-item>
-                                        <td>1</td>
+                                <?php if (empty($result['drug'])):?>
+                                    <tr data-repeater-item>
+                                        <td>1
+                                        <input type="hidden" name="rec_id">
+                                        </td>
                                         <td>                                            
-                                            <select name="product_type" id="product_type" class="form-control">
+                                            <select name="product_type" id="product_type" class="form-control"  onchange="selecttype($(this))">
                                                 <option value=""></option>
                                                 <?php foreach ($medical_type as $key => $value) :?>
                                                     <option value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                                 <?php endforeach?> 
                                             </select>
+                                            <input class="label_type" type="hidden" name="product_type_label">
                                         </td>
                                         <td>                                            
-                                            <select name="product_branch" id="product_branch" class="form-control">
+                                            <select name="product_branch" id="product_branch" class="form-control"  onchange="selecttype($(this))">
                                                 <option value=""></option>
                                                 <?php foreach ($medical as $key => $value) :?>
                                                     <option value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                                 <?php endforeach?> 
                                             </select>
+                                            <input class="label_type" type="hidden" name="product_branch_label">
                                         </td>
                                         <td>                                            
-                                            <input type="text" name="product_value" class="form-control">
+                                            <input type="text" name="product_value" class="form-control" >
                                         </td>
                                         <td>                                            
-                                            <select name="product_unit" id="" class="form-control">
+                                            <select name="product_unit" id="" class="form-control"  onchange="selecttype($(this))">
                                                 <option value=""></option>
                                                 <?php foreach ($units as $key => $value) :?>
                                                     <option value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                                 <?php endforeach?>                                             
                                             </select>
+                                            <input class="label_type" type="hidden" name="product_unit_label">
                                         </td>
                                         <td>                                            
                                             <input type="text" name="product_price" class="form-control">
@@ -217,6 +278,54 @@
                                             <button data-repeater-delete class="btn btn-danger" type="button">ลบ</button>
                                         </td>
                                     </tr>
+                                <?php else:?>
+                                    <?php foreach ($result['drug'] as $key => $product) :?>
+                                        <tr data-repeater-item>
+                                        <td>1
+                                            <input type="hidden" name="rec_id" value="<?=$product['rec_id'];?>">
+                                        </td>
+                                        <td>                                            
+                                            <select name="product_type" id="product_type" class="form-control"  onchange="selecttype($(this))">
+                                                <option value=""></option>
+                                                <?php foreach ($medical_type as $key => $value) :?>
+                                                    <option <?=$product['product_type'] == $value['Code'] ?'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
+                                                <?php endforeach?> 
+                                            </select>
+                                            <input class="label_type" type="hidden" name="product_type_label">
+                                        </td>
+                                        <td>                                            
+                                            <select name="product_branch" id="product_branch" class="form-control"  onchange="selecttype($(this))">
+                                                <option value=""></option>
+                                                <?php foreach ($medical as $key => $value) :?>
+                                                    <option <?=$product['product_branch'] == $value['Code'] ?'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
+                                                <?php endforeach?> 
+                                            </select>
+                                            <input class="label_type" type="hidden" name="product_branch_label">
+                                        </td>
+                                        <td>                                            
+                                            <input type="text" name="product_value" class="form-control" value="<?=$product['product_value'];?>">
+                                        </td>
+                                        <td>                                            
+                                            <select name="product_unit" id="" class="form-control"  onchange="selecttype($(this))">
+                                                <option value=""></option>
+                                                <?php foreach ($units as $key => $value) :?>
+                                                    <option <?=$product['product_unit'] == $value['Code'] ?'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
+                                                <?php endforeach?>                                             
+                                            </select>
+                                            <input class="label_type" type="hidden" name="product_unit_label">
+                                        </td>
+                                        <td>                                            
+                                            <input type="text" name="product_price" class="form-control" value="<?=$product['product_price'];?>">
+                                        </td>
+                                        <td>                                            
+                                           -
+                                        </td>
+                                        <td>
+                                            <button data-repeater-delete class="btn btn-danger" type="button">ลบ</button>
+                                        </td>
+                                    </tr>
+                                    <?php endforeach;?>
+                                <?php endif;?>
                                 </tbody>
                             </table>
                         </div>
@@ -239,26 +348,31 @@
                                     </tr>
                                 </thead>
                                 <tbody data-repeater-list="hormone">
-                                    <tr data-repeater-item>
-                                            <td>1</td>
+                                <?php if (empty($result['hormone'])):?>
+                                        <tr data-repeater-item>
+                                            <td>1
+                                            <input type="hidden" name="rec_id">
+                                            </td>
                                             <td>                                            
-                                                <select name="" id="" class="form-control">
+                                                <select name="product_type" id="" class="form-control" onchange="selecttype($(this))">
                                                     <option value=""></option>
                                                     <?php foreach ($hormone as $key => $value) :?>
                                                         <option value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                                     <?php endforeach?> 
                                                 </select>
+                                                <input class="label_type" type="hidden" name="product_type_label">
                                             </td>
                                             <td>                                            
                                                 <input type="text" name="product_value" class="form-control">
                                             </td>
                                             <td>                                            
-                                                <select name="product_unit" id="" class="form-control">
+                                                <select name="product_unit" id="" class="form-control" onchange="selecttype($(this))">
                                                     <option value=""></option>
                                                     <?php foreach ($units as $key => $value) :?>
                                                         <option value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                                     <?php endforeach?> 
                                                 </select>
+                                                <input class="label_type" type="hidden" name="product_unit_label">
                                             </td>
                                             <td>                                            
                                                 <input type="text" name="product_price" class="form-control">
@@ -270,6 +384,45 @@
                                                 <button data-repeater-delete class="btn btn-danger" type="button">ลบ</button>
                                             </td>
                                         </tr>
+                                <?php else:?>
+                                    <?php foreach ($result['hormone'] as $key => $product) :?>
+                                        <tr data-repeater-item>
+                                            <td>1
+                                            <input type="hidden" name="rec_id" value="<?=$product['rec_id'];?>">
+                                            </td>
+                                            <td>                                            
+                                                <select name="product_type" id="" class="form-control" onchange="selecttype($(this))">
+                                                    <option value=""></option>
+                                                    <?php foreach ($hormone as $key => $value) :?>
+                                                        <option <?=$product['product_type'] == $value['Code'] ?"selected":'' ;?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
+                                                    <?php endforeach?> 
+                                                </select>
+                                                <input class="label_type" type="hidden" name="product_type_label">
+                                            </td>
+                                            <td>                                            
+                                                <input type="text" name="product_value" class="form-control" value="<?=$product['product_value'];?>">
+                                            </td>
+                                            <td>                                            
+                                                <select name="product_unit" id="" class="form-control" onchange="selecttype($(this))">
+                                                    <option value=""></option>
+                                                    <?php foreach ($units as $key => $value) :?>
+                                                        <option <?=$product['product_unit'] == $value['Code'] ?"selected":'' ;?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
+                                                    <?php endforeach?> 
+                                                </select>
+                                                <input class="label_type" type="hidden" name="product_unit_label">
+                                            </td>
+                                            <td>                                            
+                                                <input type="text" name="product_price" class="form-control" value="<?=$product['product_price'];?>">
+                                            </td>
+                                            <td>                                            
+                                            -
+                                            </td>
+                                            <td>
+                                                <button data-repeater-delete class="btn btn-danger" type="button">ลบ</button>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach;?>
+                                <?php endif;?>
                                 </tbody>
                             </table>
                         </div>
@@ -293,23 +446,28 @@
                                     </tr>
                                 </thead>
                                 <tbody data-repeater-list="staff">
+                                <?php if (empty($result['staff'])):?>
                                     <tr data-repeater-item>
-                                        <td>1</td>
+                                        <td>1
+                                        <input type="hidden" name="rec_id">
+                                        </td>
                                         <td>                                            
-                                            <select name="product_type"  class="form-control">
+                                            <select name="product_type"  class="form-control" onchange="selecttype($(this))">
                                                 <option value=""></option>
                                                  <?php foreach ($employ_type as $key => $value) :?>
                                                     <option value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                                 <?php endforeach?> 
                                             </select>
+                                            <input class="label_type" type="hidden" name="product_type_label">
                                         </td>
                                         <td>                                            
-                                            <select name="product_branch" class="form-control">
+                                            <select name="product_branch" class="form-control" onchange="selecttype($(this))">
                                                 <option value=""></option>
                                                 <?php foreach ($labor_type as $key => $value) :?>
                                                     <option value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                                 <?php endforeach?> 
                                             </select>
+                                            <input class="label_type" type="hidden" name="product_branch_label">
                                         </td>
                                         <td>                                            
                                             <input type="text" name="product_value" class="form-control">
@@ -327,6 +485,48 @@
                                             <button data-repeater-delete class="btn btn-danger" type="button">ลบ</button>
                                         </td>
                                     </tr>
+                                <?php else:?>
+                                    <?php foreach ($result['staff'] as $key => $product) :?>
+                                        <tr data-repeater-item>
+                                            <td>1
+                                            <input type="hidden" name="rec_id" value="<?=$product['rec_id'];?>">
+                                            </td>
+                                            <td>                                            
+                                                <select name="product_type"  class="form-control" onchange="selecttype($(this))">
+                                                    <option value=""></option>
+                                                    <?php foreach ($employ_type as $key => $value) :?>
+                                                        <option  <?=$product['product_type'] == $value['Code'] ? 'selected':'' ;?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
+                                                    <?php endforeach?> 
+                                                </select>
+                                                <input class="label_type" type="hidden" name="product_type_label">
+                                            </td>
+                                            <td>                                            
+                                                <select name="product_branch" class="form-control" onchange="selecttype($(this))">
+                                                    <option value=""></option>
+                                                    <?php foreach ($labor_type as $key => $value) :?>
+                                                        <option <?=$product['product_branch'] == $value['Code'] ? 'selected':'' ;?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
+                                                    <?php endforeach?> 
+                                                </select>
+                                                <input class="label_type" type="hidden" name="product_branch_label">
+                                            </td>
+                                            <td>                                            
+                                                <input type="text" name="product_value" class="form-control" value="<?=$product['product_value'];?>">
+                                            </td>
+                                            <td>                                            
+                                                <input type="text" name="product_unit" class="form-control" value="<?=$product['product_unit'];?>">
+                                            </td>
+                                            <td>                                            
+                                                <input type="text" name="product_price" class="form-control" value="<?=$product['product_price'];?>">
+                                            </td>
+                                            <td>                                            
+                                            -
+                                            </td>
+                                            <td>
+                                                <button data-repeater-delete class="btn btn-danger" type="button">ลบ</button>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach;?>
+                                <?php endif;?>
                                 </tbody>
                             </table>
                         </div>
@@ -336,11 +536,11 @@
                     <div class="row">
                         <div class="form-group col-md-3">
                             <label>น้ำมัน</label>                                        
-                            <input type="text" class="form-control" name="cost_oil">
+                            <input type="text" class="form-control" name="cost_oil" value="<?=@$result['data']['cost_oil'];?>" >
                         </div>
                         <div class="form-group col-md-3">
                             <label>อื่นๆ</label>                                        
-                            <input type="text" class="form-control" name="cost_other">
+                            <input type="text" class="form-control" name="cost_other" value="<?=@$result['data']['cost_other'];?>">
                         </div>
                     </div>
 
@@ -362,48 +562,105 @@
                                     </tr>
                                 </thead>
                                 <tbody data-repeater-list="product">
-                                    <tr data-repeater-item>
-                                        <td>1</td>
-                                        <td>                                            
-                                            <select name="product_type" id="" class="form-control">
-                                                <option value=""></option>
-                                                <option value="1">ข้าวเปลือก</option>
-                                                <option value="2">ข้าวสาร</option>
-                                                <option value="3">เชอรี่</option>
-                                                <option value="4">กะลา</option>
-                                                <option value="5">แปรรูป</option>
-                                            </select>
-                                        </td>
-                                        <td>                                            
-                                            <input type="text" name="product_value" class="form-control">
-                                        </td>
-                                        <td>                                                                                       
-                                            <select name="product_unit" class="form-control">
-                                                <option value=""></option>
-                                                <?php foreach ($units as $key => $value) :?>
-                                                        <option value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
-                                                    <?php endforeach?>
-                                            </select>
-                                        </td>
-                                        <td>                                            
-                                            <input type="text" name="product_price" class="form-control">
-                                        </td>
-                                        <td>                                            
-                                           -
-                                        </td>
-                                        <td>                                            
-                                            <select name="product_market" id="product_market" class="form-control">
-                                                <option value=""></option>
-                                                <?php foreach ($markets as $key => $value) :?>
-                                                        <option value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
-                                                    <?php endforeach?>
-                                                
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <button data-repeater-delete class="btn btn-danger" type="button">ลบ</button>
-                                        </td>
-                                    </tr>
+                                    <?php if (empty($result['product'])):?>
+                                        <tr data-repeater-item>
+                                            <td>1
+                                            <input type="hidden" name="rec_id" >
+                                            </td>
+                                            <td>                                            
+                                                <select name="product_type" id="" class="form-control" onchange="selecttype($(this))">
+                                                    <option value=""></option>
+                                                    <option value="1">ข้าวเปลือก</option>
+                                                    <option value="2">ข้าวสาร</option>
+                                                    <option value="3">เชอรี่</option>
+                                                    <option value="4">กะลา</option>
+                                                    <option value="5">แปรรูป</option>
+                                                </select>
+                                                <input class="label_type" type="hidden" name="product_type_label">
+                                            </td>
+                                            <td>                                            
+                                                <input type="text" name="product_value" class="form-control">
+                                            </td>
+                                            <td>                                                                                       
+                                                <select name="product_unit" class="form-control" onchange="selecttype($(this))">
+                                                    <option value=""></option>
+                                                    <?php foreach ($units as $key => $value) :?>
+                                                            <option value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
+                                                        <?php endforeach?>
+                                                </select>
+                                                <input class="label_type" type="hidden" name="product_unit_label">
+                                            </td>
+                                            <td>                                            
+                                                <input type="text" name="product_price" class="form-control">
+                                            </td>
+                                            <td>                                            
+                                            -
+                                            </td>
+                                            <td>                                            
+                                                <select name="product_market" id="product_market" class="form-control" onchange="selecttype($(this))">
+                                                    <option value=""></option>
+                                                    <?php foreach ($markets as $key => $value) :?>
+                                                            <option value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
+                                                        <?php endforeach?>
+                                                    
+                                                </select>
+                                                <input class="label_type" type="hidden" name="product_market_label" >
+                                            </td>
+                                            <td>
+                                                <button data-repeater-delete class="btn btn-danger" type="button">ลบ</button>
+                                            </td>
+                                        </tr>
+                                    <?php else:?>
+                                        <?php foreach ($result['product'] as $key => $product) :?>
+                                            <tr data-repeater-item>
+                                            <td>1
+                                            <input type="hidden" name="rec_id" value="<?=$product['rec_id'];?>">
+                                            </td>
+                                            <td>                                            
+                                                <select name="product_type" id="" class="form-control" onchange="selecttype($(this))">
+                                                    <option value=""></option>
+                                                    <option <?=@$product['product_type'] == 1 ? 'selected':'';?> value="1">ข้าวเปลือก</option>
+                                                    <option <?=@$product['product_type'] == 2 ? 'selected':'';?> value="2">ข้าวสาร</option>
+                                                    <option <?=@$product['product_type'] == 3 ? 'selected':'';?> value="3">เชอรี่</option>
+                                                    <option <?=@$product['product_type'] == 4 ? 'selected':'';?> value="4">กะลา</option>
+                                                    <option <?=@$product['product_type'] == 5 ? 'selected':'';?> value="5">แปรรูป</option>
+                                                </select>
+                                                <input class="label_type" type="hidden" name="product_type_label" value="<?=@$product['product_type_label'];?>">
+                                            </td>
+                                            <td>                                            
+                                                <input type="text" name="product_value" class="form-control" value="<?=@$product['product_value'];?>">
+                                            </td>
+                                            <td>                                                                                       
+                                                <select name="product_unit" class="form-control" onchange="selecttype($(this))">
+                                                    <option value=""></option>
+                                                    <?php foreach ($units as $key => $value) :?>
+                                                            <option <?=@$product['product_unit'] == $value['Code'] ? 'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
+                                                        <?php endforeach?>
+                                                </select>
+                                                <input class="label_type" type="hidden" name="product_unit_label" value="<?=@$product['product_unit_label'];?>">
+                                            </td>
+                                            <td>                                            
+                                                <input type="text" name="product_price" class="form-control" value="<?=@$product['product_price'];?>">
+                                            </td>
+                                            <td>                                            
+                                            -
+                                            </td>
+                                            <td>                                            
+                                                <select name="product_market" id="product_market" class="form-control" onchange="selecttype($(this))">
+                                                    <option value=""></option>
+                                                    <?php foreach ($markets as $key => $value) :?>
+                                                            <option <?=@$product['product_market'] == $value['Code'] ? 'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
+                                                        <?php endforeach?>
+                                                    
+                                                </select>
+                                                <input class="label_type" type="hidden" name="product_market_label" value="<?=@$product['product_market_label'];?>">
+                                            </td>
+                                            <td>
+                                                <button data-repeater-delete class="btn btn-danger" type="button">ลบ</button>
+                                            </td>
+                                        </tr>
+                                        <?php endforeach;?>
+                                    <?php endif;?>
                                 </tbody>
                             </table>
                         </div>
@@ -411,14 +668,14 @@
                     <div class="row">
                         <div class="form-group col-md-3">
                             <label>จำนวนบริโภค</label>                                        
-                            <input type="text" class="form-control" name="detail_consume">
+                            <input type="text" class="form-control" name="detail_consume" value="<?=@$result['data']['detail_consume'];?>">
                         </div>
                         <div class="form-group col-md-3">
                             <label>หน่วยนับ</label>                                        
                             <select  class="form-control" name="detail_comsume_unit">
                                 <option value=""></option>
                                 <?php foreach ($units as $key => $value) :?>
-                                    <option value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
+                                    <option <?=@$result['data']['detail_comsume_unit'] == $value['Code'] ? 'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                 <?php endforeach?> 
                             </select>
                         </div>
@@ -434,7 +691,12 @@
 
                         
 <script>
-   
+   function selecttype(element){
+        var $option = element.find('option:selected');
+        var value = $option.val();
+        var text = $option.text();
+        element.closest('td').find('.label_type').val(text)
+   }
  
    $(function () {
         $(".select2").select2();

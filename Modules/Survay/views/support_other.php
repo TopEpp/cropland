@@ -59,6 +59,9 @@
                                                 <td>
                                                     <select name="org_id" id="org_id" class="form-control">
                                                         <option value="">เลือก</option>
+                                                        <?php foreach ($org as $key => $val) :?>
+                                                            <option  value="<?=$val['Code'];?>"><?=$val['Name'];?></option>
+                                                        <?php endforeach?> 
                                                     </select>
                                                 </td>
                                                 <td>
@@ -80,6 +83,9 @@
                                                         <td>
                                                             <select name="org_id" id="org_id" class="form-control">
                                                                 <option value="">เลือก</option>
+                                                                <?php foreach ($org as $key => $val) :?>
+                                                                    <option  <?=$value['org_id'] == $val['Code'] ?'selected':'';?> value="<?=$val['Code'];?>"><?=$val['Name'];?></option>
+                                                                <?php endforeach?> 
                                                             </select>
                                                         </td>
                                                         <td>

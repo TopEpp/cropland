@@ -114,13 +114,16 @@ class Survay extends BaseController
     public function land($interview_id,$id = ''){
         $data['interview_id'] = $interview_id;
         $data['landuse'] =  $this->model_api->getLandUse();
-        $data['data'] = $this->model_survay->getSurvayLand($interview_id);
-        if (!empty($data['data'])){     
-            foreach ($data['data'] as $key => $value) {
-                $data['data'][$key]['detail_start_date'] = $this->date_thai->date_eng2thai($value['detail_start_date'],543,'','','/');            
+        $result = $this->model_survay->getSurvayLand($interview_id);
+        if (!empty($result['data'])){     
+            foreach ($result['data'] as $key => $value) {                
+                $result['data'][$value['detail_id']]['detail_start_date'] = $this->date_thai->date_eng2thai($value['detail_start_date'],543,'','','/');            
             }
-            
+            $data['data'] =$result['data'];
+        }else{
+            $data['data'] =[];
         }
+       
         
         return view('Modules\Survay\Views\land',$data);
     }
@@ -175,6 +178,9 @@ class Survay extends BaseController
 
     public function supportOther($interview_id,$id = ''){
         $data['interview_id'] = $interview_id;
+
+        $data['org'] = $this->model_api->getDepartment();
+        
         $data['data'] = $this->model_survay->getSupportsOther($interview_id);
         return view('Modules\Survay\Views\support_other',$data);
     }
@@ -255,8 +261,19 @@ class Survay extends BaseController
         return view('Modules\Survay\Views\picture',$data);
     }
 
-    public function loadland($id = ''){
+    public function loadland($interview_id = '',$id = ''){
         $data = [];
+
+        if ($id != ''){
+            $data['result']  = $this->model_survay->getSurvayLand($interview_id,$id);
+            
+            $data['result']['data']['detail_start_date'] = $this->date_thai->date_eng2thai($data['result']['data']['detail_start_date'],543,'','','/'); 
+            $data['result']['data']['detail_finish_date'] = $this->date_thai->date_eng2thai($data['result']['data']['detail_finish_date'],543,'','','/'); 
+            $data['result']['data']['detail_keep_start_date'] = $this->date_thai->date_eng2thai($data['result']['data']['detail_keep_start_date'],543,'','','/'); 
+            $data['result']['data']['detail_keep_finish_date'] = $this->date_thai->date_eng2thai($data['result']['data']['detail_keep_finish_date'],543,'','','/'); 
+            
+
+        }
         $data['landuse'] =  $this->model_api->getLandUse();
         $data['products'] = $this->model_api->getproduct();
         $data['units'] = $this->model_api->getUnit();

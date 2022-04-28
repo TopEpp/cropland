@@ -27,7 +27,7 @@
                                         <h4>ตารางเก็บรายละเอียดข้อมูลการใช้ที่ดินในรอบ 1 ปีที่ผ่านมา</h4>
                                         <div class="card-header-action">
                                             <!-- <a data-collapse="#mycard-collapse" class="btn btn-icon btn-info" href="#"><i class="fas fa-minus"></i></a> -->
-                                            <a href="#" class="btn btn-info" onclick="addLand()">เพิ่มข้อมูล</a>
+                                            <a href="#" class="btn btn-info" onclick="addLand(<?=$interview_id;?>)">เพิ่มข้อมูล</a>
                                         </div>
                                     </div>
                                     <div class="collapse show" id="mycard-collapse">
@@ -66,30 +66,38 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>     
-                                                    <?php foreach ($data as $key => $value) :?>                                                        
+                                                    <?php foreach ($data as $key => $value) :?>    
+                                                        <?php 
+                                                        $seed =$value['cost_seed'] * $value['seed_value'];
+                                                        $sum_cost = $seed + $value['dressing'] + $value['drug']+ $value['hormone']+$value['staff']+$value['cost_oil']+$value['cost_other'];
+                                                        ?>                                                    
                                                         <tr>    
                                                             <td><?=$key+1;?></td>                                                        
                                                             <td><?=$value['landuse'];?></td>
-                                                            <td><?=$value['product_name'];?></td>
+                                                            <td>
+                                                                <a href="#"  onclick="addLand(<?=$interview_id;?>,<?=$value['detail_id'];?>)" ><?=$value['product_name'];?></a>
+                                                            </td>
                                                             <td><?=$value['detail_area'];?></td>                                                                                                                
                                                             <td><?=$value['detail_age'];?></td>
                                                             <td><?=$value['seed_value'];?></td>
                                                             <td><?=$value['detail_start_date'];?></td>
                                                             <td><?=$value['detail_hrdi'];?></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
+                                                            <td><?=$value['detail_hrdi'];?></td>
+                                                            <td><?=$seed;?></td>
+                                                            <td><?=$value['dressing'];?></td>
+                                                            <td><?=$value['drug'];?></td>
+                                                            <td><?=$value['hormone'];?></td>
+                                                            <td><?=$value['staff'];?></td>
+                                                            <td><?=$value['cost_oil'];?></td>
+                                                            <td><?=$value['cost_other'];?></td>
+                                                            <td><?=$sum_cost;?></td>
+                                                            <td><?=$value['detail_consume'];?></td>
+                                                            <td><?=$value['product_type'];?></td>
+                                                            <td><?=$value['product_value'];?></td>
+                                                            <td><?=$value['product_price'];?></td>
+                                                            <td><?=$value['product_price'] * $value['product_value'];?></td>
+                                                            <td><?=$value['product_market'];?></td>
+                                                            
                                                             
                                                         </tr>
                                                     <?php endforeach;?>                                 
@@ -134,11 +142,11 @@
 
 <script>
 
-    function addLand(){
-        // $("#land_id").val(id)
+    function addLand(interview_id,id = ''){
+        $("#detail_id").val(id)
         $.ajax({
             type: "GET",
-            url: domain+'survay/load-land/',
+            url: domain+'survay/load-land/'+interview_id+'/'+id,
             success : function(response){
                 $("#item_modal").html(response)
             }

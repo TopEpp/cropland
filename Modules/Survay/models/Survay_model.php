@@ -81,22 +81,72 @@ class Survay_model extends Model
       
     }
 
-    public function getSurvayLand($interview_id){
+    public function getSurvayLand($interview_id,$detail_id = ''){
         
         $builder = $this->db->table('LH_interview_land_detail');
         $builder->select('LH_interview_land_detail.*,
                         LH_landuse.name as landuse,
-                        CODE_PRODUCT.name as product_name');
+                        CODE_PRODUCT.name as product_name,
+                        LH_interview_land_product.*');
+        $builder->join('LH_interview_land_product', 'LH_interview_land_product.detail_id = LH_interview_land_detail.detail_id');
         $builder->join('LH_landuse', 'LH_landuse.landuse_id = LH_interview_land_detail.detail_use');
         $builder->join('CODE_PRODUCT', 'CODE_PRODUCT.Code = LH_interview_land_detail.detail_type');
-        // if ($interview_id){
-        //   $builder = $builder->where('interview_id',$interview_id);
-        //   $query = $builder->get()->getRowArray();
-        //   return $query;
-        // }
+        $builder = $builder->where('LH_interview_land_detail.interview_id',$interview_id);
+
+        if ($detail_id != ''){
+            $builder = $builder->where('LH_interview_land_detail.detail_id',$detail_id);           
+            $query = $builder->get()->getResultArray();
+            
+            $data  = [];
+            $product  = [];
+            foreach ($query as $key => $value) {
+                $data['data'] = $value;
+                $data[$value['data_type']][] = $value;
+            }
+        //   dd($data);
+
+            return $data;
+       
+        }
         
         $query = $builder->get()->getResultArray();
-        return $query;
+        $data  = [];
+        $product  = [];
+        foreach ($query as $key => $value) {
+          
+          $data['data'][$value['detail_id']] = $value;
+          $data[$value['data_type']][$value['detail_id']][] = $value;
+
+        }
+        
+        foreach ($data['dressing'] as $key => $value) {            
+            $data['data'][$key]['dressing'] = array_sum(array_column($value, 'product_value')) *  array_sum(array_column($value, 'product_price'));  
+        }
+
+        foreach ($data['drug'] as $key => $value) {            
+            $data['data'][$key]['drug'] = array_sum(array_column($value, 'product_value')) *  array_sum(array_column($value, 'product_price'));  
+        } 
+
+        foreach ($data['hormone'] as $key => $value) {            
+            $data['data'][$key]['hormone'] = array_sum(array_column($value, 'product_value')) *  array_sum(array_column($value, 'product_price'));  
+        } 
+
+        foreach ($data['staff'] as $key => $value) {            
+            $data['data'][$key]['staff'] = array_sum(array_column($value, 'product_value')) *  array_sum(array_column($value, 'product_price'));  
+        } 
+
+        foreach ($data['product'] as $key => $value) {            
+            $data['data'][$key]['product_value'] = array_sum(array_column($value, 'product_value')); 
+            $data['data'][$key]['product_price'] = array_sum(array_column($value, 'product_price'));  
+            $data['data'][$key]['product_market'] = implode(', ',array_column($value, 'product_market_label'));
+            $data['data'][$key]['product_type'] = implode(', ',array_column($value, 'product_type_label'));  
+            
+        } 
+        
+     
+
+        return $data;
+        
 
     }
 
@@ -125,17 +175,12 @@ class Survay_model extends Model
 
         $builder = $db->table('LH_interview_land_detail');
         if (!empty($data['detail_id'])){
-        //   $detail_id = $data['detail_id'];
-        //   $builder->where('detail_id',$data['detail_id']);
-        //   unset($data['detail_id']);
-        //   $builder->update($data);
-        
-        }else{
+          $detail_id = $data['detail_id'];
+          $builder->where('detail_id',$data['detail_id']);
           unset($data['detail_id']);
-          $builder->insert($data);
-          $detail_id = $db->insertID();
+          $res= $builder->update($data);
 
-          //insert detail product
+          //edit detail product
           if ($detail_id){
             $builder = $db->table('LH_interview_land_product');
             // dressing ปุ๋ย
@@ -152,12 +197,15 @@ class Survay_model extends Model
                     $tmp_product['product_unit'] = $value['product_unit'];
                     $tmp_product['product_price'] = $value['product_price']?$value['product_price']:0;
                     $tmp_product['product_branch'] = $value['product_branch'];
+                    $tmp_product['product_branch_label'] = $value['product_branch_label'];
+                    $tmp_product['product_type_label'] = $value['product_type_label'];
+                    $tmp_product['product_unit_label'] = $value['product_unit_label'];
 
-                    if (!empty($tmp['rec_id'])){                
-                        // $rec_id = $tmp['rec_id'];
-                        // $builder->where('rec_id',$tmp['rec_id']);
-                        // unset($tmp['rec_id']);
-                        // $builder->update($tmp);
+                    if (!empty($tmp_product['rec_id'])){                
+                        
+                        $builder->where('rec_id',$tmp_product['rec_id']);
+                        unset($tmp_product['rec_id']);
+                        $builder->update($tmp_product);
                         
                     }else{
                         unset($tmp_product['rec_id']);
@@ -183,12 +231,15 @@ class Survay_model extends Model
                     $tmp_product['product_unit'] = $value['product_unit'];
                     $tmp_product['product_price'] = $value['product_price']?$value['product_price']:0;                    
                     $tmp_product['product_branch'] = $value['product_branch'];
+                    $tmp_product['product_branch_label'] = $value['product_branch_label'];
+                    $tmp_product['product_type_label'] = $value['product_type_label'];
+                    $tmp_product['product_unit_label'] = $value['product_unit_label'];
 
-                    if (!empty($tmp['rec_id'])){                
-                        // $rec_id = $tmp['rec_id'];
-                        // $builder->where('rec_id',$tmp['rec_id']);
-                        // unset($tmp['rec_id']);
-                        // $builder->update($tmp);
+                    if (!empty($tmp_product['rec_id'])){                
+                        
+                        $builder->where('rec_id',$tmp_product['rec_id']);
+                        unset($tmp_product['rec_id']);
+                        $builder->update($tmp_product);
                         
                     }else{
                         unset($tmp_product['rec_id']);
@@ -212,14 +263,15 @@ class Survay_model extends Model
                     $tmp_product['product_type'] = @$value['product_type'];
                     $tmp_product['product_value'] = $value['product_value']?$value['product_value']:0;
                     $tmp_product['product_unit'] = $value['product_unit'];
-                    $tmp_product['product_price'] = $value['product_price']?$value['product_price']:0;                    
-                    $tmp_product['product_branch'] = @$value['product_branch'];
+                    $tmp_product['product_price'] = $value['product_price']?$value['product_price']:0;                                                
+                    $tmp_product['product_type_label'] = $value['product_type_label'];
+                    $tmp_product['product_unit_label'] = $value['product_unit_label'];
 
-                    if (!empty($tmp['rec_id'])){                
-                        // $rec_id = $tmp['rec_id'];
-                        // $builder->where('rec_id',$tmp['rec_id']);
-                        // unset($tmp['rec_id']);
-                        // $builder->update($tmp);
+                    if (!empty($tmp_product['rec_id'])){                
+                        
+                        $builder->where('rec_id',$tmp_product['rec_id']);
+                        unset($tmp_product['rec_id']);
+                        $builder->update($tmp_product);
                         
                     }else{
                         unset($tmp_product['rec_id']);
@@ -245,12 +297,15 @@ class Survay_model extends Model
                     $tmp_product['product_unit'] = $value['product_unit'];
                     $tmp_product['product_price'] = $value['product_price']?$value['product_price']:0;                    
                     $tmp_product['product_branch'] = $value['product_branch'];
+                    $tmp_product['product_branch_label'] = $value['product_branch_label'];
+                    $tmp_product['product_type_label'] = $value['product_type_label'];
+                    
 
-                    if (!empty($tmp['rec_id'])){                
-                        // $rec_id = $tmp['rec_id'];
-                        // $builder->where('rec_id',$tmp['rec_id']);
-                        // unset($tmp['rec_id']);
-                        // $builder->update($tmp);
+                    if (!empty($tmp_product['rec_id'])){                
+                        
+                        $builder->where('rec_id',$tmp_product['rec_id']);
+                        unset($tmp_product['rec_id']);
+                        $builder->update($tmp_product);
                         
                     }else{
                         unset($tmp_product['rec_id']);
@@ -275,13 +330,194 @@ class Survay_model extends Model
                     $tmp_product['product_value'] = $value['product_value']?$value['product_value']:0;
                     $tmp_product['product_unit'] = $value['product_unit'];
                     $tmp_product['product_price'] = $value['product_price']?$value['product_price']:0;
-                    $tmp_product['product_market'] = $value['product_market'];                    
+                    $tmp_product['product_market'] = $value['product_market'];
+                    $tmp_product['product_market_label'] = $value['product_market_label'];
+                    $tmp_product['product_type_label'] = $value['product_type_label'];
+                    $tmp_product['product_unit_label'] = $value['product_unit_label'];                
 
-                    if (!empty($tmp['rec_id'])){                
-                        // $rec_id = $tmp['rec_id'];
-                        // $builder->where('rec_id',$tmp['rec_id']);
-                        // unset($tmp['rec_id']);
-                        // $builder->update($tmp);
+                    if (!empty($tmp_product['rec_id'])){                
+                        
+                        $builder->where('rec_id',$tmp_product['rec_id']);
+                        unset($tmp_product['rec_id']);
+                        $builder->update($tmp_product);
+                        
+                    }else{
+                        unset($tmp_product['rec_id']);
+                        $builder->insert($tmp_product);
+                        $db->insertID();
+                    }
+    
+                
+                }
+            }
+
+          }
+          
+        
+        }else{
+          unset($data['detail_id']);
+          $builder->insert($data);
+          $detail_id = $db->insertID();
+
+          //insert detail product
+          if ($detail_id){
+            $builder = $db->table('LH_interview_land_product');
+            // dressing ปุ๋ย
+            if (!empty($tmp['dressing'])){
+                foreach ($tmp['dressing'] as $key => $value) {
+                    $tmp_product = [];
+                    $tmp_product['data_type'] = 'dressing';
+                    $tmp_product['interview_id'] = $data['interview_id'];
+                    $tmp_product['land_id'] = $data['land_id'];
+                    $tmp_product['detail_id'] = $detail_id;                    
+                    $tmp_product['rec_id'] = @$value['rec_id'];
+                    $tmp_product['product_type'] = $value['product_type'];
+                    $tmp_product['product_value'] = $value['product_value']?$value['product_value']:0;
+                    $tmp_product['product_unit'] = $value['product_unit'];
+                    $tmp_product['product_price'] = $value['product_price']?$value['product_price']:0;
+                    $tmp_product['product_branch'] = $value['product_branch'];
+                    $tmp_product['product_branch_label'] = $value['product_branch_label'];
+                    $tmp_product['product_type_label'] = $value['product_type_label'];
+                    $tmp_product['product_unit_label'] = $value['product_unit_label'];
+
+                    if (!empty($tmp_product['rec_id'])){                
+                        
+                        $builder->where('rec_id',$tmp_product['rec_id']);
+                        unset($tmp_product['rec_id']);
+                        $builder->update($tmp_product);
+                        
+                    }else{
+                        unset($tmp_product['rec_id']);
+                        $builder->insert($tmp_product);
+                        $db->insertID();
+                    }
+    
+                
+                }
+            }
+
+            // drug ยา
+            if (!empty($tmp['drug'])){
+                foreach ($tmp['drug'] as $key => $value) {
+                    $tmp_product = [];
+                    $tmp_product['data_type'] = 'drug';
+                    $tmp_product['interview_id'] = $data['interview_id'];
+                    $tmp_product['land_id'] = $data['land_id'];
+                    $tmp_product['detail_id'] = $detail_id;                    
+                    $tmp_product['rec_id'] = @$value['rec_id'];
+                    $tmp_product['product_type'] = $value['product_type'];
+                    $tmp_product['product_value'] = $value['product_value']?$value['product_value']:0;
+                    $tmp_product['product_unit'] = $value['product_unit'];
+                    $tmp_product['product_price'] = $value['product_price']?$value['product_price']:0;                    
+                    $tmp_product['product_branch'] = $value['product_branch'];
+                    $tmp_product['product_branch_label'] = $value['product_branch_label'];
+                    $tmp_product['product_type_label'] = $value['product_type_label'];
+                    $tmp_product['product_unit_label'] = $value['product_unit_label'];
+
+                    if (!empty($tmp_product['rec_id'])){                
+                        
+                        $builder->where('rec_id',$tmp_product['rec_id']);
+                        unset($tmp_product['rec_id']);
+                        $builder->update($tmp_product);
+                        
+                    }else{
+                        unset($tmp_product['rec_id']);
+                        $builder->insert($tmp_product);
+                        $db->insertID();
+                    }
+                
+                }
+            }
+
+            // hormone  ฮอร์โมน
+            if (!empty($tmp['hormone'])){
+                foreach ($tmp['hormone'] as $key => $value) {
+                    $tmp_product = [];
+                    $tmp_product['data_type'] = 'hormone';
+                    $tmp_product['interview_id'] = $data['interview_id'];
+                    $tmp_product['land_id'] = $data['land_id'];
+                    $tmp_product['detail_id'] = $detail_id;                    
+                    $tmp_product['rec_id'] = @$value['rec_id'];
+                    $tmp_product['product_type'] = @$value['product_type'];
+                    $tmp_product['product_value'] = $value['product_value']?$value['product_value']:0;
+                    $tmp_product['product_unit'] = $value['product_unit'];
+                    $tmp_product['product_price'] = $value['product_price']?$value['product_price']:0;                                      
+                    $tmp_product['product_type_label'] = $value['product_type_label'];
+                    $tmp_product['product_unit_label'] = $value['product_unit_label'];
+
+                    if (!empty($tmp_product['rec_id'])){                
+                        
+                        $builder->where('rec_id',$tmp_product['rec_id']);
+                        unset($tmp_product['rec_id']);
+                        $builder->update($tmp_product);
+                        
+                    }else{
+                        unset($tmp_product['rec_id']);
+                        $builder->insert($tmp_product);
+                        $db->insertID();
+                    }
+    
+                
+                }
+            }
+
+            // staff  พนักงาน
+            if (!empty($tmp['staff'])){
+                foreach ($tmp['staff'] as $key => $value) {
+                    $tmp_product = [];
+                    $tmp_product['data_type'] = 'staff';
+                    $tmp_product['interview_id'] = $data['interview_id'];
+                    $tmp_product['land_id'] = $data['land_id'];
+                    $tmp_product['detail_id'] = $detail_id;                    
+                    $tmp_product['rec_id'] = @$value['rec_id'];
+                    $tmp_product['product_type'] = $value['product_type'];
+                    $tmp_product['product_value'] = $value['product_value']?$value['product_value']:0;
+                    $tmp_product['product_unit'] = $value['product_unit'];
+                    $tmp_product['product_price'] = $value['product_price']?$value['product_price']:0;                    
+                    $tmp_product['product_branch'] = $value['product_branch'];
+                    $tmp_product['product_branch_label'] = $value['product_branch_label'];
+                    $tmp_product['product_type_label'] = $value['product_type_label'];
+                    
+
+                    if (!empty($tmp_product['rec_id'])){                
+                        
+                        $builder->where('rec_id',$tmp_product['rec_id']);
+                        unset($tmp_product['rec_id']);
+                        $builder->update($tmp_product);
+                        
+                    }else{
+                        unset($tmp_product['rec_id']);
+                        $builder->insert($tmp_product);
+                        $db->insertID();
+                    }
+    
+                
+                }
+            }
+
+            // product  ผลผลิต
+            if (!empty($tmp['product'])){
+                foreach ($tmp['product'] as $key => $value) {
+                    $tmp_product = [];
+                    $tmp_product['data_type'] = 'product';
+                    $tmp_product['interview_id'] = $data['interview_id'];
+                    $tmp_product['land_id'] = $data['land_id'];
+                    $tmp_product['detail_id'] = $detail_id;                    
+                    $tmp_product['rec_id'] = @$value['rec_id'];
+                    $tmp_product['product_type'] = $value['product_type'];
+                    $tmp_product['product_value'] = $value['product_value']?$value['product_value']:0;
+                    $tmp_product['product_unit'] = $value['product_unit'];
+                    $tmp_product['product_price'] = $value['product_price']?$value['product_price']:0;
+                    $tmp_product['product_market'] = $value['product_market'];
+                    $tmp_product['product_market_label'] = $value['product_market_label'];
+                    $tmp_product['product_type_label'] = $value['product_type_label'];
+                    $tmp_product['product_unit_label'] = $value['product_unit_label'];                
+
+                    if (!empty($tmp_product['rec_id'])){                
+                        
+                        $builder->where('rec_id',$tmp_product['rec_id']);
+                        unset($tmp_product['rec_id']);
+                        $builder->update($tmp_product);
                         
                     }else{
                         unset($tmp_product['rec_id']);
