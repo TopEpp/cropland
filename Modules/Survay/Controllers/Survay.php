@@ -133,10 +133,10 @@ class Survay extends BaseController
        
         $session = session();
         $input['interview_id'] = $interview_id;
-        $input['detail_start_date'] = $this->date_thai->date_thai2eng($input['detail_start_date'],-543);
-        $input['detail_finish_date'] = $this->date_thai->date_thai2eng($input['detail_finish_date'],-543);
-        $input['detail_keep_start_date'] = $this->date_thai->date_thai2eng($input['detail_keep_start_date'],-543);
-        $input['detail_keep_finish_date'] = $this->date_thai->date_thai2eng($input['detail_keep_finish_date'],-543);
+        $input['detail_start_date'] = !empty($input['detail_start_date']) ?  $this->date_thai->date_thai2eng($input['detail_start_date'],-543) :'';
+        $input['detail_finish_date'] = !empty($input['detail_finish_date']) ? $this->date_thai->date_thai2eng($input['detail_finish_date'],-543) : '';
+        $input['detail_keep_start_date'] = !empty($input['detail_keep_start_date']) ?  $this->date_thai->date_thai2eng($input['detail_keep_start_date'],-543) : '';
+        $input['detail_keep_finish_date'] = !empty($input['detail_keep_finish_date'])  ? $this->date_thai->date_thai2eng($input['detail_keep_finish_date'],-543) : '';
        
         $detail_id = $this->model_survay->saveSurvayLand($input);
 
@@ -265,12 +265,11 @@ class Survay extends BaseController
         $data = [];
 
         if ($id != ''){
-            $data['result']  = $this->model_survay->getSurvayLand($interview_id,$id);
-            
-            $data['result']['data']['detail_start_date'] = $this->date_thai->date_eng2thai($data['result']['data']['detail_start_date'],543,'','','/'); 
-            $data['result']['data']['detail_finish_date'] = $this->date_thai->date_eng2thai($data['result']['data']['detail_finish_date'],543,'','','/'); 
-            $data['result']['data']['detail_keep_start_date'] = $this->date_thai->date_eng2thai($data['result']['data']['detail_keep_start_date'],543,'','','/'); 
-            $data['result']['data']['detail_keep_finish_date'] = $this->date_thai->date_eng2thai($data['result']['data']['detail_keep_finish_date'],543,'','','/'); 
+            $data['result']  = $this->model_survay->getSurvayLand($interview_id,$id);            
+            $data['result']['data']['detail_start_date'] =  $data['result']['data']['detail_start_date'] != '' ? $this->date_thai->date_eng2thai($data['result']['data']['detail_start_date'],543,'','','/') : ''; 
+            $data['result']['data']['detail_finish_date'] = $data['result']['data']['detail_finish_date'] != '' ? $this->date_thai->date_eng2thai($data['result']['data']['detail_finish_date'],543,'','','/') : ''; 
+            $data['result']['data']['detail_keep_start_date'] = $data['result']['data']['detail_keep_start_date'] != '' ?  $this->date_thai->date_eng2thai($data['result']['data']['detail_keep_start_date'],543,'','','/') : ''; 
+            $data['result']['data']['detail_keep_finish_date'] = $data['result']['data']['detail_keep_finish_date'] != '' ?  $this->date_thai->date_eng2thai($data['result']['data']['detail_keep_finish_date'],543,'','','/') : ''; 
             
 
         }
