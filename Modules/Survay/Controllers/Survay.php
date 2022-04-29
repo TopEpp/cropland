@@ -296,4 +296,70 @@ class Survay extends BaseController
         $html =  view('Modules\Survay\Views\modal\land', $data);
         return $this->respond($html);
     }
+
+    public function loadImage(){
+        $interview = $this->request->getVar('interview');
+        $type = $this->request->getVar('type');
+
+        $data = [];
+        if ($interview){
+            $data = $this->model_survay->getPicture($interview,$type);     
+            $tmp = [];
+            foreach ($data as $key => $value) {
+                
+                $tmp[$key]['path'] = base_url($value['photo_path']);
+                $tmp[$key]['name'] = $value['photo'];
+                $tmp[$key]['size'] =  filesize( ROOTPATH.$value['photo_path']);
+            }
+            
+        }
+
+        return   $this->respond($tmp);
+
+    }
+    public function uploadOwnerArea($id = ''){
+        $img = $this->request->getFile('file');
+        
+        if ($img->isValid() && ! $img->hasMoved()) {
+            $name =   $img->getName();
+            $filepath = PUBLIC_PATH .'/uploads/owners/'; 
+            $img->move($filepath,$name);
+            $data = [
+                'interview_id'=> $id,
+                'photo_path'=> '/public/uploads/area/'.$name,
+                'photo'=> $name,
+                'photo_type' =>"owner"
+                
+            ];  
+
+            $res = $this->model_survay->savePicture($data);
+            return   $this->respond($data);
+        } else {        
+            $data = ['errors' => 'The file has already been moved.'];
+            return   $this->respond($data);
+        }     
+       
+    }
+
+    public function uploadArea($id = ''){
+        $img = $this->request->getFile('file');
+        
+        if ($img->isValid() && ! $img->hasMoved()) {
+            $name =   $img->getName();
+            $filepath = PUBLIC_PATH .'/uploads/area/'; 
+            $img->move($filepath,$name);
+            $data = [
+                'interview_id'=> $id,
+                'photo_path'=> '/public/uploads/area/'.$name,
+                'photo'=> $name,
+                'photo_type' =>"area"
+                
+            ];  
+            $res = $this->model_survay->savePicture($data);
+            return   $this->respond($data);
+        } else {        
+            $data = ['errors' => 'The file has already been moved.'];
+            return   $this->respond($data);
+        }
+    }
 }

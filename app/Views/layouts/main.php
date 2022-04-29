@@ -47,9 +47,6 @@
     var domain = `<?= base_url();?>/`;
   </script>
 
-   <!-- JS Libraies -->
-    <?= $this->renderSection("scripts"); ?>
-
    <!-- Page Specific JS File -->
 
   <!-- Template JS File -->
@@ -58,5 +55,8 @@
   <?= script_tag('public/assets/js/custom.js') ?>
   <?= script_tag('public/assets/js/sweetalert2.js') ?>
   <?= script_tag('public/assets/js/jquery.toast.js') ?>
+  
+   <!-- JS Libraies -->
+   <?= $this->renderSection("scripts"); ?>
 </body>
 </html>

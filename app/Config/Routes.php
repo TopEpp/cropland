@@ -99,7 +99,8 @@ $routes->group("survay", ["namespace" => "Modules\Survay\Controllers"], function
 
      //load data
      $routes->get("load-land/(:num)(:any)", "Survay::loadland/$1$2");
-
+     $routes->get("load-image", "Survay::loadImage");
+     
       //save data
       $routes->post("save_manage", "Survay::saveManage");
       $routes->post("save_land/(:num)", "Survay::saveLand/$1");
@@ -107,6 +108,11 @@ $routes->group("survay", ["namespace" => "Modules\Survay\Controllers"], function
       $routes->post("save_support_other/(:num)", "Survay::saveSupportOther/$1");
       $routes->post("save_problem/(:num)", "Survay::saveSurvayProblem/$1");
       $routes->post("save_need/(:num)", "Survay::saveSurvayNeed/$1");
+
+       //upload 
+   
+    $routes->post('upload_owner_area(:any)',"Survay::uploadOwnerArea$1");
+    $routes->post('upload_area(:any)',"Survay::uploadArea$1");
 });
 
 
@@ -134,6 +140,8 @@ $routes->group("common", ["namespace" => "App\Controllers"], function ($routes) 
     $routes->get("get-house", "Common::House");
     $routes->get("get-person", "Common::Person");
     $routes->get("get-village", "Common::Village"); //กลุ่มบ้าน
+
+   
 });
 
 $routes->group("api", ["namespace" => "Modules\Api\Controllers"], function ($routes) {

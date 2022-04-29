@@ -32,21 +32,22 @@
                                     </div>
                                     <div class="collapse show" id="mycard-collapse">
                                         <div class="card-body p-0">
+                                            <div class="table-responsive">
                                             <table class="table table-bordered">
                                                 <thead class="bg-info">
                                                     <tr>
-                                                        <th rowspan="2">ลำดับ</th>
-                                                        <th rowspan="2" scope="col">การใช้ประโยชน์ที่ดิน</th>
-                                                        <th rowspan="2" scope="col">พันธุ์</th>
-                                                        <th rowspan="2" scope="col">พื้นที่ปลูก<br/>(ไร่)</th>
-                                                        <th rowspan="2" scope="col">อายุ<br/>(ปี)</th>
-                                                        <th rowspan="2" scope="col">จำนวนปลูกต่อหน่วย</th>
-                                                        <th rowspan="2" scope="col">ช่วงเวลา ปลูก-เก็บเกี่ยว</th>
-                                                        <th rowspan="2" scope="col">การส่งเสริมจากสถาบันฯ</th>
-                                                        <th rowspan="2" scope="col">ไม่รับผลผลิต</th>
-                                                        <th colspan="7" scope="col" class="text-center">รายจ่าย (บาท)/รอบการปลูก</th>
-                                                        <th rowspan="2" scope="col" class="text-center">รวมรายจ่าย<br/>(บาท/รอบ)</th>
-                                                        <th colspan="6" scope="col" class="text-center">ผลผลิต/รอบการปลูก</th>                                
+                                                        <th width="3%" rowspan="2">ลำดับ</th>
+                                                        <th  width="10%" rowspan="2" scope="col">การใช้ประโยชน์ที่ดิน</th>
+                                                        <th  width="10%" rowspan="2" scope="col">พันธุ์</th>
+                                                        <th  width="5%" rowspan="2" scope="col">พื้นที่ปลูก<br/>(ไร่)</th>
+                                                        <th  width="5%" rowspan="2" scope="col">อายุ<br/>(ปี)</th>
+                                                        <th  width="5%" rowspan="2" scope="col">จำนวนปลูกต่อหน่วย</th>
+                                                        <th  width="5%" rowspan="2" scope="col">ช่วงเวลา ปลูก-เก็บเกี่ยว</th>
+                                                        <th  width="5%" rowspan="2" scope="col">การส่งเสริมจากสถาบันฯ</th>
+                                                        <th  width="5%" rowspan="2" scope="col">ไม่รับผลผลิต</th>
+                                                        <th  width="10%" colspan="7" scope="col" class="text-center">รายจ่าย (บาท)/รอบการปลูก</th>
+                                                        <th  width="10%" rowspan="2" scope="col" class="text-center">รวมรายจ่าย<br/>(บาท/รอบ)</th>
+                                                        <th  width="20%" colspan="6" scope="col" class="text-center">ผลผลิต/รอบการปลูก</th>                                
                                                     </tr>
                                                     <tr>
                                                         <th>เมล็ด<br/>/กล้าพันธ์ุ</th>
@@ -103,6 +104,7 @@
                                                     <?php endforeach;?>                                 
                                                 </tbody>
                                             </table>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -131,6 +133,7 @@
 <?=$this->section("css")?>
 <?= link_tag('public/assets/datepicker/css/datepicker.css') ?>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
 <?=$this->endSection()?>
 
 <?=$this->section("scripts")?>

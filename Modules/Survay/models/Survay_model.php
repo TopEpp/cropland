@@ -718,6 +718,35 @@ class Survay_model extends Model
         return null;
     }
 
+    public function getPicture($interview_id,$type){
+        $builder = $this->db->table('LH_interview_land_photo');
+        $builder->select('*');    
+        $builder->where('interview_id',$interview_id);
+        $builder->where('photo_type',$type);
+        
+        $query = $builder->get()->getResultArray();
+        return $query;
+    }
+
+    public function savePicture($data){
+        $db = \Config\Database::connect();
+        $builder = $db->table('LH_interview_land_photo');
+
+        if (!empty($data['photo_id'])){                
+            // $problem_id = $tmp['problem_id'];
+            // $builder->where('problem_id',$tmp['problem_id']);
+            // unset($tmp['problem_id']);
+            // $builder->update($tmp);
+            
+        }else{
+            // unset($tmp['problem_id']);
+            $builder->insert($data);
+            
+        }
+
+        return true;
+    }
+
  
 }
 

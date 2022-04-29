@@ -8,6 +8,7 @@ use App\Controllers\BaseController;
 use App\Models\InterViewHouse_model;
 use Modules\House\Models\House_model;
 
+use CodeIgniter\Files\File;
 
 class Common extends BaseController
 {
@@ -92,4 +93,5 @@ class Common extends BaseController
         
         return   $this->respond($data);
     }
+
 }
