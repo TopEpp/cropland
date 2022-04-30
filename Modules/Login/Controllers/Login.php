@@ -3,7 +3,7 @@
 namespace Modules\Login\Controllers;
 
 use App\Controllers\BaseController;
-use Modules\Member\Models\User_model;
+use Modules\User\Models\user_model;
 
 class Login extends BaseController
 {
@@ -18,7 +18,7 @@ class Login extends BaseController
   
     public function auth(){
   
-      $username = $this->request->getVar('user_name');
+      $username = $this->request->getVar('Username');
       $password = $this->request->getVar('password');
 
       // $ses_data = [
@@ -27,10 +27,10 @@ class Login extends BaseController
       // $session = session();
       // $session->set($ses_data);
       // return redirect()->to('/house');
-
       if($this->loginAD($username,$password)){
-        // $session->set($ses_data);
-        return redirect()->to('/main');
+        return redirect()->to('/house');
+      }else{
+        return redirect()->to('/login');
       }
 
       // else{
@@ -85,8 +85,9 @@ class Login extends BaseController
   
       if(!$ad) {
         $msg = "Can not connect server";
-        $response = '';
-  
+        $response = false;
+        
+
       }else {
         
         $b = @ldap_bind($ad,$user,$pass);
@@ -97,9 +98,9 @@ class Login extends BaseController
                 $msg = "Users Log In Simultaneously";
             }
             $response = false;
-  
+      
         }else{
-            $User_model = new User_model();
+            $User_model = new user_model();
             $item = $User_model->getUserAD($username);
             $fullname = $item['fullname'];
             $user_img = base_url('public/img/default-profile.jpeg');
@@ -140,7 +141,9 @@ class Login extends BaseController
         }
   
       }
-  
+
+      $session->setFlashdata("message", $msg);
+
       return $response;
   
     }

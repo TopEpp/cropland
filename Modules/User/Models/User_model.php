@@ -205,6 +205,7 @@ class User_model extends Model
     $builder = $db->table('vLoadDetailStaff');
     $builder->select('*');
     $builder->where('usr',$usr);
+    $query = $builder->get();
     return $query->getRowArray();
 
   }
