@@ -21,12 +21,14 @@ class Login extends BaseController
       $username = $this->request->getVar('Username');
       $password = $this->request->getVar('password');
 
-      // $ses_data = [
-      //   'logged_in' => TRUE
-      // ];
-      // $session = session();
-      // $session->set($ses_data);
-      // return redirect()->to('/house');
+      $ses_data = [
+        'logged_in' => TRUE,
+        'name' => 'Admin',
+      ];
+      $session = session();
+      $session->set($ses_data);
+      return redirect()->to('/house');
+
       if($this->loginAD($username,$password)){
         return redirect()->to('/house');
       }else{

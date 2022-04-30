@@ -97,7 +97,7 @@
                                         <select name="interview_land_holding" id="interview_land_holding" class="form-control">
                                             <option value="">เลือก</option>
                                             <?php foreach ($privileges as $key => $value) :?>
-                                                <option  <?=$data['interview_land_holding'] == $value['Code'] ? 'selected':'' ;?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
+                                                <option  <?=@$data['interview_land_holding'] == $value['Code'] ? 'selected':'' ;?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                             <?php endforeach;?>
                                         </select>
                                     </div>  
@@ -116,7 +116,10 @@
                                         <p>ชื่อเจ้าของแปลง</p>
                                         <p>บ้านเลขที่ 39/1 หมู่ 8 ต.แม่ตื่น อ.แม่ระมาด จ.ตาก 63140</p>   
                                     </div>
-                                    <div class="form-group col-md-4">
+                                    
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-md-6">
                                         <label>การเก็บตัวอย่างวิเคราะห์ดินและน้ำจาก สวพส.</label>
                                         <div class="row mb-2">
                                             <div class="col-md-12">
@@ -139,9 +142,7 @@
                                             </div>
                                         </div>                                     
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="form-group col-md-4">
+                                    <div class="form-group col-md-6">
                                         <label>การใช้ประโยชน์</label>
                                         <div class="row mb-2">
                                             <div class="col-md-12">
@@ -177,7 +178,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group col-md-4">
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-md-6">
                                         <label>แหล่งน้ำที่ใช้</label>
                                         <div class="row  mb-2">
                                             <div class="col-md-12">
@@ -255,7 +258,7 @@
                                         </div>
                                        
                                     </div>
-                                    <div class="form-group col-md-4">
+                                    <div class="form-group col-md-6">
                                         <label>การใช้ที่ดิน</label>
                                         <div class="row">
                                             <div class="col-md-12  mb-2">

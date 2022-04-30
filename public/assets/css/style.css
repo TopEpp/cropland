@@ -218,7 +218,7 @@ ol {
 .custom-select,
 .custom-file-label {
 	background-color: #fdfdff;
-	border-color: #e4e6fc;
+	border-color: #888;
 }
 .form-control:focus,
 .input-group-text:focus,
@@ -232,8 +232,8 @@ ol {
 select.form-control:not([size]):not([multiple]),
 .form-control:not(.form-control-sm):not(.form-control-lg) {
 	font-size: 14px;
-	padding: 10px 15px;
-	height: 42px;
+	padding: 5px 10px;
+	height: 35px !important;
 }
 
 textarea.form-control {
@@ -288,7 +288,7 @@ select.form-control:not([size]):not([multiple]) {
 .form-group > label {
 	font-weight: 600;
 	color: #34395e;
-	font-size: 12px;
+	font-size: 14px;
 	letter-spacing: 0.5px;
 }
 .form-group.floating-addon {
