@@ -201,11 +201,12 @@ class User_model extends Model
   }
 
   function getUserAD($usr){
-    $builder = $this->db->table('th_user_mssql');
+    $db = \Config\Database::connect('user_db', false); 
+    $builder = $db->table('vLoadDetailStaff');
     $builder->select('*');
     $builder->where('usr',$usr);
-    $query = $builder->get();
     return $query->getRowArray();
+
   }
 
   function updateERPUser(){
@@ -230,6 +231,8 @@ class User_model extends Model
 
     }
   }
+
+
 
 }
 

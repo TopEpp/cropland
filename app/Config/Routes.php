@@ -153,6 +153,7 @@ $routes->group("api", ["namespace" => "Modules\Api\Controllers"], function ($rou
     $routes->get("areaTarget", "Api::areaTarget");
     $routes->get("jobs", "Api::jobs");
 
+    $routes->get("importUsers", "Api::importUsers");
 
 });
 

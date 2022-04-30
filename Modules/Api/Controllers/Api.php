@@ -4,6 +4,7 @@ namespace Modules\Api\Controllers;
 
 use App\Controllers\BaseController;
 use Modules\Api\Models\Api_model;
+use Modules\User\Models\user_model;
 
 class Api extends BaseController
 {
@@ -130,6 +131,11 @@ class Api extends BaseController
         return view('Modules\Api\Views\jobs',$data);
     }
 
+    public function importUsers(){
+        $User = new User_model();
+        $data = $User->getAllUsers();
 
+        $this->model_api->importUsers($data);
+      }
 
 }

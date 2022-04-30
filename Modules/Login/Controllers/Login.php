@@ -21,16 +21,19 @@ class Login extends BaseController
       $username = $this->request->getVar('user_name');
       $password = $this->request->getVar('password');
 
-      $ses_data = [
-        'logged_in' => TRUE
-      ];
-      $session = session();
-      $session->set($ses_data);
-      return redirect()->to('/house');
-      // if($this->loginAD($username,$password)){
-      //   // $session->set($ses_data);
-      //   return redirect()->to('/main');
-      // }else{
+      // $ses_data = [
+      //   'logged_in' => TRUE
+      // ];
+      // $session = session();
+      // $session->set($ses_data);
+      // return redirect()->to('/house');
+
+      if($this->loginAD($username,$password)){
+        // $session->set($ses_data);
+        return redirect()->to('/main');
+      }
+
+      // else{
       //   $session = session();
       //   $User = new User_model();
         
@@ -72,7 +75,7 @@ class Login extends BaseController
     }
   
     function loginAD($username='',$pass=''){
-      return false;
+      
       $session = session();
       $response = '';
       $server   = "ad01.hrdi.or.th";
@@ -106,7 +109,7 @@ class Login extends BaseController
   
             $ses_data = [
               'user_id' => $item['emp_id'],
-              'org_id' => 0,
+              'org_id' => $item['org_lvl1_id'],
               'username' => $username,
               'name' => $fullname,
               // 'email' => $data['email'],

@@ -124,6 +124,8 @@ class User extends BaseController
     $User = new User_model();
     $data = $User->genNewUser();
   }
+
+  
 }
 
  ?>

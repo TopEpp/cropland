@@ -6,6 +6,25 @@ class Api_model extends Model
 {
 
     protected $useAutoIncrement = true;
+
+    function importUsers($data){
+      $builder_del = $this->db->table('LH_users');
+      $builder_del->where('emp_id <>','');
+      $builder_del->delete();
+
+        foreach ($data as $key => $value) {
+          $builder_set = $this->db->table('LH_users');
+          $builder_set->set('emp_id',$value['emp_id']);
+          $builder_set->set('usr',$value['usr']);
+          $builder_set->set('fullname',$value['fullname']);
+          $builder_set->set('department',$value['department']);
+          $builder_set->set('prs_id',$value['prs_id']);
+          $builder_set->set('eml',$value['eml']);
+          $builder_set->set('phn',$value['mbl_phn']);
+          $builder_set->insert();
+
+        }
+    }
     
     public function getAgriWork($id = '')
     { 
