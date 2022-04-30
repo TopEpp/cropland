@@ -32,7 +32,7 @@ class Land extends BaseController
     }
 
     public function saveLand(){
-        $input = $this->request->getVar();
+        $input = $this->request->getPost();
         $session = session();
         $person_id = $this->model_land->saveLandManage($input);
 

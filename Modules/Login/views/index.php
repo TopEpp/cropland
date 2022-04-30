@@ -29,6 +29,16 @@
                 </div>
 
               <div class="card-body">
+              <?php if (session()->getFlashdata("message")):?>
+                    <div class="alert alert-danger alert-dismissible show fade">
+                        <div class="alert-body">
+                            <button class="close" data-dismiss="alert">
+                            <span>×</span>
+                            </button>
+                            <?= session()->getFlashdata("message");?>
+                        </div>
+                    </div>
+                <?php endif;?>
                 <form method="POST" action="<?php echo base_url('/login/auth'); ?>" class="needs-validation" novalidate="">
                   <div class="form-group">
                     <label for="Username">Username</label>
