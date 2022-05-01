@@ -35,7 +35,7 @@
                             <br>
                             <h6>ข้อมูลปัญหาด้านการเกษตร</h6>
                             <br>
-                            <form action="<?=base_url('survay/save_problem/'.@$interview_id);?>"  method="post" id="form_problem">
+                            <form action="<?=base_url('survay/save_problem/'.@$interview_id);?>"  method="post" id="form_problem" class="needs-validation" novalidate="">
                                 <input type="hidden" name="interview_id">
                                 <input type="hidden" name="land_id">  
                                 <div class="row repeater">
@@ -58,15 +58,21 @@
                                                     <input type="hidden" name="problem_id">
                                                 </th>
                                                 <td>
-                                                    <select name="problem_type" id="problem_type" class="form-control">
+                                                    <select name="problem_type" id="problem_type" class="form-control" required="">
                                                         <option value="">เลือก</option>
                                                         <?php foreach ($problem as $key => $value) :?>
                                                             <option value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                                         <?php endforeach?> 
                                                     </select>
+                                                    <div class="invalid-feedback">
+                                                    กรุณาเลือกประเภท
+                                                    </div>
                                                 </td>
                                                 <td>
-                                                    <input type="text" class="form-control" name="problem_detail">
+                                                    <input type="text" class="form-control" name="problem_detail" required="">
+                                                    <div class="invalid-feedback">
+                                                    กรุณาระบุรายละเอียด
+                                                    </div>
                                                 </td>
                                                 <td>
                                                     <div class="buttons">                                            
@@ -82,15 +88,21 @@
                                                             <input type="hidden" name="problem_id" value="<?=$value['problem_id'];?>">
                                                         </th>
                                                         <td>
-                                                            <select name="problem_type" id="problem_type" class="form-control">
+                                                            <select name="problem_type" id="problem_type" class="form-control" required="">
                                                                 <option value="">เลือก</option>
                                                                 <?php foreach ($problem as $key => $val) :?>
                                                                     <option <?=$value['problem_type']  == $val['Code'] ? "selected":'';?> value="<?=$val['Code'];?>"><?=$val['Name'];?></option>
                                                                 <?php endforeach?> 
                                                             </select>
+                                                            <div class="invalid-feedback">
+                                                                กรุณาเลือกประเภท
+                                                            </div>
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="form-control" name="problem_detail" value="<?=$value['problem_detail'];?>"> 
+                                                            <input type="text" class="form-control" name="problem_detail" value="<?=$value['problem_detail'];?>" required=""> 
+                                                            <div class="invalid-feedback">
+                                                                กรุณาระบุรายละเอียด
+                                                            </div>
                                                         </td>
                                                         <td>
                                                             <div class="buttons">                                            

@@ -62,7 +62,6 @@ class Survay extends BaseController
         if ($interview_id){
             
             $data['data'] = $this->model_survay->getAllSurvay($interview_id);
-            
             $data['data']['interview_date'] = $this->date_thai->date_eng2thai($data['data']['interview_date'],543,'','','/');            
             $data['villages'] = $model_common->getVillage('',$data['data']['interview_project']);            
             $data['persons']= $model_common->getAllPersons($data['data']['interview_house_id']);
@@ -74,7 +73,7 @@ class Survay extends BaseController
 
     public function saveManage(){
         $input = $this->request->getPost();
-           
+    
         $session = session();
         
         if (!empty($input)){
@@ -130,7 +129,7 @@ class Survay extends BaseController
 
     public function saveLand($interview_id){
         $input = $this->request->getPost();
-       
+        dd($input);
         $session = session();
         $input['interview_id'] = $interview_id;
         $input['detail_start_date'] = !empty($input['detail_start_date']) ?  $this->date_thai->date_thai2eng($input['detail_start_date'],-543) :'';
@@ -277,7 +276,7 @@ class Survay extends BaseController
         $data['products'] = $this->model_api->getproduct();
         $data['units'] = $this->model_api->getUnit();
 
-        $data['chemical_type'] = $this->model_api->getChemicalType();
+        $data['chemical_formula'] = $this->model_api->getChemicalFormula();
         $data['chemical'] = $this->model_api->getChemical();
 
         $data['medical_type'] = $this->model_api->getMedicalType();

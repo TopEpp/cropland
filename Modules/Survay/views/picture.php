@@ -38,7 +38,7 @@
                                     <div class="col-md-6">
                                         <div class="card">
                                             <div class="card-header">                                            
-                                                <h4>รูปภาพเจ้าของแปลง</h4>
+                                                <h4>รูปภาพเจ้าของแปลง (2 รูป)</h4>
                                                 <div class="card-header-action">                                        
                                                     <!-- <a href="#" class="btn btn-info" onclick="addLand()">เลือกไพล์</a> -->
                                                 </div>
@@ -57,7 +57,7 @@
                                     <div class="col-md-6">
                                         <div class="card">
                                             <div class="card-header">
-                                                <h4>รูปภาพแปลง</h4>
+                                                <h4>รูปภาพแปลง (2 รูป)</h4>
                                                 <div class="card-header-action">                                        
                                                     <!-- <a href="#" class="btn btn-info" onclick="addLand()">เลือกไพล์</a> -->
                                                 </div>

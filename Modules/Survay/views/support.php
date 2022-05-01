@@ -33,7 +33,7 @@
                         <div class="p-2 border">
                             <br>
                             <h6>ข้อมูลการส่งเสริมและสนับสนุนของ สวพส.</h6>
-                            <form action="<?=base_url('survay/save_support/'.@$interview_id);?>"  method="post" id="form_support">
+                            <form action="<?=base_url('survay/save_support/'.@$interview_id);?>"  method="post" id="form_support" class="needs-validation" novalidate="">
                                 <input type="hidden" name="interview_id">
                                 <input type="hidden" name="land_id">                             
                                 <div class="row repeater">
@@ -56,15 +56,21 @@
                                                     <input type="hidden" name="support_id">
                                                 </th>
                                                 <td>
-                                                    <select name="support_type" id="support_type" class="form-control">
+                                                    <select name="support_type" id="support_type" class="form-control" required="">
                                                         <option value="">เลือก</option>                                                        
                                                         <?php foreach ($support as $key => $val) :?>
                                                             <option value="<?=$val['Code'];?>"><?=$val['Name'];?></option>
                                                         <?php endforeach?> 
                                                     </select>
+                                                    <div class="invalid-feedback">
+                                                    กรุณาเลือกประเภท
+                                                    </div> 
                                                 </td>
                                                 <td>
-                                                    <input type="text" class="form-control" name="support_detail">
+                                                    <input type="text" class="form-control" name="support_detail" required="">
+                                                    <div class="invalid-feedback">
+                                                            กรุณาระบุรายละเอียด
+                                                            </div> 
                                                 </td>
                                                 <td>
                                                     <div class="buttons">                                            
@@ -80,15 +86,21 @@
                                                             <input type="hidden" name="support_id" value="<?=$value['support_id'];?>">
                                                         </th>
                                                         <td>
-                                                            <select name="support_type" id="support_type" class="form-control">
+                                                            <select name="support_type" id="support_type" class="form-control" required="">
                                                                 <option value="">เลือก</option>
                                                                 <?php foreach ($support as $key => $val) :?>
                                                                     <option  <?=$value['support_type'] == $val['Code'] ?'selected':'';?> value="<?=$val['Code'];?>"><?=$val['Name'];?></option>
                                                                 <?php endforeach?> 
                                                             </select>
+                                                            <div class="invalid-feedback">
+                                                            กรุณาเลือกประเภท
+                                                            </div> 
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="form-control" name="support_detail" value="<?=$value['support_detail'];?>"> 
+                                                            <input type="text" class="form-control" name="support_detail" value="<?=$value['support_detail'];?>" required=""> 
+                                                            <div class="invalid-feedback">
+                                                            กรุณาระบุรายละเอียด
+                                                            </div> 
                                                         </td>
                                                         <td>
                                                             <div class="buttons">                                            

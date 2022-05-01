@@ -11,22 +11,27 @@
                         <div class="form-group col-md-3">
                             <label>การใช้ประโยชน์ที่ดิน</label>     
                             <input type="hidden" name="detail_use_type">                                   
-                            <select name="detail_use" id="detail_use" class="form-control select2">
+                            <select name="detail_use" id="detail_use" class="form-control select2"  required="">
                                 <option value="">เลือก</option>
                                 <?php foreach ($landuse as $key => $value) :?>
                                     <option <?=@$result['data']['detail_use'] == $value['landuse_id'] ? 'selected':'';?> value="<?=$value['landuse_id'];?>"><?=$value['name'];?></option>
                                 <?php endforeach?>              
                             </select>
+                            <div class="invalid-feedback">
+                                กรุณาเลือกการใช้ประโยชน์ที่ดิน
+                            </div>  
                         </div>
                         <div class="form-group col-md-3">
                             <label>พันธุ์</label>
-                            <select name="detail_type" id="detail_type" class="form-control select2">
+                            <select name="detail_type" id="detail_type" class="form-control select2" required="">
                                 <option value="">เลือก</option>       
                                 <?php foreach ($products as $key => $value) :?>
                                     <option <?=@$result['data']['detail_type'] == $value['Code'] ? 'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
-                                <?php endforeach?>         
-                                                      
-                            </select>                      
+                                <?php endforeach?>                                                               
+                            </select>    
+                            <div class="invalid-feedback">
+                                กรุณาเลือกพันธุ์
+                            </div>                    
                         </div>                      
                         <div class="form-group col-md-3">
                             <label>อายุ (ปี)</label>                                        
@@ -57,20 +62,30 @@
                     <div class="row">
                         <div class="form-group col-md-3">
                             <label>จำนวน</label>                                        
-                            <input type="text" class="form-control" name="seed_value" value="<?=@$result['data']['seed_value'];?>">
+                            <input type="text" class="form-control" name="seed_value" value="<?=@$result['data']['seed_value'];?>" required="">
+                            <div class="invalid-feedback">
+                                กรุณาระบุจำนวน
+                            </div>    
                         </div>
                         <div class="form-group col-md-3">
                             <label>หน่วยนับ</label>                                                                    
-                            <select name="seed_unit" id="seed_unit" class="form-control">
+                            <select name="seed_unit" id="seed_unit" class="form-control" required="">
                                 <option value="">เลือก</option>                                
                                 <?php foreach ($units as $key => $value) :?>
                                     <option <?=@$result['data']['seed_unit'] == $value['Code'] ? 'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                 <?php endforeach?> 
                             </select>
+                            <div class="invalid-feedback">
+                                กรุณาเลือกหน่วยนับ
+                            </div>    
                         </div>
                         <div class="form-group col-md-3">
                             <label>ราคาต่อหน่วย (บาท)</label>                                        
-                            <input type="text" class="form-control" name="cost_seed" value="<?=@$result['data']['cost_seed'];?>">
+                            <input type="text" class="form-control" name="cost_seed" value="<?=@$result['data']['cost_seed'];?>" required="">
+                            <div class="invalid-feedback">
+                                กรุณาระบุราคาต่อหน่วย
+                            </div> 
+                            
                         </div>
                         <div class="form-group col-md-3">
                             <div class="row">
@@ -103,8 +118,8 @@
                                 <thead>
                                     <tr>
                                         <th width="5%">ลำดับ</th>
-                                        <th width="10%">ประเภท</th>
-                                        <th width="10%">ยี่ห้อ</th>
+                                        <th width="10%">ยี่ห้อปุ๋ย</th>
+                                        <th width="10%">สูตรปุ๋ย</th>
                                         <th width="10%">จำนวน</th>
                                         <th width="10%">หน่วยนับ</th>
                                         <th width="10%">ราคาต่อหน่วย</th>
@@ -119,39 +134,55 @@
                                                 1
                                                 <input type="hidden" name="rec_id">
                                             </td>
-                                            <td data-id="1">                                            
-                                                <select name="product_type" id="product_type" class="form-control" onchange="selecttype($(this))">
-                                                    <option value=""></option>
-                                                    
-                                                    <?php foreach ($chemical_type as $key => $value) :?>
-                                                        <option value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
-                                                    <?php endforeach?>                                          
-                                                </select>
-                                                <input class="label_type" type="hidden" name="product_type_label">
-                                            </td>
                                             <td>                                            
-                                                <select name="product_branch" id="product_branch" class="form-control" onchange="selecttype($(this))">
+                                                <select name="product_branch" id="product_branch" class="form-control" onchange="selecttype($(this))" required="">
                                                     <option value=""></option>
                                                     <?php foreach ($chemical as $key => $value) :?>
                                                         <option value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                                     <?php endforeach?> 
                                                 </select>
                                                 <input class="label_type" type="hidden" name="product_branch_label">
+                                                <div class="invalid-feedback">
+                                                    กรุณาระบุยี่ห้อปุ๋ย
+                                                </div>    
+                                            </td>
+                                            <td >                                            
+                                                <select name="product_type" id="product_type" class="form-control" onchange="selecttype($(this))" required="">
+                                                    <option value=""></option>
+                                                    
+                                                    <?php foreach ($chemical_formula as $key => $value) :?>
+                                                        <option value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
+                                                    <?php endforeach?>                                          
+                                                </select>
+                                                <input class="label_type" type="hidden" name="product_type_label">
+                                                <div class="invalid-feedback">
+                                                    กรุณาระบุสูตรปุ๋ย
+                                                </div>  
+                                            </td>
+                                           
+                                            <td>                                            
+                                                <input type="text" name="product_value" class="form-control" required="">
+                                                <div class="invalid-feedback">
+                                                    กรุณาระบุจำนวน
+                                                </div>  
                                             </td>
                                             <td>                                            
-                                                <input type="text" name="product_value" class="form-control">
-                                            </td>
-                                            <td>                                            
-                                                <select name="product_unit"  class="form-control" onchange="selecttype($(this))">
+                                                <select name="product_unit"  class="form-control" onchange="selecttype($(this))" required="">
                                                     <option value=""></option>
                                                     <?php foreach ($units as $key => $value) :?>
                                                         <option value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                                     <?php endforeach?> 
                                                 </select>
                                                 <input class="label_type" type="hidden" name="product_unit_label">
+                                                <div class="invalid-feedback">
+                                                    กรุณาระบุหน่วย
+                                                </div>  
                                             </td>
                                             <td>                                            
-                                                <input type="text" name="product_price" class="form-control">
+                                                <input type="text" name="product_price" class="form-control" required="">
+                                                <div class="invalid-feedback">
+                                                    กรุณาระบุราคา
+                                                </div>  
                                             </td>
                                             <td>                                            
                                             -
@@ -167,38 +198,54 @@
                                                 <?=$key+1;?>
                                                 <input type="hidden" name="rec_id" value="<?=$product['rec_id'];?>">
                                             </td>
+                                          
                                             <td>                                            
-                                                <select name="product_type" id="product_type" class="form-control " onchange="selecttype($(this))">
-                                                    <option value=""></option>                                                    
-                                                    <?php foreach ($chemical_type as $key => $value) :?>
-                                                        <option <?=$product['product_type'] == $value['Code']? 'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
-                                                    <?php endforeach?>                                          
-                                                </select>
-                                                <input class="label_type" type="hidden" name="product_type_label" value="<?=@$value['product_type_label'];?>">
-                                            </td>
-                                            <td>                                            
-                                                <select name="product_branch" id="product_branch" class="form-control" onchange="selecttype($(this))">
+                                                <select name="product_branch" id="product_branch" class="form-control" onchange="selecttype($(this))" required="">
                                                     <option value=""></option>
                                                     <?php foreach ($chemical as $key => $value) :?>
                                                         <option <?=$product['product_branch'] == $value['Code']? 'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                                     <?php endforeach?> 
                                                 </select>
                                                 <input class="label_type" type="hidden" name="product_branch_label" value="<?=@$value['product_branch_label'];?>">
+                                                <div class="invalid-feedback">
+                                                    กรุณาระบุยี่ห้อปุ๋ย
+                                                </div>    
                                             </td>
                                             <td>                                            
-                                                <input type="text" name="product_value" class="form-control" value="<?=$product['product_value'];?>">
+                                                <select name="product_type" id="product_type" class="form-control " onchange="selecttype($(this))" required="">
+                                                    <option value=""></option>                                                    
+                                                    <?php foreach ($chemical_formula as $key => $value) :?>
+                                                        <option <?=$product['product_type'] == $value['Code']? 'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
+                                                    <?php endforeach?>                                          
+                                                </select>
+                                                <input class="label_type" type="hidden" name="product_type_label" value="<?=@$value['product_type_label'];?>">
+                                                <div class="invalid-feedback">
+                                                    กรุณาระบุสูตรปุ๋ย
+                                                </div>  
                                             </td>
                                             <td>                                            
-                                                <select name="product_unit"  class="form-control" onchange="selecttype($(this))">
+                                                <input type="text" name="product_value" class="form-control" value="<?=$product['product_value'];?>" required="">
+                                                <div class="invalid-feedback">
+                                                    กรุณาระบุจำนวน
+                                                </div> 
+                                            </td>
+                                            <td>                                            
+                                                <select name="product_unit"  class="form-control" onchange="selecttype($(this))" required="">
                                                     <option value=""></option>
                                                     <?php foreach ($units as $key => $value) :?>
                                                         <option <?=$product['product_unit'] == $value['Code']? 'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                                     <?php endforeach?> 
                                                 </select>
                                                 <input class="label_type" type="hidden" name="product_unit_label">
+                                                <div class="invalid-feedback">
+                                                    กรุณาระบุหน่วย
+                                                </div>  
                                             </td>
                                             <td>                                            
-                                                <input type="text" name="product_price" class="form-control" value="<?=$product['product_price'];?>">
+                                                <input type="text" name="product_price" class="form-control" value="<?=$product['product_price'];?>" required="">
+                                                <div class="invalid-feedback">
+                                                    กรุณาระบุราคา
+                                                </div>
                                             </td>
                                             <td>                                            
                                             -
@@ -239,37 +286,52 @@
                                         <input type="hidden" name="rec_id">
                                         </td>
                                         <td>                                            
-                                            <select name="product_type" id="product_type" class="form-control"  onchange="selecttype($(this))">
+                                            <select name="product_type" id="product_type" class="form-control"  onchange="selecttype($(this))" required="">
                                                 <option value=""></option>
                                                 <?php foreach ($medical_type as $key => $value) :?>
                                                     <option value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                                 <?php endforeach?> 
                                             </select>
                                             <input class="label_type" type="hidden" name="product_type_label">
+                                            <div class="invalid-feedback">
+                                                    กรุณาเลือกประเภท
+                                                </div>
                                         </td>
                                         <td>                                            
-                                            <select name="product_branch" id="product_branch" class="form-control"  onchange="selecttype($(this))">
+                                            <select name="product_branch" id="product_branch" class="form-control"  onchange="selecttype($(this))" required="">
                                                 <option value=""></option>
                                                 <?php foreach ($medical as $key => $value) :?>
                                                     <option value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                                 <?php endforeach?> 
                                             </select>
                                             <input class="label_type" type="hidden" name="product_branch_label">
+                                            <div class="invalid-feedback">
+                                                    กรุณาเลือกยี่ห้อ
+                                                </div>
                                         </td>
                                         <td>                                            
-                                            <input type="text" name="product_value" class="form-control" >
+                                            <input type="text" name="product_value" class="form-control" required="">
+                                            <div class="invalid-feedback">
+                                                    กรุณาระบุจำนวน
+                                                </div>
                                         </td>
                                         <td>                                            
-                                            <select name="product_unit" id="" class="form-control"  onchange="selecttype($(this))">
+                                            <select name="product_unit" id="" class="form-control"  onchange="selecttype($(this))" required="">
                                                 <option value=""></option>
                                                 <?php foreach ($units as $key => $value) :?>
                                                     <option value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                                 <?php endforeach?>                                             
                                             </select>
                                             <input class="label_type" type="hidden" name="product_unit_label">
+                                            <div class="invalid-feedback">
+                                                กรุณาเลือหน่วย
+                                            </div>
                                         </td>
                                         <td>                                            
-                                            <input type="text" name="product_price" class="form-control">
+                                            <input type="text" name="product_price" class="form-control" required="">
+                                            <div class="invalid-feedback">
+                                                กรุณาระบุราคา
+                                            </div>
                                         </td>
                                         <td>                                            
                                            -
@@ -285,37 +347,52 @@
                                             <input type="hidden" name="rec_id" value="<?=$product['rec_id'];?>">
                                         </td>
                                         <td>                                            
-                                            <select name="product_type" id="product_type" class="form-control"  onchange="selecttype($(this))">
+                                            <select name="product_type" id="product_type" class="form-control"  onchange="selecttype($(this))" required="">
                                                 <option value=""></option>
                                                 <?php foreach ($medical_type as $key => $value) :?>
                                                     <option <?=$product['product_type'] == $value['Code'] ?'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                                 <?php endforeach?> 
                                             </select>
                                             <input class="label_type" type="hidden" name="product_type_label">
+                                            <div class="invalid-feedback">
+                                                    กรุณาเลือกประเภท
+                                                </div>
                                         </td>
                                         <td>                                            
-                                            <select name="product_branch" id="product_branch" class="form-control"  onchange="selecttype($(this))">
+                                            <select name="product_branch" id="product_branch" class="form-control"  onchange="selecttype($(this))" required="">
                                                 <option value=""></option>
                                                 <?php foreach ($medical as $key => $value) :?>
                                                     <option <?=$product['product_branch'] == $value['Code'] ?'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                                 <?php endforeach?> 
                                             </select>
                                             <input class="label_type" type="hidden" name="product_branch_label">
+                                            <div class="invalid-feedback">
+                                                    กรุณาเลือกยี่ห้อ
+                                                </div>
                                         </td>
                                         <td>                                            
-                                            <input type="text" name="product_value" class="form-control" value="<?=$product['product_value'];?>">
+                                            <input type="text" name="product_value" class="form-control" value="<?=$product['product_value'];?>" required="">
+                                            <div class="invalid-feedback">
+                                                    กรุณาระบุจำนวน
+                                                </div>
                                         </td>
                                         <td>                                            
-                                            <select name="product_unit" id="" class="form-control"  onchange="selecttype($(this))">
+                                            <select name="product_unit" id="" class="form-control"  onchange="selecttype($(this))" required="">
                                                 <option value=""></option>
                                                 <?php foreach ($units as $key => $value) :?>
                                                     <option <?=$product['product_unit'] == $value['Code'] ?'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                                 <?php endforeach?>                                             
                                             </select>
                                             <input class="label_type" type="hidden" name="product_unit_label">
+                                            <div class="invalid-feedback">
+                                                    กรุณาระบุหน่วย
+                                                </div>
                                         </td>
                                         <td>                                            
-                                            <input type="text" name="product_price" class="form-control" value="<?=$product['product_price'];?>">
+                                            <input type="text" name="product_price" class="form-control" value="<?=$product['product_price'];?>" required="">
+                                            <div class="invalid-feedback">
+                                                    กรุณาระบุราคา
+                                                </div>
                                         </td>
                                         <td>                                            
                                            -
@@ -354,28 +431,40 @@
                                             <input type="hidden" name="rec_id">
                                             </td>
                                             <td>                                            
-                                                <select name="product_type" id="" class="form-control" onchange="selecttype($(this))">
+                                                <select name="product_type" id="" class="form-control" onchange="selecttype($(this))" required="">
                                                     <option value=""></option>
                                                     <?php foreach ($hormone as $key => $value) :?>
                                                         <option value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                                     <?php endforeach?> 
                                                 </select>
                                                 <input class="label_type" type="hidden" name="product_type_label">
+                                                <div class="invalid-feedback">
+                                                    กรุณาเลือกยี่ห้อ
+                                                </div>
                                             </td>
                                             <td>                                            
-                                                <input type="text" name="product_value" class="form-control">
+                                                <input type="text" name="product_value" class="form-control" required="">
+                                                <div class="invalid-feedback">
+                                                    กรุณาระบุจำนวน
+                                                </div>
                                             </td>
                                             <td>                                            
-                                                <select name="product_unit" id="" class="form-control" onchange="selecttype($(this))">
+                                                <select name="product_unit" id="" class="form-control" onchange="selecttype($(this))" required="">
                                                     <option value=""></option>
                                                     <?php foreach ($units as $key => $value) :?>
                                                         <option value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                                     <?php endforeach?> 
                                                 </select>
                                                 <input class="label_type" type="hidden" name="product_unit_label">
+                                                <div class="invalid-feedback">
+                                                    กรุณาระบุหน่วยนับ
+                                                </div>
                                             </td>
                                             <td>                                            
-                                                <input type="text" name="product_price" class="form-control">
+                                                <input type="text" name="product_price" class="form-control" required="">
+                                                <div class="invalid-feedback">
+                                                    กรุณาระบุราคา
+                                                </div>
                                             </td>
                                             <td>                                            
                                             -
@@ -391,28 +480,40 @@
                                             <input type="hidden" name="rec_id" value="<?=$product['rec_id'];?>">
                                             </td>
                                             <td>                                            
-                                                <select name="product_type" id="" class="form-control" onchange="selecttype($(this))">
+                                                <select name="product_type" id="" class="form-control" onchange="selecttype($(this))" required="">
                                                     <option value=""></option>
                                                     <?php foreach ($hormone as $key => $value) :?>
                                                         <option <?=$product['product_type'] == $value['Code'] ?"selected":'' ;?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                                     <?php endforeach?> 
                                                 </select>
                                                 <input class="label_type" type="hidden" name="product_type_label">
+                                                <div class="invalid-feedback">
+                                                    กรุณาระบุยี่ห้อ
+                                                </div>
                                             </td>
                                             <td>                                            
-                                                <input type="text" name="product_value" class="form-control" value="<?=$product['product_value'];?>">
+                                                <input type="text" name="product_value" class="form-control" value="<?=$product['product_value'];?>" required="">
+                                                <div class="invalid-feedback">
+                                                    กรุณาระบุจำนวน
+                                                </div>
                                             </td>
                                             <td>                                            
-                                                <select name="product_unit" id="" class="form-control" onchange="selecttype($(this))">
+                                                <select name="product_unit" id="" class="form-control" onchange="selecttype($(this))" required="">
                                                     <option value=""></option>
                                                     <?php foreach ($units as $key => $value) :?>
                                                         <option <?=$product['product_unit'] == $value['Code'] ?"selected":'' ;?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                                     <?php endforeach?> 
                                                 </select>
                                                 <input class="label_type" type="hidden" name="product_unit_label">
+                                                <div class="invalid-feedback">
+                                                    กรุณาระบุหน่วยนับ
+                                                </div>
                                             </td>
                                             <td>                                            
-                                                <input type="text" name="product_price" class="form-control" value="<?=$product['product_price'];?>">
+                                                <input type="text" name="product_price" class="form-control" value="<?=$product['product_price'];?>" required="">
+                                                <div class="invalid-feedback">
+                                                    กรุณาระบุราคา
+                                                </div>
                                             </td>
                                             <td>                                            
                                             -
@@ -452,31 +553,46 @@
                                         <input type="hidden" name="rec_id">
                                         </td>
                                         <td>                                            
-                                            <select name="product_type"  class="form-control" onchange="selecttype($(this))">
+                                            <select name="product_type"  class="form-control" onchange="selecttype($(this))" required="">
                                                 <option value=""></option>
                                                  <?php foreach ($employ_type as $key => $value) :?>
                                                     <option value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                                 <?php endforeach?> 
                                             </select>
                                             <input class="label_type" type="hidden" name="product_type_label">
+                                            <div class="invalid-feedback">
+                                                    กรุณาระบุลักษณะการจ้าง
+                                                </div>
                                         </td>
                                         <td>                                            
-                                            <select name="product_branch" class="form-control" onchange="selecttype($(this))">
+                                            <select name="product_branch" class="form-control" onchange="selecttype($(this))" required="">
                                                 <option value=""></option>
                                                 <?php foreach ($labor_type as $key => $value) :?>
                                                     <option value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                                 <?php endforeach?> 
                                             </select>
                                             <input class="label_type" type="hidden" name="product_branch_label">
+                                            <div class="invalid-feedback">
+                                                    กรุณาระบุการจ้างแรงงาน
+                                                </div>
                                         </td>
                                         <td>                                            
-                                            <input type="text" name="product_value" class="form-control">
+                                            <input type="text" name="product_value" class="form-control" required="">
+                                            <div class="invalid-feedback">
+                                                    กรุณาระบุจำนวนคน
+                                                </div>
                                         </td>
                                         <td>                                            
-                                            <input type="text" name="product_unit" class="form-control">
+                                            <input type="text" name="product_unit" class="form-control" required="">
+                                            <div class="invalid-feedback">
+                                                    กรุณาระบุวันจ้าง
+                                                </div>
                                         </td>
                                         <td>                                            
-                                            <input type="text" name="product_price" class="form-control">
+                                            <input type="text" name="product_price" class="form-control" required="">
+                                            <div class="invalid-feedback">
+                                                    กรุณาระบุบาท/วัน
+                                                </div>
                                         </td>
                                         <td>                                            
                                            -
@@ -492,31 +608,46 @@
                                             <input type="hidden" name="rec_id" value="<?=$product['rec_id'];?>">
                                             </td>
                                             <td>                                            
-                                                <select name="product_type"  class="form-control" onchange="selecttype($(this))">
+                                                <select name="product_type"  class="form-control" onchange="selecttype($(this))" required="">
                                                     <option value=""></option>
                                                     <?php foreach ($employ_type as $key => $value) :?>
                                                         <option  <?=$product['product_type'] == $value['Code'] ? 'selected':'' ;?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                                     <?php endforeach?> 
                                                 </select>
                                                 <input class="label_type" type="hidden" name="product_type_label">
+                                                <div class="invalid-feedback">
+                                                    กรุณาระบุลักษณะการจ้าง
+                                                </div>
                                             </td>
                                             <td>                                            
-                                                <select name="product_branch" class="form-control" onchange="selecttype($(this))">
+                                                <select name="product_branch" class="form-control" onchange="selecttype($(this))" required="">
                                                     <option value=""></option>
                                                     <?php foreach ($labor_type as $key => $value) :?>
                                                         <option <?=$product['product_branch'] == $value['Code'] ? 'selected':'' ;?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                                     <?php endforeach?> 
                                                 </select>
                                                 <input class="label_type" type="hidden" name="product_branch_label">
+                                                <div class="invalid-feedback">
+                                                    กรุณาระบุการจ้างแรงงาน
+                                                </div>
                                             </td>
                                             <td>                                            
-                                                <input type="text" name="product_value" class="form-control" value="<?=$product['product_value'];?>">
+                                                <input type="text" name="product_value" class="form-control" value="<?=$product['product_value'];?>" required="">
+                                                <div class="invalid-feedback">
+                                                    กรุณาระบุจำนวนคน
+                                                </div>
                                             </td>
                                             <td>                                            
-                                                <input type="text" name="product_unit" class="form-control" value="<?=$product['product_unit'];?>">
+                                                <input type="text" name="product_unit" class="form-control" value="<?=$product['product_unit'];?>" required="">
+                                                <div class="invalid-feedback">
+                                                    กรุณาระบุวันจ้าง
+                                                </div>
                                             </td>
                                             <td>                                            
-                                                <input type="text" name="product_price" class="form-control" value="<?=$product['product_price'];?>">
+                                                <input type="text" name="product_price" class="form-control" value="<?=$product['product_price'];?>" required="">
+                                                <div class="invalid-feedback">
+                                                    กรุณาระบุบาท/วัน
+                                                </div>
                                             </td>
                                             <td>                                            
                                             -
@@ -568,7 +699,7 @@
                                             <input type="hidden" name="rec_id" >
                                             </td>
                                             <td>                                            
-                                                <select name="product_type" id="" class="form-control" onchange="selecttype($(this))">
+                                                <select name="product_type" id="" class="form-control" onchange="selecttype($(this))" required="">
                                                     <option value=""></option>
                                                     <option value="1">ข้าวเปลือก</option>
                                                     <option value="2">ข้าวสาร</option>
@@ -577,27 +708,39 @@
                                                     <option value="5">แปรรูป</option>
                                                 </select>
                                                 <input class="label_type" type="hidden" name="product_type_label">
+                                                <div class="invalid-feedback">
+                                                    กรุณาระบุลักษณะการขาย
+                                                </div>
                                             </td>
                                             <td>                                            
-                                                <input type="text" name="product_value" class="form-control">
+                                                <input type="text" name="product_value" class="form-control" required="">
+                                                <div class="invalid-feedback">
+                                                    กรุณาระบุจำนวน
+                                                </div>
                                             </td>
                                             <td>                                                                                       
-                                                <select name="product_unit" class="form-control" onchange="selecttype($(this))">
+                                                <select name="product_unit" class="form-control" onchange="selecttype($(this))" required="">
                                                     <option value=""></option>
                                                     <?php foreach ($units as $key => $value) :?>
                                                             <option value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                                         <?php endforeach?>
                                                 </select>
                                                 <input class="label_type" type="hidden" name="product_unit_label">
+                                                <div class="invalid-feedback">
+                                                    กรุณาระบุหน่วยนับ
+                                                </div>
                                             </td>
                                             <td>                                            
-                                                <input type="text" name="product_price" class="form-control">
+                                                <input type="text" name="product_price" class="form-control" required="">
+                                                <div class="invalid-feedback">
+                                                    กรุณาระบุราคา
+                                                </div>
                                             </td>
                                             <td>                                            
                                             -
                                             </td>
                                             <td>                                            
-                                                <select name="product_market" id="product_market" class="form-control" onchange="selecttype($(this))">
+                                                <select name="product_market" id="product_market" class="form-control" onchange="selecttype($(this))" required="">
                                                     <option value=""></option>
                                                     <?php foreach ($markets as $key => $value) :?>
                                                             <option value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
@@ -605,6 +748,9 @@
                                                     
                                                 </select>
                                                 <input class="label_type" type="hidden" name="product_market_label" >
+                                                <div class="invalid-feedback">
+                                                    กรุณาระบุตลาด
+                                                </div>
                                             </td>
                                             <td>
                                                 <button data-repeater-delete class="btn btn-danger" type="button">ลบ</button>
@@ -617,7 +763,7 @@
                                             <input type="hidden" name="rec_id" value="<?=$product['rec_id'];?>">
                                             </td>
                                             <td>                                            
-                                                <select name="product_type" id="" class="form-control" onchange="selecttype($(this))">
+                                                <select name="product_type" id="" class="form-control" onchange="selecttype($(this))" required="">
                                                     <option value=""></option>
                                                     <option <?=@$product['product_type'] == 1 ? 'selected':'';?> value="1">ข้าวเปลือก</option>
                                                     <option <?=@$product['product_type'] == 2 ? 'selected':'';?> value="2">ข้าวสาร</option>
@@ -626,27 +772,39 @@
                                                     <option <?=@$product['product_type'] == 5 ? 'selected':'';?> value="5">แปรรูป</option>
                                                 </select>
                                                 <input class="label_type" type="hidden" name="product_type_label" value="<?=@$product['product_type_label'];?>">
+                                                <div class="invalid-feedback">
+                                                    กรุณาระบุลักษณะการขาย
+                                                </div>
                                             </td>
                                             <td>                                            
-                                                <input type="text" name="product_value" class="form-control" value="<?=@$product['product_value'];?>">
+                                                <input type="text" name="product_value" class="form-control" value="<?=@$product['product_value'];?>" required="">
+                                                <div class="invalid-feedback">
+                                                    กรุณาระบุจำนวน
+                                                </div>
                                             </td>
                                             <td>                                                                                       
-                                                <select name="product_unit" class="form-control" onchange="selecttype($(this))">
+                                                <select name="product_unit" class="form-control" onchange="selecttype($(this))" required="">
                                                     <option value=""></option>
                                                     <?php foreach ($units as $key => $value) :?>
                                                             <option <?=@$product['product_unit'] == $value['Code'] ? 'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                                         <?php endforeach?>
                                                 </select>
                                                 <input class="label_type" type="hidden" name="product_unit_label" value="<?=@$product['product_unit_label'];?>">
+                                                <div class="invalid-feedback">
+                                                    กรุณาระบุหน่วยนับ
+                                                </div>
                                             </td>
                                             <td>                                            
-                                                <input type="text" name="product_price" class="form-control" value="<?=@$product['product_price'];?>">
+                                                <input type="text" name="product_price" class="form-control" value="<?=@$product['product_price'];?>" required="">
+                                                <div class="invalid-feedback">
+                                                    กรุณาระบุราคา
+                                                </div>
                                             </td>
                                             <td>                                            
                                             -
                                             </td>
                                             <td>                                            
-                                                <select name="product_market" id="product_market" class="form-control" onchange="selecttype($(this))">
+                                                <select name="product_market" id="product_market" class="form-control" onchange="selecttype($(this))"  required="">
                                                     <option value=""></option>
                                                     <?php foreach ($markets as $key => $value) :?>
                                                             <option <?=@$product['product_market'] == $value['Code'] ? 'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
@@ -654,6 +812,9 @@
                                                     
                                                 </select>
                                                 <input class="label_type" type="hidden" name="product_market_label" value="<?=@$product['product_market_label'];?>">
+                                                <div class="invalid-feedback">
+                                                    กรุณาระบุตลาด
+                                                </div>
                                             </td>
                                             <td>
                                                 <button data-repeater-delete class="btn btn-danger" type="button">ลบ</button>

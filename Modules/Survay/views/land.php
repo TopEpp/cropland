@@ -48,6 +48,7 @@
                                                         <th  width="10%" colspan="7" scope="col" class="text-center">รายจ่าย (บาท)/รอบการปลูก</th>
                                                         <th  width="10%" rowspan="2" scope="col" class="text-center">รวมรายจ่าย<br/>(บาท/รอบ)</th>
                                                         <th  width="20%" colspan="6" scope="col" class="text-center">ผลผลิต/รอบการปลูก</th>                                
+                                                        <th rowspan="2" width="10%"></th>
                                                     </tr>
                                                     <tr>
                                                         <th>เมล็ด<br/>/กล้าพันธ์ุ</th>
@@ -76,7 +77,7 @@
                                                             <td><?=$key+1;?></td>                                                        
                                                             <td><?=$value['landuse'];?></td>
                                                             <td>
-                                                                <a href="#"  onclick="addLand(<?=$interview_id;?>,<?=$value['detail_id'];?>)" ><?=$value['product_name'];?></a>
+                                                                <?=$value['product_name'];?>
                                                             </td>
                                                             <td><?=$value['detail_area'];?></td>                                                                                                                
                                                             <td><?=$value['detail_age'];?></td>
@@ -98,8 +99,12 @@
                                                             <td><?=$value['product_price'];?></td>
                                                             <td><?=$value['product_price'] * $value['product_value'];?></td>
                                                             <td><?=$value['product_market'];?></td>
-                                                            
-                                                            
+                                                            <td class="text-center">
+                                                                <div class="buttons">
+                                                                    <a href="#"  onclick="addLand(<?=$interview_id;?>,<?=$value['detail_id'];?>)" class="btn btn-icon btn-primary"><i class="far fa-edit"></i></a>                                    
+                                                                    <a href="#" class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></a>
+                                                                </div>
+                                                            </td> 
                                                         </tr>
                                                     <?php endforeach;?>                                 
                                                 </tbody>
@@ -118,7 +123,7 @@
 
 <div class="modal fade" tabindex="-1" role="dialog" id="LandModal">
     <div class="modal-dialog modal-xl" role="document">
-        <form action="<?=base_url('survay/save_land/'.@$interview_id);?>" method="post">
+        <form action="<?=base_url('survay/save_land/'.@$interview_id);?>" method="post" class="needs-validation" novalidate="">
             <input type="hidden" name="interview_id" id="interview_id">
             <input type="hidden" name="land_id" id="land_id">
             <input type="hidden" name="detail_id" id="detail_id">

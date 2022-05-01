@@ -24,7 +24,7 @@ class App extends BaseConfig
      * @var string
      */
 
-    public $baseURL = 'https://giapptest.hrdi.or.th/';
+    public $baseURL = 'http://hrdi.local';
 
     /**
      * --------------------------------------------------------------------------
