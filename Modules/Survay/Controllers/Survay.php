@@ -129,7 +129,7 @@ class Survay extends BaseController
 
     public function saveLand($interview_id){
         $input = $this->request->getPost();
-        dd($input);
+        
         $session = session();
         $input['interview_id'] = $interview_id;
         $input['detail_start_date'] = !empty($input['detail_start_date']) ?  $this->date_thai->date_thai2eng($input['detail_start_date'],-543) :'';
