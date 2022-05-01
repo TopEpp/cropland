@@ -73,7 +73,7 @@ class Survay extends BaseController
     }
 
     public function saveManage(){
-        $input = $this->request->getVar();
+        $input = $this->request->getPost();
            
         $session = session();
         
@@ -129,7 +129,7 @@ class Survay extends BaseController
     }
 
     public function saveLand($interview_id){
-        $input = $this->request->getVar();
+        $input = $this->request->getPost();
        
         $session = session();
         $input['interview_id'] = $interview_id;
@@ -160,7 +160,7 @@ class Survay extends BaseController
     }
 
     public function saveSupport($interview_id){
-        $input = $this->request->getVar();
+        $input = $this->request->getPost();
 
         $session = session();
         $input['interview_id'] = $interview_id;
@@ -187,7 +187,7 @@ class Survay extends BaseController
 
 
     public function saveSupportOther($interview_id){
-        $input = $this->request->getVar();
+        $input = $this->request->getPost();
       
         $session = session();
         $input['interview_id'] = $interview_id;
@@ -215,7 +215,7 @@ class Survay extends BaseController
     }
 
     public function saveSurvayProblem($interview_id){
-        $input = $this->request->getVar();
+        $input = $this->request->getPost();
       
         $session = session();
         $input['interview_id'] = $interview_id;
@@ -239,7 +239,7 @@ class Survay extends BaseController
     }
 
     public function saveSurvayNeed($interview_id){
-        $input = $this->request->getVar();
+        $input = $this->request->getPost();
       
         $session = session();
         $input['interview_id'] = $interview_id;
