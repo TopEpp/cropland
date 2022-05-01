@@ -54,7 +54,7 @@ class House extends BaseController
     }
 
     public function saveManage(){
-        $input = $this->request->getVar();
+        $input = $this->request->getPost();
            
         $session = session();
         
@@ -101,7 +101,7 @@ class House extends BaseController
     }
 
     public function saveMembers($house_id){
-        $input = $this->request->getVar();
+        $input = $this->request->getPost();
         $session = session();
         $input['house_id'] = $house_id;
         $input['person_birthdate'] = $this->date_thai->date_thai2eng($input['person_birthdate'],-543);
@@ -125,7 +125,7 @@ class House extends BaseController
     }
     
     public function saveJobs($house_id){
-        $input = $this->request->getVar();
+        $input = $this->request->getPost();
        
         $session = session();
         $input['house_id'] = $house_id;
@@ -150,7 +150,7 @@ class House extends BaseController
     }
 
     public function saveIncome($house_id){
-        $input = $this->request->getVar();
+        $input = $this->request->getPost();
         $session = session();
         $input['house_id'] = $house_id;
         
@@ -175,7 +175,7 @@ class House extends BaseController
     }
 
     public function saveOutcome($house_id){
-        $input = $this->request->getVar();
+        $input = $this->request->getPost();
         $session = session();
         $input['house_id'] = $house_id;
        

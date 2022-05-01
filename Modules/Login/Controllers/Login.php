@@ -29,11 +29,14 @@ class Login extends BaseController
       $session->set($ses_data);
       return redirect()->to('/house');
 
-      if($this->loginAD($username,$password)){
-        return redirect()->to('/house');
-      }else{
-        return redirect()->to('/login');
-      }
+
+      //connect to server
+
+      // if($this->loginAD($username,$password)){
+      //   return redirect()->to('/house');
+      // }else{
+      //   return redirect()->to('/login');
+      // }
 
       // else{
       //   $session = session();

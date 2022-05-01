@@ -24,7 +24,7 @@ class App extends BaseConfig
      * @var string
      */
 
-    public $baseURL = 'http://localhost/cropland';
+    public $baseURL = 'https://giapptest.hrdi.or.th/';
 
     /**
      * --------------------------------------------------------------------------
