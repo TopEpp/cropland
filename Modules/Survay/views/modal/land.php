@@ -101,7 +101,7 @@
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" id="detail_hrdi2" name="detail_hrdi" value="2" <?=@$result['data']['detail_hrdi'] == '2' ?'checked':"";?>">
                                         <label class="form-check-label" for="detail_hrdi2">
-                                        ไม่รับผลผลิต
+                                        เก็บผลผลิต
                                         </label>
                                     </div>
                                 </div>

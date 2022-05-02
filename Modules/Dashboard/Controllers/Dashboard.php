@@ -14,9 +14,11 @@ class Dashboard extends BaseController
         $this->model_api = new Api_model();        
     }
 
-    public function index(){
-        $data['prefix'] = $this->model_api->getPrefix();
-        return view('Modules\Dashboard\Views\index',$data);
+    public function survay(){
+        
+        $data['landuse'] =  $this->model_api->getLandUse();
+        
+        return view('Modules\Dashboard\Views\survay',$data);
     }
 
     public function houseType(){

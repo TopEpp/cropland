@@ -1,0 +1,192 @@
+<?=$this->extend("layouts/main")?>
+
+<?=$this->section("content")?>
+<section class="section">
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12 col-md-12 col-lg-12">              
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="text-dark">รายงานแบบสอบถามข้อมูลที่ดินรายแปลง</h4>
+                      
+                    </div>
+                    <div class="card-body">
+                        <h5>ค้นหาข้อมูล</h5>
+                        <div>
+                            <form action="">
+                                <div class="row">                                
+                                    <div class="form-group col-md-3">
+                                        <label>ปีสำรวจ</label>
+                                        <select name="interview_year" id="interview_year" class="form-control select2">
+                                            <option value="">เลือก</option>
+                                            <option <?=@$search['interview_year'] == '2565'?'selected':''?> value="2565">2565</option>
+                                            <option <?=@$search['interview_year'] == '2564'?'selected':''?> value="2664">2564</option>
+                                            <option <?=@$search['interview_year'] == '2563'?'selected':''?> value="2663">2563</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label>ลุ่มน้ำหลัก</label>                                       
+                                        <select name="interview_user" id="interview_user" class="form-control select2">
+                                            <option value="">เลือก</option>
+                                            <!-- <?php foreach ($users as $key => $value) :?>
+                                                <option <?=@$search['interview_user'] == $value['prs_id']?'selected':'';?> value="<?=$value['prs_id'];?>"><?=$value['fullname'];?></option>
+                                            <?php endforeach;?> -->
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label>โครงการ</label>                                       
+                                        <select name="interview_project" id="interview_project" class="form-control select2">
+                                            <option value="">เลือก</option>
+                                            <?php foreach ($projects as $key => $value) :?>
+                                                <option <?=@$search['interview_project'] == $value['Code']?'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Description'];?></option>
+                                            <?php endforeach;?>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label>พื้นที่</label>                                       
+                                        <select name="interview_area" id="interview_area" class="form-control select2">
+                                            <option value="">เลือก</option>
+                                            <?php foreach ($projects as $key => $value) :?>
+                                                <option <?=@$search['interview_area'] == $value['Name']?'selected':'';?> value="<?=$value['Name'];?>"><?=$value['Name'];?></option>
+                                            <?php endforeach;?>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label>กลุ่มบ้าน</label>                                       
+                                        <select name="interview_house_id" id="interview_house_id" class="form-control select2">
+                                            <option value="">เลือก</option>
+                                            <?php foreach ($users as $key => $value) :?>
+                                                <option <?=@$search['interview_house_id'] == $value['emp_id']?'selected':'';?> value="<?=$value['emp_id'];?>"><?=$value['fullname'];?></option>
+                                            <?php endforeach;?>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label>ชื่อเจ้าของแปลง</label>                                       
+                                        <select name="interview_person_id" id="interview_person_id" class="form-control select2">
+                                            <option value="">เลือก</option>
+                                            <?php foreach ($users as $key => $value) :?>
+                                                <option <?=@$search['interview_person_id'] == $value['emp_id']?'selected':'';?> value="<?=$value['emp_id'];?>"><?=$value['fullname'];?></option>
+                                            <?php endforeach;?>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label>รหัสแปลง</label>                                       
+                                        <select name="interview_code" id="interview_code" class="form-control select2">
+                                            <option value="">เลือก</option>
+                                            <?php foreach ($lands as $key => $value) :?>
+                                                <option <?=@$search['interview_code'] == $value['land_id']?'selected':'';?> value="<?=$value['land_id'];?>"><?=$value['land_code'];?></option>
+                                            <?php endforeach;?>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-12 text-right">
+                                        <button type="submit" class="btn btn-info">ค้นหา</button>
+                                        <button type="button" class="btn btn-secondary">ล้างค่า</button>
+                                        <button type="button" class="btn btn-primary">Export Excel</button>
+                                    </div>                                    
+                                </div>
+                            </form>
+                        </div>
+                      
+                        <div class="row">
+                            <div class="col-md-2">จำนวนแปลง 2 แปลง</div>
+                            <div class="col-md-2">จำนวนเกษตรกร 1 ราย</div>
+                            <div class="col-md-2">พื้นที่แปลงรวม 15 ไร่</div>
+                        </div>
+                        
+                        <br>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead class="bg-info">
+                                    <tr>
+                                        <th scope="col">ลุ่มน้ำหลัก</th>
+                                        <th scope="col">โครงการ</th>
+                                        <th scope="col">พื้นที่</th>
+                                        <th scope="col">กลุ่มบ้าน</th>
+                                        <th scope="col">รหัสแปลง</th>
+                                        <th scope="col">ชื่อ-สกุล</th>
+                                        <th scope="col">ประเภทบัตร</th>
+                                        <th scope="col">บ้านเลขที่</th>
+                                        <th scope="col">กลุ่มบ้าน</th>
+                                        <th scope="col">หมู่ที่</th>
+                                        <th scope="col">ตำบล</th>
+                                        <th scope="col">อำเภอ</th>
+                                        <th scope="col">จังหวัด</th>
+                                        <th scope="col">การใช้ประโยชน์ที่ดิน</th>
+                                        <th scope="col">ปีสำรวจ</th>
+                                        <th scope="col">พื้นที่แปลงรวม (ไร่)</th>
+                                        <th scope="col">เอกสารสิทธิที่ดิน</th>
+                                        <th scope="col">การใช้ประโยชน์</th>
+                                        <th scope="col">การใช้ที่ดิน</th>
+                                        <th scope="col">การวิเคราะห์ดินและน้ำ</th>
+                                        <th scope="col">การสนับสนุนของ สวพส.</th>
+                                        <th scope="col">การสนับสนุนของหน่วยงานอื่น</th>
+                                        <th scope="col">ความต้องการ การสนับสนุนจากหน่วยงาน</th>
+                                        <th scope="col">ปัญหาทางด้านการเกษตร 3 อันดับแรก</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($data as $key => $value) :?>
+                                        <tr>
+                                            <th scope="row"></th>
+                                            <td> 
+                                                <div style="width: 150px" ><?=$value['project_name'];?></div>
+                                            </td>
+                                            <td>
+                                                <div style="width: 80px" ><?=$value['project_area'];?></div>
+                                            </td>
+                                            <td>                                                
+                                                <div style="width: 80px" ><?=$value['project_village'];?></div>
+                                            </td>
+                                            <td>
+                                                <div style="width: 50px" >
+                                                    <a href="<?=base_url('report/survay/'.$value['interview_code']);?>">
+                                                        <?=$value['interview_code'];?>
+                                                    </a>
+                                                </div>
+                                               
+                                            </td>
+                                            <td><?=$value['person_name'];?></td>
+                                            <td></td>
+                                            <td><?=$value['house_number'];?></td>
+                                            <td><?=$value['house_label'];?></td>   
+                                            <td><?=$value['house_moo'];?></td>
+                                            <td><?=$value['tam_name_t'];?></td>
+                                            <td><?=$value['amp_name_t'];?></td>
+                                            <td><?=$value['pro_name_t'];?></td>
+                                            <td><?=$value['land_use'];?></td>                                                 
+                                            <td><?=$value['interview_year'];?></td>         
+                                            <td><?=$value['land_address'];?></td>     
+                                            <td><?=$value['land_possess'];?></td>
+                                            <td><?=utilization_type($value['interview_land_utilization_type']);?></td>
+                                            <td><?=land_use_type($value['interview_land_use_type']);?></td>
+                                            <td><?=land_water_process($value['intervew_land_water_process']);?></td>
+
+                                            <td><?=$value['land_supports'];?></td>
+                                            <td><?=$value['land_support_org'];?></td>
+                                            <td><?=$value['land_needs'];?></td>
+                                            <td><?=$value['land_problems'];?></td>    
+
+                                            
+                  
+                                        </tr>
+                                    <?php endforeach;?>
+                                
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<?=$this->endSection()?>
+
+<?=$this->section("css")?>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<?=$this->endSection()?>
+
+<?=$this->section("scripts")?>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<?=$this->endSection()?>
+  

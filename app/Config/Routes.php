@@ -122,16 +122,30 @@ $routes->group("member", ["namespace" => "Modules\User\Controllers"], function (
 
 
 $routes->group("dashboard", ["namespace" => "Modules\Dashboard\Controllers"], function ($routes) {
-	$routes->get("/", "Dashboard::index");
-    $routes->get("house-type", "Dashboard::houseType");
-    $routes->get("house-economy", "Dashboard::houseEconomy");
-    $routes->get("house-health", "Dashboard::houseHealth");
-    $routes->get("house-society", "Dashboard::houseSociety");
-    $routes->get("house-land", "Dashboard::houseLand");
-    $routes->get("house-problem", "Dashboard::houseProblem");
-    $routes->get("house-activity", "Dashboard::houseActivity");
+	$routes->get("survay", "Dashboard::survay");
+    // $routes->get("house-type", "Dashboard::houseType");
+    // $routes->get("house-economy", "Dashboard::houseEconomy");
+    // $routes->get("house-health", "Dashboard::houseHealth");
+    // $routes->get("house-society", "Dashboard::houseSociety");
+    // $routes->get("house-land", "Dashboard::houseLand");
+    // $routes->get("house-problem", "Dashboard::houseProblem");
+    // $routes->get("house-activity", "Dashboard::houseActivity");
 
 });
+
+$routes->group("report", ["namespace" => "Modules\Report\Controllers"], function ($routes) {
+	$routes->get("survay", "Report::survay");
+    $routes->get("survay(:any)", "Report::survayDetail$1");
+    // $routes->get("house-type", "Dashboard::houseType");
+    // $routes->get("house-economy", "Dashboard::houseEconomy");
+    // $routes->get("house-health", "Dashboard::houseHealth");
+    // $routes->get("house-society", "Dashboard::houseSociety");
+    // $routes->get("house-land", "Dashboard::houseLand");
+    // $routes->get("house-problem", "Dashboard::houseProblem");
+    // $routes->get("house-activity", "Dashboard::houseActivity");
+
+});
+
 
 
 $routes->group("common", ["namespace" => "App\Controllers"], function ($routes) {
