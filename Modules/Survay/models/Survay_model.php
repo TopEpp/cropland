@@ -37,19 +37,19 @@ class Survay_model extends Model
                     ) 
                 as person_address,
         ");
-        $builder->join('LH_land', 'LH_land.land_code = LH_interview_land.interview_code');
-        $builder->join('LH_landuse', 'LH_landuse.landuse_id = LH_land.land_use');
+        $builder->join('LH_land', 'LH_land.land_code = LH_interview_land.interview_code','left');
+        $builder->join('LH_landuse', 'LH_landuse.landuse_id = LH_land.land_use','left');
 
-        $builder->join('LH_house_person', 'LH_house_person.person_id = LH_interview_land.interview_person_id');
-        $builder->join('LH_house', 'LH_house.house_id = LH_house_person.house_id');
-        $builder->join('LH_prefix', 'LH_prefix.prefix_id = LH_house_person.person_prename');
+        $builder->join('LH_house_person', 'LH_house_person.person_id = LH_interview_land.interview_person_id','left');
+        $builder->join('LH_house', 'LH_house.house_id = LH_house_person.house_id','left');
+        $builder->join('LH_prefix', 'LH_prefix.prefix_id = LH_house_person.person_prename','left');
 
-        $builder->join('amphoe', 'amphoe.amp_code = LH_house.house_district');
-        $builder->join('province', 'province.prov_code = LH_house.house_province');
-        $builder->join('tambon', 'tambon.tam_code = LH_house.house_subdistrict');
+        $builder->join('amphoe', 'amphoe.amp_code = LH_house.house_district','left');
+        $builder->join('province', 'province.prov_code = LH_house.house_province','left');
+        $builder->join('tambon', 'tambon.tam_code = LH_house.house_subdistrict','left');
         
-        $builder->join('CODE_PROJECT', 'CODE_PROJECT.Code = LH_interview_land.interview_project');
-        $builder->join('CODE_PROJECTVILLAGE', 'CODE_PROJECTVILLAGE.Code = LH_interview_land.interview_house_id and CODE_PROJECTVILLAGE.projectId = LH_interview_land.interview_project');
+        $builder->join('CODE_PROJECT', 'CODE_PROJECT.Code = LH_interview_land.interview_project','left');
+        $builder->join('CODE_PROJECTVILLAGE', 'CODE_PROJECTVILLAGE.Code = LH_interview_land.interview_house_id and CODE_PROJECTVILLAGE.projectId = LH_interview_land.interview_project','left');
         $builder->join('VIEW_agriculturist_name','VIEW_agriculturist_name.id_card = LH_interview_land.interview_user','left');
         if ($id){
           $builder = $builder->where('LH_interview_land.interview_id',$id);
@@ -64,21 +64,26 @@ class Survay_model extends Model
     public function saveSurvayManage($data)
     {
       
-      $builder = $this->db->table('LH_interview_land');
-      if (!empty($data['interview_id'])){
-        $interview_id = $data['interview_id'];
-        $builder->where('interview_id',$data['interview_id']);
-        unset($data['interview_id']);
-        $builder->update($data);
-      
-      }else{
-        unset($data['interview_id']);
-        $builder->insert($data);
-        $interview_id = $this->db->insertID();
-      }
-      
 
-      return $interview_id;
+        if (!empty($data['intervew_land_water_process'])){
+            $data['intervew_land_water_process'] = implode(',',$data['intervew_land_water_process']);
+        }
+        
+        $builder = $this->db->table('LH_interview_land');
+        if (!empty($data['interview_id'])){
+            $interview_id = $data['interview_id'];
+            $builder->where('interview_id',$data['interview_id']);
+            unset($data['interview_id']);
+            $builder->update($data);
+        
+        }else{
+            unset($data['interview_id']);
+            $builder->insert($data);
+            $interview_id = $this->db->insertID();
+        }
+        
+
+        return $interview_id;
       
     }
 

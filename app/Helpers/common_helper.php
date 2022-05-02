@@ -33,13 +33,22 @@ function land_use_type($id){
 }
 
 function land_water_process($id){
-    if ($id != ''){
+    if (!empty($id)){
+        $tmp = explode(',', $id);   
+     
         $data = [
             '1'=>'ดิน',
             '2'=>'น้ำ',            
         ];
-    
-        return $data[$id];
+        if (count($tmp) == 2){
+            
+            return $data[$tmp[0]].'/'.$data[$tmp[1]];
+        }
+
+        return $data[$tmp[0]];
     }
     return '';
+ 
+  
+
 }

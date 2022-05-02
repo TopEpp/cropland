@@ -136,12 +136,13 @@
                                     
                                 </div>
                                 <div class="row">
+                                    <?php $land_water = @explode(',',$data['intervew_land_water_process']);?>                                
                                     <div class="form-group col-md-6">
                                         <label>การเก็บตัวอย่างวิเคราะห์ดินและน้ำจาก สวพส.</label>
                                         <div class="row mb-2">
                                             <div class="col-md-12">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" id="intervew_land_water_process1" name="intervew_land_water_process" value="1" <?=@$data['intervew_land_water_process'] == '1' ?'checked':''?> >
+                                                    <input class="form-check-input" type="checkbox" id="intervew_land_water_process1" name="intervew_land_water_process[]" value="1" <?=@$land_water[0] == '1' ?'checked':''?> >
                                                     <label class="form-check-label" for="intervew_land_water_process1">
                                                     ดิน
                                                     </label>
@@ -151,7 +152,7 @@
                                         <div class="row  mb-2">
                                             <div class="col-md-12">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" id="intervew_land_water_process2" name="intervew_land_water_process" value="2" <?=@$data['intervew_land_water_process'] == '2' ?'checked':''?> > 
+                                                    <input class="form-check-input" type="checkbox" id="intervew_land_water_process2" name="intervew_land_water_process[]" value="2" <?=@$land_water[1] == '2' ?'checked':''?> > 
                                                     <label class="form-check-label" for="intervew_land_water_process2">
                                                     น้ำ
                                                     </label>
