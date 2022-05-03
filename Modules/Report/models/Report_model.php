@@ -13,11 +13,13 @@ class Report_model extends Model
             CODE_PROJECT.name as project_area,
             CODE_PROJECT.Description as project_name,
             CODE_PROJECTVILLAGE.Name as project_village,
+            CODE_PROJECTVILLAGE.BasinName,
             LH_land.land_address,
             LH_landuse.name as land_use,
             CONCAT(LH_prefix.name,LH_house_person.person_name,' ',LH_house_person.person_lastname) as person_name,
             LH_house.house_label,
             LH_house.house_number,
+            LH_house_person.person_type_number,
             LH_house.house_moo,
             tambon.tam_name_t,
             amphoe.amp_name_t,
@@ -75,17 +77,23 @@ class Report_model extends Model
         CONCAT(LH_prefix.name,LH_house_person.person_name,' ',LH_house_person.person_lastname) as person_name,
         LH_house.house_label,
         LH_house.house_number,
+        LH_house_person.person_type_number,   
         LH_house.house_moo,
         tambon.tam_name_t,
         amphoe.amp_name_t,
         province.pro_name_t,
         LH_interview_land_detail.*,
         CODE_PRODUCT.name as product_name,
+        CODE_PRODUCTTYPE.Name as product_type_name,
+        CODE_PRODUCTGROUP.Name as product_group_name,
         LH_interview_land_product.*");
 
         $builder->join('LH_interview_land_detail','LH_interview_land_detail.interview_id = LH_interview_land.interview_id');
         $builder->join('LH_interview_land_product', 'LH_interview_land_product.detail_id = LH_interview_land_detail.detail_id');
         $builder->join('CODE_PRODUCT', 'CODE_PRODUCT.Code = LH_interview_land_detail.detail_type');
+
+        $builder->join('CODE_PRODUCTTYPE', 'CODE_PRODUCTTYPE.Code = CODE_PRODUCT.TypeCode');
+        $builder->join('CODE_PRODUCTGROUP', 'CODE_PRODUCTGROUP.Code = CODE_PRODUCT.GroupCode');
 
         $builder->join('LH_house_person', 'LH_house_person.person_id = LH_interview_land.interview_person_id');
         $builder->join('LH_house', 'LH_house.house_id = LH_house_person.house_id');

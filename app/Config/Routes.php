@@ -101,18 +101,34 @@ $routes->group("survay", ["namespace" => "Modules\Survay\Controllers"], function
      $routes->get("load-land/(:num)(:any)", "Survay::loadland/$1$2");
      $routes->get("load-image", "Survay::loadImage");
      
-      //save data
-      $routes->post("save_manage", "Survay::saveManage");
-      $routes->post("save_land/(:num)", "Survay::saveLand/$1");
-      $routes->post("save_support/(:num)", "Survay::saveSupport/$1");
-      $routes->post("save_support_other/(:num)", "Survay::saveSupportOther/$1");
-      $routes->post("save_problem/(:num)", "Survay::saveSurvayProblem/$1");
-      $routes->post("save_need/(:num)", "Survay::saveSurvayNeed/$1");
+    //save data
+    $routes->post("save_manage", "Survay::saveManage");
+    $routes->post("save_land/(:num)", "Survay::saveLand/$1");
+    $routes->post("save_support/(:num)", "Survay::saveSupport/$1");
+    $routes->post("save_support_other/(:num)", "Survay::saveSupportOther/$1");
+    $routes->post("save_problem/(:num)", "Survay::saveSurvayProblem/$1");
+    $routes->post("save_need/(:num)", "Survay::saveSurvayNeed/$1");
 
        //upload 
-   
-    $routes->post('upload_owner_area(:any)',"Survay::uploadOwnerArea$1");
+    $routes->post('upload_owner(:any)',"Survay::uploadOwnerArea$1");
     $routes->post('upload_area(:any)',"Survay::uploadArea$1");
+
+    //delete
+    $routes->post("delete_survay(:any)", "Survay::deleteSurvay$1");
+    $routes->post("delete_support(:any)", "Survay::deleteSupport$1");
+    $routes->post("delete_other(:any)", "Survay::deleteSupportOther$1");
+    $routes->post("delete_problem(:any)", "Survay::deleteProblem$1");
+    $routes->post("delete_need(:any)", "Survay::deleteNeed$1");
+
+    $routes->post("delete_product(:any)", "Survay::deleteLandProduct$1");
+
+    $routes->post("delete_image(:any)", "Survay::deleteImage$1");
+
+    
+    
+    
+    
+    
 });
 
 

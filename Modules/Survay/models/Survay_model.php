@@ -118,39 +118,43 @@ class Survay_model extends Model
         $query = $builder->get()->getResultArray();
         $data  = [];
         $product  = [];
-        foreach ($query as $key => $value) {
+
+        if (!empty($query)){
+            foreach ($query as $key => $value) {
           
-          $data['data'][$value['detail_id']] = $value;
-          $data[$value['data_type']][$value['detail_id']][] = $value;
-
+                $data['data'][$value['detail_id']] = $value;
+                $data[$value['data_type']][$value['detail_id']][] = $value;
+      
+              }
+              
+              
+              foreach ($data['dressing'] as $key => $value) {            
+                  $data['data'][$key]['dressing'] = array_sum(array_column($value, 'product_value')) *  array_sum(array_column($value, 'product_price'));  
+              }
+      
+              foreach ($data['drug'] as $key => $value) {            
+                  $data['data'][$key]['drug'] = array_sum(array_column($value, 'product_value')) *  array_sum(array_column($value, 'product_price'));  
+              } 
+      
+              foreach ($data['hormone'] as $key => $value) {            
+                  $data['data'][$key]['hormone'] = array_sum(array_column($value, 'product_value')) *  array_sum(array_column($value, 'product_price'));  
+              } 
+      
+              foreach ($data['staff'] as $key => $value) {            
+                  $data['data'][$key]['staff'] = array_sum(array_column($value, 'product_value')) *  array_sum(array_column($value, 'product_price'));  
+              } 
+      
+              foreach ($data['product'] as $key => $value) {            
+                  $data['data'][$key]['product_value'] = array_sum(array_column($value, 'product_value')); 
+                  $data['data'][$key]['product_price'] = array_sum(array_column($value, 'product_price'));  
+                  $data['data'][$key]['product_market'] = implode(', ',array_column($value, 'product_market_label'));
+                  $data['data'][$key]['product_type'] = implode(', ',array_column($value, 'product_type_label'));  
+                  
+              } 
+              
+      
         }
-        
-        foreach ($data['dressing'] as $key => $value) {            
-            $data['data'][$key]['dressing'] = array_sum(array_column($value, 'product_value')) *  array_sum(array_column($value, 'product_price'));  
-        }
-
-        foreach ($data['drug'] as $key => $value) {            
-            $data['data'][$key]['drug'] = array_sum(array_column($value, 'product_value')) *  array_sum(array_column($value, 'product_price'));  
-        } 
-
-        foreach ($data['hormone'] as $key => $value) {            
-            $data['data'][$key]['hormone'] = array_sum(array_column($value, 'product_value')) *  array_sum(array_column($value, 'product_price'));  
-        } 
-
-        foreach ($data['staff'] as $key => $value) {            
-            $data['data'][$key]['staff'] = array_sum(array_column($value, 'product_value')) *  array_sum(array_column($value, 'product_price'));  
-        } 
-
-        foreach ($data['product'] as $key => $value) {            
-            $data['data'][$key]['product_value'] = array_sum(array_column($value, 'product_value')); 
-            $data['data'][$key]['product_price'] = array_sum(array_column($value, 'product_price'));  
-            $data['data'][$key]['product_market'] = implode(', ',array_column($value, 'product_market_label'));
-            $data['data'][$key]['product_type'] = implode(', ',array_column($value, 'product_type_label'));  
-            
-        } 
-        
      
-
         return $data;
         
 
@@ -668,12 +672,12 @@ class Survay_model extends Model
                 }else{
                     unset($tmp['problem_id']);
                     $builder->insert($tmp);
-                    $need_id = $db->insertID();
+                    $problem_id = $db->insertID();
                 }
 
             
             }
-            return $need_id;
+            return $problem_id;
     
         }
 
@@ -752,6 +756,73 @@ class Survay_model extends Model
 
         return true;
     }
+
+    public function deleteSurvay($id){
+        
+        $builder = $this->db->table('LH_interview_land');
+        $builder->where('interview_id', $id);
+        $query = $builder->delete();
+
+        return $query;
+    }
+
+    public function deleteSupport($id){
+        
+        $builder = $this->db->table('LH_interview_land_support');
+        $builder->where('support_id', $id);
+        $query = $builder->delete();
+
+        return $query;
+    }
+
+    public function deleteSupportOther($id){
+
+        $builder = $this->db->table('LH_interview_land_support_org');
+        $builder->where('support_id', $id);
+        $query = $builder->delete();
+
+        return $query;
+    }
+
+    public function deleteProblem($id){
+        
+        $builder = $this->db->table('LH_interview_land_problem');
+        $builder->where('problem_id', $id);
+        $query = $builder->delete();
+
+        return $query;
+    }
+
+    public function deleteNeed($id){
+        
+        $builder = $this->db->table('LH_interview_land_need');
+        $builder->where('need_id', $id);
+        $query = $builder->delete();
+
+        return $query;
+    }
+
+    //item land
+    public function deleteLandProduct($id){
+        
+        $builder = $this->db->table('LH_interview_land_product');
+        $builder->where('rec_id', $id);
+        $query = $builder->delete();
+
+        return $query;
+    }
+
+    public function deleteImage($id){
+        
+        $builder = $this->db->table('LH_interview_land_photo');
+        $builder->where('photo', $id);
+        $query = $builder->delete();
+
+        return $query;
+    }
+    
+
+    
 
  
 }

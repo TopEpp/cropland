@@ -142,7 +142,7 @@
                                         <div class="row mb-2">
                                             <div class="col-md-12">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" id="intervew_land_water_process1" name="intervew_land_water_process[]" value="1" <?=@$land_water[0] == '1' ?'checked':''?> >
+                                                    <input class="form-check-input" type="checkbox" id="intervew_land_water_process1" name="intervew_land_water_process[]" value="1" <?=@in_array("1", $land_water) ?'checked':''?> >
                                                     <label class="form-check-label" for="intervew_land_water_process1">
                                                     ดิน
                                                     </label>
@@ -152,7 +152,7 @@
                                         <div class="row  mb-2">
                                             <div class="col-md-12">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" id="intervew_land_water_process2" name="intervew_land_water_process[]" value="2" <?=@$land_water[1] == '2' ?'checked':''?> > 
+                                                    <input class="form-check-input" type="checkbox" id="intervew_land_water_process2" name="intervew_land_water_process[]" value="2" <?=@in_array("2", $land_water) ?'checked':''?> > 
                                                     <label class="form-check-label" for="intervew_land_water_process2">
                                                     น้ำ
                                                     </label>

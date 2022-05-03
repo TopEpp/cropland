@@ -114,7 +114,7 @@
                     <p>ปุ๋ย</p>
                     <div class="row repeater-dressing">
                         <div class="col-md-12">
-                            <table class="table table-bordered">
+                            <table class="table table-bordered" id="tableDressing">
                                 <thead>
                                     <tr>
                                         <th width="5%">ลำดับ</th>
@@ -124,12 +124,12 @@
                                         <th width="10%">หน่วยนับ</th>
                                         <th width="10%">ราคาต่อหน่วย</th>
                                         <th width="10%">ราคารวม</th>
-                                        <th width="10%"><button class="btn btn-info btn-sm" type="button" data-repeater-create>เพิ่มข้อมูล</button></th>                                        
+                                        <th width="10%"><button class="btn btn-info btn-sm" type="button" data-repeater-create id="add-dressing" >เพิ่มข้อมูล</button></th>                                        
                                     </tr>
                                 </thead>
                                 <tbody data-repeater-list="dressing">
                                     <?php if (empty($result['dressing'])):?>
-                                        <tr data-repeater-item>
+                                        <tr data-repeater-item data-id="">
                                             <td>
                                                 1
                                                 <input type="hidden" name="rec_id">
@@ -193,7 +193,7 @@
                                         </tr>
                                     <?php else:?>
                                         <?php foreach ($result['dressing'] as $key => $product) :?>
-                                            <tr data-repeater-item>
+                                            <tr data-repeater-item data-id="<?=$product['rec_id'];?>">
                                             <td>
                                                 <?=$key+1;?>
                                                 <input type="hidden" name="rec_id" value="<?=$product['rec_id'];?>">
@@ -265,7 +265,7 @@
                     <p>ยา</p>
                     <div class="row repeater-drug">
                         <div class="col-md-12">
-                            <table class="table table-bordered">
+                            <table class="table table-bordered" id="tableDrug">
                                 <thead>
                                     <tr>
                                         <th width="5%">ลำดับ</th>
@@ -275,13 +275,13 @@
                                         <th width="10%">หน่วยนับ</th>
                                         <th width="10%">ราคาต่อหน่วย</th>
                                         <th width="10%">ราคารวม</th>
-                                        <th width="10%"><button class="btn btn-info btn-sm"  type="button" data-repeater-create>เพิ่มข้อมูล</button></th>
+                                        <th width="10%"><button class="btn btn-info btn-sm"  type="button" data-repeater-create id="add-drug">เพิ่มข้อมูล</button></th>
                                         
                                     </tr>
                                 </thead>
                                 <tbody data-repeater-list="drug">
                                 <?php if (empty($result['drug'])):?>
-                                    <tr data-repeater-item>
+                                    <tr data-repeater-item data-id="">
                                         <td>1
                                         <input type="hidden" name="rec_id">
                                         </td>
@@ -342,7 +342,7 @@
                                     </tr>
                                 <?php else:?>
                                     <?php foreach ($result['drug'] as $key => $product) :?>
-                                        <tr data-repeater-item>
+                                        <tr data-repeater-item data-id="<?=$product['rec_id'];?>">
                                         <td>1
                                             <input type="hidden" name="rec_id" value="<?=$product['rec_id'];?>">
                                         </td>
@@ -411,7 +411,7 @@
                     <p>ฮอร์โมน</p>
                     <div class="row repeater-hormone">
                         <div class="col-md-12">
-                            <table class="table table-bordered">
+                            <table class="table table-bordered" id="tableHormone">
                                 <thead>
                                     <tr>
                                         <th width="5%">ลำดับ</th>                                        
@@ -420,13 +420,13 @@
                                         <th width="10%">หน่วยนับ</th>
                                         <th width="10%">ราคาต่อหน่วย</th>
                                         <th width="10%">ราคารวม</th>
-                                        <th width="10%"><button class="btn btn-info btn-sm" type="button" data-repeater-create>เพิ่มข้อมูล</button></th>
+                                        <th width="10%"><button class="btn btn-info btn-sm" type="button" data-repeater-create id="add-hormone">เพิ่มข้อมูล</button></th>
                                         
                                     </tr>
                                 </thead>
                                 <tbody data-repeater-list="hormone">
                                 <?php if (empty($result['hormone'])):?>
-                                        <tr data-repeater-item>
+                                        <tr data-repeater-item data-id="">
                                             <td>1
                                             <input type="hidden" name="rec_id">
                                             </td>
@@ -475,7 +475,7 @@
                                         </tr>
                                 <?php else:?>
                                     <?php foreach ($result['hormone'] as $key => $product) :?>
-                                        <tr data-repeater-item>
+                                        <tr data-repeater-item  data-id="<?=$product['rec_id'];?>">
                                             <td>1
                                             <input type="hidden" name="rec_id" value="<?=$product['rec_id'];?>">
                                             </td>
@@ -532,7 +532,7 @@
                     <p>แรงงาน</p>
                     <div class="row repeater-staff">
                         <div class="col-md-12">
-                            <table class="table table-bordered">
+                            <table class="table table-bordered"  id="tableStaff">
                                 <thead>
                                     <tr>
                                         <th width="5%">ลำดับ</th>
@@ -542,13 +542,13 @@
                                         <th width="10%">จำนวนวันจ้าง</th>
                                         <th width="10%">บาท/วัน</th>
                                         <th width="10%">ค่าจ้างรวม</th>
-                                        <th width="10%"><button class="btn btn-info btn-sm" type="button" data-repeater-create>เพิ่มข้อมูล</button></th>
+                                        <th width="10%"><button class="btn btn-info btn-sm" type="button" data-repeater-create id="add-staff">เพิ่มข้อมูล</button></th>
                                         
                                     </tr>
                                 </thead>
                                 <tbody data-repeater-list="staff">
                                 <?php if (empty($result['staff'])):?>
-                                    <tr data-repeater-item>
+                                    <tr data-repeater-item data-id="">
                                         <td>1
                                         <input type="hidden" name="rec_id">
                                         </td>
@@ -603,7 +603,7 @@
                                     </tr>
                                 <?php else:?>
                                     <?php foreach ($result['staff'] as $key => $product) :?>
-                                        <tr data-repeater-item>
+                                        <tr data-repeater-item  data-id="<?=$product['rec_id'];?>">
                                             <td>1
                                             <input type="hidden" name="rec_id" value="<?=$product['rec_id'];?>">
                                             </td>
@@ -678,7 +678,7 @@
                     <p>ผลผลิต</p>
                     <div class="row repeater-product">
                         <div class="col-md-12">
-                            <table class="table table-bordered">
+                            <table class="table table-bordered" id="tableProduct">
                                 <thead>
                                     <tr>
                                         <th width="5%">ลำดับ</th>
@@ -688,13 +688,13 @@
                                         <th width="10%">ราคาต่อหน่วย</th>
                                         <th width="10%">รวมรายได้(บาท)</th>
                                         <th width="10%">ตลาด</th>
-                                        <th width="10%"><button class="btn btn-info btn-sm" type="button" data-repeater-create>เพิ่มข้อมูล</button></th>
+                                        <th width="10%"><button class="btn btn-info btn-sm" type="button" data-repeater-create id="add-product">เพิ่มข้อมูล</button></th>
                                         
                                     </tr>
                                 </thead>
                                 <tbody data-repeater-list="product">
                                     <?php if (empty($result['product'])):?>
-                                        <tr data-repeater-item>
+                                        <tr data-repeater-item data-id="">
                                             <td>1
                                             <input type="hidden" name="rec_id" >
                                             </td>
@@ -758,7 +758,7 @@
                                         </tr>
                                     <?php else:?>
                                         <?php foreach ($result['product'] as $key => $product) :?>
-                                            <tr data-repeater-item>
+                                            <tr data-repeater-item  data-id="<?=$product['rec_id'];?>">
                                             <td>1
                                             <input type="hidden" name="rec_id" value="<?=$product['rec_id'];?>">
                                             </td>
@@ -885,7 +885,28 @@
             },
 
             hide: function (deleteElement) {
-                if(confirm('Are you sure you want to delete this element?')) {
+                var id = $(this).attr("data-id");
+                if (id !== ''){
+                    swal({
+                        title: 'Are you sure?',
+                        text: 'ยืนยันลบข้อมูลนี้!',
+                        icon: 'warning',
+                        buttons: true,
+                        dangerMode: true,
+                        })
+                        .then((willDelete) => {
+                            if (willDelete) {
+                                $.ajax({
+                                    type: "POST",
+                                    async: false,
+                                    url: domain+'survay/delete_product/'+id,
+                                    success : function(res){
+                                        $(this).slideUp(deleteElement);
+                                    }
+                                });
+                            } 
+                    }); 
+                }else{                    
                     $(this).slideUp(deleteElement);
                 }
             },
@@ -914,7 +935,28 @@
             },
 
             hide: function (deleteElement) {
-                if(confirm('Are you sure you want to delete this element?')) {
+                var id = $(this).attr("data-id");
+                if (id !== ''){
+                    swal({
+                        title: 'Are you sure?',
+                        text: 'ยืนยันลบข้อมูลนี้!',
+                        icon: 'warning',
+                        buttons: true,
+                        dangerMode: true,
+                        })
+                        .then((willDelete) => {
+                            if (willDelete) {
+                                $.ajax({
+                                    type: "POST",
+                                    async: false,
+                                    url: domain+'survay/delete_product/'+id,
+                                    success : function(res){
+                                        $(this).slideUp(deleteElement);
+                                    }
+                                });
+                            } 
+                    }); 
+                }else{                    
                     $(this).slideUp(deleteElement);
                 }
             },
@@ -940,7 +982,28 @@
             },
 
             hide: function (deleteElement) {
-                if(confirm('Are you sure you want to delete this element?')) {
+                var id = $(this).attr("data-id");
+                if (id !== ''){
+                    swal({
+                        title: 'Are you sure?',
+                        text: 'ยืนยันลบข้อมูลนี้!',
+                        icon: 'warning',
+                        buttons: true,
+                        dangerMode: true,
+                        })
+                        .then((willDelete) => {
+                            if (willDelete) {
+                                $.ajax({
+                                    type: "POST",
+                                    async: false,
+                                    url: domain+'survay/delete_product/'+id,
+                                    success : function(res){
+                                        $(this).slideUp(deleteElement);
+                                    }
+                                });
+                            } 
+                    }); 
+                }else{                    
                     $(this).slideUp(deleteElement);
                 }
             },
@@ -966,7 +1029,28 @@
             },
 
             hide: function (deleteElement) {
-                if(confirm('Are you sure you want to delete this element?')) {
+                var id = $(this).attr("data-id");
+                if (id !== ''){
+                    swal({
+                        title: 'Are you sure?',
+                        text: 'ยืนยันลบข้อมูลนี้!',
+                        icon: 'warning',
+                        buttons: true,
+                        dangerMode: true,
+                        })
+                        .then((willDelete) => {
+                            if (willDelete) {
+                                $.ajax({
+                                    type: "POST",
+                                    async: false,
+                                    url: domain+'survay/delete_product/'+id,
+                                    success : function(res){
+                                        $(this).slideUp(deleteElement);
+                                    }
+                                });
+                            } 
+                    }); 
+                }else{                    
                     $(this).slideUp(deleteElement);
                 }
             },
@@ -991,7 +1075,29 @@
             },
 
             hide: function (deleteElement) {
-                if(confirm('Are you sure you want to delete this element?')) {
+
+                var id = $(this).attr("data-id");
+                if (id !== ''){
+                    swal({
+                        title: 'Are you sure?',
+                        text: 'ยืนยันลบข้อมูลนี้!',
+                        icon: 'warning',
+                        buttons: true,
+                        dangerMode: true,
+                        })
+                        .then((willDelete) => {
+                            if (willDelete) {
+                                $.ajax({
+                                    type: "POST",
+                                    async: false,
+                                    url: domain+'survay/delete_product/'+id,
+                                    success : function(res){
+                                        $(this).slideUp(deleteElement);
+                                    }
+                                });
+                            } 
+                    }); 
+                }else{                    
                     $(this).slideUp(deleteElement);
                 }
             },
@@ -1004,9 +1110,6 @@
         });
 
 
-
-
-
         $(".datepicker").datepicker({
             language: "th-th",
             format: "dd/mm/yyyy",
@@ -1014,6 +1117,36 @@
 
             // daysOfWeekDisabled: [0, 6],
         });
+
+        $("#add-dressing").click(function () {
+			$repeaterDressing.repeaterVal()["dressing"].map(function (fields, row) {                
+                $("#tableDressing tr").last().attr("data-id",'');              
+			});
+		});
+
+        $("#add-drug").click(function () {
+			$repeaterDrug.repeaterVal()["drug"].map(function (fields, row) {                
+                $("#tableDrug tr").last().attr("data-id",'');              
+			});
+		});
+
+        $("#add-hormone").click(function () {
+			$repeaterHormone.repeaterVal()["hormone"].map(function (fields, row) {                
+                $("#tableHormone tr").last().attr("data-id",'');              
+			});
+		});
+
+        $("#add-staff").click(function () {
+			$repeaterStaff.repeaterVal()["staff"].map(function (fields, row) {                
+                $("#tableStaff tr").last().attr("data-id",'');              
+			});
+		});
+
+        $("#add-product").click(function () {
+			$repeaterProduct.repeaterVal()["product"].map(function (fields, row) {                
+                $("#tableProduct tr").last().attr("data-id",'');              
+			});
+		});
     });
    
 </script>

@@ -1,5 +1,6 @@
 body {
 	font-family: "Sarabun", sans-serif;
+	color: rgba(51, 51, 51, 1);
 }
 
 @media (min-width: 1200px) {
@@ -97,4 +98,12 @@ body.layout-3 .main-content {
 	box-shadow: 0 10px 40px 0 rgba(51, 73, 94, 0.15);
 	border: none;
 	width: 250px;
+}
+
+.table:not(.table-sm) thead th {
+	border-bottom: none;
+	background-color: rgba(0, 0, 0, 0.04);
+	color: rgba(51, 51, 51, 1);
+	padding-top: 15px;
+	padding-bottom: 15px;
 }

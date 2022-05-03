@@ -52,3 +52,15 @@ function land_water_process($id){
   
 
 }
+
+function house_person_type($id){
+    if ($id != ''){
+        $data = [
+            '1'=>'บัตรประชาชน',
+            '2'=>'บัตรต่างดาว',            
+        ];
+    
+        return $data[$id];
+    }
+    return '';
+}

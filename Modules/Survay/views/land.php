@@ -148,6 +148,8 @@
 <?= script_tag('public/assets/datepicker/js/bootstrap-datepicker-thai.js') ?>
 <?= script_tag('public/assets/datepicker/js/locales/bootstrap-datepicker.th.js') ?>
 
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 <script>
 
     function addLand(interview_id,id = ''){

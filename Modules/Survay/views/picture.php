@@ -44,7 +44,7 @@
                                                 </div>
                                             </div>
                                             <div class="card-body">
-                                                <form action="<?=site_url('/survay/upload_owner_area/'.$interview_id);?>" class="dropzone" id="mydropzone1">
+                                                <form action="<?=site_url('/survay/upload_owner/'.$interview_id);?>" class="dropzone" id="mydropzone1" method="POST">
                                                     <div class="fallback">
                                                         <input name="file" type="file" multiple />                                                        
                                                     </div>
@@ -63,7 +63,7 @@
                                                 </div>
                                             </div>
                                             <div class="card-body">
-                                                <form action="<?=site_url('/survay/upload_area/'.$interview_id);?>" class="dropzone" id="mydropzone2">
+                                                <form action="<?=site_url('/survay/upload_area/'.$interview_id);?>" class="dropzone" id="mydropzone2" method="POST">
                                                     <div class="fallback">
                                                         <input name="file" type="file" multiple />
                                                     </div>
@@ -104,6 +104,8 @@
 
 <?=$this->section("scripts")?>
 <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 <script>
     
     Dropzone.autoDiscover = false;
@@ -119,9 +121,14 @@
             clickable: true,
             createImageThumbnails:false,
             dictDefaultMessage: "เลือกรูปภาพ",
-            thumbnailMethod:'crop',
-            resizeMethod:'crop',
-            
+            // thumbnailMethod:'crop',
+            // resizeMethod:'crop',
+            method:"POST",
+            headers: {    
+                'access-control-allow-origin' :"*",
+                'Access-Control-Allow-Methods':"GET, PUT, POST, OPTIONS"
+
+            },
             init: function() {
                 myDropzone = this;
                 $.ajax({
@@ -136,35 +143,27 @@
                             var mockFile = { name: value.name, size: value.size};
                             myDropzone.emit("addedfile", mockFile);
                             myDropzone.emit("thumbnail", mockFile, value.path);
-                            
-
-
                             myDropzone.emit("complete", mockFile);
                         });
                     }
                 });
                 
 
-                this.on("removedfile", function(files, response) {                  
-                
-                    console.log(files);
-                   
-                    // for(var i=0;i<file_up_names.length;++i){
+                this.on("removedfile", function(files) {       
+                    $.ajax({
+                        url: '/survay/delete_image/'+$("#interview_id").val(),
+                        method: 'POST',
+                        data: {filename : files.name},
+                        dataType: 'json',
+                        success: function(response){                            
+                            window.location.reload();
+                        }
+                    });         
 
-                    //     if(file_up_names[i]==file.name) {
-
-                    //         $.post('delete_file.php', 
-                    //             {file_name:file_up_names[i]},
-                    //         function(data,status){
-                    //             alert('file deleted');
-                    //             });
-                    //     }
-                    // }
-                    
                 });
-                this.on("success", function(files) {  
-                    window.location.reload();
-                });
+                // this.on("success", function(files) {  
+                //     // window.location.reload();
+                // });
              
             }
         
@@ -187,6 +186,7 @@
             dictInvalidFileType: "upload only JPG/PNG",
             dictDefaultMessage: "เลือกรูปภาพ",
             createImageThumbnails:false,
+            method:"POST",
             init: function() {
                 myDropzone1 = this;
                 $.ajax({
@@ -205,6 +205,19 @@
                         });
                     }
                 });
+
+                this.on("removedfile", function(files) {       
+                    $.ajax({
+                        url: '/survay/delete_image/'+$("#interview_id").val(),
+                        method: 'POST',
+                        data: {filename : files.name},
+                        dataType: 'json',
+                        success: function(response){                            
+                            window.location.reload();
+                        }
+                    });         
+
+                });
                 // this.on("success", function(files, response) {                  
                 //     $("#pic_area").append('<input type="hidden" name="pic_area['+response.interview_id+']" value="'+response.path+'">');            
                 // });
@@ -220,8 +233,13 @@
 
     //submit pic
     function onclicks(){
-        dropzone.processQueue();
         dropzone1.processQueue();
+        dropzone.processQueue();
+
+        setTimeout(() => {
+            window.location.reload();
+        }, 2000);
+        
     }
 </script>
 <?=$this->endSection()?>

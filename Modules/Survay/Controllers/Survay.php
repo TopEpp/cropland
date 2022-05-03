@@ -152,7 +152,7 @@ class Survay extends BaseController
     public function support($interview_id,$id = ''){
         $data['interview_id'] = $interview_id;
 
-        $data['support'] = $this->model_api->getWantSupport();
+        $data['support'] = $this->model_api->getHrdiSupport();
 
         $data['data'] = $this->model_survay->getSupports($interview_id);
         return view('Modules\Survay\Views\support',$data);
@@ -178,7 +178,7 @@ class Survay extends BaseController
     public function supportOther($interview_id,$id = ''){
         $data['interview_id'] = $interview_id;
 
-        $data['org'] = $this->model_api->getDepartment();
+        $data['org'] = $this->model_api->getHrdiSupport();
         
         $data['data'] = $this->model_survay->getSupportsOther($interview_id);
         return view('Modules\Survay\Views\support_other',$data);
@@ -232,7 +232,7 @@ class Survay extends BaseController
 
     public function need($interview_id,$id = ''){
         $data['interview_id'] = $interview_id;
-        $data['support'] = $this->model_api->getWantSupport();
+        $data['support'] = $this->model_api->getDepartment();
         $data['data'] = $this->model_survay->getNeed($interview_id);
         return view('Modules\Survay\Views\need',$data);
     }
@@ -316,35 +316,36 @@ class Survay extends BaseController
 
     }
     public function uploadOwnerArea($id = ''){
+        
         $img = $this->request->getFile('file');
         
-        if ($img->isValid() && ! $img->hasMoved()) {
+        try {
             $name =   $img->getName();
-            $filepath = PUBLIC_PATH .'/uploads/owners/'; 
+            $filepath = FCPATH.'public/' .'/uploads/owners/'; 
             $img->move($filepath,$name);
             $data = [
                 'interview_id'=> $id,
-                'photo_path'=> '/public/uploads/area/'.$name,
+                'photo_path'=> '/public/uploads/owners/'.$name,
                 'photo'=> $name,
                 'photo_type' =>"owner"
                 
             ];  
-
             $res = $this->model_survay->savePicture($data);
             return   $this->respond($data);
-        } else {        
+        } catch (\Throwable $th) {
             $data = ['errors' => 'The file has already been moved.'];
             return   $this->respond($data);
-        }     
+        }
        
     }
 
     public function uploadArea($id = ''){
         $img = $this->request->getFile('file');
         
-        if ($img->isValid() && ! $img->hasMoved()) {
+        // print_r($img->hasMoved());die();
+        try {
             $name =   $img->getName();
-            $filepath = PUBLIC_PATH .'/uploads/area/'; 
+            $filepath = FCPATH.'public/' .'/uploads/area/'; 
             $img->move($filepath,$name);
             $data = [
                 'interview_id'=> $id,
@@ -355,9 +356,78 @@ class Survay extends BaseController
             ];  
             $res = $this->model_survay->savePicture($data);
             return   $this->respond($data);
-        } else {        
+        } catch (\Throwable $th) {
             $data = ['errors' => 'The file has already been moved.'];
             return   $this->respond($data);
         }
+    
+  
+        // if ($img->isValid()) {
+        //     $name =   $img->getName();
+        //     $filepath = PUBLIC_PATH .'/uploads/area/'; 
+        //     $img->move($filepath,$name);
+        //     $data = [
+        //         'interview_id'=> $id,
+        //         'photo_path'=> '/public/uploads/area/'.$name,
+        //         'photo'=> $name,
+        //         'photo_type' =>"area"
+                
+        //     ];  
+        //     $res = $this->model_survay->savePicture($data);
+        //     return   $this->respond($data);
+        // } else {     
+        //     print_r($file->getErrorString());die();   
+        //     $data = ['errors' => 'The file has already been moved.'];
+        //     return   $this->respond($data);
+        // }
     }
+
+
+    public function deleteSurvay($id){
+        
+        $res = $this->model_survay->deleteSurvay($id);
+        return   $this->respond($res);
+    }
+
+    public function deleteSupport($id){
+        
+        $res = $this->model_survay->deleteSupport($id);
+        return   $this->respond($res);
+    }
+
+    public function deleteSupportOther($id){
+        
+        $res = $this->model_survay->deleteSupportOther($id);
+        return   $this->respond($res);
+    }
+
+    public function deleteProblem($id){
+        
+        $res = $this->model_survay->deleteProblem($id);
+        return   $this->respond($res);
+    }
+
+    public function deleteNeed($id){
+        
+        $res = $this->model_survay->deleteNeed($id);
+        return   $this->respond($res);
+    }
+
+
+    //remove item land
+    public function deleteLandProduct($id){
+        $res = $this->model_survay->deleteLandProduct($id);
+        return   $this->respond($res);
+    }
+
+    public function deleteImage($id){
+        $filename = $this->request->getVar('filename');
+        $res = $this->model_survay->deleteImage($filename);
+        return   $this->respond($res);
+    }
+    
+
+    
+
+    
 }

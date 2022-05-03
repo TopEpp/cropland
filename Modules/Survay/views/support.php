@@ -37,20 +37,21 @@
                                 <input type="hidden" name="interview_id">
                                 <input type="hidden" name="land_id">                             
                                 <div class="row repeater">
-                                    <table class="table table-bordered">
+                                    <table class="table table-bordered" id="tableSupport">
                                         <thead>
                                             <tr>
                                             <th scope="col">ลำดับ</th>
                                             <th scope="col">ประเภท</th>
                                             <th scope="col">รายละเอียด</th>
                                             <th scope="col">
-                                                <button type="button" class="btn btn-info" data-repeater-create>เพิ่มข้อมูล</button>
+                                                <button type="button" class="btn btn-info" id="add-support" data-repeater-create>เพิ่มข้อมูล</button>
                                             </th>                                 
                                             </tr>
                                         </thead>
                                         <tbody data-repeater-list="supports">
+                                         
                                             <?php if(empty($data)):?>
-                                            <tr data-repeater-item>
+                                            <tr data-repeater-item data-id="">
                                                 <th scope="row">
                                                     1
                                                     <input type="hidden" name="support_id">
@@ -72,19 +73,19 @@
                                                             กรุณาระบุรายละเอียด
                                                             </div> 
                                                 </td>
-                                                <td>
+                                                <td  class="text-center">
                                                     <div class="buttons">                                            
-                                                        <a href="#" class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></a>
+                                                        <button type="button" data-repeater-delete class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></button>
                                                     </div>
                                                 </td>                                      
                                             </tr>
                                             <?php else:?>
                                                 <?php foreach ($data as $key => $value) :?>
-                                                    <tr data-repeater-item>
-                                                        <th scope="row">
+                                                    <tr data-repeater-item data-id="<?=$value['support_id'];?>" class="data_list">
+                                                        <td scope="row">
                                                             1
                                                             <input type="hidden" name="support_id" value="<?=$value['support_id'];?>">
-                                                        </th>
+                                                        </td>
                                                         <td>
                                                             <select name="support_type" id="support_type" class="form-control" required="">
                                                                 <option value="">เลือก</option>
@@ -102,9 +103,9 @@
                                                             กรุณาระบุรายละเอียด
                                                             </div> 
                                                         </td>
-                                                        <td>
+                                                        <td class="text-center">
                                                             <div class="buttons">                                            
-                                                                <a href="#" class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></a>
+                                                                <button type="button" data-repeater-delete class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></button>
                                                             </div>
                                                         </td>                                      
                                                     </tr>
@@ -134,6 +135,7 @@
 
 <?=$this->section("scripts")?>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.repeater/1.2.1/jquery.repeater.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
     // var $repeater = '';
     $(document).ready(function () {
@@ -144,14 +146,36 @@
                 // 'family': '1'
             },
             show: function () {
+            
                 $(this).slideDown();
-                // $('#myTable tr:last').remove();
                 
             },
             hide: function (deleteElement) {
-                if(confirm('Are you sure you want to delete this element?')) {
+                var id = $(this).attr("data-id");
+                if (id !== ''){
+                    swal({
+                        title: 'Are you sure?',
+                        text: 'ยืนยันลบข้อมูลนี้!',
+                        icon: 'warning',
+                        buttons: true,
+                        dangerMode: true,
+                        })
+                        .then((willDelete) => {
+                            if (willDelete) {
+                                $.ajax({
+                                    type: "POST",
+                                    async: false,
+                                    url: domain+'survay/delete_support/'+id,
+                                    success : function(res){
+                                        $(this).slideUp(deleteElement);
+                                    }
+                                });
+                            } 
+                    }); 
+                }else{
                     $(this).slideUp(deleteElement);
                 }
+                            
             },
             ready: function (setIndexes) {
                 
@@ -161,12 +185,12 @@
             isFirstItemUndeletable: false
         })
 
-        $("#add-family").click(function () {
-			$repeater.repeaterVal()["group"].map(function (fields, row) {
-                
-				$(".key_data:last").text(row);
-                $(".family_key:last").attr('data-id', (row));               
-                $(`input[name='group[${row}][family]']`).val((row))
+        $("#add-support").click(function () {
+			$repeater.repeaterVal()["supports"].map(function (fields, row) {
+                $("#tableSupport tr").last().attr("data-id",'');
+				// console.log($(".data_list:last").data('id'));
+                // $(".family_key:last").attr('data-id', (row));               
+                // $(`input[name='group[${row}][family]']`).val((row))
                 // $('[data-repeater-list]').empty();
                 // $('[data-repeater-item]').slice(1).empty();
 			});

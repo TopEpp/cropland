@@ -127,7 +127,11 @@
                                 <tbody>
                                     <?php foreach ($data as $key => $value) :?>
                                         <tr>
-                                            <th scope="row"></th>
+                                            <td scope="row">
+                                                <div style="width: 100px" >
+                                                    <?=$value['BasinName'];?>
+                                                </div>
+                                            </td>
                                             <td> 
                                                 <div style="width: 150px" ><?=$value['project_name'];?></div>
                                             </td>
@@ -145,26 +149,26 @@
                                                 </div>
                                                
                                             </td>
-                                            <td><?=$value['person_name'];?></td>
-                                            <td></td>
+                                            <td><div style="width: 100px"><?=$value['person_name'];?></div></td>
+                                            <td><div style="width: 100px"><?=house_person_type($value['person_type_number']);?></div></td>
                                             <td><?=$value['house_number'];?></td>
                                             <td><?=$value['house_label'];?></td>   
                                             <td><?=$value['house_moo'];?></td>
                                             <td><?=$value['tam_name_t'];?></td>
                                             <td><?=$value['amp_name_t'];?></td>
                                             <td><?=$value['pro_name_t'];?></td>
-                                            <td><?=$value['land_use'];?></td>                                                 
+                                            <td><div style="width: 120px"><?=$value['land_use'];?></div></td>                                                 
                                             <td><?=$value['interview_year'];?></td>         
                                             <td><?=$value['land_address'];?></td>     
                                             <td><?=$value['land_possess'];?></td>
-                                            <td><?=utilization_type($value['interview_land_utilization_type']);?></td>
-                                            <td><?=land_use_type($value['interview_land_use_type']);?></td>
-                                            <td><?=land_water_process($value['intervew_land_water_process']);?></td>
+                                            <td><div style="width: 100px"><?=utilization_type($value['interview_land_utilization_type']);?></div></td>
+                                            <td><div style="width: 50px"><?=land_use_type($value['interview_land_use_type']);?></div></td>
+                                            <td><div style="width: 50px"><?=land_water_process($value['intervew_land_water_process']);?></div></td>
 
-                                            <td><?=$value['land_supports'];?></td>
-                                            <td><?=$value['land_support_org'];?></td>
-                                            <td><?=$value['land_needs'];?></td>
-                                            <td><?=$value['land_problems'];?></td>    
+                                            <td><div style="width: 100px"><?=$value['land_supports'];?></div></td>
+                                            <td><div style="width: 100px"><?=$value['land_support_org'];?></div></td>
+                                            <td><div style="width: 100px"><?=$value['land_needs'];?></div></td>
+                                            <td><div style="width: 100px"><?=$value['land_problems'];?></div></td>    
 
                                             
                   
