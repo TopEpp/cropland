@@ -25,6 +25,101 @@ class Api_model extends Model
 
         }
     }
+
+    function importlands(){
+        set_time_limit(500);
+        $builder = $this->db->table('cropland_opm');
+        $builder->select('code_total,ogr_geometry,address,tambon,amphur,province,area_rai,basin,project,id_card,landuse_55');
+        // $builder->groupBy('code_total');
+        $builder->limit(0,100);
+        $query = $builder->get()->getResultArray();
+        foreach ($query as $key => $value) {
+
+          $data['land_code'] = $value['code_total'];
+          // $data['land_geo'] = $value['ogr_geometry'];
+          $data['land_basin'] = $this->getBasinId($value['basin']);
+          $prov_code = $this->getProvinceId($value['province']);
+          $dis_code = $this->getDistrictId($prov_code,$value['amphur']);
+          $subdis_code = $this->getSubDistrictId($dis_code,$value['tambon']);
+
+          $data['land_province'] = $prov_code;
+          $data['land_district'] = $dis_code;
+          $data['land_subdistrcit'] = $subdis_code;
+          $data['land_address'] = $value['address'];
+          $data['land_project'] = $this->getProjectId($value['project']);
+          $data['land_use'] = $this->getLandUseId($value['landuse_55']);
+          $data['land_area'] = $value['area_rai'];
+          
+          // echo '<pre>';
+          // print_r($data); echo '<br>';
+
+          $builder_land = $this->db->table('LH_land');
+          $builder_land->insert($data);
+        }
+    }
+
+    function getLandUseId($name){
+      $builder = $this->db->table('LH_landuse');
+      $builder->select('*');
+      $builder->where('name',$name);
+      $row = $builder->get()->getRowArray();
+      if(!empty($row['landuse_id'])){
+        return $row['landuse_id'];
+      }else{
+        return null;
+      } 
+    }
+
+    function getBasinId($name){
+      $builder = $this->db->table('CODE_BASIN');
+      $builder->select('*');
+      $builder->where('Name',$name);
+      $row = $builder->get()->getRowArray();
+      if(!empty($row['Code'])){
+        return $row['Code'];
+      }else{
+        return null;
+      } 
+    }
+
+    function getProjectId($name){
+      $builder = $this->db->table('CODE_PROJECT');
+      $builder->select('*');
+      $builder->where('Name',$name);
+      $row = $builder->get()->getRowArray();
+      if(!empty($row['Code'])){
+        return $row['Code'];
+      }else{
+        return null;
+      }
+            
+    }
+
+    function getProvinceId($name){
+      $builder = $this->db->table('province');
+      $builder->select('*');
+      $builder->where('pro_name_t',$name);
+      $row = $builder->get()->getRowArray();
+      return $row['prov_code'];      
+    }
+
+    function getDistrictId($code,$name){
+      $builder = $this->db->table('amphoe');
+      $builder->select('*');
+      $builder->where('prov_code',$code);
+      $builder->where('amp_name_t',$name);
+      $row = $builder->get()->getRowArray();
+      return $row['amp_code'];    
+    }
+
+    function getSubDistrictId($code,$name){
+      $builder = $this->db->table('tambon');
+      $builder->select('*');
+      $builder->where('amp_code',$code);
+      $builder->where('tam_name_t',$name);
+      $row = $builder->get()->getRowArray();
+      return $row['tam_code'];    
+    }
     
     public function getAgriWork($id = '')
     { 

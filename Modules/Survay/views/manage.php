@@ -100,7 +100,7 @@
                                             <option value="">เลือก</option>
                                             <?php   foreach ($persons as $key => $person) :?>
                                                 <?php foreach ($person as $key => $value) :?>                                            
-                                                        <option  <?=$data['interview_person_id'] == $value['person_id'] ? 'selected':'' ;?> value="<?=$value['person_id'];?>"><?=$value['person_name'].' '.$value['person_lastname'];?></option>                                                
+                                                        <option  <?=@$data['interview_person_id'] == $value['person_id'] ? 'selected':'' ;?> value="<?=$value['person_id'];?>"><?=$value['person_name'].' '.$value['person_lastname'];?></option>                                                
                                                 <?php endforeach;?>
                                             <?php endforeach;?>
                                         </select>  

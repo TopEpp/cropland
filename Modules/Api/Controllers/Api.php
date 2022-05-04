@@ -136,6 +136,12 @@ class Api extends BaseController
         $data = $User->getAllUsers();
 
         $this->model_api->importUsers($data);
-      }
+    }
+
+    public function importlands(){
+        $User = new User_model();
+
+        $this->model_api->importlands();
+    }
 
 }
