@@ -205,11 +205,14 @@
                  
                     ข้อมูลผู้ใช้งาน
                     </a>
-                    <a href="<?=base_url('dashboard');?>" class="dropdown-item has-icon">
+                    <a href="<?=base_url('dashboard/survay');?>" class="dropdown-item has-icon">
                    
-                    รายงานสรุปโครงสร้างประชากร
+                    แดชบอร์ดแบบสำรวจที่ดินรายแปลง
                     </a>
-                    <!-- <a href="<?=base_url('dashboard/house-type');?>" class="dropdown-item has-icon">
+                    <a href="<?=base_url('report/survay');?>" class="dropdown-item has-icon">                   
+                        รายงานสรุปแบบสำรวจที่ดินรายแปลง 
+                   </a>
+                    <!-- <a href="<?=base_url('dashboard/house-land');?>" class="dropdown-item has-icon">
                    
                     รายงานสรุปลักษณะของครัวเรือน
                     </a>

@@ -95,18 +95,18 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th scope="col">ลำดับ</th>
-                                    <th scope="col">โครงการ</th>
-                                    <th scope="col">พื้นที่</th>
-                                    <th scope="col">กลุ่มบ้าน</th>
-                                    <th scope="col">รหัสแปลง</th>
-                                    <th scope="col">ชื่อ-สกุล เจ้าของแปลง</th>
-                                    <th>ที่อยู่</th>
-                                    <th>กลุ่มบ้าน</th>
-                                    <th>การใช้ประโยชน์ที่ดิน</th>
-                                    <th>ปีสำรวจ</th>
-                                    <th>พื้นที่แปลงรวม (ไร่)</th>
-                                    <th></th>
+                                    <th width="3%" scope="col">ลำดับ</th>
+                                    <th width="15%" scope="col">โครงการ</th>
+                                    <th width="10%" scope="col">พื้นที่</th>
+                                    <th width="10%" scope="col">กลุ่มบ้าน</th>
+                                    <th width="10%" scope="col">รหัสแปลง</th>
+                                    <th width="10%" scope="col">ชื่อ-สกุล เจ้าของแปลง</th>
+                                    <th width="15%">ที่อยู่</th>
+                                    <th width="10%">กลุ่มบ้าน</th>
+                                    <th width="10%">การใช้ประโยชน์ที่ดิน</th>
+                                    <th width="5%">ปีสำรวจ</th>
+                                    <th width="5%">พื้นที่แปลงรวม (ไร่)</th>
+                                    <th width="10%"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -119,14 +119,14 @@
                                         <td><?=$value['interview_code'];?></td>
                                         <td><?=$value['person_name'];?></td>
                                         <td><?=$value['person_address'];?></td>
-                                        <td><?=$value['house_label'];?></td>
+                                        <td><?=$value['person_village'];?></td>
                                         <td><?=$value['land_use'];?></td>
                                         <td><?=$value['interview_year'];?></td>
                                         <td><?=$value['land_address'];?></td>
-                                        <td>
+                                        <td class="text-center">
                                             <div class="buttons">
                                                 <a href="<?=base_url('survay/manage/'.$value['interview_id']);?>" class="btn btn-icon btn-primary"><i class="far fa-edit"></i></a>                                    
-                                                <a href="#" class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></a>
+                                                <button class="btn btn-icon btn-danger" onclick="deleteItem(<?=$value['interview_id'];?>)"><i class="fas fa-trash"></i></button>
                                             </div>
                                         </td>
                                     </tr>
@@ -148,5 +148,31 @@
 
 <?=$this->section("scripts")?>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script>
+    function deleteItem(elm){
+        swal({
+        title: 'Are you sure?',
+        text: 'ยืนยันลบข้อมูลนี้!',
+        icon: 'warning',
+        buttons: true,
+        dangerMode: true,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+                $.ajax({
+                    type: "POST",
+                    url: domain+'survay/delete_survay/'+elm,
+                    success : function(res){
+                        window.location.reload();
+                    }
+                });
+            } 
+        });
+        
+    }
+   
+</script>
 <?=$this->endSection()?>
   

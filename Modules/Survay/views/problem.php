@@ -35,66 +35,79 @@
                             <br>
                             <h6>ข้อมูลปัญหาด้านการเกษตร</h6>
                             <br>
-                            <form action="<?=base_url('survay/save_problem/'.@$interview_id);?>"  method="post" id="form_problem">
+                            <form action="<?=base_url('survay/save_problem/'.@$interview_id);?>"  method="post" id="form_problem" class="needs-validation" novalidate="">
                                 <input type="hidden" name="interview_id">
                                 <input type="hidden" name="land_id">  
                                 <div class="row repeater">
-                                    <table class="table table-bordered">
+                                    <table class="table table-bordered" id="tableProblem">
                                         <thead>
                                             <tr>
                                             <th scope="col">ลำดับ</th>
-                                            <th scope="col">ประเภท</th>
+                                            <th scope="col">ประเภทปัญหา</th>
                                             <th scope="col">รายละเอียด</th>
                                             <th scope="col">
-                                                <a href="#" class="btn btn-info" data-repeater-create>เพิ่มข้อมูล</a>
+                                                <a href="#" class="btn btn-info" data-repeater-create id="add-problems">เพิ่มข้อมูล</a>
                                             </th>                                 
                                             </tr>
                                         </thead>
                                         <tbody data-repeater-list="problems">
+
                                         <?php if(empty($data)):?>
-                                            <tr data-repeater-item>
+                                            <tr data-repeater-item data-id="">
                                                 <th scope="row">
                                                     1
                                                     <input type="hidden" name="problem_id">
                                                 </th>
                                                 <td>
-                                                    <select name="problem_type" id="problem_type" class="form-control">
+                                                    <select name="problem_type" id="problem_type" class="form-control" required="">
                                                         <option value="">เลือก</option>
                                                         <?php foreach ($problem as $key => $value) :?>
                                                             <option value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                                         <?php endforeach?> 
                                                     </select>
+                                                    <div class="invalid-feedback">
+                                                    กรุณาเลือกประเภท
+                                                    </div>
                                                 </td>
                                                 <td>
-                                                    <input type="text" class="form-control" name="problem_detail">
+                                                    <input type="text" class="form-control" name="problem_detail" required="">
+                                                    <div class="invalid-feedback">
+                                                    กรุณาระบุรายละเอียด
+                                                    </div>
                                                 </td>
-                                                <td>
+                                                <td class="text-center">
                                                     <div class="buttons">                                            
-                                                        <a href="#" class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></a>
+                                                        <button type="button" data-repeater-delete class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></button>
                                                     </div>
                                                 </td>                                      
                                             </tr>
                                             <?php else:?>
                                                 <?php foreach ($data as $key => $value) :?>
-                                                    <tr data-repeater-item>
+                                                    <tr data-repeater-item data-id="<?=$value['problem_id'];?>">
                                                         <th scope="row" class="text-center">
                                                             <?=$key+1;?>
                                                             <input type="hidden" name="problem_id" value="<?=$value['problem_id'];?>">
                                                         </th>
                                                         <td>
-                                                            <select name="problem_type" id="problem_type" class="form-control">
+                                                            <select name="problem_type" id="problem_type" class="form-control" required="">
                                                                 <option value="">เลือก</option>
                                                                 <?php foreach ($problem as $key => $val) :?>
                                                                     <option <?=$value['problem_type']  == $val['Code'] ? "selected":'';?> value="<?=$val['Code'];?>"><?=$val['Name'];?></option>
                                                                 <?php endforeach?> 
                                                             </select>
+                                                            <div class="invalid-feedback">
+                                                                กรุณาเลือกประเภท
+                                                            </div>
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="form-control" name="problem_detail" value="<?=$value['problem_detail'];?>"> 
+                                                            <input type="text" class="form-control" name="problem_detail" value="<?=$value['problem_detail'];?>" required=""> 
+                                                            <div class="invalid-feedback">
+                                                                กรุณาระบุรายละเอียด
+                                                            </div>
                                                         </td>
-                                                        <td>
+                                                        <td class="text-center">
                                                             <div class="buttons">                                            
-                                                                <a href="#" class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></a>
+                                                                <button type="button" data-repeater-delete class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></button>
                                                             </div>
                                                         </td>                                      
                                                     </tr>
@@ -124,6 +137,7 @@
 <?=$this->section("scripts")?>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.repeater/1.2.1/jquery.repeater.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
     // var $repeater = '';
     $(document).ready(function () {
@@ -139,7 +153,28 @@
                 
             },
             hide: function (deleteElement) {
-                if(confirm('Are you sure you want to delete this element?')) {
+                var id = $(this).attr("data-id");
+                if (id !== ''){
+                    swal({
+                        title: 'Are you sure?',
+                        text: 'ยืนยันลบข้อมูลนี้!',
+                        icon: 'warning',
+                        buttons: true,
+                        dangerMode: true,
+                        })
+                        .then((willDelete) => {
+                            if (willDelete) {
+                                $.ajax({
+                                    type: "POST",
+                                    async: false,
+                                    url: domain+'survay/delete_problem/'+id,
+                                    success : function(res){
+                                        $(this).slideUp(deleteElement);
+                                    }
+                                });
+                            } 
+                    }); 
+                }else{
                     $(this).slideUp(deleteElement);
                 }
             },
@@ -151,12 +186,10 @@
             isFirstItemUndeletable: false
         })
 
-        $("#add-family").click(function () {
+        $("#add-problems").click(function () {
 			$repeater.repeaterVal()["problems"].map(function (fields, row) {
-                
-				$(".key_data:last").text(row);
-                $(".family_key:last").attr('data-id', (row));               
-                $(`input[name='problems[${row}][family]']`).val((row))
+                $("#tableProblem tr").last().attr("data-id",'');
+			
                 // $('[data-repeater-list]').empty();
                 // $('[data-repeater-item]').slice(1).empty();
 			});

@@ -33,66 +33,78 @@
                         <div class="p-2 border">
                             <br>
                             <h6>ข้อมูลความต้องการการส่งเสริม</h6>
-                            <form action="<?=base_url('survay/save_need/'.@$interview_id);?>"  method="post" id="form_support">
+                            <form action="<?=base_url('survay/save_need/'.@$interview_id);?>"  method="post" id="form_support" class="needs-validation" novalidate="">
                                 <input type="hidden" name="interview_id">
                                 <input type="hidden" name="land_id">                             
                                 <div class="row repeater">
-                                    <table class="table table-bordered">
+                                    <table class="table table-bordered" id="tableNeed">
                                         <thead>
                                             <tr>
                                             <th scope="col">ลำดับ</th>
-                                            <th scope="col">ประเภท</th>
+                                            <th scope="col">ชื่อหน่วยงาน</th>
                                             <th scope="col">รายละเอียด</th>
                                             <th scope="col">
-                                                <a href="#" class="btn btn-info" data-repeater-create>เพิ่มข้อมูล</a>
+                                                <a href="#" class="btn btn-info" data-repeater-create id="add-need">เพิ่มข้อมูล</a>
                                             </th>                                 
                                             </tr>
                                         </thead>
                                         <tbody data-repeater-list="needs">
                                         <?php if(empty($data)):?>
-                                            <tr data-repeater-item>
+                                            <tr data-repeater-item class="need_key" data-id="">
                                                 <th scope="row">
                                                     1
                                                     <input type="hidden" name="need_id">
                                                 </th>
                                                 <td>
-                                                    <select name="need_type" id="need_type" class="form-control">
+                                                    <select name="need_type" id="need_type" class="form-control" required="">
                                                         <option value="">เลือก</option>
                                                         <?php foreach ($support as $key => $val) :?>
                                                             <option value="<?=$val['Code'];?>"><?=$val['Name'];?></option>
                                                         <?php endforeach?> 
                                                     </select>
+                                                    <div class="invalid-feedback">
+                                                        กรุณาเลือกประเภท
+                                                    </div>
                                                 </td>
                                                 <td>
-                                                    <input type="text" class="form-control" name="need_detail">
+                                                    <input type="text" class="form-control" name="need_detail" required="">
+                                                    <div class="invalid-feedback">
+                                                    กรุณาระบุรายละเอียด
+                                                    </div>
                                                 </td>
                                                 <td>
                                                     <div class="buttons">                                            
-                                                        <a href="#" class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></a>
+                                                        <button type="button" data-repeater-delete class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></button>
                                                     </div>
                                                 </td>                                      
                                             </tr>
                                             <?php else:?>
                                                 <?php foreach ($data as $key => $value) :?>
-                                                    <tr data-repeater-item>
-                                                        <th scope="row">
+                                                    <tr data-repeater-item data-id="<?=$value['need_id'];?>" class="need_key">
+                                                        <td scope="row">
                                                             1
                                                             <input type="hidden" name="need_id" value="<?=$value['need_id'];?>">
-                                                        </th>
+                                                        </td>
                                                         <td>
-                                                            <select name="need_type" id="need_type" class="form-control">
+                                                            <select name="need_type" id="need_type" class="form-control" required="">
                                                                 <option value="">เลือก</option>
                                                                 <?php foreach ($support as $key => $val) :?>
                                                                     <option  <?=$value['need_type'] == $val['Code'] ?'selected':'';?> value="<?=$val['Code'];?>"><?=$val['Name'];?></option>
                                                                 <?php endforeach?> 
                                                             </select>
+                                                            <div class="invalid-feedback">
+                                                            กรุณาเลือกประเภท
+                                                            </div>
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="form-control" name="need_detail" value="<?=$value['need_detail'];?>"> 
+                                                            <input type="text" class="form-control" name="need_detail" value="<?=$value['need_detail'];?>" required=""> 
+                                                            <div class="invalid-feedback">
+                                                            กรุณาระบุรายละเอียด
+                                                            </div>
                                                         </td>
                                                         <td>
                                                             <div class="buttons">                                            
-                                                                <a href="#" class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></a>
+                                                                <button type="button" data-repeater-delete class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></button>
                                                             </div>
                                                         </td>                                      
                                                     </tr>
@@ -122,6 +134,7 @@
 
 <?=$this->section("scripts")?>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.repeater/1.2.1/jquery.repeater.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
     // var $repeater = '';
     $(document).ready(function () {
@@ -132,29 +145,51 @@
                 // 'family': '1'
             },
             show: function () {
+   
                 $(this).slideDown();
-                // $('#myTable tr:last').remove();
                 
             },
             hide: function (deleteElement) {
-                if(confirm('Are you sure you want to delete this element?')) {
+                var id = $(this).attr("data-id");
+                
+                if (id !== ''){
+                    swal({
+                        title: 'Are you sure?',
+                        text: 'ยืนยันลบข้อมูลนี้!',
+                        icon: 'warning',
+                        buttons: true,
+                        dangerMode: true,
+                        })
+                        .then((willDelete) => {
+                            if (willDelete) {
+                                $.ajax({
+                                    type: "POST",
+                                    async: false,
+                                    url: domain+'survay/delete_need/'+id,
+                                    success : function(res){
+                                        $(this).slideUp(deleteElement);
+                                    }
+                                });
+                            } 
+                    }); 
+                }else{
                     $(this).slideUp(deleteElement);
                 }
             },
             ready: function (setIndexes) {
                 
-                // console.log(setIndexes);
                 // $dragAndDrop.on('drop', setIndexes);
             },
             isFirstItemUndeletable: false
         })
 
-        $("#add-family").click(function () {
-			$repeater.repeaterVal()["group"].map(function (fields, row) {
+        $("#add-need").click(function () {
+			$repeater.repeaterVal()["needs"].map(function (fields, row) {                
+                $("#tableNeed tr").last().attr("data-id",'');
                 
-				$(".key_data:last").text(row);
-                $(".family_key:last").attr('data-id', (row));               
-                $(`input[name='group[${row}][family]']`).val((row))
+				// $(".key_data:last").text(row);
+                // $("tbody tr > .need_key:last").html();             
+                // $(`input[name='group[${row}][family]']`).val((row))
                 // $('[data-repeater-list]').empty();
                 // $('[data-repeater-item]').slice(1).empty();
 			});

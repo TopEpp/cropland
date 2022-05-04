@@ -2,6 +2,7 @@
 
 namespace Modules\Dashboard\Controllers;
 
+use App\Models\Common_model;
 use Modules\Api\Models\Api_model;
 use App\Controllers\BaseController;
 
@@ -11,12 +12,21 @@ class Dashboard extends BaseController
 
     public function __construct()
     {
-        $this->model_api = new Api_model();        
+        $this->model_api = new Api_model();   
+        $this->model_common = new Common_model();     
     }
 
-    public function index(){
-        $data['prefix'] = $this->model_api->getPrefix();
-        return view('Modules\Dashboard\Views\index',$data);
+    public function survay(){
+        $data['projects'] = $this->model_api->getProject();
+        $data['landuse'] =  $this->model_api->getLandUse();
+        $data['province'] = $this->model_common->getProvince();
+
+        //set label
+        $data['chart']['product_value']['label'] = ['บุก','ข้าว','พริกกะเหรี่ยง','กล้วย','กาแฟ','ลิ้นจี่'];
+        $data['chart']['product_price']['label'] = ['ข้าว','กาแฟ','ข้าวโพด','ลำใย','สัก'];
+        $data['chart']['product_pay']['label'] = ['ปุ๋ย','ยา','ฮอร์โมน','แรงงาน','อื่นๆ'];
+
+        return view('Modules\Dashboard\Views\survay',$data);
     }
 
     public function houseType(){

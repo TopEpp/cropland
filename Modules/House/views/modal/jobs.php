@@ -122,7 +122,7 @@
                                             <select name="type_id" id="type_id" class="form-control">
                                                 <option value="">เลือก</option>
                                                 <?php foreach ($products as $key => $value) :?>
-                                                    <option value="<?=$value['product_id'];?>"><?=$value['name'];?></option>
+                                                    <option value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                                 <?php endforeach;?>
                                             </select>
                                         </td>

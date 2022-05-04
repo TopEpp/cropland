@@ -33,7 +33,7 @@
                         <div class="p-2 border">
                             <br>
                             <h6>ข้อมูลเบื้องต้น</h6>
-                            <form action="<?=base_url('survay/save_manage');?>"  method="post" id="form_manage">
+                            <form action="<?=base_url('survay/save_manage');?>"  method="post" id="form_manage" class="needs-validation" novalidate="">
                                 <input type="hidden" name="interview_id" value=<?=$interview_id;?>>
                                 <div class="row">                               
                                     <div class="form-group col-md-4">
@@ -44,6 +44,7 @@
                                                 <option <?=@$data['interview_user'] == $value['prs_id']?'selected':'';?> value="<?=$value['prs_id'];?>"><?=$value['fullname'];?></option>
                                             <?php endforeach;?>
                                         </select>
+                                       
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>วันที่เก็บข้อมูล</label>
@@ -51,39 +52,51 @@
                                     </div>     
                                     <div class="form-group col-md-4">
                                         <label>รหัสแปลง</label>
-                                        <select name="interview_code" id="interview_code" class="form-control select2">
+                                        <select name="interview_code" id="interview_code" class="form-control select2" required="">
                                             <option value="">เลือก</option>
                                             <?php foreach ($lands as $key => $value) :?>
                                                 <option <?=@$data['interview_code'] == $value['land_code']?'selected':'';?>  value="<?=$value['land_code'];?>"><?=$value['land_code'];?></option>
                                             <?php endforeach;?>
-                                        </select>                                         
+                                        </select>      
+                                        <div class="invalid-feedback">
+                                           กรุณาเลือกรหัสแปลง
+                                        </div>                                   
                                     </div>    
                                     <div class="form-group col-md-4">
                                         <label>โครงการ</label>                                     
-                                        <select name="interview_project" id="interview_project" class="form-control select2" onchange="selectProject($(this))">
+                                        <select name="interview_project" id="interview_project" class="form-control select2" onchange="selectProject($(this))" required="">
                                             <option value="">เลือก</option>
                                             <?php foreach ($projects as $key => $value) :?>
                                                 <option <?=@$data['interview_project'] == $value['Code']?'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Description'].'/'.$value['Name'];?></option>
                                             <?php endforeach;?>
                                             
                                         </select>
+                                        <div class="invalid-feedback">
+                                           กรุณาเลือกโครงการ
+                                        </div>   
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>พื้นที่</label>
-                                        <input type="text" name="interview_area" id="interview_area" class="form-control" value="<?=@$data['interview_area'];?>">                                    
+                                        <input type="text" name="interview_area" id="interview_area" class="form-control" value="<?=@$data['interview_area'];?>" required="">                                    
+                                        <div class="invalid-feedback">
+                                           กรุณาระบุพื้นที่
+                                        </div> 
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>กลุ่มบ้าน</label>
-                                         <select name="interview_house_id" id="interview_house_id" class="form-control select2" onchange="selectHouse($(this))">
+                                         <select name="interview_house_id" id="interview_house_id" class="form-control select2" onchange="selectHouse($(this))" required="">
                                             <option value="">เลือก</option>
                                             <?php foreach ($villages as $key => $value) :?>
                                                 <option <?=@$data['interview_house_id'] == $value['Code']?'selected':'';?>  value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                             <?php endforeach;?>
                                         </select>  
+                                        <div class="invalid-feedback">
+                                           กรุณาเลือกกลุ่มบ้าน
+                                        </div> 
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>ชื่อเจ้าของแปลง</label>
-                                         <select name="interview_person_id" id="interview_person_id" class="form-control select2">
+                                         <select name="interview_person_id" id="interview_person_id" class="form-control select2" required="">
                                             <option value="">เลือก</option>
                                             <?php   foreach ($persons as $key => $person) :?>
                                                 <?php foreach ($person as $key => $value) :?>                                            
@@ -91,23 +104,27 @@
                                                 <?php endforeach;?>
                                             <?php endforeach;?>
                                         </select>  
+                                        <div class="invalid-feedback">
+                                           กรุณาเลือกเจ้าของแปลง
+                                        </div> 
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>เอกสารสิทธิ์ที่ดิน</label>                                        
-                                        <select name="interview_land_holding" id="interview_land_holding" class="form-control">
+                                        <select name="interview_land_holding" id="interview_land_holding" class="form-control" >
                                             <option value="">เลือก</option>
                                             <?php foreach ($privileges as $key => $value) :?>
                                                 <option  <?=@$data['interview_land_holding'] == $value['Code'] ? 'selected':'' ;?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                             <?php endforeach;?>
                                         </select>
+                                    
                                     </div>  
                                     <div class="form-group col-md-4">
                                         <label>ปีสำรวจ</label>                                        
                                         <select name="interview_year" id="interview_year" class="form-control">
-                                            <option <?=@$data['interview_year'] == '2565'?'selected':''?> value="2565">2565</option>
-                                            <option <?=@$data['interview_year'] == '2564'?'selected':''?> value="2664">2564</option>
-                                            <option <?=@$data['interview_year'] == '2563'?'selected':''?> value="2663">2563</option>
-                                        </select>
+                                            <option <?=@$data['interview_year'] == '2565' ?'selected':''?> value="2565">2565</option>
+                                            <option <?=@$data['interview_year'] == '2564' ?'selected':''?> value="2564">2564</option>
+                                            <option <?=@$data['interview_year'] == '2563' ?'selected':''?> value="2563">2563</option>
+                                        </select>                                        
                                     </div>       
                                 </div>
                                 <div class="row">
@@ -119,12 +136,13 @@
                                     
                                 </div>
                                 <div class="row">
+                                    <?php $land_water = @explode(',',$data['intervew_land_water_process']);?>                                
                                     <div class="form-group col-md-6">
                                         <label>การเก็บตัวอย่างวิเคราะห์ดินและน้ำจาก สวพส.</label>
                                         <div class="row mb-2">
                                             <div class="col-md-12">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" id="intervew_land_water_process1" name="intervew_land_water_process" value="1" <?=@$data['intervew_land_water_process'] == '1' ?'checked':''?> >
+                                                    <input class="form-check-input" type="checkbox" id="intervew_land_water_process1" name="intervew_land_water_process[]" value="1" <?=@in_array("1", $land_water) ?'checked':''?> >
                                                     <label class="form-check-label" for="intervew_land_water_process1">
                                                     ดิน
                                                     </label>
@@ -134,7 +152,7 @@
                                         <div class="row  mb-2">
                                             <div class="col-md-12">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" id="intervew_land_water_process2" name="intervew_land_water_process" value="2" <?=@$data['intervew_land_water_process'] == '1' ?'checked':''?> > 
+                                                    <input class="form-check-input" type="checkbox" id="intervew_land_water_process2" name="intervew_land_water_process[]" value="2" <?=@in_array("2", $land_water) ?'checked':''?> > 
                                                     <label class="form-check-label" for="intervew_land_water_process2">
                                                     น้ำ
                                                     </label>

@@ -36,20 +36,28 @@ class Survay_model extends Model
                     LH_house.house_moo,' ตำบล ',tambon.tam_name_t,' อำเภอ ',amphoe.amp_name_t,' จังหวัด ',province.pro_name_t
                     ) 
                 as person_address,
+                person_village.Name as person_village
+                                
         ");
-        $builder->join('LH_land', 'LH_land.land_code = LH_interview_land.interview_code');
-        $builder->join('LH_landuse', 'LH_landuse.landuse_id = LH_land.land_use');
+        $builder->join('LH_land', 'LH_land.land_code = LH_interview_land.interview_code','left');
+        $builder->join('LH_landuse', 'LH_landuse.landuse_id = LH_land.land_use','left');
 
-        $builder->join('LH_house_person', 'LH_house_person.person_id = LH_interview_land.interview_person_id');
-        $builder->join('LH_house', 'LH_house.house_id = LH_house_person.house_id');
-        $builder->join('LH_prefix', 'LH_prefix.prefix_id = LH_house_person.person_prename');
+        $builder->join('LH_house_person', 'LH_house_person.person_id = LH_interview_land.interview_person_id','left');
+      
+        $builder->join('LH_house', 'LH_house.house_id = LH_house_person.house_id','left');
+        $builder->join('LH_prefix', 'LH_prefix.prefix_id = LH_house_person.person_prename','left');
+        $builder->join('CODE_PROJECTVILLAGE as person_village', 'person_village.Code = LH_house.house_label 
+                        and person_village.ProvinceId = LH_house.house_province 
+                        and CONCAT(person_village.ProvinceId,\'\',person_village.AmphurId) = LH_house.house_district
+                        and CONCAT(person_village.ProvinceId,\'\',person_village.AmphurId,\'\',person_village.TamBonId) = LH_house.house_subdistrict
+                        ','left');
 
-        $builder->join('amphoe', 'amphoe.amp_code = LH_house.house_district');
-        $builder->join('province', 'province.prov_code = LH_house.house_province');
-        $builder->join('tambon', 'tambon.tam_code = LH_house.house_subdistrict');
+        $builder->join('amphoe', 'amphoe.amp_code = LH_house.house_district','left');
+        $builder->join('province', 'province.prov_code = LH_house.house_province','left');
+        $builder->join('tambon', 'tambon.tam_code = LH_house.house_subdistrict','left');
         
-        $builder->join('CODE_PROJECT', 'CODE_PROJECT.Code = LH_interview_land.interview_project');
-        $builder->join('CODE_PROJECTVILLAGE', 'CODE_PROJECTVILLAGE.Code = LH_interview_land.interview_house_id and CODE_PROJECTVILLAGE.projectId = LH_interview_land.interview_project');
+        $builder->join('CODE_PROJECT', 'CODE_PROJECT.Code = LH_interview_land.interview_project','left');
+        $builder->join('CODE_PROJECTVILLAGE', 'CODE_PROJECTVILLAGE.Code = LH_interview_land.interview_house_id and CODE_PROJECTVILLAGE.projectId = LH_interview_land.interview_project','left');
         $builder->join('VIEW_agriculturist_name','VIEW_agriculturist_name.id_card = LH_interview_land.interview_user','left');
         if ($id){
           $builder = $builder->where('LH_interview_land.interview_id',$id);
@@ -64,21 +72,26 @@ class Survay_model extends Model
     public function saveSurvayManage($data)
     {
       
-      $builder = $this->db->table('LH_interview_land');
-      if (!empty($data['interview_id'])){
-        $interview_id = $data['interview_id'];
-        $builder->where('interview_id',$data['interview_id']);
-        unset($data['interview_id']);
-        $builder->update($data);
-      
-      }else{
-        unset($data['interview_id']);
-        $builder->insert($data);
-        $interview_id = $this->db->insertID();
-      }
-      
 
-      return $interview_id;
+        if (!empty($data['intervew_land_water_process'])){
+            $data['intervew_land_water_process'] = implode(',',$data['intervew_land_water_process']);
+        }
+        
+        $builder = $this->db->table('LH_interview_land');
+        if (!empty($data['interview_id'])){
+            $interview_id = $data['interview_id'];
+            $builder->where('interview_id',$data['interview_id']);
+            unset($data['interview_id']);
+            $builder->update($data);
+        
+        }else{
+            unset($data['interview_id']);
+            $builder->insert($data);
+            $interview_id = $this->db->insertID();
+        }
+        
+
+        return $interview_id;
       
     }
 
@@ -113,39 +126,43 @@ class Survay_model extends Model
         $query = $builder->get()->getResultArray();
         $data  = [];
         $product  = [];
-        foreach ($query as $key => $value) {
+
+        if (!empty($query)){
+            foreach ($query as $key => $value) {
           
-          $data['data'][$value['detail_id']] = $value;
-          $data[$value['data_type']][$value['detail_id']][] = $value;
-
+                $data['data'][$value['detail_id']] = $value;
+                $data[$value['data_type']][$value['detail_id']][] = $value;
+      
+              }
+              
+              
+              foreach ($data['dressing'] as $key => $value) {            
+                  $data['data'][$key]['dressing'] = array_sum(array_column($value, 'product_value')) *  array_sum(array_column($value, 'product_price'));  
+              }
+      
+              foreach ($data['drug'] as $key => $value) {            
+                  $data['data'][$key]['drug'] = array_sum(array_column($value, 'product_value')) *  array_sum(array_column($value, 'product_price'));  
+              } 
+      
+              foreach ($data['hormone'] as $key => $value) {            
+                  $data['data'][$key]['hormone'] = array_sum(array_column($value, 'product_value')) *  array_sum(array_column($value, 'product_price'));  
+              } 
+      
+              foreach ($data['staff'] as $key => $value) {            
+                  $data['data'][$key]['staff'] = array_sum(array_column($value, 'product_value')) *  array_sum(array_column($value, 'product_price'));  
+              } 
+      
+              foreach ($data['product'] as $key => $value) {            
+                  $data['data'][$key]['product_value'] = array_sum(array_column($value, 'product_value')); 
+                  $data['data'][$key]['product_price'] = array_sum(array_column($value, 'product_price'));  
+                  $data['data'][$key]['product_market'] = implode(', ',array_column($value, 'product_market_label'));
+                  $data['data'][$key]['product_type'] = implode(', ',array_column($value, 'product_type_label'));  
+                  
+              } 
+              
+      
         }
-        
-        foreach ($data['dressing'] as $key => $value) {            
-            $data['data'][$key]['dressing'] = array_sum(array_column($value, 'product_value')) *  array_sum(array_column($value, 'product_price'));  
-        }
-
-        foreach ($data['drug'] as $key => $value) {            
-            $data['data'][$key]['drug'] = array_sum(array_column($value, 'product_value')) *  array_sum(array_column($value, 'product_price'));  
-        } 
-
-        foreach ($data['hormone'] as $key => $value) {            
-            $data['data'][$key]['hormone'] = array_sum(array_column($value, 'product_value')) *  array_sum(array_column($value, 'product_price'));  
-        } 
-
-        foreach ($data['staff'] as $key => $value) {            
-            $data['data'][$key]['staff'] = array_sum(array_column($value, 'product_value')) *  array_sum(array_column($value, 'product_price'));  
-        } 
-
-        foreach ($data['product'] as $key => $value) {            
-            $data['data'][$key]['product_value'] = array_sum(array_column($value, 'product_value')); 
-            $data['data'][$key]['product_price'] = array_sum(array_column($value, 'product_price'));  
-            $data['data'][$key]['product_market'] = implode(', ',array_column($value, 'product_market_label'));
-            $data['data'][$key]['product_type'] = implode(', ',array_column($value, 'product_type_label'));  
-            
-        } 
-        
      
-
         return $data;
         
 
@@ -663,12 +680,12 @@ class Survay_model extends Model
                 }else{
                     unset($tmp['problem_id']);
                     $builder->insert($tmp);
-                    $need_id = $db->insertID();
+                    $problem_id = $db->insertID();
                 }
 
             
             }
-            return $need_id;
+            return $problem_id;
     
         }
 
@@ -747,6 +764,73 @@ class Survay_model extends Model
 
         return true;
     }
+
+    public function deleteSurvay($id){
+        
+        $builder = $this->db->table('LH_interview_land');
+        $builder->where('interview_id', $id);
+        $query = $builder->delete();
+
+        return $query;
+    }
+
+    public function deleteSupport($id){
+        
+        $builder = $this->db->table('LH_interview_land_support');
+        $builder->where('support_id', $id);
+        $query = $builder->delete();
+
+        return $query;
+    }
+
+    public function deleteSupportOther($id){
+
+        $builder = $this->db->table('LH_interview_land_support_org');
+        $builder->where('support_id', $id);
+        $query = $builder->delete();
+
+        return $query;
+    }
+
+    public function deleteProblem($id){
+        
+        $builder = $this->db->table('LH_interview_land_problem');
+        $builder->where('problem_id', $id);
+        $query = $builder->delete();
+
+        return $query;
+    }
+
+    public function deleteNeed($id){
+        
+        $builder = $this->db->table('LH_interview_land_need');
+        $builder->where('need_id', $id);
+        $query = $builder->delete();
+
+        return $query;
+    }
+
+    //item land
+    public function deleteLandProduct($id){
+        
+        $builder = $this->db->table('LH_interview_land_product');
+        $builder->where('rec_id', $id);
+        $query = $builder->delete();
+
+        return $query;
+    }
+
+    public function deleteImage($id){
+        
+        $builder = $this->db->table('LH_interview_land_photo');
+        $builder->where('photo', $id);
+        $query = $builder->delete();
+
+        return $query;
+    }
+    
+
+    
 
  
 }

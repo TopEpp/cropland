@@ -102,7 +102,14 @@
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>กลุ่มบ้าน</label>
-                                        <input type="text" class="form-control" name="house_label" value="<?=@$data['house_label'];?>">
+                                        
+                                        <select class="form-control select2" name="house_label">
+                                        <?php foreach ($villages as $key => $value) :?>
+                                            <option <?=@$data['house_label'] == $value['Code'] ? 'selected':'';?>  value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
+                                        <?php endforeach?>
+                                        </select>
+                                        
+                                      
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>ประเภทที่พักอาศัย</label>
@@ -130,7 +137,13 @@
 </section>
 <?=$this->endSection()?>
 
+<?=$this->section("css")?>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+<?=$this->endSection()?>
+
 <?=$this->section("scripts")?>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <script>
     $(function(){
