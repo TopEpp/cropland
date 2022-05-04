@@ -36,6 +36,20 @@ class Land_model extends Model
         return $query;
     }
 
+     public function getAllLandPaginate($page = '',$group = '')
+    { 
+        
+        $builder = $this->table('LH_land');
+        // $builder->select('LH_land.*,LH_landuse.name,LH_location.name as location_name');
+        $builder->select('LH_land.*,LH_landuse.name,CODE_PROJECT.Name as project_name');
+        $builder->join('LH_landuse', 'LH_land.land_use = LH_landuse.landuse_id','left');
+         $builder->join('CODE_PROJECT', 'LH_land.land_project = CODE_PROJECT.Code','left');
+      
+        
+        $query = $builder->paginate($page,$group);        
+        return $query;
+    }
+
     public function saveLandManage($data)
     {
       $db = \Config\Database::connect();
