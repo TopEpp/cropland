@@ -30,11 +30,11 @@
                                 <tr>
                                 <th scope="col">ลำดับ</th>
                                 <th scope="col">รหัสแปลง</th>
-                                <th scope="col">เลขที่แปลง</th>
-                                <th scope="col">พื้นที่</th>
+                                <!-- <th scope="col">เลขที่แปลง</th> -->
+                                <th scope="col">ขนาดพื้นที่ (ไร่)</th>
                                 <th scope="col">การใช้ประโยชน์ที่ดิน</th>
                                 <th scope="col">ผู้ถือคลอง</th>
-                                <th scope="col">ที่ตั้ง</th>
+                                <th scope="col">พื้นที่</th>
                                 <th scope="col">เครื่องมือ</th>
                                 </tr>
                             </thead>
@@ -43,11 +43,11 @@
                                     <tr>
                                         <th scope="row"><?=$key+1;?></th>
                                         <td><?=$value['land_code'];?></td>
-                                        <td><?=$value['land_no'];?></td>
+                                        <!-- <td><?=$value['land_no'];?></td> -->
                                         <td><?=$value['land_area'];?> ไร่</td>
                                         <td><?=@$value['name'];?></td>
                                         <td>-</td>
-                                        <td>-</td>
+                                        <td><?=$value['project_name'];?></td>
                                         <td>
                                             <div class="buttons">
                                                 <button  onclick="landModal(<?=$value['land_id'];?>)" class="btn btn-icon btn-primary"><i class="far fa-edit"></i></button>                                    
