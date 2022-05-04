@@ -45,7 +45,7 @@
                                         <td><?=$value['land_code'];?></td>
                                         <td><?=$value['land_no'];?></td>
                                         <td><?=$value['land_area'];?> ไร่</td>
-                                        <td><?=$value['name'];?></td>
+                                        <td><?=@$value['name'];?></td>
                                         <td>-</td>
                                         <td>-</td>
                                         <td>
@@ -56,10 +56,16 @@
                                         </td>
                                     </tr>
                                 <?php endforeach;?>
-                               
-
                             </tbody>
                         </table>
+
+                        <div class="d-flex justify-content-end">
+                            <?php if ($pager) :?>
+                            <?php $pagi_path='member'; ?>
+                            <?php $pager->setPath($pagi_path); ?>               
+                            <?= $pager->links('page','default_pagination'); ?>
+                            <?php endif ?>
+                        </div>
                     </div>
                 </div>
             </div>

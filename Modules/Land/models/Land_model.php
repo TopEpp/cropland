@@ -22,9 +22,10 @@ class Land_model extends Model
     { 
         
         $builder = $this->db->table('LH_land');
-        $builder->select('LH_land.*,LH_landuse.name,LH_location.name as location_name');
-        $builder->join('LH_landuse', 'LH_land.land_use = LH_landuse.landuse_id');
-        $builder->join('LH_location', 'LH_land.land_address = LH_location.location_id');
+        // $builder->select('LH_land.*,LH_landuse.name,LH_location.name as location_name');
+        $builder->select('LH_land.*');
+        // $builder->join('LH_landuse', 'LH_land.land_use = LH_landuse.landuse_id','left');
+        // $builder->join('LH_location', 'LH_land.land_address = LH_location.location_id','left');
         if ($id){
           $builder = $builder->where('land_id',$id);
           $query = $builder->get()->getRowArray();
@@ -32,6 +33,20 @@ class Land_model extends Model
         }
         
         $query = $builder->get()->getResultArray();
+        return $query;
+    }
+
+    public function getAllLandPaginate($page = '',$group = '')
+    { 
+        
+        $builder = $this->table('LH_land');
+        // $builder->select('LH_land.*,LH_landuse.name,LH_location.name as location_name');
+        $builder->select('LH_land.*');
+        // $builder->join('LH_landuse', 'LH_land.land_use = LH_landuse.landuse_id','left');
+        // $builder->join('LH_location', 'LH_land.land_address = LH_location.location_id','left');
+      
+        
+        $query = $builder->paginate($page,$group);        
         return $query;
     }
 

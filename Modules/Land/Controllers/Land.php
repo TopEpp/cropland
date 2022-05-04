@@ -22,12 +22,19 @@ class Land extends BaseController
     public function index(){
 
         $data = [];
+
+        $data = [
+            'data' => $this->model_land->getAllLandPaginate(10,'page'),
+            'pager' => $this->model_land->pager
+        ];    
+        
         $data['landuse'] =  $this->model_api->getLandUse();
+
         // $data['location'] =  $this->model_api->getlocation();
         // $data['landprivilege'] =  $this->model_api->getLandprivilege();
         // $data['landowner'] =  $this->model_api->getLandOwner();
         
-        $data['data'] = $this->model_land->getAllLand();
+        // $data['data'] = $this->model_land->getAllLand();
         return view('Modules\Land\Views\index',$data);
     }
 

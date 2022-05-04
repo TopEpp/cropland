@@ -29,13 +29,20 @@ class Survay extends BaseController
     public function index(){
         $model_user = new User_model();
         $model_land = new Land_model();
+        $model_common = new Common_model();
         // /search
+
+        $data['search'] = $this->request->getGet();
+        
 
         $data['lands'] = $model_land->getAllLand();
         $data['users']= $model_user->getSelectUsers();
         $data['projects'] = $this->model_api->getProject();
+        $data['villages'] = $model_common->getVillage();
+        $data['persons']= $model_common->getAllPersons();
+        
 
-        $data['data'] = $this->model_survay->getAllSurvay();
+        $data['data'] = $this->model_survay->getAllSurvay('',$data['search']);
         return view('Modules\Survay\Views\index',$data);
     }
     

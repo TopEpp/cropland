@@ -211,6 +211,13 @@ class Common_model extends Model
     
   }
 
+  public function getBasin(){
+    $builder = $this->db->table('CODE_BASIN');
+    $builder->select('*');
+    $query = $builder->get()->getResultArray();
+    return $query;
+  }
+
 }
 
  ?>

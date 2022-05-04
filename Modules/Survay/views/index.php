@@ -17,21 +17,21 @@
                     <div class="card-body">
                         <h5>ค้นหาข้อมูล</h5>
                         <div>
-                            <form action="">
+                            <form action="" id="form-search">
                                 <div class="row">                                
                                     <div class="form-group col-md-3">
                                         <label>ปีสำรวจ</label>
                                         <select name="interview_year" id="interview_year" class="form-control select2">
-                                            <option value="">เลือก</option>
-                                            <option <?=@$search['interview_year'] == '2565'?'selected':''?> value="2565">2565</option>
-                                            <option <?=@$search['interview_year'] == '2564'?'selected':''?> value="2664">2564</option>
-                                            <option <?=@$search['interview_year'] == '2563'?'selected':''?> value="2663">2563</option>
+                                            <option value="">ทั้งหมด</option>
+                                            <?php foreach (getYear() as $key => $value) :?>
+                                                <option <?=@$search['interview_year'] == $value ?'selected':''?> value="<?=$value;?>"><?=$value;?></option>
+                                            <?php endforeach;?>                                           
                                         </select>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label>ชื่อผู้บันทึกข้อมูล</label>                                       
                                         <select name="interview_user" id="interview_user" class="form-control select2">
-                                            <option value="">เลือก</option>
+                                            <option value="">ทั้งหมด</option>
                                             <?php foreach ($users as $key => $value) :?>
                                                 <option <?=@$search['interview_user'] == $value['prs_id']?'selected':'';?> value="<?=$value['prs_id'];?>"><?=$value['fullname'];?></option>
                                             <?php endforeach;?>
@@ -40,7 +40,7 @@
                                     <div class="form-group col-md-3">
                                         <label>โครงการ</label>                                       
                                         <select name="interview_project" id="interview_project" class="form-control select2">
-                                            <option value="">เลือก</option>
+                                            <option value="">ทั้งหมด</option>
                                             <?php foreach ($projects as $key => $value) :?>
                                                 <option <?=@$search['interview_project'] == $value['Code']?'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Description'];?></option>
                                             <?php endforeach;?>
@@ -49,7 +49,7 @@
                                     <div class="form-group col-md-3">
                                         <label>พื้นที่</label>                                       
                                         <select name="interview_area" id="interview_area" class="form-control select2">
-                                            <option value="">เลือก</option>
+                                            <option value="">ทั้งหมด</option>
                                             <?php foreach ($projects as $key => $value) :?>
                                                 <option <?=@$search['interview_area'] == $value['Name']?'selected':'';?> value="<?=$value['Name'];?>"><?=$value['Name'];?></option>
                                             <?php endforeach;?>
@@ -58,25 +58,27 @@
                                     <div class="form-group col-md-3">
                                         <label>กลุ่มบ้าน</label>                                       
                                         <select name="interview_house_id" id="interview_house_id" class="form-control select2">
-                                            <option value="">เลือก</option>
-                                            <?php foreach ($users as $key => $value) :?>
-                                                <option <?=@$search['interview_house_id'] == $value['emp_id']?'selected':'';?> value="<?=$value['emp_id'];?>"><?=$value['fullname'];?></option>
+                                            <option value="">ทั้งหมด</option>
+                                            <?php foreach ($villages as $key => $value) :?>
+                                                <option <?=@$search['interview_house_id'] == $value['Code']?'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                             <?php endforeach;?>
                                         </select>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label>ชื่อเจ้าของแปลง</label>                                       
                                         <select name="interview_person_id" id="interview_person_id" class="form-control select2">
-                                            <option value="">เลือก</option>
-                                            <?php foreach ($users as $key => $value) :?>
-                                                <option <?=@$search['interview_person_id'] == $value['emp_id']?'selected':'';?> value="<?=$value['emp_id'];?>"><?=$value['fullname'];?></option>
+                                            <option value="">ทั้งหมด</option>
+                                            <?php foreach ($persons as $key => $val) :?>
+                                                <?php foreach ($val as $key => $value) :?>
+                                                    <option <?=@$search['interview_person_id'] == $value['person_id']?'selected':'';?> value="<?=$value['person_id'];?>"><?=$value['person_name'].' '.$value['person_lastname'];?></option>
+                                                <?php endforeach;?>
                                             <?php endforeach;?>
                                         </select>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label>รหัสแปลง</label>                                       
                                         <select name="interview_code" id="interview_code" class="form-control select2">
-                                            <option value="">เลือก</option>
+                                            <option value="">ทั้งหมด</option>
                                             <?php foreach ($lands as $key => $value) :?>
                                                 <option <?=@$search['interview_code'] == $value['land_id']?'selected':'';?> value="<?=$value['land_id'];?>"><?=$value['land_code'];?></option>
                                             <?php endforeach;?>
@@ -84,7 +86,7 @@
                                     </div>
                                     <div class="col-md-12 text-right">
                                         <button type="submit" class="btn btn-info">ค้นหา</button>
-                                        <button type="button" class="btn btn-secondary">ล้างค่า</button>
+                                        <button type="button" class="btn btn-secondary" onclick="window.location.replace('<?=site_url('survay');?>');">ล้างค่า</button>
                                     </div>                                    
                                 </div>
                             </form>
@@ -93,7 +95,7 @@
                         <br>
                         
                         <table class="table table-bordered">
-                            <thead>
+                            <thead class="bg-info">
                                 <tr>
                                     <th width="3%" scope="col">ลำดับ</th>
                                     <th width="15%" scope="col">โครงการ</th>

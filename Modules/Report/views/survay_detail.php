@@ -74,142 +74,147 @@
                                 </thead>
                          
                                 <tbody>
-                                    <?php foreach ($data as $key => $interviews) :?>
-                                        <?php foreach ($interviews as $key => $value) :?>
-                                            <?php if (!empty($value)):?>
-                                                <!-- แสดง รายการย่อย -->
-                                                <?php if (count($value['product']) > 0):?>
-                                                    <?php $cout = 0;?>
-                                                   <?php foreach ($value['product'] as $key => $item):?>
-                                                    
+                                    <?php if(!empty($data)):?>
+                                        <?php foreach ($data as $key => $interviews) :?>
+                                            <?php foreach ($interviews as $key => $value) :?>
+                                                <?php if (!empty($value)):?>
+                                                    <!-- แสดง รายการย่อย -->
+                                                    <?php if (count($value['product']) > 0):?>
+                                                        <?php $cout = 0;?>
+                                                    <?php foreach ($value['product'] as $key => $item):?>
+                                                        
+                                                            <?php 
+                                                                $seed =$value['cost_seed'] * $value['seed_value'];
+                                                                $sum_cost = $seed + $value['dressing'] + $value['drug']+ $value['hormone']+$value['staff']+$value['cost_oil']+$value['cost_other'];
+                                                                $cout = $cout+1;
+                                                            ?>    
+                                                            <tr>
+                                                                    <td> 
+                                                                        <div style="width: 150px" ><?=$value['project_name'];?></div>
+                                                                    </td>
+                                                                    <td><div style="width: 80px" ><?=$value['project_area'];?></div></td>
+                                                                    <td><div style="width: 80px" ><?=$value['project_village'];?></div></td>
+                                                                    <td>
+                                                                        <?=$value['interview_code'];?>
+                                                                    </td>
+                                                                    <td><div style="width: 100px" ><?=$value['person_name'];?></div></td>
+                                                                    <td><div style="width: 100px" ><?=house_person_type($value['person_type_number']);?></div></td>
+                                                                    <td><?=$value['house_number'];?></td>
+                                                                    <td><div style="width: 100px" ><?=$value['person_village'];?></div></td>   
+                                                                    <td><?=$value['house_moo'];?></td>
+                                                                    <td><?=$value['tam_name_t'];?></td>
+                                                                    <td><?=$value['amp_name_t'];?></td>
+                                                                    <td><?=$value['pro_name_t'];?></td>
+                                                                    <td><div style="width: 60px" ><?=$value['product_type_name']?></div></td>
+                                                                    <td><div style="width: 60px" ><?=$value['product_group_name']?></div></td>
+                                                                    <td><div style="width: 60px" ><?=$value['product_name'];?></div></td>
+                                                                    <?php if ($cout > 1):?>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                    <?php else:?>
+                                                                        <td><?=$value['detail_area'];?></td>                                                                                                                
+                                                                        <td><?=$value['detail_age'];?></td>
+                                                                        <td><?=$value['seed_value'];?></td>
+                                                                        <td><?=$value['seed_unit'];?></td>
+                                                                        <td><?=$value['detail_start_date'];?></td>
+                                                                        <td><?=$value['detail_hrdi'];?></td>
+                                                                        <td><?=$value['detail_hrdi'];?></td>
+                                                                        <td><?=$seed;?></td>
+                                                                        <td><?=$value['dressing'];?></td>
+                                                                        <td><?=$value['drug'];?></td>
+                                                                        <td><?=$value['hormone'];?></td>
+                                                                        <td><?=$value['staff'];?></td>
+                                                                        <td><?=$value['cost_oil'];?></td>
+                                                                        <td><?=$value['cost_other'];?></td>
+                                                                        <td><?=$sum_cost;?></td> 
+                                                                        <td><?=$value['detail_consume'];?></td>
+                                                                        <td></td>
+                                                                    <?php endif;?>
+                                                                    
+                                                                    <td><?=$item['product_type'];?></td>
+                                                                    <td><?=$item['product_value'];?></td>
+                                                                    <td><?=$item['product_price'];?></td>
+                                                                    <td><?=$item['product_price'] * $item['product_value'];?></td>
+                                                                    <td><div style="width: 120px" ><?=$item['product_market'];?></div></td>        
+                                                                    
+                                                            </tr>
+                                                    <?php endforeach;?>
+                                                    <?php else:?>
                                                         <?php 
                                                             $seed =$value['cost_seed'] * $value['seed_value'];
                                                             $sum_cost = $seed + $value['dressing'] + $value['drug']+ $value['hormone']+$value['staff']+$value['cost_oil']+$value['cost_other'];
-                                                            $cout = $cout+1;
                                                         ?>    
                                                         <tr>
-                                                                 <td> 
+                                                                <td> 
                                                                     <div style="width: 150px" ><?=$value['project_name'];?></div>
                                                                 </td>
-                                                                <td><div style="width: 80px" ><?=$value['project_area'];?></div></td>
-                                                                <td><div style="width: 80px" ><?=$value['project_village'];?></div></td>
+                                                                <td><?=$value['project_area'];?></td>
+                                                                <td><?=$value['project_village'];?></td>
                                                                 <td>
-                                                                    <?=$value['interview_code'];?>
+                                                                    <a href="<?=base_url('report/survay/'.$value['interview_code']);?>">
+                                                                        <?=$value['interview_code'];?>
+                                                                    </a>
                                                                 </td>
-                                                                <td><div style="width: 100px" ><?=$value['person_name'];?></div></td>
-                                                                <td><div style="width: 100px" ><?=house_person_type($value['person_type_number']);?></div></td>
+                                                                <td><?=$value['person_name'];?></td>
+                                                                <td><?=house_person_type($value['person_type_number']);?></td>
                                                                 <td><?=$value['house_number'];?></td>
-                                                                <td><div style="width: 100px" ><?=$value['person_village'];?></div></td>   
+                                                                <td><?=$value['house_label'];?></td>   
                                                                 <td><?=$value['house_moo'];?></td>
                                                                 <td><?=$value['tam_name_t'];?></td>
                                                                 <td><?=$value['amp_name_t'];?></td>
                                                                 <td><?=$value['pro_name_t'];?></td>
-                                                                <td><div style="width: 60px" ><?=$value['product_type_name']?></div></td>
-                                                                <td><div style="width: 60px" ><?=$value['product_group_name']?></div></td>
-                                                                <td><div style="width: 60px" ><?=$value['product_name'];?></div></td>
-                                                                <?php if ($cout > 1):?>
-                                                                    <td></td>
-                                                                    <td></td>
-                                                                    <td></td>
-                                                                    <td></td>
-                                                                    <td></td>
-                                                                    <td></td>
-                                                                    <td></td>
-                                                                    <td></td>
-                                                                    <td></td>
-                                                                    <td></td>
-                                                                    <td></td>
-                                                                    <td></td>
-                                                                    <td></td>
-                                                                    <td></td>
-                                                                    <td></td>
-                                                                    <td></td>
-                                                                    <td></td>
-                                                                <?php else:?>
-                                                                    <td><?=$value['detail_area'];?></td>                                                                                                                
-                                                                    <td><?=$value['detail_age'];?></td>
-                                                                    <td><?=$value['seed_value'];?></td>
-                                                                    <td><?=$value['seed_unit'];?></td>
-                                                                    <td><?=$value['detail_start_date'];?></td>
-                                                                    <td><?=$value['detail_hrdi'];?></td>
-                                                                    <td><?=$value['detail_hrdi'];?></td>
-                                                                    <td><?=$seed;?></td>
-                                                                    <td><?=$value['dressing'];?></td>
-                                                                    <td><?=$value['drug'];?></td>
-                                                                    <td><?=$value['hormone'];?></td>
-                                                                    <td><?=$value['staff'];?></td>
-                                                                    <td><?=$value['cost_oil'];?></td>
-                                                                    <td><?=$value['cost_other'];?></td>
-                                                                    <td><?=$sum_cost;?></td> 
-                                                                    <td><?=$value['detail_consume'];?></td>
-                                                                    <td></td>
-                                                                <?php endif;?>
+                                                                <td><?=$value['product_type_name']?></td>
+                                                                <td><?=$value['product_group_name']?></td>
+                                                                <td><?=$value['product_name'];?></td>
+                                                                <td><?=$value['detail_area'];?></td>                                                                                                                
+                                                                <td><?=$value['detail_age'];?></td>
+                                                                <td><?=$value['seed_value'];?></td>
+                                                                <td><?=$value['seed_unit'];?></td>
+                                                                <td><?=$value['detail_start_date'];?></td>
+                                                                <td><?=$value['detail_hrdi'];?></td>
+                                                                <td><?=$value['detail_hrdi'];?></td>
+                                                                <td><?=$seed;?></td>
+                                                                <td><?=$value['dressing'];?></td>
+                                                                <td><?=$value['drug'];?></td>
+                                                                <td><?=$value['hormone'];?></td>
+                                                                <td><?=$value['staff'];?></td>
+                                                                <td><?=$value['cost_oil'];?></td>
+                                                                <td><?=$value['cost_other'];?></td>
+                                                                <td><?=$sum_cost;?></td>  
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
                                                                 
-                                                                <td><?=$item['product_type'];?></td>
-                                                                <td><?=$item['product_value'];?></td>
-                                                                <td><?=$item['product_price'];?></td>
-                                                                <td><?=$item['product_price'] * $item['product_value'];?></td>
-                                                                <td><div style="width: 120px" ><?=$item['product_market'];?></div></td>        
                                                                 
                                                         </tr>
-                                                   <?php endforeach;?>
-                                                <?php else:?>
-                                                    <?php 
-                                                        $seed =$value['cost_seed'] * $value['seed_value'];
-                                                        $sum_cost = $seed + $value['dressing'] + $value['drug']+ $value['hormone']+$value['staff']+$value['cost_oil']+$value['cost_other'];
-                                                    ?>    
-                                                    <tr>
-                                                             <td> 
-                                                                <div style="width: 150px" ><?=$value['project_name'];?></div>
-                                                            </td>
-                                                            <td><?=$value['project_area'];?></td>
-                                                            <td><?=$value['project_village'];?></td>
-                                                            <td>
-                                                                <a href="<?=base_url('report/survay/'.$value['interview_code']);?>">
-                                                                    <?=$value['interview_code'];?>
-                                                                </a>
-                                                            </td>
-                                                            <td><?=$value['person_name'];?></td>
-                                                            <td><?=house_person_type($value['person_type_number']);?></td>
-                                                            <td><?=$value['house_number'];?></td>
-                                                            <td><?=$value['house_label'];?></td>   
-                                                            <td><?=$value['house_moo'];?></td>
-                                                            <td><?=$value['tam_name_t'];?></td>
-                                                            <td><?=$value['amp_name_t'];?></td>
-                                                            <td><?=$value['pro_name_t'];?></td>
-                                                            <td><?=$value['product_type_name']?></td>
-                                                            <td><?=$value['product_group_name']?></td>
-                                                            <td><?=$value['product_name'];?></td>
-                                                            <td><?=$value['detail_area'];?></td>                                                                                                                
-                                                            <td><?=$value['detail_age'];?></td>
-                                                            <td><?=$value['seed_value'];?></td>
-                                                            <td><?=$value['seed_unit'];?></td>
-                                                            <td><?=$value['detail_start_date'];?></td>
-                                                            <td><?=$value['detail_hrdi'];?></td>
-                                                            <td><?=$value['detail_hrdi'];?></td>
-                                                            <td><?=$seed;?></td>
-                                                            <td><?=$value['dressing'];?></td>
-                                                            <td><?=$value['drug'];?></td>
-                                                            <td><?=$value['hormone'];?></td>
-                                                            <td><?=$value['staff'];?></td>
-                                                            <td><?=$value['cost_oil'];?></td>
-                                                            <td><?=$value['cost_other'];?></td>
-                                                            <td><?=$sum_cost;?></td>  
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                             
-                                                            
-                                                    </tr>
+                                                    <?php endif;?>
                                                 <?php endif;?>
-                                            <?php endif;?>
+                                            <?php endforeach;?>
                                         <?php endforeach;?>
-                                    <?php endforeach;?>
-                                
+                                    <?php else:?>
+                                        <tr>
+                                            <td colspan="18" class="text-center">ไม่พบข้อมูล</td>
+                                        </tr>
+                                    <?php endif;?>
                                 </tbody>
                             </table>
                         </div>

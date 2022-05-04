@@ -5,7 +5,7 @@ use CodeIgniter\Model;
 class Report_model extends Model
 {
   
-    public function getAllSurvay($id = ''){
+    public function getAllSurvay($search = []){
 
         $builder = $this->db->table('LH_interview_land');
         $builder->select("LH_interview_land.*,
@@ -70,6 +70,32 @@ class Report_model extends Model
         $builder->join('VIEW_agriculturist_name','VIEW_agriculturist_name.id_card = LH_interview_land.interview_user','left');
         $builder->join('CODE_POSSESSRIGHT', 'CODE_POSSESSRIGHT.Code = LH_interview_land.interview_land_holding ','left');
         
+
+        if (!empty($search)){
+            if (!empty($search['interview_year'])){
+                $builder->where('LH_interview_land.interview_year',$search['interview_year']);
+            }
+            if (!empty($search['interview_basin'])){
+                $builder->where('CODE_PROJECTVILLAGE.BasinName',$search['interview_basin']);
+            }
+            if (!empty($search['interview_project'])){
+                $builder->where('LH_interview_land.interview_project',$search['interview_project']);
+            }
+            if (!empty($search['interview_area'])){
+                $builder->where('LH_interview_land.interview_area',$search['interview_area']);
+            }
+            if (!empty($search['interview_house_id'])){
+                $builder->where('LH_interview_land.interview_house_id',$search['interview_house_id']);
+            }
+            if (!empty($search['interview_person_id'])){
+                $builder->where('LH_interview_land.interview_person_id',$search['interview_person_id']);
+            }
+            if (!empty($search['interview_code'])){
+                $builder->where('LH_interview_land.interview_code',$search['interview_code']);
+            }
+        }
+
+
         $query = $builder->get()->getResultArray();
         
         return $query;

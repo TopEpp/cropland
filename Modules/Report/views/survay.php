@@ -19,18 +19,18 @@
                                         <label>ปีสำรวจ</label>
                                         <select name="interview_year" id="interview_year" class="form-control select2">
                                             <option value="">เลือก</option>
-                                            <option <?=@$search['interview_year'] == '2565'?'selected':''?> value="2565">2565</option>
-                                            <option <?=@$search['interview_year'] == '2564'?'selected':''?> value="2664">2564</option>
-                                            <option <?=@$search['interview_year'] == '2563'?'selected':''?> value="2663">2563</option>
+                                            <?php foreach (getYear() as $key => $value) :?>
+                                                <option <?=@$search['interview_year'] == $value ?'selected':''?> value="<?=$value;?>"><?=$value;?></option>
+                                            <?php endforeach;?>
                                         </select>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label>ลุ่มน้ำหลัก</label>                                       
-                                        <select name="interview_user" id="interview_user" class="form-control select2">
+                                        <select name="interview_basin" id="interview_basin" class="form-control select2">
                                             <option value="">เลือก</option>
-                                            <!-- <?php foreach ($users as $key => $value) :?>
-                                                <option <?=@$search['interview_user'] == $value['prs_id']?'selected':'';?> value="<?=$value['prs_id'];?>"><?=$value['fullname'];?></option>
-                                            <?php endforeach;?> -->
+                                            <?php foreach ($basins as $key => $value) :?>
+                                                <option <?=@$search['interview_basin'] == $value['Name']?'selected':'';?> value="<?=$value['Name'];?>"><?=$value['Name'];?></option>
+                                            <?php endforeach;?>
                                         </select>
                                     </div>
                                     <div class="form-group col-md-3">
@@ -55,8 +55,8 @@
                                         <label>กลุ่มบ้าน</label>                                       
                                         <select name="interview_house_id" id="interview_house_id" class="form-control select2">
                                             <option value="">เลือก</option>
-                                            <?php foreach ($users as $key => $value) :?>
-                                                <option <?=@$search['interview_house_id'] == $value['emp_id']?'selected':'';?> value="<?=$value['emp_id'];?>"><?=$value['fullname'];?></option>
+                                            <?php foreach ($villages as $key => $value) :?>
+                                                <option <?=@$search['interview_house_id'] == $value['Code']?'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                             <?php endforeach;?>
                                         </select>
                                     </div>
@@ -64,8 +64,10 @@
                                         <label>ชื่อเจ้าของแปลง</label>                                       
                                         <select name="interview_person_id" id="interview_person_id" class="form-control select2">
                                             <option value="">เลือก</option>
-                                            <?php foreach ($users as $key => $value) :?>
-                                                <option <?=@$search['interview_person_id'] == $value['emp_id']?'selected':'';?> value="<?=$value['emp_id'];?>"><?=$value['fullname'];?></option>
+                                            <?php foreach ($persons as $key => $val) :?>
+                                                <?php foreach ($val as $key => $value) :?>
+                                                    <option <?=@$search['interview_person_id'] == $value['person_id']?'selected':'';?> value="<?=$value['person_id'];?>"><?=$value['person_name'].' '.$value['person_lastname'];?></option>
+                                                <?php endforeach;?>
                                             <?php endforeach;?>
                                         </select>
                                     </div>
@@ -80,7 +82,7 @@
                                     </div>
                                     <div class="col-md-12 text-right">
                                         <button type="submit" class="btn btn-info">ค้นหา</button>
-                                        <button type="button" class="btn btn-secondary">ล้างค่า</button>
+                                        <button type="button" class="btn btn-secondary" onclick="window.location.replace('<?=site_url('report/survay');?>');">ล้างค่า</button>
                                         <button type="button" class="btn btn-primary" onclick="generateExcel()">Export Excel</button>
                                     </div>                                    
                                 </div>
@@ -125,55 +127,61 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php foreach ($data as $key => $value) :?>
+                                    <?php if(!empty($data)):?>
+                                        <?php foreach ($data as $key => $value) :?>
+                                            <tr>
+                                                <td scope="row">
+                                                    <div style="width: 100px" >
+                                                        <?=$value['BasinName'];?>
+                                                    </div>
+                                                </td>
+                                                <td> 
+                                                    <div style="width: 150px" ><?=$value['project_name'];?></div>
+                                                </td>
+                                                <td>
+                                                    <div style="width: 80px" ><?=$value['project_area'];?></div>
+                                                </td>
+                                                <td>                                                
+                                                    <div style="width: 80px" ><?=$value['project_village'];?></div>
+                                                </td>
+                                                <td>
+                                                    <div style="width: 50px" >
+                                                        <a href="<?=base_url('report/survay/'.$value['interview_code']);?>">
+                                                            <?=$value['interview_code'];?>
+                                                        </a>
+                                                    </div>
+                                                
+                                                </td>
+                                                <td><div style="width: 100px"><?=$value['person_name'];?></div></td>
+                                                <td><div style="width: 100px"><?=house_person_type($value['person_type_number']);?></div></td>
+                                                <td><?=$value['house_number'];?></td>
+                                                <td><div style="width: 100px"><?=$value['person_village'];?></div></td>   
+                                                <td><?=$value['house_moo'];?></td>
+                                                <td><?=$value['tam_name_t'];?></td>
+                                                <td><?=$value['amp_name_t'];?></td>
+                                                <td><?=$value['pro_name_t'];?></td>
+                                                <td><div style="width: 120px"><?=$value['land_use'];?></div></td>                                                 
+                                                <td><?=$value['interview_year'];?></td>         
+                                                <td><?=$value['land_address'];?></td>     
+                                                <td><?=$value['land_possess'];?></td>
+                                                <td><div style="width: 100px"><?=utilization_type($value['interview_land_utilization_type']);?></div></td>
+                                                <td><div style="width: 50px"><?=land_use_type($value['interview_land_use_type']);?></div></td>
+                                                <td><div style="width: 50px"><?=land_water_process($value['intervew_land_water_process']);?></div></td>
+
+                                                <td><div style="width: 100px"><?=$value['land_supports'];?></div></td>
+                                                <td><div style="width: 100px"><?=$value['land_support_org'];?></div></td>
+                                                <td><div style="width: 100px"><?=$value['land_needs'];?></div></td>
+                                                <td><div style="width: 100px"><?=$value['land_problems'];?></div></td>    
+
+                                                
+                    
+                                            </tr>
+                                        <?php endforeach;?>
+                                    <?php else:?>
                                         <tr>
-                                            <td scope="row">
-                                                <div style="width: 100px" >
-                                                    <?=$value['BasinName'];?>
-                                                </div>
-                                            </td>
-                                            <td> 
-                                                <div style="width: 150px" ><?=$value['project_name'];?></div>
-                                            </td>
-                                            <td>
-                                                <div style="width: 80px" ><?=$value['project_area'];?></div>
-                                            </td>
-                                            <td>                                                
-                                                <div style="width: 80px" ><?=$value['project_village'];?></div>
-                                            </td>
-                                            <td>
-                                                <div style="width: 50px" >
-                                                    <a href="<?=base_url('report/survay/'.$value['interview_code']);?>">
-                                                        <?=$value['interview_code'];?>
-                                                    </a>
-                                                </div>
-                                               
-                                            </td>
-                                            <td><div style="width: 100px"><?=$value['person_name'];?></div></td>
-                                            <td><div style="width: 100px"><?=house_person_type($value['person_type_number']);?></div></td>
-                                            <td><?=$value['house_number'];?></td>
-                                            <td><div style="width: 100px"><?=$value['person_village'];?></div></td>   
-                                            <td><?=$value['house_moo'];?></td>
-                                            <td><?=$value['tam_name_t'];?></td>
-                                            <td><?=$value['amp_name_t'];?></td>
-                                            <td><?=$value['pro_name_t'];?></td>
-                                            <td><div style="width: 120px"><?=$value['land_use'];?></div></td>                                                 
-                                            <td><?=$value['interview_year'];?></td>         
-                                            <td><?=$value['land_address'];?></td>     
-                                            <td><?=$value['land_possess'];?></td>
-                                            <td><div style="width: 100px"><?=utilization_type($value['interview_land_utilization_type']);?></div></td>
-                                            <td><div style="width: 50px"><?=land_use_type($value['interview_land_use_type']);?></div></td>
-                                            <td><div style="width: 50px"><?=land_water_process($value['intervew_land_water_process']);?></div></td>
-
-                                            <td><div style="width: 100px"><?=$value['land_supports'];?></div></td>
-                                            <td><div style="width: 100px"><?=$value['land_support_org'];?></div></td>
-                                            <td><div style="width: 100px"><?=$value['land_needs'];?></div></td>
-                                            <td><div style="width: 100px"><?=$value['land_problems'];?></div></td>    
-
-                                            
-                  
+                                            <td colspan="18" class="text-center">ไม่พบข้อมูล</td>
                                         </tr>
-                                    <?php endforeach;?>
+                                    <?php endif;?>
                                 
                                 </tbody>
                             </table>

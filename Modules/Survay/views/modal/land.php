@@ -161,7 +161,7 @@
                                             </td>
                                            
                                             <td>                                            
-                                                <input type="text" name="product_value" class="form-control" required="">
+                                                <input type="text" name="product_value" class="form-control label_amount" required="" onchange="priceCal($(this))">
                                                 <div class="invalid-feedback">
                                                     กรุณาระบุจำนวน
                                                 </div>  
@@ -179,13 +179,13 @@
                                                 </div>  
                                             </td>
                                             <td>                                            
-                                                <input type="text" name="product_price" class="form-control" required="">
+                                                <input type="text" name="product_price" class="form-control label_price" required="" onchange="priceCal($(this))">
                                                 <div class="invalid-feedback">
                                                     กรุณาระบุราคา
                                                 </div>  
                                             </td>
-                                            <td>                                            
-                                            -
+                                            <td  class="text-center">                                            
+                                                <p class="label_sum_price"></p>
                                             </td>
                                             <td>
                                                 <button data-repeater-delete class="btn btn-danger" type="button">ลบ</button>
@@ -224,7 +224,7 @@
                                                 </div>  
                                             </td>
                                             <td>                                            
-                                                <input type="text" name="product_value" class="form-control" value="<?=$product['product_value'];?>" required="">
+                                                <input type="text" name="product_value" class="form-control label_amount" value="<?=$product['product_value'];?>" required="" onchange="priceCal($(this))">
                                                 <div class="invalid-feedback">
                                                     กรุณาระบุจำนวน
                                                 </div> 
@@ -242,13 +242,13 @@
                                                 </div>  
                                             </td>
                                             <td>                                            
-                                                <input type="text" name="product_price" class="form-control" value="<?=$product['product_price'];?>" required="">
+                                                <input type="text" name="product_price" class="form-control label_price" value="<?=$product['product_price'];?>" required="" onchange="priceCal($(this))">
                                                 <div class="invalid-feedback">
                                                     กรุณาระบุราคา
                                                 </div>
                                             </td>
-                                            <td>                                            
-                                            -
+                                            <td  class="text-center">                                            
+                                              <p class="label_sum_price"><?= $product['product_value'] * $product['product_price'] ;?></p>
                                             </td>
                                             <td>
                                                 <button data-repeater-delete class="btn btn-danger" type="button">ลบ</button>
@@ -310,7 +310,7 @@
                                                 </div>
                                         </td>
                                         <td>                                            
-                                            <input type="text" name="product_value" class="form-control" required="">
+                                            <input type="text" name="product_value" class="form-control label_amount" required="" onchange="priceCal($(this))">
                                             <div class="invalid-feedback">
                                                     กรุณาระบุจำนวน
                                                 </div>
@@ -328,13 +328,13 @@
                                             </div>
                                         </td>
                                         <td>                                            
-                                            <input type="text" name="product_price" class="form-control" required="">
+                                            <input type="text" name="product_price" class="form-control label_price" required="" onchange="priceCal($(this))">
                                             <div class="invalid-feedback">
                                                 กรุณาระบุราคา
                                             </div>
                                         </td>
-                                        <td>                                            
-                                           -
+                                        <td  class="text-center">                                             
+                                           <p class="label_sum_price"></p>
                                         </td>
                                         <td>
                                             <button data-repeater-delete class="btn btn-danger" type="button">ลบ</button>
@@ -371,7 +371,7 @@
                                                 </div>
                                         </td>
                                         <td>                                            
-                                            <input type="text" name="product_value" class="form-control" value="<?=$product['product_value'];?>" required="">
+                                            <input type="text" name="product_value" class="form-control label_amount" value="<?=$product['product_value'];?>" required="" onchange="priceCal($(this))">
                                             <div class="invalid-feedback">
                                                     กรุณาระบุจำนวน
                                                 </div>
@@ -389,13 +389,13 @@
                                                 </div>
                                         </td>
                                         <td>                                            
-                                            <input type="text" name="product_price" class="form-control" value="<?=$product['product_price'];?>" required="">
+                                            <input type="text" name="product_price" class="form-control label_price" value="<?=$product['product_price'];?>" required="" onchange="priceCal($(this))">
                                             <div class="invalid-feedback">
                                                     กรุณาระบุราคา
                                                 </div>
                                         </td>
-                                        <td>                                            
-                                           -
+                                        <td  class="text-center">                                             
+                                            <p class="label_sum_price"><?= $product['product_value'] * $product['product_price'] ;?></p>
                                         </td>
                                         <td>
                                             <button data-repeater-delete class="btn btn-danger" type="button">ลบ</button>
@@ -443,7 +443,7 @@
                                                 </div>
                                             </td>
                                             <td>                                            
-                                                <input type="text" name="product_value" class="form-control" required="">
+                                                <input type="text" name="product_value" class="form-control label_amount" required="" onchange="priceCal($(this))">
                                                 <div class="invalid-feedback">
                                                     กรุณาระบุจำนวน
                                                 </div>
@@ -455,19 +455,19 @@
                                                         <option value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                                     <?php endforeach?> 
                                                 </select>
-                                                <input class="label_type" type="hidden" name="product_unit_label">
+                                                <input class="label_type" type="hidden" name="product_unit_label" >
                                                 <div class="invalid-feedback">
                                                     กรุณาระบุหน่วยนับ
                                                 </div>
                                             </td>
                                             <td>                                            
-                                                <input type="text" name="product_price" class="form-control" required="">
+                                                <input type="text" name="product_price" class="form-control label_price" required="" onchange="priceCal($(this))">
                                                 <div class="invalid-feedback">
                                                     กรุณาระบุราคา
                                                 </div>
                                             </td>
-                                            <td>                                            
-                                            -
+                                            <td  class="text-center">                                            
+                                                <p class="label_sum_price"></p>
                                             </td>
                                             <td>
                                                 <button data-repeater-delete class="btn btn-danger" type="button">ลบ</button>
@@ -492,7 +492,7 @@
                                                 </div>
                                             </td>
                                             <td>                                            
-                                                <input type="text" name="product_value" class="form-control" value="<?=$product['product_value'];?>" required="">
+                                                <input type="text" name="product_value" class="form-control label_amount" value="<?=$product['product_value'];?>" required="" onchange="priceCal($(this))">
                                                 <div class="invalid-feedback">
                                                     กรุณาระบุจำนวน
                                                 </div>
@@ -510,13 +510,13 @@
                                                 </div>
                                             </td>
                                             <td>                                            
-                                                <input type="text" name="product_price" class="form-control" value="<?=$product['product_price'];?>" required="">
+                                                <input type="text" name="product_price" class="form-control label_price" value="<?=$product['product_price'];?>" required="" onchange="priceCal($(this))">
                                                 <div class="invalid-feedback">
                                                     กรุณาระบุราคา
                                                 </div>
                                             </td>
-                                            <td>                                            
-                                            -
+                                            <td  class="text-center">                                             
+                                                <p class="label_sum_price"><?= $product['product_value'] * $product['product_price'] ;?></p>
                                             </td>
                                             <td>
                                                 <button data-repeater-delete class="btn btn-danger" type="button">ลบ</button>
@@ -577,25 +577,25 @@
                                                 </div>
                                         </td>
                                         <td>                                            
-                                            <input type="text" name="product_value" class="form-control" required="">
+                                            <input type="text" name="product_value" class="form-control label_staff" required="" onchange="priceCalStaff($(this))">
                                             <div class="invalid-feedback">
                                                     กรุณาระบุจำนวนคน
                                                 </div>
                                         </td>
                                         <td>                                            
-                                            <input type="text" name="product_unit" class="form-control" required="">
+                                            <input type="text" name="product_unit" class="form-control label_day" required="" onchange="priceCalStaff($(this))">
                                             <div class="invalid-feedback">
                                                     กรุณาระบุวันจ้าง
                                                 </div>
                                         </td>
                                         <td>                                            
-                                            <input type="text" name="product_price" class="form-control" required="">
+                                            <input type="text" name="product_price" class="form-control label_price" required="" onchange="priceCalStaff($(this))">
                                             <div class="invalid-feedback">
                                                     กรุณาระบุบาท/วัน
                                                 </div>
                                         </td>
-                                        <td>                                            
-                                           -
+                                        <td  class="text-center">                                            
+                                           <p class="label_sum_price"></p>
                                         </td>
                                         <td>
                                             <button data-repeater-delete class="btn btn-danger" type="button">ลบ</button>
@@ -632,25 +632,27 @@
                                                 </div>
                                             </td>
                                             <td>                                            
-                                                <input type="text" name="product_value" class="form-control" value="<?=$product['product_value'];?>" required="">
+                                                <input type="text" name="product_value" class="form-control label_staff" value="<?=$product['product_value'];?>" required="" onchange="priceCalStaff($(this))">
                                                 <div class="invalid-feedback">
                                                     กรุณาระบุจำนวนคน
                                                 </div>
                                             </td>
                                             <td>                                            
-                                                <input type="text" name="product_unit" class="form-control" value="<?=$product['product_unit'];?>" required="">
+                                                <input type="text" name="product_unit" class="form-control label_day" value="<?=$product['product_unit'];?>" required="" onchange="priceCalStaff($(this))">
                                                 <div class="invalid-feedback">
                                                     กรุณาระบุวันจ้าง
                                                 </div>
                                             </td>
                                             <td>                                            
-                                                <input type="text" name="product_price" class="form-control" value="<?=$product['product_price'];?>" required="">
+                                                <input type="text" name="product_price" class="form-control label_price" value="<?=$product['product_price'];?>" required="" onchange="priceCalStaff($(this))">
                                                 <div class="invalid-feedback">
                                                     กรุณาระบุบาท/วัน
                                                 </div>
                                             </td>
-                                            <td>                                            
-                                            -
+                                            <td class="text-center">                                            
+                                                <p class="label_sum_price">
+                                                    <?=$product['product_unit'] * $product['product_price'] * $product['product_value'];?>
+                                                </p>
                                             </td>
                                             <td>
                                                 <button data-repeater-delete class="btn btn-danger" type="button">ลบ</button>
@@ -713,7 +715,7 @@
                                                 </div>
                                             </td>
                                             <td>                                            
-                                                <input type="text" name="product_value" class="form-control" required="">
+                                                <input type="text" name="product_value" class="form-control label_amount" required="" onchange="priceCal($(this))">
                                                 <div class="invalid-feedback">
                                                     กรุณาระบุจำนวน
                                                 </div>
@@ -731,13 +733,13 @@
                                                 </div>
                                             </td>
                                             <td>                                            
-                                                <input type="text" name="product_price" class="form-control" required="">
+                                                <input type="text" name="product_price" class="form-control label_price" required="" onchange="priceCal($(this))">
                                                 <div class="invalid-feedback">
                                                     กรุณาระบุราคา
                                                 </div>
                                             </td>
-                                            <td>                                            
-                                            -
+                                            <td  class="text-center">                                             
+                                                <p class="label_sum_price"></p>
                                             </td>
                                             <td>                                            
                                                 <select name="product_market" id="product_market" class="form-control" onchange="selecttype($(this))" required="">
@@ -777,7 +779,7 @@
                                                 </div>
                                             </td>
                                             <td>                                            
-                                                <input type="text" name="product_value" class="form-control" value="<?=@$product['product_value'];?>" required="">
+                                                <input type="text" name="product_value" class="form-control label_amount" value="<?=@$product['product_value'];?>" required="" onchange="priceCal($(this))">
                                                 <div class="invalid-feedback">
                                                     กรุณาระบุจำนวน
                                                 </div>
@@ -795,13 +797,15 @@
                                                 </div>
                                             </td>
                                             <td>                                            
-                                                <input type="text" name="product_price" class="form-control" value="<?=@$product['product_price'];?>" required="">
+                                                <input type="text" name="product_price" class="form-control label_price" value="<?=@$product['product_price'];?>" required="" onchange="priceCal($(this))">
                                                 <div class="invalid-feedback">
                                                     กรุณาระบุราคา
                                                 </div>
                                             </td>
-                                            <td>                                            
-                                            -
+                                            <td  class="text-center">                                            
+                                                <p class="label_sum_price">
+                                                    <?=$product['product_price'] * $product['product_value'];?>
+                                                </p>
                                             </td>
                                             <td>                                            
                                                 <select name="product_market" id="product_market" class="form-control" onchange="selecttype($(this))"  required="">
@@ -858,7 +862,28 @@
         var text = $option.text();
         element.closest('td').find('.label_type').val(text)
    }
+
+
+   function priceCal(element){
+       var amount = element.closest('tr').find('.label_amount').val()
+       var price = element.closest('tr').find('.label_price').val()
+       if (typeof amount !== "undefined" && typeof price !== "undefined"  ){
+           var sum = amount * price;
+           element.closest('tr').find('.label_sum_price').text(sum)
+       }       
+   }
+
+   function priceCalStaff(element){
+       var staff = element.closest('tr').find('.label_staff').val()
+       var day = element.closest('tr').find('.label_day').val()
+       var price = element.closest('tr').find('.label_price').val()
+       if (typeof staff !== "undefined" && typeof price !== "undefined" && typeof day !== "undefined"  ){
+           var sum = staff * price * day;
+           element.closest('tr').find('.label_sum_price').text(sum)
+       }       
+   }
  
+   
    $(function () {
         $(".select2").select2();
         $(".datepicker").datepicker({
