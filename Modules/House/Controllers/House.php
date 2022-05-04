@@ -39,6 +39,7 @@ class House extends BaseController
         $data['house_id'] = $id;
         $data['landomner'] = $this->model_api->getLandOwner();
         $data['province'] = $this->model_common->getProvince();
+        $data['villages'] = $this->model_common->getVillage();
         $data['amphurs'] = [];
         $data['tambons'] = [];
        

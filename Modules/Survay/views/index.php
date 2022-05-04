@@ -119,7 +119,7 @@
                                         <td><?=$value['interview_code'];?></td>
                                         <td><?=$value['person_name'];?></td>
                                         <td><?=$value['person_address'];?></td>
-                                        <td><?=$value['house_label'];?></td>
+                                        <td><?=$value['person_village'];?></td>
                                         <td><?=$value['land_use'];?></td>
                                         <td><?=$value['interview_year'];?></td>
                                         <td><?=$value['land_address'];?></td>

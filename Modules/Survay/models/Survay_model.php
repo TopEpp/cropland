@@ -36,13 +36,21 @@ class Survay_model extends Model
                     LH_house.house_moo,' ตำบล ',tambon.tam_name_t,' อำเภอ ',amphoe.amp_name_t,' จังหวัด ',province.pro_name_t
                     ) 
                 as person_address,
+                person_village.Name as person_village
+                                
         ");
         $builder->join('LH_land', 'LH_land.land_code = LH_interview_land.interview_code','left');
         $builder->join('LH_landuse', 'LH_landuse.landuse_id = LH_land.land_use','left');
 
         $builder->join('LH_house_person', 'LH_house_person.person_id = LH_interview_land.interview_person_id','left');
+      
         $builder->join('LH_house', 'LH_house.house_id = LH_house_person.house_id','left');
         $builder->join('LH_prefix', 'LH_prefix.prefix_id = LH_house_person.person_prename','left');
+        $builder->join('CODE_PROJECTVILLAGE as person_village', 'person_village.Code = LH_house.house_label 
+                        and person_village.ProvinceId = LH_house.house_province 
+                        and CONCAT(person_village.ProvinceId,\'\',person_village.AmphurId) = LH_house.house_district
+                        and CONCAT(person_village.ProvinceId,\'\',person_village.AmphurId,\'\',person_village.TamBonId) = LH_house.house_subdistrict
+                        ','left');
 
         $builder->join('amphoe', 'amphoe.amp_code = LH_house.house_district','left');
         $builder->join('province', 'province.prov_code = LH_house.house_province','left');

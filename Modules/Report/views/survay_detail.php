@@ -15,13 +15,13 @@
                       
                         <div class="row">
                             <div class="col-md-12 text-right">
-                                <button type="button" class="btn btn-primary">Export Excel</button>
+                                <button type="button" class="btn btn-primary" onclick="generateExcel()">Export Excel</button>
                             </div>
                         </div>
                         
                         <br>
                         <div class="table-responsive">
-                            <table class="table table-bordered">
+                            <table class="table table-bordered" id="table_with_data">
                                 <thead class="bg-info">
                                     <tr>
                                         <th class="text-center" rowspan="2" scope="col" width="200px">โครงการ</th>
@@ -99,7 +99,7 @@
                                                                 <td><div style="width: 100px" ><?=$value['person_name'];?></div></td>
                                                                 <td><div style="width: 100px" ><?=house_person_type($value['person_type_number']);?></div></td>
                                                                 <td><?=$value['house_number'];?></td>
-                                                                <td><?=$value['house_label'];?></td>   
+                                                                <td><div style="width: 100px" ><?=$value['person_village'];?></div></td>   
                                                                 <td><?=$value['house_moo'];?></td>
                                                                 <td><?=$value['tam_name_t'];?></td>
                                                                 <td><?=$value['amp_name_t'];?></td>
@@ -223,9 +223,24 @@
 
 <?=$this->section("css")?>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/TableExport/4.0.11/css/tableexport.css" rel="stylesheet">
 <?=$this->endSection()?>
 
 <?=$this->section("scripts")?>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<?= script_tag('public/assets/tableExport/libs/FileSaver/FileSaver.min.js') ?>
+<?= script_tag('public/assets/tableExport/libs/js-xlsx/xlsx.core.min.js') ?>
+<?= script_tag('public/assets/tableExport/tableExport.min.js') ?>
+
+<script>
+    function generateExcel() {
+        //getting data from our table
+        $('#table_with_data').tableExport({fileName: 'export-survay-detail',
+            type: 'xlsx'
+        });
+
+    }
+</script>
 <?=$this->endSection()?>
   

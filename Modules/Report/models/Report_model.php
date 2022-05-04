@@ -25,6 +25,7 @@ class Report_model extends Model
             amphoe.amp_name_t,
             province.pro_name_t,
             CODE_POSSESSRIGHT.name as land_possess,
+            person_village.Name as person_village,
 
             STUFF((SELECT  ',' +LH_interview_land_support.support_detail
             FROM LH_interview_land_support
@@ -52,6 +53,13 @@ class Report_model extends Model
         $builder->join('LH_house_person', 'LH_house_person.person_id = LH_interview_land.interview_person_id');
         $builder->join('LH_house', 'LH_house.house_id = LH_house_person.house_id');
         $builder->join('LH_prefix', 'LH_prefix.prefix_id = LH_house_person.person_prename');
+
+        
+        $builder->join('CODE_PROJECTVILLAGE as person_village', 'person_village.Code = LH_house.house_label 
+        and person_village.ProvinceId = LH_house.house_province 
+        and CONCAT(person_village.ProvinceId,\'\',person_village.AmphurId) = LH_house.house_district
+        and CONCAT(person_village.ProvinceId,\'\',person_village.AmphurId,\'\',person_village.TamBonId) = LH_house.house_subdistrict
+        ','left');
 
         $builder->join('amphoe', 'amphoe.amp_code = LH_house.house_district');
         $builder->join('province', 'province.prov_code = LH_house.house_province');
@@ -86,6 +94,7 @@ class Report_model extends Model
         CODE_PRODUCT.name as product_name,
         CODE_PRODUCTTYPE.Name as product_type_name,
         CODE_PRODUCTGROUP.Name as product_group_name,
+        person_village.Name as person_village,
         LH_interview_land_product.*");
 
         $builder->join('LH_interview_land_detail','LH_interview_land_detail.interview_id = LH_interview_land.interview_id');
@@ -98,6 +107,12 @@ class Report_model extends Model
         $builder->join('LH_house_person', 'LH_house_person.person_id = LH_interview_land.interview_person_id');
         $builder->join('LH_house', 'LH_house.house_id = LH_house_person.house_id');
         $builder->join('LH_prefix', 'LH_prefix.prefix_id = LH_house_person.person_prename');
+
+        $builder->join('CODE_PROJECTVILLAGE as person_village', 'person_village.Code = LH_house.house_label 
+        and person_village.ProvinceId = LH_house.house_province 
+        and CONCAT(person_village.ProvinceId,\'\',person_village.AmphurId) = LH_house.house_district
+        and CONCAT(person_village.ProvinceId,\'\',person_village.AmphurId,\'\',person_village.TamBonId) = LH_house.house_subdistrict
+        ','left');
 
         $builder->join('amphoe', 'amphoe.amp_code = LH_house.house_district');
         $builder->join('province', 'province.prov_code = LH_house.house_province');
