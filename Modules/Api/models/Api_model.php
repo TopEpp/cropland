@@ -27,16 +27,16 @@ class Api_model extends Model
     }
 
     function importlands(){
-        set_time_limit(500);
-        $builder = $this->db->table('cropland_opm');
-        $builder->select('code_total,ogr_geometry,address,tambon,amphur,province,area_rai,basin,project,id_card,landuse_55');
+        set_time_limit(2000);
+        $builder = $this->db->table('cropland_rak');
+        $builder->select('code_total,address,tambon,amphur,province,area_rai,basin,project,id_card,landuse_56');
         // $builder->groupBy('code_total');
-        $builder->limit(0,100);
+        $builder->orderBy('code_total');
+        $builder->limit(1000,1000);
         $query = $builder->get()->getResultArray();
         foreach ($query as $key => $value) {
 
           $data['land_code'] = $value['code_total'];
-          // $data['land_geo'] = $value['ogr_geometry'];
           $data['land_basin'] = $this->getBasinId($value['basin']);
           $prov_code = $this->getProvinceId($value['province']);
           $dis_code = $this->getDistrictId($prov_code,$value['amphur']);
@@ -47,7 +47,7 @@ class Api_model extends Model
           $data['land_subdistrcit'] = $subdis_code;
           $data['land_address'] = $value['address'];
           $data['land_project'] = $this->getProjectId($value['project']);
-          $data['land_use'] = $this->getLandUseId($value['landuse_55']);
+          $data['land_use'] = $this->getLandUseId($value['landuse_56']);
           $data['land_area'] = $value['area_rai'];
           
           // echo '<pre>';
@@ -99,8 +99,12 @@ class Api_model extends Model
       $builder = $this->db->table('province');
       $builder->select('*');
       $builder->where('pro_name_t',$name);
-      $row = $builder->get()->getRowArray();
-      return $row['prov_code'];      
+      $row = $builder->get()->getRowArray();  
+      if(!empty($row['prov_code'])){
+        return $row['prov_code'];
+      }else{
+        return null;
+      }    
     }
 
     function getDistrictId($code,$name){
@@ -108,8 +112,12 @@ class Api_model extends Model
       $builder->select('*');
       $builder->where('prov_code',$code);
       $builder->where('amp_name_t',$name);
-      $row = $builder->get()->getRowArray();
-      return $row['amp_code'];    
+      $row = $builder->get()->getRowArray(); 
+      if(!empty($row['amp_code'])){
+        return $row['amp_code'];
+      }else{
+        return null;
+      }   
     }
 
     function getSubDistrictId($code,$name){
@@ -118,7 +126,11 @@ class Api_model extends Model
       $builder->where('amp_code',$code);
       $builder->where('tam_name_t',$name);
       $row = $builder->get()->getRowArray();
-      return $row['tam_code'];    
+      if(!empty($row['tam_code'])){
+        return $row['tam_code'];
+      }else{
+        return null;
+      }    
     }
     
     public function getAgriWork($id = '')
