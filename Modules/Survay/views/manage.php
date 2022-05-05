@@ -63,7 +63,7 @@
                                         </div>                                   
                                     </div>    
                                     <div class="form-group col-md-4">
-                                        <label>โครงการ</label>                                     
+                                        <label>โครงการ</label>                      
                                         <select name="interview_project" id="interview_project" class="form-control select2" onchange="selectProject($(this))" required="">
                                             <option value="">เลือก</option>
                                             <?php foreach ($projects as $key => $value) :?>
@@ -96,7 +96,7 @@
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>ชื่อเจ้าของแปลง</label>
-                                         <select name="interview_person_id" id="interview_person_id" class="form-control select2" required="">
+                                         <select name="interview_person_id" id="interview_person_id" class="form-control select2" required="" onchange="changePerson()">
                                             <option value="">เลือก</option>
                                             <?php   foreach ($persons as $key => $person) :?>
                                                 <?php foreach ($person as $key => $value) :?>                                            
@@ -130,11 +130,12 @@
                                 <div class="row">
                                     <div class="col-md-8">
                                         <h5>ข้อมูลครัวเรือน</h5>
-                                        <p>ชื่อเจ้าของแปลง</p>
-                                        <p>บ้านเลขที่ 39/1 หมู่ 8 ต.แม่ตื่น อ.แม่ระมาด จ.ตาก 63140</p>   
+                                        <div>ชื่อเจ้าของแปลง</div>
+                                        <div id="show_address"></div>   
                                     </div>
                                     
                                 </div>
+                                <br>                                    
                                 <div class="row">
                                     <?php $land_water = @explode(',',$data['intervew_land_water_process']);?>                                
                                     <div class="form-group col-md-6">
@@ -353,7 +354,13 @@
 
             // daysOfWeekDisabled: [0, 6],
         });
+
+        // init data address/
+        changePerson()
+
     });
+
+    
     function selectProject(elm){
         var value = elm.val();
         let selText = $("#interview_project option:selected").text();
@@ -380,6 +387,24 @@
                 $("#interview_person_id").html(options)
             }
         });
+    }
+
+    function changePerson(){
+        
+        var $option = $('#interview_person_id').find('option:selected');
+        var value = $option.val();
+        if (value != ''){
+            $.ajax({
+                type: "GET",
+                url: domain+'common/get-address?person='+value,
+                success : function(res){
+                    $("#show_address").text(res.person_address)
+                    
+                }
+            });
+        }
+        // $("#show_address").text('')
+     
     }
 
     

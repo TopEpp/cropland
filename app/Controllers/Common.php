@@ -94,4 +94,10 @@ class Common extends BaseController
         return   $this->respond($data);
     }
 
+    public function personAddress(){
+        $person = $this->request->getVar('person');
+        $data = $this->model_common->personAddress($person);
+        return   $this->respond($data);
+    }
+
 }

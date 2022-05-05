@@ -123,11 +123,6 @@ $routes->group("survay", ["namespace" => "Modules\Survay\Controllers"], function
     $routes->post("delete_product(:any)", "Survay::deleteLandProduct$1");
 
     $routes->post("delete_image(:any)", "Survay::deleteImage$1");
-
-    
-    
-    
-    
     
 });
 
@@ -170,6 +165,8 @@ $routes->group("common", ["namespace" => "App\Controllers"], function ($routes) 
     $routes->get("get-house", "Common::House");
     $routes->get("get-person", "Common::Person");
     $routes->get("get-village", "Common::Village"); //กลุ่มบ้าน
+
+    $routes->get("get-address", "Common::personAddress"); //ที่อยู่
 
    
 });

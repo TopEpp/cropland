@@ -218,6 +218,19 @@ class Common_model extends Model
     return $query;
   }
 
+  public function personAddress($person){
+    $builder = $this->db->table('LH_house_person');
+    $builder->select("  CONCAT('บ้านเลขที่ ',LH_house.house_number,' หมู่ที่ ',LH_house.house_moo,' ตำบล ',tambon.tam_name_t,' อำเภอ ',amphoe.amp_name_t,' จังหวัด ',province.pro_name_t) as person_address");
+    $builder->join('LH_house','LH_house.house_id = LH_house_person.house_id');
+    $builder->where('LH_house_person.person_id',$person);
+    $builder->join('amphoe', 'amphoe.amp_code = LH_house.house_district','left');
+    $builder->join('province', 'province.prov_code = LH_house.house_province','left');
+    $builder->join('tambon', 'tambon.tam_code = LH_house.house_subdistrict','left');
+
+    $query = $builder->get()->getRowArray();
+    return $query;
+  }
+
 }
 
  ?>
