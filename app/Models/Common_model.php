@@ -231,6 +231,17 @@ class Common_model extends Model
     return $query;
   }
 
+  public function getProduct($group){
+    $builder = $this->db->table('CODE_PRODUCT');
+    $builder->select('*');
+    if ($group != ''){
+      $builder = $builder->where('GroupCode',$group);
+    }
+    
+    $query = $builder->get()->getResultArray();
+    return $query;
+  }
+
 }
 
  ?>

@@ -24,7 +24,7 @@ class Survay_model extends Model
 
         $builder = $this->db->table('LH_interview_land');
         $builder->select("LH_interview_land.*,
-            VIEW_agriculturist_name.name as user_name,
+          
             CODE_PROJECT.name as project_area,
             CODE_PROJECT.Description as project_name,
             CODE_PROJECTVILLAGE.Name as project_village,
@@ -58,7 +58,7 @@ class Survay_model extends Model
         
         $builder->join('CODE_PROJECT', 'CODE_PROJECT.Code = LH_interview_land.interview_project','left');
         $builder->join('CODE_PROJECTVILLAGE', 'CODE_PROJECTVILLAGE.Code = LH_interview_land.interview_house_id and CODE_PROJECTVILLAGE.projectId = LH_interview_land.interview_project','left');
-        $builder->join('VIEW_agriculturist_name','VIEW_agriculturist_name.id_card = LH_interview_land.interview_user','left');
+        // $builder->join('VIEW_agriculturist_name','VIEW_agriculturist_name.id_card = LH_interview_land.interview_user','left');
 
 
         if ($id){
@@ -125,11 +125,11 @@ class Survay_model extends Model
         
         $builder = $this->db->table('LH_interview_land_detail');
         $builder->select('LH_interview_land_detail.*,
-                        LH_landuse.name as landuse,
+                        CODE_PRODUCTGROUP.name as product_group,
                         CODE_PRODUCT.name as product_name,
                         LH_interview_land_product.*');
         $builder->join('LH_interview_land_product', 'LH_interview_land_product.detail_id = LH_interview_land_detail.detail_id');
-        $builder->join('LH_landuse', 'LH_landuse.landuse_id = LH_interview_land_detail.detail_use');
+        $builder->join('CODE_PRODUCTGROUP', 'CODE_PRODUCTGROUP.Code = LH_interview_land_detail.detail_use');
         $builder->join('CODE_PRODUCT', 'CODE_PRODUCT.Code = LH_interview_land_detail.detail_type');
         $builder = $builder->where('LH_interview_land_detail.interview_id',$interview_id);
 
@@ -207,6 +207,9 @@ class Survay_model extends Model
         unset($data['product']);
          
         $data['seed_value'] = $data['seed_value'] ? $data['seed_value'] : 0;
+        $data['detail_hrdi'] = !empty($data['detail_hrdi']) ? implode(',',$data['detail_hrdi']) : '';
+        
+        
         // $data['cost_fertilizer'] = $data['cost_fertilizer'] ? $data['cost_fertilizer'] : 0;
         // $data['cost_drug'] = $data['cost_drug'] ? $data['cost_drug'] : 0;
         // $data['cost_labor'] = $data['cost_labor'] ? $data['cost_labor'] : 0;

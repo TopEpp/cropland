@@ -11,10 +11,10 @@
                         <div class="form-group col-md-3">
                             <label>การใช้ประโยชน์ที่ดิน</label>     
                             <input type="hidden" name="detail_use_type">                                   
-                            <select name="detail_use" id="detail_use" class="form-control select2"  required="">
+                            <select name="detail_use" id="detail_use" class="form-control select2"  required="" onchange="selectProduct($(this))">
                                 <option value="">เลือก</option>
-                                <?php foreach ($landuse as $key => $value) :?>
-                                    <option <?=@$result['data']['detail_use'] == $value['landuse_id'] ? 'selected':'';?> value="<?=$value['landuse_id'];?>"><?=$value['name'];?></option>
+                                <?php foreach ($product_group as $key => $value) :?>
+                                    <option <?=@$result['data']['detail_use'] == $value['Code'] ? 'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                 <?php endforeach?>              
                             </select>
                             <div class="invalid-feedback">
@@ -88,10 +88,11 @@
                             
                         </div>
                         <div class="form-group col-md-3">
+                        <?php $detail_hrdi = @explode(',',$result['data']['detail_hrdi']);?>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" id="detail_hrdi1" name="detail_hrdi" value="1" <?=@$result['data']['detail_hrdi'] == '1' ?'checked':"";?>"  >
+                                        <input class="form-check-input" type="checkbox" id="detail_hrdi1" name="detail_hrdi[]" value="1" <?=@in_array("1", $detail_hrdi) ?'checked':''?>   >
                                         <label class="form-check-label" for="detail_hrdi1">
                                         การส่งเสริมจากสถาบันฯ
                                         </label>
@@ -99,7 +100,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" id="detail_hrdi2" name="detail_hrdi" value="2" <?=@$result['data']['detail_hrdi'] == '2' ?'checked':"";?>">
+                                        <input class="form-check-input" type="checkbox" id="detail_hrdi2" name="detail_hrdi[]" value="2" <?=@in_array("2", $detail_hrdi) ?'checked':''?> >
                                         <label class="form-check-label" for="detail_hrdi2">
                                         เก็บผลผลิต
                                         </label>
@@ -286,8 +287,7 @@
                                         <input type="hidden" name="rec_id">
                                         </td>
                                         <td>                                            
-                                            <select name="product_type" id="product_type" class="form-control"  onchange="selecttype($(this))" required="">
-                                                <option value=""></option>
+                                            <select name="product_type" id="product_type" class="form-control"  onchange="selecttype($(this))" required="">                                                
                                                 <?php foreach ($medical_type as $key => $value) :?>
                                                     <option value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                                 <?php endforeach?> 
@@ -856,6 +856,19 @@
 
                         
 <script>
+
+    function selectProduct(elm){
+        var $option = elm.find('option:selected');
+        var value = $option.val();
+         $.ajax({
+            type: "GET",
+            url: domain+'common/get-product?group='+value,
+            success : function(options){
+                $("#detail_type").html(options)
+            }
+        });
+    }
+
    function selecttype(element){
         var $option = element.find('option:selected');
         var value = $option.val();

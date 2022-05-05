@@ -42,7 +42,7 @@
                                         <thead>
                                             <tr>
                                             <th scope="col">ลำดับ</th>
-                                            <th scope="col">ประเภท</th>
+                                            <th scope="col">หน่วยงาน</th>
                                             <th scope="col">รายละเอียด</th>
                                             <th scope="col">
                                                 <a href="#" class="btn btn-info" data-repeater-create id="add-support">เพิ่มข้อมูล</a>

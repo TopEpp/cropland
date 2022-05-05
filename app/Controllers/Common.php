@@ -2,13 +2,14 @@
 
 namespace App\Controllers;
 
+use CodeIgniter\Files\File;
 use App\Models\Common_model;
+use Modules\Api\Models\Api_model;
 use CodeIgniter\API\ResponseTrait;
 use App\Controllers\BaseController;
+
 use App\Models\InterViewHouse_model;
 use Modules\House\Models\House_model;
-
-use CodeIgniter\Files\File;
 
 class Common extends BaseController
 {
@@ -97,6 +98,19 @@ class Common extends BaseController
     public function personAddress(){
         $person = $this->request->getVar('person');
         $data = $this->model_common->personAddress($person);
+        return   $this->respond($data);
+    }
+
+    public function getProduct(){
+        $group = $this->request->getVar('group');
+        
+        $product = $this->model_common->getProduct($group);
+        
+        $data = '';
+        foreach ($product as $key => $value) {
+           $data .= "<option value='".$value['Code']."'>".$value['Name']."</option>";
+        }
+        
         return   $this->respond($data);
     }
 
