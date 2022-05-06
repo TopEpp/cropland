@@ -96,7 +96,7 @@
                                                                     <td><div style="width: 80px" ><?=$value['project_area'];?></div></td>
                                                                     <td><div style="width: 80px" ><?=$value['project_village'];?></div></td>
                                                                     <td>
-                                                                        <?=$value['interview_code'];?>
+                                                                        <?=$value['land_code'];?>
                                                                     </td>
                                                                     <td><div style="width: 100px" ><?=$value['person_name'];?></div></td>
                                                                     <td><div style="width: 100px" ><?=house_person_type($value['person_type_number']);?></div></td>

@@ -15,6 +15,7 @@ class Report_model extends Model
             CODE_PROJECTVILLAGE.Name as project_village,
             CODE_PROJECTVILLAGE.BasinName,
             LH_land.land_address,
+            LH_land.land_code,
             LH_landuse.name as land_use,
             CONCAT(LH_prefix.name,LH_house_person.person_name,' ',LH_house_person.person_lastname) as person_name,
             LH_house.house_label,
@@ -47,7 +48,7 @@ class Report_model extends Model
             WHERE LH_interview_land_problem.interview_id = LH_interview_land.interview_id order by 	LH_interview_land_problem.problem_id	 
             FOR XML PATH, TYPE).value(N'.[1]', N'varchar(max)'), 1, 2, '') as land_problems,
         ");
-        $builder->join('LH_land', 'LH_land.land_code = LH_interview_land.interview_code');
+        $builder->join('LH_land', 'LH_land.land_id = LH_interview_land.interview_code');
         $builder->join('LH_landuse', 'LH_landuse.landuse_id = LH_land.land_use');
 
         $builder->join('LH_house_person', 'LH_house_person.person_id = LH_interview_land.interview_person_id');
@@ -111,6 +112,7 @@ class Report_model extends Model
         CONCAT(LH_prefix.name,LH_house_person.person_name,' ',LH_house_person.person_lastname) as person_name,
         LH_house.house_label,
         LH_house.house_number,
+        LH_land.land_code,
         LH_house_person.person_type_number,   
         LH_house.house_moo,
         tambon.tam_name_t,
@@ -123,6 +125,7 @@ class Report_model extends Model
         person_village.Name as person_village,
         LH_interview_land_product.*");
 
+        $builder->join('LH_land', 'LH_land.land_id = LH_interview_land.interview_code','left');
         $builder->join('LH_interview_land_detail','LH_interview_land_detail.interview_id = LH_interview_land.interview_id');
         $builder->join('LH_interview_land_product', 'LH_interview_land_product.detail_id = LH_interview_land_detail.detail_id');
         $builder->join('CODE_PRODUCT', 'CODE_PRODUCT.Code = LH_interview_land_detail.detail_type');
@@ -144,6 +147,7 @@ class Report_model extends Model
         $builder->join('province', 'province.prov_code = LH_house.house_province');
         $builder->join('tambon', 'tambon.tam_code = LH_house.house_subdistrict');
 
+    
         $builder->join('CODE_PROJECT', 'CODE_PROJECT.Code = LH_interview_land.interview_project');
         $builder->join('CODE_PROJECTVILLAGE', 'CODE_PROJECTVILLAGE.Code = LH_interview_land.interview_house_id and CODE_PROJECTVILLAGE.projectId = LH_interview_land.interview_project');
       

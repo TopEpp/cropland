@@ -147,7 +147,7 @@
                                                 <td>
                                                     <div style="width: 50px" >
                                                         <a href="<?=base_url('report/survay/'.$value['interview_code']);?>">
-                                                            <?=$value['interview_code'];?>
+                                                            <?=$value['land_code'];?>
                                                         </a>
                                                     </div>
                                                 

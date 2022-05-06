@@ -55,7 +55,7 @@
                                         <select name="interview_code" id="interview_code" class="form-control select2" required="">
                                             <option value="">เลือก</option>
                                             <?php foreach ($lands as $key => $value) :?>
-                                                <option <?=@$data['interview_code'] == $value['land_code']?'selected':'';?>  value="<?=$value['land_code'];?>"><?=$value['land_code'];?></option>
+                                                <option <?=@$data['interview_code'] == $value['land_id']?'selected':'';?>  value="<?=$value['land_id'];?>"><?=$value['land_code'];?></option>
                                             <?php endforeach;?>
                                         </select>      
                                         <div class="invalid-feedback">
@@ -121,9 +121,9 @@
                                     <div class="form-group col-md-4">
                                         <label>ปีสำรวจ</label>                                        
                                         <select name="interview_year" id="interview_year" class="form-control">
-                                            <option <?=@$data['interview_year'] == '2565' ?'selected':''?> value="2565">2565</option>
-                                            <option <?=@$data['interview_year'] == '2564' ?'selected':''?> value="2564">2564</option>
-                                            <option <?=@$data['interview_year'] == '2563' ?'selected':''?> value="2563">2563</option>
+                                            <?php foreach (getYear() as $key => $value) :?>
+                                                <option <?=@$data['interview_year'] == $value ?'selected':''?> value="<?=$value;?>"><?=$value;?></option>
+                                            <?php endforeach;?>                                        
                                         </select>                                        
                                     </div>       
                                 </div>

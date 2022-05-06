@@ -29,6 +29,7 @@ class Survay_model extends Model
             CODE_PROJECT.Description as project_name,
             CODE_PROJECTVILLAGE.Name as project_village,
             LH_land.land_address,
+            LH_land.land_code,
             LH_landuse.name as land_use,
             CONCAT(LH_prefix.name,LH_house_person.person_name,' ',LH_house_person.person_lastname) as person_name,
             LH_house.house_label,
@@ -39,7 +40,7 @@ class Survay_model extends Model
                 person_village.Name as person_village
                                 
         ");
-        $builder->join('LH_land', 'LH_land.land_code = LH_interview_land.interview_code','left');
+        $builder->join('LH_land', 'LH_land.land_id = LH_interview_land.interview_code','left');
         $builder->join('LH_landuse', 'LH_landuse.landuse_id = LH_land.land_use','left');
 
         $builder->join('LH_house_person', 'LH_house_person.person_id = LH_interview_land.interview_person_id','left');
