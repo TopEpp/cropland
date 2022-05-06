@@ -74,7 +74,7 @@
 </section>
 
 <div class="modal fade" tabindex="-1" role="dialog" id="LandModal">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-xl" role="document">
         <form action="<?=base_url('land/save_land');?>" method="post">            
             <input type="hidden" name="land_id" id="land_id">
             <div class="modal-content">
@@ -161,26 +161,10 @@ let markers = [];
 let drawingManager;
 var default_color = '#1E90FF';
 var itemPath;
-$(document).ready(function() {
-    initMap();
-});
+// $(document).ready(function() {
+//     initMap();
+// });
 
-function initMap() {
-    const myLatLng = { lat: 18.8026962, lng: 98.9555348 };
-    map = new google.maps.Map(document.getElementById("map"), {
-        center: myLatLng,
-        zoom: 7,
-    });
-
-
-
-    //     // The marker, positioned at Uluru
-    const marker = new google.maps.Marker({
-        position: myLatLng,
-        map: map,
-    });
-
-}
 
     function landModal(id = ''){
         $("#land_id").val(id)
@@ -190,8 +174,20 @@ function initMap() {
                 type: "GET",
                 url: domain+'land/load-lands/'+id,
                 success : function(response){
+
                     if (response){
+                        // conver to geo
+                     
+
                         const data = response.data;
+                        let latLngs = []
+                        if (data.land_geo){
+                            var geo = JSON.parse(data.land_geo)                        
+                            var data_geo = geo[0];                         
+                            latLngs = data_geo.map(pair => ({lat: pair[0], lng: pair[1]}))
+                        }
+                     
+     
                         $("#land_code").val(data.land_code)
                         $("#land_number").val(data.land_number)
                         $("#land_no").val(data.land_no)
@@ -199,6 +195,8 @@ function initMap() {
 
                         $("#land_use").val(data.land_use)
                         $("#land_address").val(data.land_address)
+
+                        initMap(latLngs)
                         // $("#land_ownership").val(data.land_ownership)
                         // $("#land_holding").val(data.land_holding)
                         
@@ -210,6 +208,38 @@ function initMap() {
       
 
         $("#LandModal").modal();
+    }
+
+    
+    function initMap(geo) {        
+        const myLatLng = { lat: 18.8026962, lng: 98.9555348 };
+        map = new google.maps.Map(document.getElementById("map"), {
+            center: myLatLng,
+            zoom: 7,
+            // mapTypeId: "terrain",
+
+        });
+
+
+         // Construct the polygon.
+            const bermudaTriangle = new google.maps.Polygon({
+                paths: geo,
+                strokeColor: "#FF0000",
+                strokeOpacity: 0.8,
+                strokeWeight: 2,
+                fillColor: "#FF0000",
+                fillOpacity: 0.35,
+            });
+
+            bermudaTriangle.setMap(map);
+
+
+        //     // The marker, positioned at Uluru
+        // const marker = new google.maps.Marker({
+        //     position: myLatLng,
+        //     map: map,
+        // });
+
     }
 
 </script>

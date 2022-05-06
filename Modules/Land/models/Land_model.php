@@ -20,9 +20,11 @@ class Land_model extends Model
 
     public function getAllLand($id = '')
     { 
+      
         
         $builder = $this->db->table('LH_land');
-        $builder->select('LH_land.*,LH_landuse.name,CODE_PROJECT.Name as project_name');
+        $builder->select('LH_land.land_code,LH_land.land_number,LH_land.land_no,LH_land.land_area,LH_land.land_id,
+        dbo.GetCoordinate(LH_land.land_geo) as land_geo,LH_landuse.name,CODE_PROJECT.Name as project_name');
         $builder->join('LH_landuse', 'LH_land.land_use = LH_landuse.landuse_id','left');
         $builder->join('CODE_PROJECT', 'LH_land.land_project = CODE_PROJECT.Code','left');
         // $builder->join('LH_location', 'LH_land.land_address = LH_location.location_id');
