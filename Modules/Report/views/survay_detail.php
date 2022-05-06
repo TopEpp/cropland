@@ -87,6 +87,7 @@
                                                                 $seed =$value['cost_seed'] * $value['seed_value'];
                                                                 $sum_cost = $seed + $value['dressing'] + $value['drug']+ $value['hormone']+$value['staff']+$value['cost_oil']+$value['cost_other'];
                                                                 $cout = $cout+1;
+                                                                $detail_hrdi = @explode(',',$value['detail_hrdi']);
                                                             ?>    
                                                             <tr>
                                                                     <td> 
@@ -95,7 +96,7 @@
                                                                     <td><div style="width: 80px" ><?=$value['project_area'];?></div></td>
                                                                     <td><div style="width: 80px" ><?=$value['project_village'];?></div></td>
                                                                     <td>
-                                                                        <?=$value['interview_code'];?>
+                                                                        <?=$value['land_code'];?>
                                                                     </td>
                                                                     <td><div style="width: 100px" ><?=$value['person_name'];?></div></td>
                                                                     <td><div style="width: 100px" ><?=house_person_type($value['person_type_number']);?></div></td>
@@ -129,27 +130,27 @@
                                                                     <?php else:?>
                                                                         <td><?=$value['detail_area'];?></td>                                                                                                                
                                                                         <td><?=$value['detail_age'];?></td>
-                                                                        <td><?=$value['seed_value'];?></td>
-                                                                        <td><?=$value['seed_unit'];?></td>
+                                                                        <td><?=number_format($value['seed_value']);?></td>
+                                                                        <td><?=number_format($value['seed_unit']);?></td>
                                                                         <td><?=$value['detail_start_date'];?></td>
-                                                                        <td><?=$value['detail_hrdi'];?></td>
-                                                                        <td><?=$value['detail_hrdi'];?></td>
-                                                                        <td><?=$seed;?></td>
-                                                                        <td><?=$value['dressing'];?></td>
-                                                                        <td><?=$value['drug'];?></td>
-                                                                        <td><?=$value['hormone'];?></td>
-                                                                        <td><?=$value['staff'];?></td>
-                                                                        <td><?=$value['cost_oil'];?></td>
-                                                                        <td><?=$value['cost_other'];?></td>
-                                                                        <td><?=$sum_cost;?></td> 
-                                                                        <td><?=$value['detail_consume'];?></td>
+                                                                        <td><?=@in_array("1", $detail_hrdi) ?'&check;':''?></td>
+                                                                        <td><?=@in_array("2", $detail_hrdi) ?'&check;':''?></td>
+                                                                        <td><?=number_format($seed);?></td>
+                                                                        <td><?=number_format($value['dressing']);?></td>
+                                                                        <td><?=number_format($value['drug']);?></td>
+                                                                        <td><?=number_format($value['hormone']);?></td>
+                                                                        <td><?=number_format($value['staff']);?></td>
+                                                                        <td><?=number_format($value['cost_oil']);?></td>
+                                                                        <td><?=number_format($value['cost_other']);?></td>
+                                                                        <td><?=number_format($sum_cost);?></td> 
+                                                                        <td><?=number_format($value['detail_consume']);?></td>
                                                                         <td></td>
                                                                     <?php endif;?>
                                                                     
                                                                     <td><?=$item['product_type'];?></td>
-                                                                    <td><?=$item['product_value'];?></td>
-                                                                    <td><?=$item['product_price'];?></td>
-                                                                    <td><?=$item['product_price'] * $item['product_value'];?></td>
+                                                                    <td><?=number_format($item['product_value']);?></td>
+                                                                    <td><?=number_format($item['product_price']);?></td>
+                                                                    <td><?=number_format($item['product_price'] * $item['product_value']);?></td>
                                                                     <td><div style="width: 120px" ><?=$item['product_market'];?></div></td>        
                                                                     
                                                             </tr>

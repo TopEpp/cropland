@@ -167,6 +167,8 @@ $routes->group("common", ["namespace" => "App\Controllers"], function ($routes) 
     $routes->get("get-village", "Common::Village"); //กลุ่มบ้าน
 
     $routes->get("get-address", "Common::personAddress"); //ที่อยู่
+    $routes->get("get-product", "Common::getProduct"); //ที่อยู่
+    
 
    
 });

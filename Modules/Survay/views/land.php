@@ -72,10 +72,12 @@
                                                         <?php 
                                                         $seed =$value['cost_seed'] * $value['seed_value'];
                                                         $sum_cost = $seed + $value['dressing'] + $value['drug']+ $value['hormone']+$value['staff']+$value['cost_oil']+$value['cost_other'];
+                                                        $detail_hrdi = @explode(',',$value['detail_hrdi']);
+                                                        $sum_market =$value['product_price'] * $value['product_value'];
                                                         ?>                                                    
                                                         <tr>    
                                                             <td><?=$key+1;?></td>                                                        
-                                                            <td><?=$value['landuse'];?></td>
+                                                            <td><?=$value['product_group'];?></td>
                                                             <td>
                                                                 <?=$value['product_name'];?>
                                                             </td>
@@ -83,21 +85,21 @@
                                                             <td><?=$value['detail_age'];?></td>
                                                             <td><?=$value['seed_value'];?></td>
                                                             <td><?=$value['detail_start_date'];?></td>
-                                                            <td><?=$value['detail_hrdi'];?></td>
-                                                            <td><?=$value['detail_hrdi'];?></td>
-                                                            <td><?=$seed;?></td>
-                                                            <td><?=$value['dressing'];?></td>
-                                                            <td><?=$value['drug'];?></td>
-                                                            <td><?=$value['hormone'];?></td>
-                                                            <td><?=$value['staff'];?></td>
-                                                            <td><?=$value['cost_oil'];?></td>
-                                                            <td><?=$value['cost_other'];?></td>
-                                                            <td><?=$sum_cost;?></td>
-                                                            <td><?=$value['detail_consume'];?></td>
+                                                            <td><?=@in_array("1", $detail_hrdi) ?'&check;':''?></td>
+                                                            <td><?=@in_array("2", $detail_hrdi) ?'&check;':''?></td>
+                                                            <td><?=$seed ? number_format($seed):0;?></td>
+                                                            <td><?=$value['dressing'] ? number_format($value['dressing']):0;?></td>
+                                                            <td><?=$value['drug'] ? number_format($value['dressing']):0;?></td>
+                                                            <td><?=$value['hormone'] ? number_format($value['hormone']):0;?></td>
+                                                            <td><?=$value['staff'] ? number_format($value['staff']):0;?></td>
+                                                            <td><?=$value['cost_oil'] ? number_format($value['cost_oil']):0;?></td>
+                                                            <td><?=$value['cost_other'] ? number_format($value['cost_other']):0;?></td>
+                                                            <td><?=$sum_cost ? number_format($sum_cost):0;?></td>
+                                                            <td><?=$value['detail_consume'] ? number_format($value['detail_consume']):0;?></td>
                                                             <td><?=$value['product_type'];?></td>
-                                                            <td><?=$value['product_value'];?></td>
-                                                            <td><?=$value['product_price'];?></td>
-                                                            <td><?=$value['product_price'] * $value['product_value'];?></td>
+                                                            <td><?=$value['product_value'] ? number_format($value['product_value']):0;?></td>
+                                                            <td><?=$value['product_price'] ? number_format($value['product_price']):0;?></td>
+                                                            <td><?=number_format($sum_market);?></td>
                                                             <td><?=$value['product_market'];?></td>
                                                             <td class="text-center">
                                                                 <div class="buttons">

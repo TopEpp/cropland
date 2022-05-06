@@ -185,7 +185,8 @@ class Survay extends BaseController
     public function supportOther($interview_id,$id = ''){
         $data['interview_id'] = $interview_id;
 
-        $data['org'] = $this->model_api->getHrdiSupport();
+        // $data['org'] = $this->model_api->getHrdiSupport();
+        $data['org'] = $this->model_api->getDepartment();
         
         $data['data'] = $this->model_survay->getSupportsOther($interview_id);
         return view('Modules\Survay\Views\support_other',$data);
@@ -279,7 +280,7 @@ class Survay extends BaseController
             
 
         }
-        $data['landuse'] =  $this->model_api->getLandUse();
+        $data['product_group'] =  $this->model_api->getProductGroup();
         $data['products'] = $this->model_api->getproduct();
         $data['units'] = $this->model_api->getUnit();
 

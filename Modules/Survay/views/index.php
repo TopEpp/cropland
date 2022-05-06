@@ -118,7 +118,7 @@
                                         <td><?=$value['project_name'];?></td>
                                         <td><?=$value['project_area'];?></td>
                                         <td><?=$value['project_village'];?></td>
-                                        <td><?=$value['interview_code'];?></td>
+                                        <td><?=$value['land_code'];?></td>
                                         <td><?=$value['person_name'];?></td>
                                         <td><?=$value['person_address'];?></td>
                                         <td><?=$value['person_village'];?></td>
