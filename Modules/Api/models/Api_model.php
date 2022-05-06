@@ -26,6 +26,79 @@ class Api_model extends Model
         }
     }
 
+    function importHouse(){
+      set_time_limit(2000);
+        $builder = $this->db->table('Person');
+        $builder->select('Province_idProvince,districtName,Amphur_idAmphur,subMooName,address,moo,mooName');
+        $builder->where('idcard <>',null);
+        $builder->where('address <>',null);
+        
+        $query = $builder->get()->getResultArray();
+        foreach ($query as $key => $value) {
+          $db = \Config\Database::connect();
+          $data['house_province'] = $value['Province_idProvince'];
+          $data['house_district'] = $value['Amphur_idAmphur'];
+          $data['house_subdistrict'] = $value['districtName'];
+          $data['house_number'] = $value['address'];
+          $data['house_moo'] = $value['moo'];
+          $data['house_moo_name'] = $value['mooName'];
+          
+          $builder_land = $this->db->table('LH_house');
+          $builder_land->insert($data);
+
+          $house_id = $db->insertID();
+
+          $builder_person = $this->db->table('LH_house_person');
+          $builder_person->select('LH_house_person.person_id');
+          $builder_person->join('Person','Person.idcard = LH_house_person.person_number');
+          $builder_person->where('Province_idProvince',$value['Province_idProvince']);
+          $builder_person->where('Amphur_idAmphur',$value['Amphur_idAmphur']);
+          $builder_person->where('districtName',$value['districtName']);
+          $builder_person->where('address',$value['address']);
+          $builder_person->where('moo',$value['moo']);
+          $builder_person->where('mooName',$value['mooName']);
+          $query_person = $builder_person->get()->getResultArray();
+          foreach ($query_person as $key_p => $person) {
+            $builder_person_set = $this->db->table('LH_house_person');
+            $builder_person_set->where('person_id',$person['person_id']);
+            $builder_person_set->set('house_id',$house_id);
+            $builder_person_set->set('family_id',1);
+            $builder_person_set->update();
+          }
+
+
+        }
+    }
+
+    function importPersons(){
+      set_time_limit(2000);
+        $builder = $this->db->table('Person');
+        $builder->select('Prefix_idPrefix,firstName,lastName,idcard,birthday,religionName,tribeName,pos_family,EduLevel_idEduLevel');
+        $builder->where('idcard <>',null);
+        
+        $query = $builder->get()->getResultArray();
+        foreach ($query as $key => $value) {
+
+          $person_header = 0;
+          if($value['pos_family']=='หัวหน้าครัวเรือน'){
+            $person_header = 1;
+          }
+
+          $data['person_number'] = $value['idcard'];
+          $data['person_prename'] = $value['Prefix_idPrefix'];
+          $data['person_name'] = $value['firstName'];
+          $data['person_lastname'] = $value['lastName'];
+          $data['person_birthdate'] = $value['birthday'];
+          $data['person_religion'] = $value['religionName'];
+          $data['person_header'] = $person_header;
+          $data['person_tribe'] = $this->getTribeId($value['tribeName']);
+          $data['person_educate'] = $value['EduLevel_idEduLevel'];
+          
+          $builder_land = $this->db->table('LH_house_person');
+          $builder_land->insert($data);
+        }
+    }
+
     function importlands(){
         set_time_limit(2000);
         $builder = $this->db->table('cropland_rak');
@@ -56,6 +129,10 @@ class Api_model extends Model
           $builder_land = $this->db->table('LH_land');
           $builder_land->insert($data);
         }
+    }
+
+    function updatePersonLand(){
+      
     }
 
     function getLandUseId($name){
@@ -131,6 +208,18 @@ class Api_model extends Model
       }else{
         return null;
       }    
+    }
+
+    function getTribeId($name){
+      $builder = $this->db->table('LH_tribe');
+      $builder->select('*');
+      $builder->where('name',$name);
+      $row = $builder->get()->getRowArray();
+      if(!empty($row['tribe_id'])){
+        return $row['tribe_id'];
+      }else{
+        return null;
+      }  
     }
     
     public function getAgriWork($id = '')

@@ -144,4 +144,14 @@ class Api extends BaseController
         $this->model_api->importlands();
     }
 
+    public function importHouse(){
+        $User = new User_model();
+        $this->model_api->importHouse();
+    }
+
+    public function importPersons(){
+        $User = new User_model();
+        $this->model_api->importPersons();
+    }
+
 }
