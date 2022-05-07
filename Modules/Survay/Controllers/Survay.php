@@ -41,7 +41,8 @@ class Survay extends BaseController
             if (!empty($data['search']['interview_project'])){
                 // $builder->where('LH_interview_land.interview_project',$data['search']['interview_project']);
             }          
-            if (!empty($data['search']['interview_house_id'])){                
+            if (!empty($data['search']['interview_house_id'])){        
+                $data['data_search']['house'] = $model_common->searchHouse('',$data['search']['interview_house_id']);               
             }
             if (!empty($data['search']['interview_person_id'])){            
                 $data['data_search']['person'] = $model_common->searchPerson('',$data['search']['interview_person_id']);       
@@ -66,23 +67,24 @@ class Survay extends BaseController
         $model_common = new Common_model();
           
 
-
         $data['interview_id'] = $interview_id;
     
-        $data['lands'] = $model_land->getAllLand();
-        $data['users']= $model_user->getSelectUsers();
+        // $data['lands'] = $model_land->getAllLand();
+        // $data['users']= $model_user->getSelectUsers();
         $data['projects'] = $this->model_api->getProject();
         $data['privileges'] = $this->model_api->getLandprivilege();
+          // $data['persons']= $model_common->getAllPersons();
         
         $data['villages'] = [];
         $data['persons'] = [];
-        $data['persons']= $model_common->getAllPersons();
+      
         if ($interview_id){
             
             $data['data'] = $this->model_survay->getAllSurvay($interview_id);
-            $data['data']['interview_date'] = $this->date_thai->date_eng2thai($data['data']['interview_date'],543,'','','/');            
+            $data['data']['interview_date'] = $this->date_thai->date_eng2thai($data['data']['interview_date'],543,'','','/');
             $data['villages'] = $model_common->getVillage('',$data['data']['interview_project']);            
             $data['persons']= $model_common->getAllPersons($data['data']['interview_house_id']);
+            $data['users']= $model_user->getSelectUsers($data['data']['interview_user'])[0];
     
         }
         

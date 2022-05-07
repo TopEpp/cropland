@@ -23,10 +23,13 @@ class User_model extends Model
     return $query;
   }
 
-  public function getSelectUsers()
+  public function getSelectUsers($id ='')
   {
     $db = \Config\Database::connect('user_db', false); 
     $builder = $db->table('vLoadDetailStaff');
+    if ($id != ''){
+      $builder->where('prs_id',$id);
+    }
     $builder->select('emp_id,fullname,prs_id');
     $query = $builder->get()->getResultArray();
     return $query;

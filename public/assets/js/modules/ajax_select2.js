@@ -1,5 +1,5 @@
 $(function () {
-	$(".select2Ajax").select2({
+	$(".select2-ajax-person").select2({
 		// data: [{id:1,text:'qwew'}],
 		minimumInputLength: 2,
 		tags: [],

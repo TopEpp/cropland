@@ -68,7 +68,7 @@
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label>ชื่อเจ้าของแปลง</label>                                       
-                                        <select name="interview_person_id" id="interview_person_id" class="form-control select2Ajax">
+                                        <select name="interview_person_id" id="interview_person_id" class="form-control select2-ajax-person">
                                             <?php if(!empty($search['interview_person_id'])):?>
                                                 <option value="<?=$search['interview_person_id'];?>"><?=$data_search['person']['person_name'].' '.$data_search['person']['person_lastname'];?></option>
                                             <?php else:?>
@@ -155,7 +155,7 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <!-- //load select2 ajax/ -->
-<?= script_tag('public/assets/modules/ajax_select2.js') ?>
+<?= script_tag('public/assets/js/modules/ajax_select2.js') ?>
 
 <script>
 

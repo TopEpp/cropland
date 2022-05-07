@@ -38,11 +38,13 @@
                                 <div class="row">                               
                                     <div class="form-group col-md-4">
                                         <label>ชื่อผู้เก็บข้อมูล</label>                                       
-                                        <select name="interview_user" id="interview_user" class="form-control select2">
-                                            <option value="">เลือก</option>
-                                            <?php foreach ($users as $key => $value) :?>
-                                                <option <?=@$data['interview_user'] == $value['prs_id']?'selected':'';?> value="<?=$value['prs_id'];?>"><?=$value['fullname'];?></option>
-                                            <?php endforeach;?>
+                                        <select name="interview_user" id="interview_user" class="form-control select2-ajax-user">
+                                            <?php if(!empty($data['interview_user'])):?>
+                                                <option value="<?=$data['interview_user'];?>"><?=$users['fullname'];?></option>
+                                            <?php else:?>
+                                                <option value="">ทั้งหมด</option>
+                                            <?php endif;?>
+                                          
                                         </select>
                                        
                                     </div>
@@ -52,11 +54,13 @@
                                     </div>     
                                     <div class="form-group col-md-4">
                                         <label>รหัสแปลง</label>
-                                        <select name="interview_code" id="interview_code" class="form-control select2" required="">
-                                            <option value="">เลือก</option>
-                                            <?php foreach ($lands as $key => $value) :?>
-                                                <option <?=@$data['interview_code'] == $value['land_id']?'selected':'';?>  value="<?=$value['land_id'];?>"><?=$value['land_code'];?></option>
-                                            <?php endforeach;?>
+                                        <select name="interview_code" id="interview_code" class="form-control select2-ajax-land" required="">
+                                            <?php if(!empty($data['interview_code'])):?>
+                                                <option value="<?=$data['interview_code'];?>"><?=$data['land_code'];?></option>
+                                            <?php else:?>
+                                                <option value="">ทั้งหมด</option>
+                                            <?php endif;?>
+                                           
                                         </select>      
                                         <div class="invalid-feedback">
                                            กรุณาเลือกรหัสแปลง
@@ -84,11 +88,12 @@
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>กลุ่มบ้าน</label>
-                                         <select name="interview_house_id" id="interview_house_id" class="form-control select2" onchange="selectHouse($(this))" required="">
-                                            <option value="">เลือก</option>
-                                            <?php foreach ($villages as $key => $value) :?>
-                                                <option <?=@$data['interview_house_id'] == $value['Code']?'selected':'';?>  value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
-                                            <?php endforeach;?>
+                                         <select name="interview_house_id" id="interview_house_id" class="form-control select2-ajax-house" onchange="selectHouse($(this))" required="">
+                                            <?php if(!empty($data['interview_house_id'])):?>
+                                                <option value="<?=$data['interview_house_id'];?>"><?=$data['person_village'];?></option>
+                                            <?php else:?>
+                                                <option value="">ทั้งหมด</option>
+                                            <?php endif;?>                                       
                                         </select>  
                                         <div class="invalid-feedback">
                                            กรุณาเลือกกลุ่มบ้าน
@@ -96,13 +101,12 @@
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>ชื่อเจ้าของแปลง</label>
-                                         <select name="interview_person_id" id="interview_person_id" class="form-control select2" required="" onchange="changePerson()">
-                                            <option value="">เลือก</option>
-                                            <?php   foreach ($persons as $key => $person) :?>
-                                                <?php foreach ($person as $key => $value) :?>                                            
-                                                        <option  <?=@$data['interview_person_id'] == $value['person_id'] ? 'selected':'' ;?> value="<?=$value['person_id'];?>"><?=$value['person_name'].' '.$value['person_lastname'];?></option>                                                
-                                                <?php endforeach;?>
-                                            <?php endforeach;?>
+                                         <select name="interview_person_id" id="interview_person_id" class="form-control select2-ajax-person" required="" onchange="changePerson()">
+                                            <?php if(!empty($data['interview_person_id'])):?>
+                                                <option value="<?=$data['interview_person_id'];?>"><?=$data['person_name'];?></option>
+                                            <?php else:?>
+                                                <option value="">ทั้งหมด</option>
+                                            <?php endif;?> 
                                         </select>  
                                         <div class="invalid-feedback">
                                            กรุณาเลือกเจ้าของแปลง
@@ -343,6 +347,9 @@
 <?= script_tag('public/assets/datepicker/js/bootstrap-datepicker.js') ?>
 <?= script_tag('public/assets/datepicker/js/bootstrap-datepicker-thai.js') ?>
 <?= script_tag('public/assets/datepicker/js/locales/bootstrap-datepicker.th.js') ?>
+
+<!-- //load select2 ajax/ -->
+<?= script_tag('public/assets/js/modules/ajax_select2.js') ?>
 
 <script>
 
