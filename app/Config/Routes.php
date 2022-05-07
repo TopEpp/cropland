@@ -188,6 +188,8 @@ $routes->group("api", ["namespace" => "Modules\Api\Controllers"], function ($rou
 
     $routes->get("importUsers", "Api::importUsers");
     $routes->get("importlands", "Api::importlands");
+    $routes->get("importHouse", "Api::importHouse");
+    $routes->get("importPersons", "Api::importPersons");
 
 });
 
