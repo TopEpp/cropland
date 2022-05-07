@@ -169,7 +169,11 @@ $routes->group("common", ["namespace" => "App\Controllers"], function ($routes) 
     $routes->get("get-address", "Common::personAddress"); //ที่อยู่
     $routes->get("get-product", "Common::getProduct"); //ที่อยู่
     
-
+    // select2
+    $routes->get("search-person", "Common::searchPerson");
+    $routes->get("search-land", "Common::searchLand");
+    $routes->get("search-user", "Common::searchUser");
+    $routes->get("search-house", "Common::searchHouse");
    
 });
 

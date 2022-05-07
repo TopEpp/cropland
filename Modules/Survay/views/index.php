@@ -30,11 +30,12 @@
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label>ชื่อผู้บันทึกข้อมูล</label>                                       
-                                        <select name="interview_user" id="interview_user" class="form-control select2">
-                                            <option value="">ทั้งหมด</option>
-                                            <?php foreach ($users as $key => $value) :?>
-                                                <option <?=@$search['interview_user'] == $value['prs_id']?'selected':'';?> value="<?=$value['prs_id'];?>"><?=$value['fullname'];?></option>
-                                            <?php endforeach;?>
+                                        <select name="interview_user" id="interview_user" class="form-control select2-ajax-user">
+                                            <?php if(!empty($search['interview_user'])):?>
+                                                <option value="<?=$search['interview_user'];?>"><?=$data_search['user']['fullname'];?></option>
+                                            <?php else:?>
+                                                <option value="">ทั้งหมด</option>
+                                            <?php endif;?>
                                         </select>
                                     </div>
                                     <div class="form-group col-md-3">
@@ -57,31 +58,32 @@
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label>กลุ่มบ้าน</label>                                       
-                                        <select name="interview_house_id" id="interview_house_id" class="form-control select2">
-                                            <option value="">ทั้งหมด</option>
-                                            <?php foreach ($villages as $key => $value) :?>
-                                                <option <?=@$search['interview_house_id'] == $value['Code']?'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
-                                            <?php endforeach;?>
+                                        <select name="interview_house_id" id="interview_house_id" class="form-control select2-ajax-house">                                            
+                                            <?php if(!empty($search['interview_house_id'])):?>
+                                                <option value="<?=$search['interview_house_id'];?>"><?=$data_search['house']['Name']?></option>
+                                            <?php else:?>
+                                                <option value="">ทั้งหมด</option>
+                                            <?php endif;?>                                          
                                         </select>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label>ชื่อเจ้าของแปลง</label>                                       
-                                        <select name="interview_person_id" id="interview_person_id" class="form-control select2">
-                                            <option value="">ทั้งหมด</option>
-                                            <?php foreach ($persons as $key => $val) :?>
-                                                <?php foreach ($val as $key => $value) :?>
-                                                    <option <?=@$search['interview_person_id'] == $value['person_id']?'selected':'';?> value="<?=$value['person_id'];?>"><?=$value['person_name'].' '.$value['person_lastname'];?></option>
-                                                <?php endforeach;?>
-                                            <?php endforeach;?>
+                                        <select name="interview_person_id" id="interview_person_id" class="form-control select2Ajax">
+                                            <?php if(!empty($search['interview_person_id'])):?>
+                                                <option value="<?=$search['interview_person_id'];?>"><?=$data_search['person']['person_name'].' '.$data_search['person']['person_lastname'];?></option>
+                                            <?php else:?>
+                                                <option value="">ทั้งหมด</option>
+                                            <?php endif;?>
                                         </select>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label>รหัสแปลง</label>                                       
-                                        <select name="interview_code" id="interview_code" class="form-control select2">
-                                            <option value="">ทั้งหมด</option>
-                                            <?php foreach ($lands as $key => $value) :?>
-                                                <option <?=@$search['interview_code'] == $value['land_id']?'selected':'';?> value="<?=$value['land_id'];?>"><?=$value['land_code'];?></option>
-                                            <?php endforeach;?>
+                                        <select name="interview_code" id="interview_code" class="form-control select2-ajax-land">                                            
+                                            <?php if(!empty($search['interview_code'])):?>
+                                                <option value="<?=$search['interview_code'];?>"><?=$data_search['land']['land_code'];?></option>
+                                            <?php else:?>
+                                                <option value="">ทั้งหมด</option>
+                                            <?php endif;?>                                     
                                         </select>
                                     </div>
                                     <div class="col-md-12 text-right">
@@ -152,7 +154,12 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
+<!-- //load select2 ajax/ -->
+<?= script_tag('public/assets/modules/ajax_select2.js') ?>
+
 <script>
+
+   
     function deleteItem(elm){
         swal({
         title: 'Are you sure?',

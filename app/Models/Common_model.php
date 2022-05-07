@@ -195,9 +195,8 @@ class Common_model extends Model
       // if ($village){
         // $village['ProvinceId'],$village['AmphurId'],$village['TamBonId']
         $builder = $this->db->table('LH_house_person');
-        $builder->select('LH_house_person.*,LH_prefix.name');
+        $builder->select('LH_house_person.family_id,LH_house_person.person_id,LH_house_person.person_name,LH_house_person.person_lastname,LH_prefix.name');
         // $builder->where('LH_house.house_province',$village['ProvinceId']);
-        $builder->join('LH_house', 'LH_house.house_id = LH_house_person.house_id','left');      
         $builder->join('LH_prefix', 'LH_prefix.prefix_id = LH_house_person.person_prename','left');
     
         $query = $builder->get()->getResultArray();
@@ -241,6 +240,75 @@ class Common_model extends Model
     $query = $builder->get()->getResultArray();
     return $query;
   }
+
+  public function searchPerson($search = [],$id = ''){
+    
+       $builder = $this->db->table('LH_house_person');
+       $builder->select('LH_house_person.family_id,LH_house_person.person_id,
+       LH_house_person.person_name,LH_house_person.person_lastname,LH_prefix.name');
+       $builder->join('LH_prefix', 'LH_prefix.prefix_id = LH_house_person.person_prename','left');
+       if ($id != ''){
+          $builder->where(' LH_house_person.person_id', $id);   
+          $query = $builder->get()->getRowArray();
+          return $query;      
+       }else{
+          $builder->like(' LH_house_person.person_name', $search); 
+          $builder->orLike(' LH_house_person.person_lastname', $search);
+    
+          $query = $builder->get()->getResultArray();
+          return $query;
+       }
+  }
+
+
+  public function searchLand($search = '',$id = ''){
+      
+      
+      $builder = $this->db->table('LH_land');
+      $builder->select('LH_land.land_id,LH_land.land_code');
+      if ($id != ''){
+        $builder->where('LH_land.land_id', $id);   
+        $query = $builder->get()->getRowArray();
+        return $query;      
+      }else{
+        $builder->like('LH_land.land_code', $search);
+        $query = $builder->get()->getResultArray();
+        return $query;
+      }
+  }
+
+  public function searchUser($search = '',$id = '')
+  {
+    $db = \Config\Database::connect('user_db', false); 
+    $builder = $db->table('vLoadDetailStaff');
+    $builder->select('emp_id,fullname,prs_id');
+    if ($id != ''){
+      $builder->where('prs_id', $id);   
+      $query = $builder->get()->getRowArray();
+      return $query;      
+   }else{
+      $builder->like('fullname', $search);
+      $query = $builder->get()->getResultArray();
+      return $query;
+   }
+
+  }
+
+  public function searchHouse($search = '',$id = ''){
+    
+    $builder = $this->db->table('CODE_PROJECTVILLAGE');
+    $builder->select('Code,Name');
+    if ($id != ''){
+      $builder->where('Code', $id);   
+      $query = $builder->get()->getRowArray();
+      return $query;      
+    }else{
+      $builder->like('Name', $search);
+      $query = $builder->get()->getResultArray();
+      return $query;
+    }
+}
+    
 
 }
 

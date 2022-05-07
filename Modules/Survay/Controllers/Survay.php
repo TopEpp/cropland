@@ -31,16 +31,27 @@ class Survay extends BaseController
         $model_land = new Land_model();
         $model_common = new Common_model();
         // /search
-
         $data['search'] = $this->request->getGet();
-        
+        if (!empty($data['search'])){
+          
+            if (!empty($data['search']['interview_user'])){
+                // $builder->where('LH_interview_land.interview_user',$data['search']['interview_year']);
+                $data['data_search']['user'] = $model_common->searchUser('',$data['search']['interview_user']);       
+            }
+            if (!empty($data['search']['interview_project'])){
+                // $builder->where('LH_interview_land.interview_project',$data['search']['interview_project']);
+            }          
+            if (!empty($data['search']['interview_house_id'])){                
+            }
+            if (!empty($data['search']['interview_person_id'])){            
+                $data['data_search']['person'] = $model_common->searchPerson('',$data['search']['interview_person_id']);       
+            }
+            if (!empty($data['search']['interview_code'])){
+                $data['data_search']['land'] = $model_common->searchLand('',$data['search']['interview_code']);  
+            }
+        }
 
-        $data['lands'] = $model_land->getAllLand();
-        $data['users']= $model_user->getSelectUsers();
         $data['projects'] = $this->model_api->getProject();
-        $data['villages'] = $model_common->getVillage();
-        $data['persons']= $model_common->getAllPersons();
-        
 
         $data['data'] = $this->model_survay->getAllSurvay('',$data['search']);
         return view('Modules\Survay\Views\index',$data);

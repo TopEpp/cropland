@@ -114,4 +114,29 @@ class Common extends BaseController
         return   $this->respond($data);
     }
 
+
+    //select2 load ajax
+    public function searchPerson(){
+        $search = $this->request->getVar('q');
+        $data = $this->model_common->searchPerson($search);
+        return   $this->respond($data);
+    }
+
+    public function searchLand(){
+        $search = $this->request->getVar('q');
+        $data = $this->model_common->searchLand($search);
+        return   $this->respond($data);
+    }
+
+    public function searchUser(){
+        $search = $this->request->getVar('q');
+        $data = $this->model_common->searchUser($search);
+        return   $this->respond($data);
+    }
+
+    public function searchHouse(){
+        $search = $this->request->getVar('q');
+        $data = $this->model_common->searchHouse($search);
+        return   $this->respond($data);
+    }
 }
