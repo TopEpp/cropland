@@ -1,8 +1,18 @@
 $(function () {
 	$(".select2-ajax-person").select2({
-		// data: [{id:1,text:'qwew'}],
+		language: {
+			searching: function () {
+				return "กำลังโหลดข้อมูล...";
+			},
+			inputTooShort: function () {
+				return "พิมพ์ค้นหาข้อมูล";
+			},
+			noResults: function () {
+				return "ไม่พบข้อมูล";
+			},
+		},
 		minimumInputLength: 2,
-		tags: [],
+
 		ajax: {
 			url: domain + "common/search-person",
 			dataType: "json",
@@ -30,9 +40,19 @@ $(function () {
 	});
 
 	$(".select2-ajax-land").select2({
-		// data: [{id:1,text:'qwew'}],
+		language: {
+			searching: function () {
+				return "กำลังโหลดข้อมูล...";
+			},
+			inputTooShort: function () {
+				return "พิมพ์ค้นหาข้อมูล";
+			},
+			noResults: function () {
+				return "ไม่พบข้อมูล";
+			},
+		},
 		minimumInputLength: 2,
-		tags: [],
+
 		ajax: {
 			url: domain + "common/search-land",
 			dataType: "json",
@@ -60,9 +80,19 @@ $(function () {
 	});
 
 	$(".select2-ajax-user").select2({
-		// data: [{id:1,text:'qwew'}],
+		language: {
+			searching: function () {
+				return "กำลังโหลดข้อมูล...";
+			},
+			inputTooShort: function () {
+				return "พิมพ์ค้นหาข้อมูล";
+			},
+			noResults: function () {
+				return "ไม่พบข้อมูล";
+			},
+		},
 		minimumInputLength: 2,
-		tags: [],
+
 		ajax: {
 			url: domain + "common/search-user",
 			dataType: "json",
@@ -90,9 +120,19 @@ $(function () {
 	});
 
 	$(".select2-ajax-house").select2({
-		// data: [{id:1,text:'qwew'}],
+		language: {
+			searching: function () {
+				return "กำลังโหลดข้อมูล...";
+			},
+			inputTooShort: function () {
+				return "พิมพ์ค้นหาข้อมูล";
+			},
+			noResults: function () {
+				return "ไม่พบข้อมูล";
+			},
+		},
 		minimumInputLength: 2,
-		tags: [],
+
 		ajax: {
 			url: domain + "common/search-house",
 			dataType: "json",
