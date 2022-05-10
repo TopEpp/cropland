@@ -9,7 +9,7 @@ class Report_model extends Model
 
         $builder = $this->db->table('LH_interview_land');
         $builder->select("LH_interview_land.*,
-            VIEW_agriculturist_name.name as user_name,
+            LH_users.fullname as user_name,
             CODE_PROJECT.name as project_area,
             CODE_PROJECT.Description as project_name,
             CODE_PROJECTVILLAGE.Name as project_village,
@@ -68,7 +68,7 @@ class Report_model extends Model
         
         $builder->join('CODE_PROJECT', 'CODE_PROJECT.Code = LH_interview_land.interview_project');
         $builder->join('CODE_PROJECTVILLAGE', 'CODE_PROJECTVILLAGE.Code = LH_interview_land.interview_house_id and CODE_PROJECTVILLAGE.projectId = LH_interview_land.interview_project');
-        $builder->join('VIEW_agriculturist_name','VIEW_agriculturist_name.id_card = LH_interview_land.interview_user','left');
+        $builder->join('LH_users','LH_users.emp_id = LH_interview_land.interview_user','left');
         $builder->join('CODE_POSSESSRIGHT', 'CODE_POSSESSRIGHT.Code = LH_interview_land.interview_land_holding ','left');
         
 

@@ -44,7 +44,7 @@
                                                         <th  width="5%" rowspan="2" scope="col">จำนวนปลูกต่อหน่วย</th>
                                                         <th  width="5%" rowspan="2" scope="col">ช่วงเวลา ปลูก-เก็บเกี่ยว</th>
                                                         <th  width="5%" rowspan="2" scope="col">การส่งเสริมจากสถาบันฯ</th>
-                                                        <th  width="5%" rowspan="2" scope="col">ไม่รับผลผลิต</th>
+                                                        <th  width="5%" rowspan="2" scope="col">ได้รับผลผลิต</th>
                                                         <th  width="10%" colspan="7" scope="col" class="text-center">รายจ่าย (บาท)/รอบการปลูก</th>
                                                         <th  width="10%" rowspan="2" scope="col" class="text-center">รวมรายจ่าย<br/>(บาท/รอบ)</th>
                                                         <th  width="20%" colspan="6" scope="col" class="text-center">ผลผลิต/รอบการปลูก</th>                                

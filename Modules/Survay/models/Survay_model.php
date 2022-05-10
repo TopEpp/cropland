@@ -126,12 +126,13 @@ class Survay_model extends Model
         
         $builder = $this->db->table('LH_interview_land_detail');
         $builder->select('LH_interview_land_detail.*,
+                        LH_interview_land_detail.detail_id as detail_ids,
                         CODE_PRODUCTGROUP.name as product_group,
                         CODE_PRODUCT.name as product_name,
                         LH_interview_land_product.*');
         $builder->join('LH_interview_land_product', 'LH_interview_land_product.detail_id = LH_interview_land_detail.detail_id');
-        $builder->join('CODE_PRODUCTGROUP', 'CODE_PRODUCTGROUP.Code = LH_interview_land_detail.detail_use');
-        $builder->join('CODE_PRODUCT', 'CODE_PRODUCT.Code = LH_interview_land_detail.detail_type');
+        $builder->join('CODE_PRODUCTGROUP', 'CODE_PRODUCTGROUP.Code = LH_interview_land_detail.detail_use','left');
+        $builder->join('CODE_PRODUCT', 'CODE_PRODUCT.Code = LH_interview_land_detail.detail_type','left');
         $builder = $builder->where('LH_interview_land_detail.interview_id',$interview_id);
 
         if ($detail_id != ''){

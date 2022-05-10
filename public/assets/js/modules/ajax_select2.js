@@ -107,7 +107,7 @@ $(function () {
 				var arr = [];
 				$.each(data, function (index, value) {
 					arr.push({
-						id: value.prs_id,
+						id: value.emp_id,
 						text: value.fullname,
 					});
 				});

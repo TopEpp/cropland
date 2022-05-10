@@ -92,17 +92,18 @@
                                     <label>รหัสแปลง</label>                                        
                                     <input type="text" class="form-control" name="land_code" id="land_code">
                                 </div>
-                                <div class="form-group col-md-12">
+                                <!-- <div class="form-group col-md-12">
                                     <label>แปลงที่</label>                                        
                                     <input type="text" class="form-control" name="land_number" id="land_number">
                                 </div>
                                 <div class="form-group col-md-12">
                                     <label>เลขที่แปลง</label>
                                     <input type="text" class="form-control" name="land_no" id="land_no">                         
-                                </div>
+                                </div> -->
                                 <div class="form-group col-md-12">
-                                    <label>พื้นที่</label>
-                                    <input type="text" class="form-control" name="land_area" id="land_area">                 
+                                    <label>ผู้ถือคลอง</label>
+                                    <select name="land_owner" id="land_owner" class="form-control select2-ajax-person">
+                                    </select>
                                 </div>                     
                                 <div class="form-group col-md-12">
                                     <label>การใช้ประโยชน์ที่ดิน</label>                                        
@@ -115,7 +116,7 @@
                                 </div>
                                 <div class="form-group col-md-12">
                                     <label>พื้นที่แปลงรวม (ไร่)</label>          
-                                    <input type="text" class="form-control" name="land_address" id="land_address">                                 
+                                    <input type="text" class="form-control" name="land_area" id="land_area">
                                 </div>
                                                             
                             </div>
@@ -146,13 +147,15 @@
   height: 100%;
 }
 </style>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <?=$this->endSection()?>
 
 <?=$this->section("scripts")?>
 
-
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCl2s_jaG7f21ZhyUGobio7B5-dbvO1v3A"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBe0nivzXjyUHEzQQCvI8kSIUx0a2dTFLA"></script>
+<!-- //load select2 ajax/ -->
+<?= script_tag('public/assets/js/modules/ajax_select2.js') ?>
 <script type="text/javascript">
 
 let map;
@@ -189,12 +192,16 @@ var itemPath;
                      
      
                         $("#land_code").val(data.land_code)
-                        $("#land_number").val(data.land_number)
-                        $("#land_no").val(data.land_no)
+                        // $("#land_number").val(data.land_number)
+                        $("#land_owner").html('');
+                        if (data.land_owner){
+                            $("#land_owner").html("<option selected value='"+data.land_owner+"'>"+data.person_name +' '+ data.person_lastname+"</option>")
+                        }
+                     
                         $("#land_area").val(data.land_area)
 
                         $("#land_use").val(data.land_use)
-                        $("#land_address").val(data.land_address)
+                        // $("#land_address").val(data.land_address)
 
                         initMap(latLngs)
                         // $("#land_ownership").val(data.land_ownership)
@@ -219,26 +226,29 @@ var itemPath;
             // mapTypeId: "terrain",
 
         });
+       
 
 
          // Construct the polygon.
-            const bermudaTriangle = new google.maps.Polygon({
-                paths: geo,
-                strokeColor: "#FF0000",
-                strokeOpacity: 0.8,
-                strokeWeight: 2,
-                fillColor: "#FF0000",
-                fillOpacity: 0.35,
-            });
+            // const bermudaTriangle = new google.maps.Polygon({
+            //     paths: geo,
+            //     strokeColor: "#FF0000",
+            //     strokeOpacity: 0.8,
+            //     strokeWeight: 2,
+            //     fillColor: "#FF0000",
+            //     fillOpacity: 0.35,
+            // });
 
-            bermudaTriangle.setMap(map);
+            // bermudaTriangle.setMap(map);
 
 
         //     // The marker, positioned at Uluru
-        // const marker = new google.maps.Marker({
-        //     position: myLatLng,
-        //     map: map,
-        // });
+        const laaa = {lat: 428821.88619601/57.2958, lng: 1914526.84011716/57.2958};
+        console.log(laaa);
+        const marker = new google.maps.Marker({
+            position: laaa,
+            map: map,
+        });
 
     }
 

@@ -166,6 +166,13 @@ class Common_model extends Model
       return $query;
     }
 
+    public function getProductSale(){
+      $builder = $this->db->table('CODE_PRODUCT_SALE');
+      $builder->select('*');
+      $query = $builder->get()->getResultArray();
+      return $query;
+    }
+
     public function getVillage($id = '',$project = '') #กลุ่มบ้าน
     { 
         
@@ -240,6 +247,19 @@ class Common_model extends Model
     $query = $builder->get()->getResultArray();
     return $query;
   }
+  public function getDressing($chem_id){
+    $builder = $this->db->table('CODE_CHEMICALFORMULAR');
+    $builder->select('*');
+    
+    if($chem_id){
+      $builder = $builder->where('Chem_id',$chem_id);
+    }
+    
+    $query = $builder->get()->getResultArray();
+    return $query;
+  }
+
+  
 
   public function searchPerson($search = [],$id = ''){
     
@@ -279,11 +299,10 @@ class Common_model extends Model
 
   public function searchUser($search = '',$id = '')
   {
-    $db = \Config\Database::connect('user_db', false); 
-    $builder = $db->table('vLoadDetailStaff');
+    $builder = $this->db->table('LH_users');
     $builder->select('emp_id,fullname,prs_id');
     if ($id != ''){
-      $builder->where('prs_id', $id);   
+      $builder->where('emp_id', $id);   
       $query = $builder->get()->getRowArray();
       return $query;      
    }else{

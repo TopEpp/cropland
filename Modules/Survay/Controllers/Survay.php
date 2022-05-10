@@ -84,7 +84,7 @@ class Survay extends BaseController
             $data['data']['interview_date'] = $this->date_thai->date_eng2thai($data['data']['interview_date'],543,'','','/');
             $data['villages'] = $model_common->getVillage('',$data['data']['interview_project']);            
             $data['persons']= $model_common->getAllPersons($data['data']['interview_house_id']);
-            $data['users']= $model_user->getSelectUsers($data['data']['interview_user'])[0];
+            $data['users']= $model_common->searchUser('',$data['data']['interview_user']);
     
         }
         
@@ -309,6 +309,9 @@ class Survay extends BaseController
         $data['labor_type'] = $this->model_api->getLaborType();
 
         $data['markets'] = $this->model_api->getMarket();
+        $model_common = new Common_model();
+        $data['product_sale'] = $model_common->getProductSale();
+        
 
         
         // $data['data'] = $this->model_house->getPersonJobs($id);

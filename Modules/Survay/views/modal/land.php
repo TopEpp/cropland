@@ -102,7 +102,7 @@
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" id="detail_hrdi2" name="detail_hrdi[]" value="2" <?=@in_array("2", $detail_hrdi) ?'checked':''?> >
                                         <label class="form-check-label" for="detail_hrdi2">
-                                        เก็บผลผลิต
+                                        ได้รับผลผลิต
                                         </label>
                                     </div>
                                 </div>
@@ -136,7 +136,7 @@
                                                 <input type="hidden" name="rec_id">
                                             </td>
                                             <td>                                            
-                                                <select name="product_branch" id="product_branch" class="form-control" onchange="selecttype($(this))" required="">
+                                                <select name="product_branch" id="product_branch" class="form-control" onchange="selecttype($(this)); selectdressing($(this));" required="">
                                                     <option value=""></option>
                                                     <?php foreach ($chemical as $key => $value) :?>
                                                         <option value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
@@ -168,7 +168,7 @@
                                                 </div>  
                                             </td>
                                             <td>                                            
-                                                <select name="product_unit"  class="form-control" onchange="selecttype($(this))" required="">
+                                                <select name="product_unit"  class="form-control" onchange="selecttype($(this));" required="">
                                                     <option value=""></option>
                                                     <?php foreach ($units as $key => $value) :?>
                                                         <option value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
@@ -201,7 +201,7 @@
                                             </td>
                                           
                                             <td>                                            
-                                                <select name="product_branch" id="product_branch" class="form-control" onchange="selecttype($(this))" required="">
+                                                <select name="product_branch" id="product_branch" class="form-control" onchange="selecttype($(this)); selectdressing($(this));" required="">
                                                     <option value=""></option>
                                                     <?php foreach ($chemical as $key => $value) :?>
                                                         <option <?=$product['product_branch'] == $value['Code']? 'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
@@ -348,7 +348,7 @@
                                         </td>
                                         <td>                                            
                                             <select name="product_type" id="product_type" class="form-control"  onchange="selecttype($(this))" required="">
-                                                <option value=""></option>
+                                                <!-- <option value=""></option> -->
                                                 <?php foreach ($medical_type as $key => $value) :?>
                                                     <option <?=$product['product_type'] == $value['Code'] ?'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                                 <?php endforeach?> 
@@ -767,11 +767,11 @@
                                             <td>                                            
                                                 <select name="product_type" id="" class="form-control" onchange="selecttype($(this))" required="">
                                                     <option value=""></option>
-                                                    <option <?=@$product['product_type'] == 1 ? 'selected':'';?> value="1">ข้าวเปลือก</option>
-                                                    <option <?=@$product['product_type'] == 2 ? 'selected':'';?> value="2">ข้าวสาร</option>
-                                                    <option <?=@$product['product_type'] == 3 ? 'selected':'';?> value="3">เชอรี่</option>
-                                                    <option <?=@$product['product_type'] == 4 ? 'selected':'';?> value="4">กะลา</option>
-                                                    <option <?=@$product['product_type'] == 5 ? 'selected':'';?> value="5">แปรรูป</option>
+                                                    
+                                                    <?php foreach ($product_sale as $key => $value) :?>
+                                                            <option <?=@$product['product_type'] == $value['Code'] ? 'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
+                                                    <?php endforeach?>
+                                                  
                                                 </select>
                                                 <input class="label_type" type="hidden" name="product_type_label" value="<?=@$product['product_type_label'];?>">
                                                 <div class="invalid-feedback">
@@ -865,6 +865,21 @@
             url: domain+'common/get-product?group='+value,
             success : function(options){
                 $("#detail_type").html(options)
+            }
+        });
+    }
+
+    function selectdressing(elm){
+        var $option = elm.find('option:selected');
+        var value = $option.val();
+        $.ajax({
+            type: "GET",
+            url: domain+'common/get-dressing?id='+value,
+            success : function(options){
+                // if(options){
+                //     $("#detail_type").html(options)
+                // }
+               
             }
         });
     }

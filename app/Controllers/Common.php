@@ -114,6 +114,19 @@ class Common extends BaseController
         return   $this->respond($data);
     }
 
+    public function getDressing(){
+        $group = $this->request->getVar('id');
+        
+        $product = $this->model_common->getDressing($group);
+        
+        $data = '';
+        foreach ($product as $key => $value) {
+           $data .= "<option value='".$value['Code']."'>".$value['Name']."</option>";
+        }
+        
+        return   $this->respond($data);
+    }
+
 
     //select2 load ajax
     public function searchPerson(){
