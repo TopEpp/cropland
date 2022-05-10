@@ -13,7 +13,7 @@
                         <ul>
                             <li><a href="<?php echo base_url('api/manage/projectType')?>">ประเภทโครงการ</a></li>
                             <li><a href="<?php echo base_url('api/manage/project')?>">โครงการ</a></li>
-                            <li><a href="<?php echo base_url('api/manage/cardType')?>">ประเภทบัตร</a></li>
+                            <!-- <li><a href="<?php echo base_url('api/manage/cardType')?>">ประเภทบัตร</a></li> -->
                             <li><a href="<?php echo base_url('api/manage/productGroup')?>">ประเภทการใช้ประโยชน์ที่ดิน</a></li>
                             <li><a href="<?php echo base_url('api/manage/productType')?>">การใช้ที่ดิน</a></li>
                             <li><a href="<?php echo base_url('api/manage/product')?>">พันธุ์</a></li>
@@ -22,30 +22,33 @@
                             <li><a href="<?php echo base_url('api/manage/chemicalFormular')?>">สูตรปุ๋ย</a></li>
                             <li><a href="<?php echo base_url('api/manage/medicalType')?>">ประเภทยา</a></li>
                             <li><a href="<?php echo base_url('api/manage/medicalBrand')?>">ยี่ห้อยา</a></li>
-                            <li><a href="<?php echo base_url('api/manage/agriWork')?>">ประเภทแรงงาน</a></li>
-                            <li><a href="<?php echo base_url('api/manage/landUse')?>">ลักษณะการจ้าง</a></li>
-                            <li><a href="<?php echo base_url('api/manage/')?>">ลักษณะการขาย</a></li>
+                            <li><a href="<?php echo base_url('api/manage/employType')?>">ลักษณธการจ้าง</a></li>
+                            <li><a href="<?php echo base_url('api/manage/laborType')?>">การจ้างแรงงาน</a></li>
+                            <li><a href="<?php echo base_url('api/manage/productSale')?>">ลักษณะการขาย</a></li>
                             <li><a href="<?php echo base_url('api/manage/possessRight')?>">เอกสารสิทธิที่ดิน</a></li>
-                            <li><a href="<?php echo base_url('api/manage/supportType')?>">การสนับสนุน</a></li>
+                            <li><a href="<?php echo base_url('api/manage/supportType')?>">การสนับสนุนจาก สวพส.</a></li>
+                            <li><a href="<?php echo base_url('api/manage/wantSupportType')?>">ความต้องการ การสนับสนุนจากหน่วยงาน</a></li>
                             <li><a href="<?php echo base_url('api/manage/department')?>">หน่วยงาน</a></li>
+                            <li><a href="<?php echo base_url('api/manage/problemType')?>">ปัญหาทางด้านการเกษตร</a></li>
                             <li><a href="<?php echo base_url('api/manage/market')?>">ตลาด</a></li>
                             <li><a href="<?php echo base_url('api/manage/unit')?>">หน่วยนับ</a></li>
 
+                            <li><a href="<?php echo base_url('api/manage/jobsGroup')?>">ประเภทกลุ่มอาชีพ</a></li>
                             <li><a href="<?php echo base_url('api/jobs')?>">ประเภทอาชีพ</a></li>
                             <li><a href="<?php echo base_url('api/manage/education')?>">ระดับการศึกษา</a></li>
                             <li><a href="<?php echo base_url('api/manage/expenses')?>">ประเภทรายจ่าย</a></li>
                             <li><a href="<?php echo base_url('api/manage/religion')?>">ศาสนา</a></li>
                             <li><a href="<?php echo base_url('api/manage/tribe')?>">ชนเผ่า</a></li>
                             <li><a href="<?php echo base_url('api/manage/publicHealth')?>">ประเภทสิทธิ์การรักษาพยาบาล</a></li>
+                            <li><a href="<?php echo base_url('api/manage/diseaseGroup')?>">ประเภทโรคประจำตัว</a></li>
+                            <li><a href="<?php echo base_url('api/manage/hospital')?>">สถานพยาบาล</a></li>
+                            
+                            
                         </ul>
                        <!--  <ul>
                             <li><a href="<?php echo base_url('api/manage/agriWork')?>">ประเภทแรงงาน</a></li>
                             <li><a href="<?php echo base_url('api/areaTarget')?>">พื้นที่เป้าหมาย</a></li>
-                            <li><a href="<?php echo base_url('api/manage/diseaseGroup')?>">ประเภทโรคประจำตัว</a></li>
                             
-                            <li><a href="<?php echo base_url('api/manage/hospital')?>">สถานพยาบาล</a></li>
-                            
-                            <li><a href="<?php echo base_url('api/manage/jobsGroup')?>">ประเภทกลุ่มอาชีพ</a></li>
                             <li><a href="<?php echo base_url('api/manage/landOwner')?>">ประเภทที่พักอาศัย</a></li>
                             <li><a href="<?php echo base_url('api/manage/problemType')?>">ประเภทปัญหา</a></li>
                             <li><a href="<?php echo base_url('api/manage/product')?>">ประเภทผลผลิต</a></li>

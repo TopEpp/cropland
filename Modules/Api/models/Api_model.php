@@ -84,7 +84,7 @@ class Api_model extends Model
             $person_header = 1;
           }
 
-          $data['person_number'] = $value['idcard'];
+          $data['person_number'] = str_replace('-','',$value['idcard']);
           $data['person_prename'] = $value['Prefix_idPrefix'];
           $data['person_name'] = $value['firstName'];
           $data['person_lastname'] = $value['lastName'];
@@ -132,7 +132,36 @@ class Api_model extends Model
     }
 
     function updatePersonLand(){
-      
+      set_time_limit(2000);
+      // $builder = $this->db->table('LH_house_person');
+      //   $builder->select('person_id,person_number');
+      //   $query = $builder->get()->getResultArray();
+      //   foreach ($query as $key => $value) {
+      //      $builder_update = $this->db->table('LH_house_person');
+      //      $builder_update->set('person_number',str_replace('-','',$value['person_number']));
+      //      $builder_update->where('person_id',$value['person_id']);
+      //      $builder_update->update();
+      //   }
+
+        $builder = $this->db->table('cropland_rak');
+        $builder->select('id_card,code_total,LH_land.land_id,LH_house_person.person_id,LH_house_person.house_id');
+        $builder->join('LH_land','LH_land.land_code = cropland_rak.code_total');
+        $builder->join('LH_house_person','LH_house_person.person_number = cropland_rak.id_card');
+        $builder->where('id_card <>',null);
+        $builder->orderBy('code_total');
+        $query = $builder->get()->getResultArray();
+        foreach ($query as $key => $value) {
+          // $builder_hl =  $this->db->table('LH_house_land');
+          // $builder_hl->select('MAX(rec_id) as rec_id');
+          // $row = $builder_hl->get()->getRowArray();
+
+          // $data['rec_id'] = $row['rec_id']+1;
+          // $data['person_id'] = $value['person_id'];
+          // $data['land_id'] = $value['land_id'];
+          // $data['house_id'] = $value['house_id'];
+          // $builder_set = $this->db->table('LH_house_land');
+          // $builder_set->insert($data);
+        }
     }
 
     function getLandUseId($name){
@@ -532,7 +561,7 @@ class Api_model extends Model
         
         $builder = $this->db->table($table);
         $builder->select('*');
-        $builder->where('active',1);
+        // $builder->where('active',1);
         if ($id){
           $builder = $builder->where($key,$id);
           $query = $builder->get()->getRowArray();
@@ -737,7 +766,7 @@ class Api_model extends Model
         return $query;
     }
 
-    public function getEmployType($id = '') #ลักษณธการจ้าง
+    public function getEmployType($id = '') #ลักษณะการจ้าง
     { 
         
         $builder = $this->db->table('CODE_EMPLOYTYPE');
