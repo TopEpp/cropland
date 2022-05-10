@@ -10,8 +10,8 @@
                     <div class="row">                               
                         <div class="form-group col-md-3">
                             <label>การใช้ประโยชน์ที่ดิน</label>     
-                            <input type="hidden" name="detail_use_type">                                   
-                            <select name="detail_use" id="detail_use" class="form-control select2"  required="" onchange="selectProduct($(this))">
+                            
+                            <select name="detail_use" id="detail_use" class="form-control select2"  required="" onchange="selectProductType($(this))">
                                 <option value="">เลือก</option>
                                 <?php foreach ($product_group as $key => $value) :?>
                                     <option <?=@$result['data']['detail_use'] == $value['Code'] ? 'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
@@ -19,6 +19,18 @@
                             </select>
                             <div class="invalid-feedback">
                                 กรุณาเลือกการใช้ประโยชน์ที่ดิน
+                            </div>  
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>ประเภท</label>     
+                            <select name="detail_use_type" id="detail_use_type" class="form-control select2"  required="" onchange="selectProduct($(this))">
+                                <option value="">เลือก</option>
+                                <?php foreach ($product_type as $key => $value) :?>
+                                    <option <?=@$result['data']['detail_use_type'] == $value['Code'] ? 'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
+                                <?php endforeach?>              
+                            </select>
+                            <div class="invalid-feedback">
+                                กรุณาเลือกประเภท
                             </div>  
                         </div>
                         <div class="form-group col-md-3">
@@ -40,7 +52,9 @@
                         <div class="form-group col-md-3">
                             <label>พื้นที่ปลูก (ไร่)</label>                                        
                             <input type="text" class="form-control" name="detail_area" value="<?=@$result['data']['detail_area'];?>" >
-                        </div>
+                        </div>                       
+                    </div>
+                    <div class="row">
                         <div class="form-group col-md-3">
                             <label>ช่วงเวลาปลูก</label>                                        
                             <input type="text" class="form-control datepicker" name="detail_start_date" value="<?=@$result['data']['detail_start_date'];?>">
@@ -857,12 +871,24 @@
                         
 <script>
 
+function selectProductType(elm){
+        var $option = elm.find('option:selected');
+        var value = $option.val();
+         $.ajax({
+            type: "GET",
+            url: domain+'common/get-product_type?group='+value,
+            success : function(options){
+                $("#detail_use_type").html(options)
+            }
+        });
+    }
+
     function selectProduct(elm){
         var $option = elm.find('option:selected');
         var value = $option.val();
          $.ajax({
             type: "GET",
-            url: domain+'common/get-product?group='+value,
+            url: domain+'common/get-product?type='+value,
             success : function(options){
                 $("#detail_type").html(options)
             }

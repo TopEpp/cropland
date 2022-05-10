@@ -165,9 +165,11 @@ $routes->group("common", ["namespace" => "App\Controllers"], function ($routes) 
     $routes->get("get-house", "Common::House");
     $routes->get("get-person", "Common::Person");
     $routes->get("get-village", "Common::Village"); //กลุ่มบ้าน
+    $routes->get("get-land", "Common::Land"); //กลุ่มบ้าน
 
     $routes->get("get-address", "Common::personAddress"); //ที่อยู่
-    $routes->get("get-product", "Common::getProduct"); //ที่อยู่
+    $routes->get("get-product_type", "Common::getProductType"); //พันธู์
+    $routes->get("get-product", "Common::getProduct"); //พันธู์
     $routes->get("get-dressing", "Common::getDressing");// ปุ๋ย
     
     // select2

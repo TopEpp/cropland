@@ -5,6 +5,7 @@ namespace Modules\Dashboard\Controllers;
 use App\Models\Common_model;
 use Modules\Api\Models\Api_model;
 use App\Controllers\BaseController;
+use Modules\Dashboard\Models\Dashboard_model;
 
 class Dashboard extends BaseController
 {
@@ -14,6 +15,7 @@ class Dashboard extends BaseController
     {
         $this->model_api = new Api_model();   
         $this->model_common = new Common_model();     
+        $this->model_dashboard = new Dashboard_model();
     }
 
     public function survay(){
@@ -21,10 +23,27 @@ class Dashboard extends BaseController
         $data['landuse'] =  $this->model_api->getLandUse();
         $data['province'] = $this->model_common->getProvince();
 
+        $data['income'] = $this->model_dashboard->getIncome();
+        $outcome = $this->model_dashboard->getOutcome();
+        $tmp = [];
+        $label = ['drug'=>'ยา','dressing'=>'ปุ๋ย','hormone'=>'ฮอร์โมน','staff'=>'แรงงาน','other'=>'อื่นๆ'];
+        foreach ($outcome as $key => $value) {
+           $outcome[$key]['data_type'] = $label[$value['data_type']];
+        }
+        $data['outcome'] = $outcome;
+   
+        $income_label = array_column($data['income'], 'Name');
+        $income_value = array_column($data['income'], 'product_sum');
+
+
+        $outcome_value = array_column($data['outcome'], 'product_sum');
+    
         //set label
         $data['chart']['product_value']['label'] = ['บุก','ข้าว','พริกกะเหรี่ยง','กล้วย','กาแฟ','ลิ้นจี่'];
-        $data['chart']['product_price']['label'] = ['ข้าว','กาแฟ','ข้าวโพด','ลำใย','สัก'];
+        $data['chart']['product_price']['label'] = $income_label;
+        $data['chart']['product_price']['data'] = $income_value;
         $data['chart']['product_pay']['label'] = ['ปุ๋ย','ยา','ฮอร์โมน','แรงงาน','อื่นๆ'];
+        $data['chart']['product_pay']['data'] = $outcome_value;
 
         return view('Modules\Dashboard\Views\survay',$data);
     }

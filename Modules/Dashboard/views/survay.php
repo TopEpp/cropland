@@ -25,7 +25,7 @@
                     </div>        
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-4">
+                            <!-- <div class="col-md-4">
                                 <div class="text-center">
                                     <h6>จำนวนผลผลิต</h6>
                                     <canvas id="myChart" width="400" height="400"></canvas>
@@ -53,11 +53,11 @@
                                         </tbody>                                     
                                     </table>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                            <div class="text-center">
+                            </div> -->
+                            <div class="col-md-6">
+                                <div class="text-center">
                                     <h6>รายได้จากผลผลิต</h6>
-                                    <canvas id="myChart1" width="400" height="400"></canvas>
+                                    <canvas id="myChart1" width="400" height="250"></canvas>
                                 </div>
                                 <div class="mt-2">
                                     <table class="table table-bordered">
@@ -72,10 +72,10 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        <?php foreach ($chart['product_price']['label'] as $key => $value) :?>
+                                        <?php foreach ($income as $key => $value) :?>
                                                <tr>
-                                                    <td><?=$value;?></td>
-                                                    <td class="text-center">0</td>
+                                                    <td><?=$value['Name'];?></td>
+                                                    <td class="text-center"><?= number_format($value['product_sum']);?></td>
                                                     <td class="text-center">0</td>
                                                 </tr>
                                             <?php endforeach;?>               
@@ -83,10 +83,10 @@
                                     </table>
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                            <div class="text-center">
+                            <div class="col-md-6">
+                                <div class="text-center">
                                     <h6>รายจ่ายต่อรอบ</h6>
-                                    <canvas id="myChart2" width="400" height="400"></canvas>
+                                    <canvas id="myChart2" width="400" height="250"></canvas>
                                 </div>
                                 <div class="mt-2">
                                     <table class="table table-bordered">
@@ -104,7 +104,7 @@
                                             <?php foreach ($chart['product_pay']['label'] as $key => $value) :?>
                                                <tr>
                                                     <td><?=$value;?></td>
-                                                    <td class="text-center">0</td>
+                                                    <td class="text-center"><?=@$outcome[$key]['product_sum'] ? number_format($outcome[$key]['product_sum']) : 0;?></td>
                                                     <td class="text-center">0</td>
                                                 </tr>
                                             <?php endforeach;?>                                   
@@ -209,56 +209,58 @@
     var label_price = <?= json_encode($chart['product_price']['label']);?>;
     var label_pay = <?= json_encode($chart['product_pay']['label']);?>;
 
+    var data_price = <?= json_encode($chart['product_price']['data']);?>;
+    var data_pay = <?= json_encode($chart['product_pay']['data']);?>;
     $(function(){
         
-        const ctx = document.getElementById('myChart');
-        const myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: label_value,
-                datasets: [{
-                    label: '',
-                    data: [12, 19, 3, 5, 2, 3],
-                    backgroundColor: [
-                        'rgba(155, 81, 224, 1)',
-                        'rgba(0, 122, 255, 1)',
-                        'rgba(118, 214, 132, 1)',
-                        'rgba(243, 130, 90, 1)',
-                        'rgba(32, 213, 206, 1)',
-                        'rgba(234, 84, 85, 1)'
-                    ],
-                    borderColor: [
-                        'rgba(155, 81, 224, 1)',
-                        'rgba(0, 122, 255, 1)',
-                        'rgba(118, 214, 132, 1)',
-                        'rgba(243, 130, 90, 1)',
-                        'rgba(32, 213, 206, 1)',
-                        'rgba(234, 84, 85, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                plugins: {
-                    legend: {
-                    display: false
-                    }
-                },
-                scales: {
-                    x: {
-                        grid: {
-                        display: false
-                        }
-                    },
-                    y: {
-                        beginAtZero: true,
-                        grid: {
-                            display: false
-                        }                        
-                    },                   
-                }
-            }
-        });
+        // const ctx = document.getElementById('myChart');
+        // const myChart = new Chart(ctx, {
+        //     type: 'bar',
+        //     data: {
+        //         labels: label_value,
+        //         datasets: [{
+        //             label: '',
+        //             data: [12, 19, 3, 5, 2, 3],
+        //             backgroundColor: [
+        //                 'rgba(155, 81, 224, 1)',
+        //                 'rgba(0, 122, 255, 1)',
+        //                 'rgba(118, 214, 132, 1)',
+        //                 'rgba(243, 130, 90, 1)',
+        //                 'rgba(32, 213, 206, 1)',
+        //                 'rgba(234, 84, 85, 1)'
+        //             ],
+        //             borderColor: [
+        //                 'rgba(155, 81, 224, 1)',
+        //                 'rgba(0, 122, 255, 1)',
+        //                 'rgba(118, 214, 132, 1)',
+        //                 'rgba(243, 130, 90, 1)',
+        //                 'rgba(32, 213, 206, 1)',
+        //                 'rgba(234, 84, 85, 1)'
+        //             ],
+        //             borderWidth: 1
+        //         }]
+        //     },
+        //     options: {
+        //         plugins: {
+        //             legend: {
+        //             display: false
+        //             }
+        //         },
+        //         scales: {
+        //             x: {
+        //                 grid: {
+        //                 display: false
+        //                 }
+        //             },
+        //             y: {
+        //                 beginAtZero: true,
+        //                 grid: {
+        //                     display: false
+        //                 }                        
+        //             },                   
+        //         }
+        //     }
+        // });
 
         const ctx1 = document.getElementById('myChart1');
         const myChart1 = new Chart(ctx1, {
@@ -266,8 +268,8 @@
             data: {
                 labels: label_price,
                 datasets: [{
-                    label: '# of Votes',
-                    data: [12, 19, 3, 5, 2, 3],
+                    label: 'จำนวน (บาท)',
+                    data: data_price,
                     backgroundColor: [
                         'rgba(155, 81, 224, 1)',
                         'rgba(0, 122, 255, 1)',
@@ -315,8 +317,8 @@
             data: {
                 labels: label_pay,
                 datasets: [{
-                    label: '# of Votes',
-                    data: [12, 19, 3, 5, 2, 3],
+                    label: 'จำนวน (บาท)',
+                    data: data_pay,
                     backgroundColor: [
                         'rgba(155, 81, 224, 1)',
                         'rgba(0, 122, 255, 1)',

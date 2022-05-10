@@ -95,14 +95,41 @@ class Common extends BaseController
         return   $this->respond($data);
     }
 
+    public function Land(){
+        $land = $this->request->getVar('land');
+        $lands = $this->model_common->getLand($land);
+        
+        $data = '<option value="">เลือก</option>';
+        foreach ($lands as $key => $value) {
+           $data .= "<option value='".$value['Code']."'>".$value['Description'].'/'.$value['Name']."</option>";        
+        }
+        
+        return   $this->respond($data);
+    }
+
+    
+
     public function personAddress(){
         $person = $this->request->getVar('person');
         $data = $this->model_common->personAddress($person);
         return   $this->respond($data);
     }
 
-    public function getProduct(){
+    public function getProductType(){
         $group = $this->request->getVar('group');
+        
+        $product = $this->model_common->getProductType($group);
+        
+        $data = '';
+        foreach ($product as $key => $value) {
+           $data .= "<option value='".$value['Code']."'>".$value['Name']."</option>";
+        }
+        
+        return   $this->respond($data);
+    }
+
+    public function getProduct(){
+        $group = $this->request->getVar('type');
         
         $product = $this->model_common->getProduct($group);
         

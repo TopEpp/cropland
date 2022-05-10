@@ -195,6 +195,17 @@ class Common_model extends Model
         return $query;
     }
 
+
+    public function getLand($id){
+      
+      $builder = $this->db->table('LH_land');
+      $builder->select('CODE_PROJECT.*');
+      $builder->where('LH_land.land_id',$id);
+      $builder->join('CODE_PROJECT','CODE_PROJECT.Code = LH_land.land_project');
+      $query = $builder->get()->getResultArray();
+      return $query;
+    }
+
     public function getAllPersons($house = '',$data = array()){    
       
       // $village = $this->getVillage($house);
@@ -237,11 +248,22 @@ class Common_model extends Model
     return $query;
   }
 
-  public function getProduct($group){
-    $builder = $this->db->table('CODE_PRODUCT');
+  public function getProductType($group){
+    $builder = $this->db->table('CODE_PRODUCTTYPE');
     $builder->select('*');
     if ($group != ''){
       $builder = $builder->where('GroupCode',$group);
+    }
+    
+    $query = $builder->get()->getResultArray();
+    return $query;
+  }
+
+  public function getProduct($type){
+    $builder = $this->db->table('CODE_PRODUCT');
+    $builder->select('*');
+    if ($type != ''){
+      $builder = $builder->where('TypeCode',$type);
     }
     
     $query = $builder->get()->getResultArray();

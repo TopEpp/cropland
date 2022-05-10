@@ -46,7 +46,7 @@
                                         <!-- <td><?=$value['land_no'];?></td> -->
                                         <td><?=$value['land_area'];?> ไร่</td>
                                         <td><?=@$value['name'];?></td>
-                                        <td>-</td>
+                                        <td><?=@$value['person_name'];?></td>
                                         <td><?=$value['project_name'];?></td>
                                         <td>
                                             <div class="buttons">
@@ -102,7 +102,7 @@
                                 </div> -->
                                 <div class="form-group col-md-12">
                                     <label>ผู้ถือคลอง</label>
-                                    <select name="land_owner" id="land_owner" class="form-control select2-ajax-person">
+                                    <select name="land_ownership" id="land_ownership" class="form-control select2-ajax-person">
                                     </select>
                                 </div>                     
                                 <div class="form-group col-md-12">
@@ -193,9 +193,9 @@ var itemPath;
      
                         $("#land_code").val(data.land_code)
                         // $("#land_number").val(data.land_number)
-                        $("#land_owner").html('');
-                        if (data.land_owner){
-                            $("#land_owner").html("<option selected value='"+data.land_owner+"'>"+data.person_name +' '+ data.person_lastname+"</option>")
+                        $("#land_ownership").html('');
+                        if (data.land_ownership){
+                            $("#land_ownership").html("<option selected value='"+data.land_ownership+"'>"+data.person_name +' '+ data.person_lastname+"</option>")
                         }
                      
                         $("#land_area").val(data.land_area)

@@ -54,7 +54,7 @@
                                     </div>     
                                     <div class="form-group col-md-4">
                                         <label>รหัสแปลง</label>
-                                        <select name="interview_code" id="interview_code" class="form-control select2-ajax-land" required="">
+                                        <select name="interview_code" id="interview_code" class="form-control select2-ajax-land" required="" onchange="selectLand($(this))">
                                             <?php if(!empty($data['interview_code'])):?>
                                                 <option value="<?=$data['interview_code'];?>"><?=$data['land_code'];?></option>
                                             <?php else:?>
@@ -366,6 +366,21 @@
         changePerson()
 
     });
+
+    function selectLand(elm){
+        var value = elm.val();
+        
+        $.ajax({
+            type: "GET",
+            url: domain+'common/get-land?land='+value,
+            success : function(options){
+                if (options){
+                    $("#interview_project").html(options)
+                }
+                
+            }
+        });
+    }
 
     
     function selectProject(elm){

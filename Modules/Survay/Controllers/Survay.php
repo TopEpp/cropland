@@ -293,6 +293,7 @@ class Survay extends BaseController
             
 
         }
+        $data['product_type'] = $this->model_api->getProductType();
         $data['product_group'] =  $this->model_api->getProductGroup();
         $data['products'] = $this->model_api->getproduct();
         $data['units'] = $this->model_api->getUnit();
