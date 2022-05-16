@@ -94,7 +94,7 @@ body.layout-3 .main-content {
 	line-height: 42px !important;
 }
 
-.dropdown-menu {
+.nav-link .dropdown-menu {
 	box-shadow: 0 10px 40px 0 rgba(51, 73, 94, 0.15);
 	border: none;
 	width: 250px;
