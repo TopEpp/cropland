@@ -1,7 +1,7 @@
 <?=$this->extend("layouts/main")?>
 
 <?=$this->section("content")?>
-<?php $month = ["",1,2,3,4,5,6,7,8,9,10,11,12];?>
+<?php $month = [1,2,3,4,5,6,7,8,9,10,11,12];?>
 <section class="section">
     <div class="section-body">
         <div class="row">
@@ -33,7 +33,7 @@
                             <br>
                             <h6>ข้อมูลด้านรายได้จากสวัสดิการ</h6>
                             <table class="table table-bordered">
-                                <thead>
+                                <thead class="bg-info">
                                     <tr>
                                     <th scope="col">ลำดับ</th>
                                     <th scope="col">ชื่อ-นามสกุล</th>
@@ -47,26 +47,28 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <?php $cout = 1;?>
                                     <?php foreach ($data as $key => $value) :?>
                                         <?php if (!empty($value['person_id'])):?>
                                             <tr>
-                                                <th scope="row"><?=$key+1;?></th>
+                                                <th scope="row"><?=$cout;?></th>
                                                 <td>
                                                     <a class="text-info" onclick="addIncome(<?=$value['person_id'];?>)" style="cursor: pointer;"><?=$value['person_name'].' '.$value['person_lastname'];?></a>
                                                 </td>
-                                                <td><?=$value[1]['income_value'] * $value[1]['income_month'];?></td>
-                                                <td><?=$value[2]['income_value'] * $value[2]['income_month'];;?></td>
-                                                <td><?=$value[3]['income_value'] * $value[3]['income_month'];;?></td>
-                                                <td><?=$value[4]['income_value'] * $value[4]['income_month'];;?></td>
-                                                <td><?=$value[5]['income_value'] * $value[5]['income_month'];;?></td>
-                                                <td><?=$value[6]['income_value'] * $value[6]['income_month'];;?></td>
-                                                <td><?=$value[7]['income_value'] * $value[7]['income_month'];;?></td>
+                                                <td><?=@$value[1]['income_value'] * @$value[1]['income_month'];?></td>
+                                                <td><?=@$value[2]['income_value'] * @$value[2]['income_month'];;?></td>
+                                                <td><?=@$value[3]['income_value'] * @$value[3]['income_month'];;?></td>
+                                                <td><?=@$value[4]['income_value'] * @$value[4]['income_month'];;?></td>
+                                                <td><?=@$value[5]['income_value'] * @$value[5]['income_month'];;?></td>
+                                                <td><?=@$value[6]['income_value'] * @$value[6]['income_month'];;?></td>
+                                                <td><?=@$value[7]['income_value'] * @$value[7]['income_month'];;?></td>
                                                 
                                             </tr>
+                                       
                                         <?php else:?>
 
                                             <tr>
-                                                <th scope="row"><?=$key+1;?></th>
+                                                <th scope="row"><?=$cout;?></th>
                                                 <td>
                                                     <a class="text-info" onclick="addIncome(<?=$value['person_id'];?>)" style="cursor: pointer;"><?=$value['person_name'].' '.$value['person_lastname'];?></a>
                                                 </td>
@@ -79,6 +81,7 @@
                                                 <td>-</td>                                                
                                             </tr>
                                         <?php endif;?>
+                                        <?php $cout = $cout+1;?>
                                     <?php endforeach;?>
                                   
 
@@ -108,7 +111,7 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-12">
-                            <p>ชาญชัย วหคชลชี</p>
+                            <p id="person_name">-</p>
                         </div>
                     </div>
                     <div class="row">                               
@@ -119,6 +122,7 @@
                         <div class="form-group col-md-6">
                             <label>จำนวนเดือน</label>
                             <select name="income[1][income_month]" id="income[1][income_month]" class="form-control">
+                                <option value="">เลือก</option>
                                 <?php foreach ($month as $key => $value) :?>
                                     <option value="<?=$value;?>"><?=$value;?></option>
                                 <?php endforeach;?>                                
@@ -131,6 +135,7 @@
                         <div class="form-group col-md-6">
                             <label>จำนวนเดือน</label>
                             <select name="income[2][income_month]" id="income[2][income_month]" class="form-control">
+                                <option value="">เลือก</option>
                                 <?php foreach ($month as $key => $value) :?>
                                     <option value="<?=$value;?>"><?=$value;?></option>
                                 <?php endforeach;?>                                
@@ -143,6 +148,7 @@
                         <div class="form-group col-md-6">
                             <label>จำนวนเดือน</label>
                             <select name="income[3][income_month]" id="income[3][income_month]" class="form-control">
+                                <option value="">เลือก</option>
                                 <?php foreach ($month as $key => $value) :?>
                                     <option value="<?=$value;?>"><?=$value;?></option>
                                 <?php endforeach;?>                                
@@ -155,6 +161,7 @@
                         <div class="form-group col-md-6">
                             <label>จำนวนเดือน</label>
                             <select name="income[4][income_month]" id="income[4][income_month]" class="form-control">
+                                <option value="">เลือก</option>
                                 <?php foreach ($month as $key => $value) :?>
                                     <option value="<?=$value;?>"><?=$value;?></option>
                                 <?php endforeach;?>                                
@@ -205,8 +212,9 @@
             url: domain+'house/load-income/'+id,
             success : function(response){
                 const data = response.data
+                
                 data.forEach(async (val) => {
-                    
+                    $("#person_name").text(val.person_name +' '+val.person_lastname)
                     $("input[name='income["+val.income_type+"][income_value]']").val(val.income_value)
                     $("select[name='income["+val.income_type+"][income_month]']").val(val.income_month)
                 });

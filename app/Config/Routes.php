@@ -74,6 +74,11 @@ $routes->group("house", ["namespace" => "Modules\House\Controllers"], function (
     $routes->post("save_jobs/(:num)", "House::saveJobs/$1");
     $routes->post("save_income/(:num)", "House::saveIncome/$1");
     $routes->post("save_outcome/(:num)", "House::saveOutcome/$1");
+
+    //delete
+    $routes->post("delete_house(:any)", "House::deleteHouse$1");
+    $routes->post("delete_member(:any)", "House::deleteMember$1");
+    
     
 });
 

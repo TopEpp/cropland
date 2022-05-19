@@ -1,6 +1,7 @@
 <?=$this->extend("layouts/main")?>
 
 <?=$this->section("content")?>
+
 <section class="section">
     <div class="section-body">
         <div class="row">
@@ -16,28 +17,28 @@
                     </div>
                     <div class="card-body">
                         <table class="table table-bordered">
-                            <thead>
+                            <thead class="bg-info">
                                 <tr>
-                                <th scope="col">ลำดับ</th>
-                                <th scope="col">ชื่อ-นามสกุล</th>
-                                <th scope="col">ที่อยู่</th>
-                                <th scope="col">จำนวนสมาชิก</th>
-                                <th scope="col">จำนวนที่ดิน</th>
-                                <th scope="col">เครื่องมือ</th>
+                                    <th with="10%" scope="col">ลำดับ</th>
+                                    <th with="15%" scope="col">ชื่อ-นามสกุล</th>
+                                    <th with="30%" scope="col">ที่อยู่</th>
+                                    <th with="10%" scope="col">จำนวนสมาชิก</th>
+                                    <th with="10%" scope="col">จำนวนที่ดิน</th>
+                                    <th with="20%" scope="col">เครื่องมือ</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php foreach ($data as $key => $value) :?>
                                     <tr>
-                                        <th scope="row"><?=$key+1;?></th>
-                                        <td><?=$value['person_name'].' '.$value['person_lastname'] ?></td>
-                                        <td>บ้านเลขที่ <?=$value['house_number'] .' หมู่ '. $value['house_moo'];?></td>
-                                        <td>5 คน</td>
-                                        <td>2 แปลง</td>
-                                        <td>
+                                        <th class="text-center" scope="row"><?=$key+1;?></th>
+                                        <td><?=@$value['person_name'].' '.@$value['person_lastname'] ?></td>
+                                        <td>บ้านเลขที่ <?=$value['house_number'] .' หมู่บ้าน '. $value['house_moo_name'];?></td>
+                                        <td class="text-center"><?=$value['total_person'];?></td>
+                                        <td> - </td>
+                                        <td class="text-center">
                                             <div class="buttons">
                                                 <a href="<?=base_url('house/manage/'.$value['house_id']);?>" class="btn btn-icon btn-primary"><i class="far fa-edit"></i></a>                                    
-                                                <a href="#" class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></a>
+                                                <button onclick="deleteItem(<?=$value['house_id'];?>)" class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></button>
                                             </div>
                                         </td>
                                     </tr>
@@ -46,6 +47,14 @@
 
                             </tbody>
                         </table>
+
+                        <div class="d-flex justify-content-end">
+                            <?php if ($pager) :?>
+                            <?php $pagi_path='member'; ?>
+                            <?php $pager->setPath($pagi_path); ?>               
+                            <?= $pager->links('page','default_pagination'); ?>
+                            <?php endif ?>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -55,6 +64,30 @@
 <?=$this->endSection()?>
 
 <?=$this->section("scripts")?>
-<!-- <script src="<?= base_url('public/js/script.js') ?>"></script> -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+    
+    function deleteItem(elm){
+        swal({
+        title: 'Are you sure?',
+        text: 'ยืนยันลบข้อมูลนี้!',
+        icon: 'warning',
+        buttons: true,
+        dangerMode: true,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+                $.ajax({
+                    type: "POST",
+                    url: domain+'house/delete_house/'+elm,
+                    success : function(res){
+                        window.location.reload();
+                    }
+                });
+            } 
+        });
+        
+    }
+</script>
 <?=$this->endSection()?>
   

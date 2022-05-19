@@ -50,9 +50,9 @@
                                     <div class="form-group col-md-4">
                                         <label>ปีที่สำรวจ</label>                                        
                                         <select name="interview_year" id="interview_year" class="form-control">
-                                            <option value="2565">2565</option>
-                                            <option value="2564">2564</option>
-                                            <option value="2563">2563</option>
+                                            <?php foreach (getYear() as $key => $value) :?>
+                                                <option value="<?=$value;?>"><?=$value;?></option>
+                                            <?php endforeach;?>
                                         </select>
                                     </div>    
                                     <div class="form-group col-md-4">
@@ -97,7 +97,7 @@
                                     <div class="form-group col-md-4">
                                         <label>บ้าน</label>                                        
                                         <select name="house_home" id="house_home" class="form-control">
-                                            <option value="2565">2565</option>
+                                            <option value=""></option>
                                         </select>
                                     </div>
                                     <div class="form-group col-md-4">

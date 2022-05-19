@@ -36,7 +36,7 @@
                             <br>
                             <h6>ข้อมูลด้านอาชีพ</h6>
                             <table class="table table-bordered">
-                                <thead>
+                                <thead class="bg-info">
                                     <tr>
                                     <th scope="col">ลำดับ</th>
                                     <th scope="col">ชื่อ-นามสกุล</th>

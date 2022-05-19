@@ -39,7 +39,7 @@ class Land_model extends Model
         return $query;
     }
 
-     public function getAllLandPaginate($page = '',$group = '')
+    public function getAllLandPaginate($page = '',$group = '')
     { 
         
         $builder = $this->table('LH_land');

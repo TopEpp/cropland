@@ -83,7 +83,7 @@
                                                     <div class="collapse show" id="mycard-collapse">
                                                         <div class="card-body">
                                                             <table class="table table-bordered" id="myTable<?=$keys;?>">
-                                                                <thead >
+                                                                <thead class="bg-info">
                                                                     <tr>
                                                                     <th scope="col">ลำดับ</th>
                                                                     <th scope="col">รหัสประจำตัวประชาชน</th>
@@ -94,20 +94,22 @@
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    <?php foreach ($value as $key => $val) :?>
+                                                                    <?php $cout = 1;?>
+                                                                    <?php foreach ($value as $key => $val) :?>                                                                       
                                                                          <tr>
-                                                                            <th scope="row"><?=$key+1;?></th>
+                                                                            <th class="text-center" scope="row"><?=$cout;?></th>
                                                                             <td><?=$val['person_number'];?></td>
-                                                                            <td><?=$val['name'].' '.$val['person_name'].$val['person_lastname'];?></td>
+                                                                            <td><?=$val['name'].''.$val['person_name'].' '.$val['person_lastname'];?></td>
                                                                             <td><?=$val['education_name'];?></td>
                                                                             <td><?=$val['person_header'] ? 'หัวหน้าครอบครัว':'';?></td>
                                                                             <td>
                                                                                 <div class="buttons">
                                                                                     <button data-id="<?=$keys;?>" onclick="editFimaly('<?=$house_id;?>',$(this),<?=$val['person_id'];?>)" class="btn btn-icon btn-primary btn-sm"><i class="far fa-edit"></i></button>                                    
-                                                                                    <a href="#" class="btn btn-icon btn-danger btn-sm"><i class="fas fa-trash"></i></a>
+                                                                                    <button onclick="deleteItem(<?=$val['person_id'];?>)" class="btn btn-icon btn-danger btn-sm"><i class="fas fa-trash"></i></button>
                                                                                 </div>
                                                                             </td>
                                                                         </tr>
+                                                                        <?php $cout = $cout+1;?>
                                                                     <?php endforeach;?>
                                                                   
                                                                 </tbody>
@@ -132,7 +134,7 @@
                                                 <div class="collapse show" id="mycard-collapse">
                                                     <div class="card-body">
                                                         <table class="table table-bordered">
-                                                            <thead >
+                                                            <thead  class="bg-info">
                                                                 <tr>
                                                                 <th scope="col">ลำดับ</th>
                                                                 <th scope="col">รหัสประจำตัวประชาชน</th>
@@ -198,7 +200,7 @@
 <?= script_tag('public/assets/datepicker/js/bootstrap-datepicker.js') ?>
 <?= script_tag('public/assets/datepicker/js/bootstrap-datepicker-thai.js') ?>
 <?= script_tag('public/assets/datepicker/js/locales/bootstrap-datepicker.th.js') ?>
-
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.repeater/1.2.1/jquery.repeater.min.js"></script>
 <script>
     // var $repeater = '';
@@ -269,6 +271,28 @@
         });
 
         $("#FamilyModal").modal();
+    }
+
+    function deleteItem(elm){
+        swal({
+        title: 'Are you sure?',
+        text: 'ยืนยันลบข้อมูลนี้!',
+        icon: 'warning',
+        buttons: true,
+        dangerMode: true,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+                $.ajax({
+                    type: "POST",
+                    url: domain+'house/delete_member/'+elm,
+                    success : function(res){
+                        window.location.reload();
+                    }
+                });
+            } 
+        });
+        
     }
 
 </script>

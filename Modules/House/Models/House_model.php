@@ -24,7 +24,7 @@ class House_model extends Model
         
         $builder = $this->db->table('LH_house');
         $builder->select('*');
-        $builder->join('LH_interview_house', 'LH_house.house_id = LH_interview_house.interview_house');
+        $builder->join('LH_interview_house', 'LH_house.house_id = LH_interview_house.interview_house','left');
         if ($id){
           $builder = $builder->where('house_id',$id);
           $query = $builder->get()->getRowArray();
@@ -34,6 +34,30 @@ class House_model extends Model
         $query = $builder->get()->getResultArray();
         return $query;
     }
+
+    public function getAllHousePaginate($page = '',$group = '')
+    { 
+        
+      $builder =  $this->table('LH_house');
+      $builder->select('LH_house.house_id,
+      (
+        count(LH_house_person.person_id)
+      ) as total_person,
+      max(LH_house_person.person_name) as person_name,
+      max(LH_house_person.person_lastname) as person_lastname,
+      max(LH_house.house_number) as house_number,
+      max(LH_house.house_moo_name) as house_moo_name');
+      $builder->join('LH_interview_house', 'LH_house.house_id = LH_interview_house.interview_house','left');
+      $builder->join('LH_house_person', 'LH_house.house_id = LH_house_person.house_id','left');
+    
+      
+      $builder->groupBy('LH_house.house_id');
+      
+      $query = $builder->paginate($page,$group);     
+  
+      return $query;
+    }
+
 
     public function saveHouseManage($data)
     {
@@ -83,6 +107,7 @@ class House_model extends Model
 
       $db = \Config\Database::connect();
       $builder = $db->table('LH_house_person');
+      $data['person_read'] = !empty($data['person_read']) ? implode(',',$data['person_read']) : '';
       if (!empty($data['person_id'])){
         $person_id = $data['person_id'];
         $builder->where('person_id',$data['person_id']);
@@ -190,7 +215,7 @@ class House_model extends Model
         // dd($query);
       $tmp = [];
       foreach ($query as $key => $value) {
-        $tmp[$value['person']]['person_id'] = $value['person_id'];
+        $tmp[$value['person']]['person_id'] = $value['person'];
         $tmp[$value['person']]['person_name'] = $value['person_name'];
         $tmp[$value['person']]['person_lastname'] = $value['person_lastname'];
         $tmp[$value['person']][$value['income_type']]['income_value'] = $value['income_value'];
@@ -244,7 +269,7 @@ class House_model extends Model
       $tmp = [];
       foreach ($query as $key => $value) {
         
-        $tmp[$value['person']]['person_id'] = $value['person_id'];
+        $tmp[$value['person']]['person_id'] = $value['person'];
         $tmp[$value['person']]['person_name'] = $value['person_name'];
         $tmp[$value['person']]['person_lastname'] = $value['person_lastname'];
         $tmp[$value['person']][$value['outcome_type']]['outcome_value'] = $value['outcome_value'];
@@ -301,9 +326,10 @@ class House_model extends Model
 
     public function getPersonIncome($person_id){
 
-      $builder = $this->db->table('LH_person_income');
-      $builder->select('*');
-      $builder->where('person_id',$person_id);
+      $builder = $this->db->table('LH_house_person');
+      $builder->select('LH_person_income.*,LH_house_person.person_id,LH_house_person.person_name,LH_house_person.person_lastname');
+      $builder->where('LH_house_person.person_id',$person_id);
+      $builder->join('LH_person_income', 'LH_house_person.person_id = LH_person_income.person_id','left');
       $query = $builder->get()->getResultArray();
 
       return $query;
@@ -311,10 +337,30 @@ class House_model extends Model
 
     public function getPersonOutcome($person_id){
 
-      $builder = $this->db->table('LH_person_outcome');
-      $builder->select('*');
-      $builder->where('person_id',$person_id);
+      $builder = $this->db->table('LH_house_person');
+      $builder->select('LH_person_outcome.*,LH_house_person.person_id,LH_house_person.person_name,LH_house_person.person_lastname');
+      $builder->where('LH_house_person.person_id',$person_id);
+      $builder->join('LH_person_outcome', 'LH_house_person.person_id = LH_person_outcome.person_id','left');
       $query = $builder->get()->getResultArray();
+
+      return $query;
+    }
+
+
+    public function deleteHouse($id){
+
+      $builder = $this->db->table('LH_house');
+      $builder->where('house_id', $id);
+      $query = $builder->delete();
+
+      return $query;
+    }
+
+    public function deleteMember($id){
+
+      $builder = $this->db->table('LH_house_person');
+      $builder->where('person_id', $id);
+      $query = $builder->delete();
 
       return $query;
     }

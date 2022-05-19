@@ -28,7 +28,11 @@ class House extends BaseController
 
     public function index(){
         $data = [];
-        $data['data'] = $this->model_interview_house->getAllInterViewHouse();
+        $data['data'] = $this->model_house->getAllHousePaginate(10,'page');
+        $data['pager'] = $this->model_house->pager;
+
+        
+        
         
         return view('Modules\House\Views\index',$data);
     }
@@ -232,5 +236,17 @@ class House extends BaseController
         return $this->respond($data);
     }
 
+
+    //delete data 
+    public function deleteHouse($id){
+        $res = $this->model_house->deleteHouse($id);
+        return   $this->respond($res);
+    }
+
+    public function deleteMember($id){
+        $res = $this->model_house->deleteMember($id);
+        return   $this->respond($res);
+    }
+    
     
 }

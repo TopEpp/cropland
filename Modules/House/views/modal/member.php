@@ -83,13 +83,14 @@
         </select>
     </div>
     <div class="form-group col-md-4">
+        <?php $read = @explode(',',$data['person_read']);?> 
         <label class="d-block">อ่านออก/เขียนได้</label>    
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="person_read"name="person_read" value="1" <?=@$data['person_read'] == 1 ? 'checked':'';?>>
+            <input class="form-check-input" type="checkbox" id="person_read"name="person_read[]" value="1" <?=@in_array("1", $read) ?'checked':''?>>
             <label class="form-check-label" for="person_read">อ่านออก</label>
         </div> 
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="person_read"name="person_read" value="2" <?=@$data['person_read'] == 2 ? 'checked':'';?>>
+            <input class="form-check-input" type="checkbox" id="person_read"name="person_read[]" value="2" <?=@in_array("2", $read) ?'checked':''?>>
             <label class="form-check-label" for="person_read">เขียนได้</label>
         </div>                            
     </div>
