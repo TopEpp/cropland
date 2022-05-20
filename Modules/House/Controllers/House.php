@@ -131,7 +131,7 @@ class House extends BaseController
     
     public function saveJobs($house_id){
         $input = $this->request->getPost();
-       
+        
         $session = session();
         $input['house_id'] = $house_id;
         
@@ -202,6 +202,7 @@ class House extends BaseController
         $data['jobs'] = $this->model_api->getJobs();
         $data['products'] = $this->model_api->getproduct();
         $data['data'] = $this->model_house->getPersonJobs($id);
+        
         $html =  view('Modules\House\Views\modal\jobs', $data);
         return $this->respond($html);
     }
@@ -236,6 +237,10 @@ class House extends BaseController
         return $this->respond($data);
     }
 
+    public function jobdetails($id){
+        $data['data'] = $this->model_house->getJobdetails($id);
+        return $this->respond($data);
+    }
 
     //delete data 
     public function deleteHouse($id){
@@ -247,6 +252,13 @@ class House extends BaseController
         $res = $this->model_house->deleteMember($id);
         return   $this->respond($res);
     }
+
+    public function deleteJobs($id){
+        $res = $this->model_house->deleteJobs($id);
+        return   $this->respond($res);
+    }
+
+    
     
     
 }

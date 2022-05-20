@@ -9,7 +9,7 @@
 <div class="modal-body">
     <div class="row">
         <div class="col-md-12">
-            <p>ชาญชัย วหคชลชี</p>
+            <p>ชื่อ-นามสกุล : <?=$data[0]['person_name'].' '.$data[0]['person_lastname'] ?></p>
         </div>
     </div>
     <div class="row">
@@ -18,26 +18,35 @@
             <table class="table table-bordered">
                 <thead class="bg-info">
                     <tr>
-                    <th scope="col">ลำดับ</th>
-                    <th scope="col">อาชีพ</th>
-                    <th scope="col">รายละเอียด</th>
-                    <th scope="col">ประเภท</th>
-                    <th scope="col">รายได้</th>
-                    <th scope="col">สถานประกอบการ</th>
-                    <th scope="col">หมายเหตุ</th>
+                        <th scope="col">ลำดับ</th>
+                        <th scope="col">อาชีพ</th>
+                        <th scope="col">รายละเอียด</th>
+                        <th scope="col">ประเภท</th>
+                        <th scope="col">รายได้</th>
+                        <th scope="col">สถานประกอบการ</th>
+                        <th scope="col">หมายเหตุ</th>
+                        <th scope="col">เครื่องมือ</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach ($data as $key => $value) :?>
-                       <tr>
-                           <td class="text-center"><?=$key+1;?></td>
-                           <td><?=$value['name'];?></td>
-                           <td><?=$value['job_descript'];?></td>
-                           <td><?=@$cal_type[$value['job_cal_type']];?></td>
-                           <td class="text-right"><?=$value['job_salary'];?></td>
-                           <td><?=$value['job_address'];?></td>
-                           <td><?=$value['job_remark'];?></td>
-                       </tr> 
+                        <?php if (!empty($value['jobs_id'])):?>
+                            <tr>
+                                <td class="text-center"><?=$key+1;?></td>
+                                <td><?=$value['name'];?></td>
+                                <td><?=$value['job_descript'];?></td>
+                                <td><?=@$cal_type[$value['job_cal_type']];?></td>
+                                <td class="text-right"><?=$value['job_salary'];?></td>
+                                <td><?=$value['job_address'];?></td>
+                                <td><?=$value['job_remark'];?></td>
+                                <td>
+                                        <div class="buttons">                                    
+                                            <button type="button" onclick="editItem(<?=$value['job_id'];?>)" class="btn btn-icon btn-sm btn-primary"><i class="fas fa-edit"></i></button>
+                                            <button type="button" onclick="deleteItem(<?=$value['job_id'];?>)" class="btn btn-icon btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                        </div>
+                                </td>
+                            </tr> 
+                        <?php endif;?>
                     <?php endforeach;?>
                 </tbody>
             </table>
@@ -51,6 +60,7 @@
                     <h4 class="text-dark">อาชีพ</h4>
                 </div>
                 <div class="card-body">
+                <input type="hidden" name="job_id" id="job_id">
                     <div class="row">                               
                         <div class="form-group col-md-4">
                             <label>อาชีพ</label>                                        
@@ -77,21 +87,26 @@
                             <input type="hidden" name="job_cal_type" id="job_cal_type">
                         </div>
 
-                        <div class="form-group col-md-4">
-                            <label>รายได้ต่อรอบ</label>                                        
-                            <input type="text" class="form-control" name="job_salary">
+                        <div class="form-group col-md-4 show_salary"  style="display:block">
+                            <label id="label_salary">รายได้ต่อรอบ</label>                                        
+                            <input type="text" class="form-control" name="job_salary" id="job_salary">
                         </div>
-                        <div class="form-group col-md-4">
-                            <label>จำนวนรอบต่อปี</label>                                        
-                            <input type="text" class="form-control" name="job_salary_month">
+                        <div class="form-group col-md-4 show_salary_month"  style="display:block">
+                            <label id="label_salary_month">จำนวนรอบต่อปี</label>                                        
+                            <input type="text" class="form-control" name="job_salary_month" id="job_salary_month">
                         </div>
+
                         <div class="form-group col-md-4">
                             <label>สถานที่ประกอบการ</label>                                        
-                            <input type="text" class="form-control" name="job_address">
+                            <input type="text" class="form-control" name="job_address" id="job_address">
+                        </div>
+                        <div class="form-group col-md-12 " id="remark_show" style="display:none">
+                            <label>รายละเอียด</label>                                        
+                            <input type="text" class="form-control" name="job_remark" id="job_remark">
                         </div>
                         <div class="form-group col-md-12">
                             <label>หมายเหตุ</label>                                        
-                            <input type="text" class="form-control" name="job_descript">
+                            <input type="text" class="form-control" name="job_descript" id="job_descript">
                         </div>
                     </div>
                     
@@ -154,7 +169,9 @@
     <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
 </div>
 
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
+ 
     $(document).ready(function () {
 
         var $repeater = $('.outer-repeater').repeater({
@@ -234,12 +251,76 @@
         if (id == 1 || id == 2 || id == 3){
             $("#job_cal_type").val(1)
             $("#text_cal_type").html('<p>ประเภท : ในภาคการเกษตร</p>')
-
+            $("#remark_show").hide();
+            $(".show_salary_month").show();
+            $(".show_salary").show();
             $(".inner-repeater").show();
-        }else{
+        }else if (id == 6){
             $("#job_cal_type").val(2)
             $("#text_cal_type").html('<p>ประเภท : นอกภาคการเกษตร</p>')
+            $("#remark_show").show();
+            $(".show_salary_month").show();
+            $(".show_salary").show();
+            $("#label_salary").text('รายได้ต่อครั้ง');
+            $("#label_salary_month").text('จำนวนครั้งต่อเดือน');
             $(".inner-repeater").hide();
+        }else{
+            $("#job_cal_type").val(2)
+            $(".show_salary_month").show();
+            $(".show_salary").hide();        
+            $("#label_salary_month").text('รายได้ต่อเดือน');
+            $("#text_cal_type").html('<p>ประเภท : นอกภาคการเกษตร</p>')
+            $("#remark_show").hide();
         }
+    }
+
+    function editItem(elm){
+        $.ajax({
+            type: "GET",
+            url: domain+'house/load-jobdetail/'+elm,
+            success : function(res){
+                if (res.data){
+                    var data = res.data;
+                    
+                    $("#job_id").val(data.job_id)
+                    $("#job_type").val(data.job_type)
+                    $("#job_cal_type").val(data.job_cal_type)
+                    if (data.job_main == 1){
+                        $('#job_main').prop('checked', true);                        
+                    }else{
+                        $('#job_main').prop('checked', false);    
+                    }
+                    $("#job_salary").val(data.job_salary)
+                    $("#job_salary_month").val(data.job_salary_month)
+                    $("#job_address").val(data.job_address)
+                    $("#job_descript").val(data.job_descript)
+                    $("#job_remark").val(data.job_remark)
+                }
+                // window.location.reload();
+            }
+        });
+        
+    }
+
+    function deleteItem(elm){
+        swal({
+        title: 'Are you sure?',
+        text: 'ยืนยันลบข้อมูลนี้!',
+        icon: 'warning',
+        buttons: true,
+        dangerMode: true,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+                $.ajax({
+                    type: "POST",
+                    url: domain+'house/delete_jobs/'+elm,
+                    success : function(res){
+                        window.location.reload();
+                    }
+                });
+            } 
+        });
+        
     }
 </script>

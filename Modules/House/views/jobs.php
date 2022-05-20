@@ -78,7 +78,7 @@
         <form action="<?=base_url('house/save_jobs/'.@$house_id);?>" method="post">
             <input type="hidden" name="interview_id" id="interview_id">
             <input type="hidden" name="person_id" id="person_id">
-            <input type="hidden" name="job_id" id="job_id">
+            <!-- <input type="hidden" name="job_id" id="job_id"> -->
             <div class="modal-content outer-repeater">
                 <div id="item_modal" />
             </div>

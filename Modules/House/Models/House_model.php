@@ -147,18 +147,19 @@ class House_model extends Model
     public function saveHouseJobs($data){
       $db = \Config\Database::connect();
       $builder = $db->table('LH_person_job');
-      if (!empty($data['job_id'])){
-        $job_id = $data['job_id'];
-        $builder->where('job_id',$data['job_id']);
-        unset($data['job_id']);
-        $builder->update($data);
+      // if (!empty($data['job_id'])){
+      //   $job_id = $data['job_id'];
+      //   $builder->where('job_id',$data['job_id']);
+      //   unset($data['job_id']);
+      //   $builder->update($data);
       
-      }else{
+      // }else{
         
-        unset($data['job_id']);
+        
         if (!empty($data['jobs'])){
           $jobs = $data['jobs'];
           foreach ($jobs as $key => $job) {
+
             $data_set = [
               'interview_id'=>$data['interview_id'],
               'person_id '=>$data['person_id'],
@@ -170,9 +171,16 @@ class House_model extends Model
               'job_address' => $job['job_address'],
               'job_descript'=> $job['job_descript'],
             ];
-            
-            $builder->insert($data_set);
-            $job_id = $db->insertID();
+
+            if (!empty($job['job_id'])) {
+              $builder->where('job_id',$job['job_id']);
+              $builder->update($data_set);
+              $job_id = $job['job_id'];
+            }else{
+              $builder->insert($data_set);
+              $job_id = $db->insertID();
+            }
+          
 
             // insert detail
             if (!empty($job['job-detail'])){
@@ -197,7 +205,7 @@ class House_model extends Model
             }
           }
 
-        }
+        // }
      
       }
 
@@ -315,9 +323,11 @@ class House_model extends Model
     }
 
     public function getPersonJobs($person_id){
-      $builder = $this->db->table('LH_person_job');
-      $builder->select('*');
-      $builder->where('person_id',$person_id);
+      $builder = $this->db->table('LH_house_person');
+      $builder->select('LH_jobs.*,LH_person_job.*,LH_house_person.person_name,LH_house_person.person_lastname');
+      $builder->where('LH_house_person.person_id',$person_id);
+    
+      $builder->join('LH_person_job', 'LH_house_person.person_id = LH_person_job.person_id','left');
       $builder->join('LH_jobs', 'LH_jobs.jobs_id = LH_person_job.job_type','left');
       $query = $builder->get()->getResultArray();
 
@@ -364,6 +374,24 @@ class House_model extends Model
 
       return $query;
     }
+
+    public function deleteJobs($id){
+
+      $builder = $this->db->table('LH_person_job');
+      $builder->where('job_id', $id);
+      $query = $builder->delete();
+
+      return $query;
+    }
+
+    public function getJobdetails($id){
+      $builder = $this->db->table('LH_person_job');
+      $builder->where('job_id', $id);
+      $query = $builder->get()->getRowArray();
+      return $query;
+    }
+
+    
 
 }
 

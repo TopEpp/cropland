@@ -68,6 +68,10 @@ $routes->group("house", ["namespace" => "Modules\House\Controllers"], function (
     $routes->get("load-income/(:num)", "House::loadIncome/$1");
     $routes->get("load-outcome/(:num)", "House::loadOutcome/$1");
 
+    $routes->get("load-jobdetail/(:num)", "House::jobdetails/$1");
+
+    
+
     //save data
     $routes->post("save_manage", "House::saveManage");
     $routes->post("save_members/(:num)", "House::saveMembers/$1");
@@ -78,7 +82,8 @@ $routes->group("house", ["namespace" => "Modules\House\Controllers"], function (
     //delete
     $routes->post("delete_house(:any)", "House::deleteHouse$1");
     $routes->post("delete_member(:any)", "House::deleteMember$1");
-    
+    $routes->post("delete_jobs(:any)", "House::deleteJobs$1");
+
     
 });
 
