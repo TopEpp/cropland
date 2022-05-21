@@ -32,7 +32,7 @@
                                     <tr>
                                         <th class="text-center" scope="row"><?=$key+1;?></th>
                                         <td><?=@$value['person_name'].' '.@$value['person_lastname'] ?></td>
-                                        <td>บ้านเลขที่ <?=$value['house_number'] .' หมู่บ้าน '. $value['house_moo_name'];?></td>
+                                        <td><?=$value['person_address'];?></td>
                                         <td class="text-center"><?=$value['total_person'];?></td>
                                         <td> - </td>
                                         <td class="text-center">

@@ -53,7 +53,7 @@ class House extends BaseController
         if ($id){
             $data['data'] = $this->model_house->getAllHouse($id);            
             $data['amphurs'] = $this->model_common->getAmphur($data['data']['house_province']);
-            $data['tambons'] = $this->model_common->getTambon($data['data']['house_district']);
+            $data['tambons'] = $this->model_common->getTambon($data['data']['house_district'],$data['data']['house_province']);
             
               
         }

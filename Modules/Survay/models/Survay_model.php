@@ -33,10 +33,8 @@ class Survay_model extends Model
             LH_landuse.name as land_use,
             CONCAT(LH_prefix.name,LH_house_person.person_name,' ',LH_house_person.person_lastname) as person_name,
             LH_house.house_label,
-            CONCAT('บ้านเลขที่ ',LH_house.house_number,' หมู่ที่ ',
-                    LH_house.house_moo,' ตำบล ',tambon.tam_name_t,' อำเภอ ',amphoe.amp_name_t,' จังหวัด ',province.pro_name_t
-                    ) 
-                as person_address,
+            CONCAT('บ้านเลขที่ ', LH_house.house_number,' หมู่ที่ ',
+            LH_house.house_moo,' ตำบล ',CODE_TAMBON.TAM_T,' อำเภอ ',CODE_AMPHUR.AMP_T,' จังหวัด ',CODE_PROVINCE.Name) as person_address,
                 person_village.Name as person_village
                                 
         ");
@@ -47,15 +45,17 @@ class Survay_model extends Model
       
         $builder->join('LH_house', 'LH_house.house_id = LH_house_person.house_id','left');
         $builder->join('LH_prefix', 'LH_prefix.prefix_id = LH_house_person.person_prename','left');
-        $builder->join('CODE_PROJECTVILLAGE as person_village', 'person_village.Code = LH_house.house_label 
+        $builder->join('CODE_PROJECTVILLAGE as person_village', '
+                        person_village.Code = LH_house.house_label 
                         and person_village.ProvinceId = LH_house.house_province 
-                        and CONCAT(person_village.ProvinceId,\'\',person_village.AmphurId) = LH_house.house_district
-                        and CONCAT(person_village.ProvinceId,\'\',person_village.AmphurId,\'\',person_village.TamBonId) = LH_house.house_subdistrict
+                        and person_village.AmphurId = LH_house.house_district
+                        and person_village.TamBonId = LH_house.house_subdistrict
                         ','left');
 
-        $builder->join('amphoe', 'amphoe.amp_code = LH_house.house_district','left');
-        $builder->join('province', 'province.prov_code = LH_house.house_province','left');
-        $builder->join('tambon', 'tambon.tam_code = LH_house.house_subdistrict','left');
+        $builder->join('CODE_PROVINCE', 'CODE_PROVINCE.Code = LH_house.house_province','left');
+        $builder->join('CODE_AMPHUR', 'CAST(CODE_AMPHUR.AMP_CODE as int) = LH_house.house_district and CODE_PROVINCE.Code = CODE_AMPHUR.PROV_CODE','left');      
+        $builder->join('CODE_TAMBON', 'CAST(CODE_TAMBON.TAM_CODE as int) = LH_house.house_subdistrict and CODE_PROVINCE.Code = CODE_TAMBON.PROV_CODE and CODE_AMPHUR.AMP_CODE = CODE_TAMBON.AMP_CODE','left');      
+                      
         
         $builder->join('CODE_PROJECT', 'CODE_PROJECT.Code = LH_interview_land.interview_project','left');
         $builder->join('CODE_PROJECTVILLAGE', 'CODE_PROJECTVILLAGE.Code = LH_interview_land.interview_house_id and CODE_PROJECTVILLAGE.projectId = LH_interview_land.interview_project','left');

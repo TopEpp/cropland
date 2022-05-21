@@ -83,7 +83,7 @@
                                         <select name="house_province" id="house_province" class="form-control">
                                             <option value="">เลือก</option>
                                             <?php foreach ($province as $key => $value) :?>
-                                                <option <?=@$data['house_province'] == $value['prov_code'] ? 'selected':'';?> value="<?=$value['prov_code'];?>"><?=$value['pro_name_t'];?></option>
+                                                <option <?=@$data['house_province'] == $value['Code'] ? 'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                             <?php endforeach?>
                                         </select>
                                     </div>
@@ -92,7 +92,7 @@
                                         <select name="house_district" id="house_district" class="form-control">
                                             <option value="">เลือก</option>
                                             <?php foreach ($amphurs as $key => $value) :?>
-                                                <option <?=@$data['house_district'] == $value['amp_code'] ? 'selected':'';?>  value="<?=$value['amp_code'];?>"><?=$value['amp_name_t'];?></option>
+                                                <option <?=@$data['house_district'] == $value['AMP_CODE'] ? 'selected':'';?>  value="<?=$value['AMP_CODE'];?>"><?=$value['AMP_T'];?></option>
                                             <?php endforeach?>
                                         </select>
                                     </div>
@@ -101,7 +101,7 @@
                                         <select name="house_subdistrict" id="house_subdistrict" class="form-control">
                                             <option value="">เลือก</option>
                                             <?php foreach ($tambons as $key => $value) :?>
-                                                <option <?=@$data['house_subdistrict'] == $value['tam_code'] ? 'selected':'';?>  value="<?=$value['tam_code'];?>"><?=$value['tam_name_t'];?></option>
+                                                <option <?=@$data['house_subdistrict'] == $value['TAM_CODE'] ? 'selected':'';?>  value="<?=$value['TAM_CODE'];?>"><?=$value['TAM_T'];?></option>
                                             <?php endforeach?>
                                         </select>
                                     </div>
@@ -171,9 +171,10 @@
 
         $("#house_district").change(function(){
             var amphur = $(this).val();
+            var province = $("#house_province").val();
             $.ajax({
                 type: "GET",
-                url: domain+'common/get-tambon?amphur='+amphur,
+                url: domain+'common/get-tambon?amphur='+amphur+'&province='+province,
                 success : function(options){
                     $("#house_subdistrict").html(options)
                 }

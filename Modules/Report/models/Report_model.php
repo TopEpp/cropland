@@ -22,9 +22,9 @@ class Report_model extends Model
             LH_house.house_number,
             LH_house_person.person_type_number,
             LH_house.house_moo,
-            tambon.tam_name_t,
-            amphoe.amp_name_t,
-            province.pro_name_t,
+            CODE_TAMBON.TAM_T as tam_name_t,
+            CODE_AMPHUR.AMP_T as amp_name_t,
+            CODE_PROVINCE.Name as pro_name_t,
             CODE_POSSESSRIGHT.name as land_possess,
             person_village.Name as person_village,
 
@@ -56,15 +56,16 @@ class Report_model extends Model
         $builder->join('LH_prefix', 'LH_prefix.prefix_id = LH_house_person.person_prename');
 
         
-        $builder->join('CODE_PROJECTVILLAGE as person_village', 'person_village.Code = LH_house.house_label 
+        $builder->join('CODE_PROJECTVILLAGE as person_village', '
+        person_village.Code = LH_house.house_label 
         and person_village.ProvinceId = LH_house.house_province 
-        and CONCAT(person_village.ProvinceId,\'\',person_village.AmphurId) = LH_house.house_district
-        and CONCAT(person_village.ProvinceId,\'\',person_village.AmphurId,\'\',person_village.TamBonId) = LH_house.house_subdistrict
+        and person_village.AmphurId = LH_house.house_district
+        and person_village.TamBonId = LH_house.house_subdistrict
         ','left');
 
-        $builder->join('amphoe', 'amphoe.amp_code = LH_house.house_district');
-        $builder->join('province', 'province.prov_code = LH_house.house_province');
-        $builder->join('tambon', 'tambon.tam_code = LH_house.house_subdistrict');
+        $builder->join('CODE_PROVINCE', 'CODE_PROVINCE.Code = LH_house.house_province','left');
+        $builder->join('CODE_AMPHUR', 'CAST(CODE_AMPHUR.AMP_CODE as int) = LH_house.house_district and CODE_PROVINCE.Code = CODE_AMPHUR.PROV_CODE','left');      
+        $builder->join('CODE_TAMBON', 'CAST(CODE_TAMBON.TAM_CODE as int) = LH_house.house_subdistrict and CODE_PROVINCE.Code = CODE_TAMBON.PROV_CODE and CODE_AMPHUR.AMP_CODE = CODE_TAMBON.AMP_CODE','left');      
         
         $builder->join('CODE_PROJECT', 'CODE_PROJECT.Code = LH_interview_land.interview_project');
         $builder->join('CODE_PROJECTVILLAGE', 'CODE_PROJECTVILLAGE.Code = LH_interview_land.interview_house_id and CODE_PROJECTVILLAGE.projectId = LH_interview_land.interview_project');
@@ -115,9 +116,9 @@ class Report_model extends Model
         LH_land.land_code,
         LH_house_person.person_type_number,   
         LH_house.house_moo,
-        tambon.tam_name_t,
-        amphoe.amp_name_t,
-        province.pro_name_t,
+        CODE_TAMBON.TAM_T as tam_name_t,
+        CODE_AMPHUR.AMP_T as amp_name_t,
+        CODE_PROVINCE.Name as pro_name_t,
         LH_interview_land_detail.*,
         CODE_PRODUCT.name as product_name,
         CODE_PRODUCTTYPE.Name as product_type_name,
@@ -137,15 +138,16 @@ class Report_model extends Model
         $builder->join('LH_house', 'LH_house.house_id = LH_house_person.house_id');
         $builder->join('LH_prefix', 'LH_prefix.prefix_id = LH_house_person.person_prename');
 
-        $builder->join('CODE_PROJECTVILLAGE as person_village', 'person_village.Code = LH_house.house_label 
+        $builder->join('CODE_PROJECTVILLAGE as person_village', '
+        person_village.Code = LH_house.house_label 
         and person_village.ProvinceId = LH_house.house_province 
-        and CONCAT(person_village.ProvinceId,\'\',person_village.AmphurId) = LH_house.house_district
-        and CONCAT(person_village.ProvinceId,\'\',person_village.AmphurId,\'\',person_village.TamBonId) = LH_house.house_subdistrict
+        and person_village.AmphurId = LH_house.house_district
+        and person_village.TamBonId = LH_house.house_subdistrict
         ','left');
 
-        $builder->join('amphoe', 'amphoe.amp_code = LH_house.house_district');
-        $builder->join('province', 'province.prov_code = LH_house.house_province');
-        $builder->join('tambon', 'tambon.tam_code = LH_house.house_subdistrict');
+        $builder->join('CODE_PROVINCE', 'CODE_PROVINCE.Code = LH_house.house_province','left');
+        $builder->join('CODE_AMPHUR', 'CAST(CODE_AMPHUR.AMP_CODE as int) = LH_house.house_district and CODE_PROVINCE.Code = CODE_AMPHUR.PROV_CODE','left');      
+        $builder->join('CODE_TAMBON', 'CAST(CODE_TAMBON.TAM_CODE as int) = LH_house.house_subdistrict and CODE_PROVINCE.Code = CODE_TAMBON.PROV_CODE and CODE_AMPHUR.AMP_CODE = CODE_TAMBON.AMP_CODE','left');      
 
     
         $builder->join('CODE_PROJECT', 'CODE_PROJECT.Code = LH_interview_land.interview_project');
@@ -162,42 +164,46 @@ class Report_model extends Model
           $data[$value['data_type']][$value['interview_id']][$value['detail_id']][] = $value;
 
         }
-        // หา ผลรวม
-        foreach ($data['dressing'] as $interview => $val) {  
-            foreach ($val as $key => $value) {                      
-                $data['data'][$interview][$key]['dressing'] = array_sum(array_column($value, 'product_value')) *  array_sum(array_column($value, 'product_price'));  
-            }
-        }
-        foreach ($data['drug'] as $interview => $val) {  
-            foreach ($val as $key => $value) {                      
-                $data['data'][$interview][$key]['drug'] = array_sum(array_column($value, 'product_value')) *  array_sum(array_column($value, 'product_price'));  
-            }
-        }
-        foreach ($data['hormone'] as $interview => $val) {  
-            foreach ($val as $key => $value) {                      
-                $data['data'][$interview][$key]['hormone'] = array_sum(array_column($value, 'product_value')) *  array_sum(array_column($value, 'product_price'));  
-            }
-        }
-        foreach ($data['staff'] as $interview => $val) {  
-            foreach ($val as $key => $value) {                      
-                $data['data'][$interview][$key]['staff'] = array_sum(array_column($value, 'product_value')) *  array_sum(array_column($value, 'product_price'));  
-            }
-        }
-        //ลักษณะ query
-        foreach ($data['product'] as $interview => $item) {    
-            foreach ($item as $keys => $product) {          
-                foreach ($product as $key => $value) {                               
-                    $data['data'][$interview][$keys]['product'][$value['rec_id']]['product_value'] = $value['product_value'];
-                    $data['data'][$interview][$keys]['product'][$value['rec_id']]['product_price'] = $value['product_price']; 
-                    $data['data'][$interview][$keys]['product'][$value['rec_id']]['product_market'] = $value['product_market_label'];
-                    $data['data'][$interview][$keys]['product'][$value['rec_id']]['product_type'] = $value['product_type_label'];
+        if (!empty($data)){
+             // หา ผลรวม
+            foreach ($data['dressing'] as $interview => $val) {  
+                foreach ($val as $key => $value) {                      
+                    $data['data'][$interview][$key]['dressing'] = array_sum(array_column($value, 'product_value')) *  array_sum(array_column($value, 'product_price'));  
                 }
             }
-            
-        } 
+            foreach ($data['drug'] as $interview => $val) {  
+                foreach ($val as $key => $value) {                      
+                    $data['data'][$interview][$key]['drug'] = array_sum(array_column($value, 'product_value')) *  array_sum(array_column($value, 'product_price'));  
+                }
+            }
+            foreach ($data['hormone'] as $interview => $val) {  
+                foreach ($val as $key => $value) {                      
+                    $data['data'][$interview][$key]['hormone'] = array_sum(array_column($value, 'product_value')) *  array_sum(array_column($value, 'product_price'));  
+                }
+            }
+            foreach ($data['staff'] as $interview => $val) {  
+                foreach ($val as $key => $value) {                      
+                    $data['data'][$interview][$key]['staff'] = array_sum(array_column($value, 'product_value')) *  array_sum(array_column($value, 'product_price'));  
+                }
+            }
+            //ลักษณะ query
+            foreach ($data['product'] as $interview => $item) {    
+                foreach ($item as $keys => $product) {          
+                    foreach ($product as $key => $value) {                               
+                        $data['data'][$interview][$keys]['product'][$value['rec_id']]['product_value'] = $value['product_value'];
+                        $data['data'][$interview][$keys]['product'][$value['rec_id']]['product_price'] = $value['product_price']; 
+                        $data['data'][$interview][$keys]['product'][$value['rec_id']]['product_market'] = $value['product_market_label'];
+                        $data['data'][$interview][$keys]['product'][$value['rec_id']]['product_type'] = $value['product_type_label'];
+                    }
+                }
+                
+            } 
+            return $data['data'];
+        }
+       
         
       
-        return $data['data'];
+        return [];
 
     }
 }

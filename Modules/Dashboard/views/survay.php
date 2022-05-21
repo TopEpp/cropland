@@ -144,7 +144,7 @@
                                             <select name="province" id="province" class="form-control">
                                                 <option value="">ทั้งหมด</option>
                                                 <?php foreach ($province as $key => $value) :?>
-                                                    <option <?=@$search['province'] == $value['prov_code'] ? 'selected':'';?> value="<?=$value['prov_code'];?>"><?=$value['pro_name_t'];?></option>
+                                                    <option <?=@$search['province'] == $value['Code'] ? 'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                                 <?php endforeach;?>    
                                             </select>
                                         </div>
@@ -376,9 +376,10 @@
 
         $("#amphur").change(function(){
             var amphur = $(this).val();
+            var province = $('#province').val();
             $.ajax({
                 type: "GET",
-                url: domain+'common/get-tambon?amphur='+amphur,
+                url: domain+'common/get-tambon?amphur='+amphur+'&province='+province,
                 success : function(options){
                     $("#tambon").html(options)
                 }

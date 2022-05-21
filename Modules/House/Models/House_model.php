@@ -39,16 +39,23 @@ class House_model extends Model
     { 
         
       $builder =  $this->table('LH_house');
-      $builder->select('LH_house.house_id,
+      $builder->select("LH_house.house_id,
       (
         count(LH_house_person.person_id)
       ) as total_person,
       max(LH_house_person.person_name) as person_name,
       max(LH_house_person.person_lastname) as person_lastname,
-      max(LH_house.house_number) as house_number,
-      max(LH_house.house_moo_name) as house_moo_name');
+      
+
+       CONCAT('บ้านเลขที่ ', max(LH_house.house_number),' หมู่ที่ ',
+       max(LH_house.house_moo),' ตำบล ',max(CODE_TAMBON.TAM_T),' อำเภอ ',max(CODE_AMPHUR.AMP_T),' จังหวัด ',max(CODE_PROVINCE.Name)) as person_address
+    ");
       $builder->join('LH_interview_house', 'LH_house.house_id = LH_interview_house.interview_house','left');
       $builder->join('LH_house_person', 'LH_house.house_id = LH_house_person.house_id','left');
+
+      $builder->join('CODE_PROVINCE', 'CODE_PROVINCE.Code = LH_house.house_province','left');
+      $builder->join('CODE_AMPHUR', 'CAST(CODE_AMPHUR.AMP_CODE as int) = LH_house.house_district and CODE_PROVINCE.Code = CODE_AMPHUR.PROV_CODE','left');      
+      $builder->join('CODE_TAMBON', 'CAST(CODE_TAMBON.TAM_CODE as int) = LH_house.house_subdistrict and CODE_PROVINCE.Code = CODE_TAMBON.PROV_CODE and CODE_AMPHUR.AMP_CODE = CODE_TAMBON.AMP_CODE','left');      
     
       
       $builder->groupBy('LH_house.house_id');

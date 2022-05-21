@@ -8,8 +8,8 @@ class Common_model extends Model
     public function getProvince()
     {
 
-      $builder = $this->db->table('province');
-      $builder->select('prov_code,pro_name_t');
+      $builder = $this->db->table('CODE_PROVINCE');
+      $builder->select('Code,Name');
       $query = $builder->get()->getResultArray();
       return $query;
       
@@ -18,20 +18,21 @@ class Common_model extends Model
     public function getAmphur($province)
     {
 
-      $builder = $this->db->table('amphoe');
-      $builder->select('amp_code,amp_name_t');
-      $builder->where('prov_code',$province);
+      $builder = $this->db->table('CODE_AMPHUR');
+      $builder->select('AMP_CODE,AMP_T');
+      $builder->where('PROV_CODE',$province);
       $query = $builder->get()->getResultArray();
       return $query;
       
     }
 
-    public function getTambon($amphor)
+    public function getTambon($amphor,$province = '')
     {
 
-      $builder = $this->db->table('tambon');
-      $builder->select('tam_code,tam_name_t');
-      $builder->where('amp_code',$amphor);
+      $builder = $this->db->table('CODE_TAMBON');
+      $builder->select('TAM_CODE,TAM_T');
+      $builder->where('AMP_CODE',$amphor);
+      $builder->where('PROV_CODE',$province);
       $query = $builder->get()->getResultArray();
       return $query;
       
@@ -237,12 +238,15 @@ class Common_model extends Model
 
   public function personAddress($person){
     $builder = $this->db->table('LH_house_person');
-    $builder->select("  CONCAT('บ้านเลขที่ ',LH_house.house_number,' หมู่ที่ ',LH_house.house_moo,' ตำบล ',tambon.tam_name_t,' อำเภอ ',amphoe.amp_name_t,' จังหวัด ',province.pro_name_t) as person_address");
+    $builder->select("  CONCAT('บ้านเลขที่ ', LH_house.house_number,' หมู่ที่ ',
+    LH_house.house_moo,' ตำบล ',CODE_TAMBON.TAM_T,' อำเภอ ',CODE_AMPHUR.AMP_T,' จังหวัด ',CODE_PROVINCE.Name) as person_address");
+
     $builder->join('LH_house','LH_house.house_id = LH_house_person.house_id');
     $builder->where('LH_house_person.person_id',$person);
-    $builder->join('amphoe', 'amphoe.amp_code = LH_house.house_district','left');
-    $builder->join('province', 'province.prov_code = LH_house.house_province','left');
-    $builder->join('tambon', 'tambon.tam_code = LH_house.house_subdistrict','left');
+
+    $builder->join('CODE_PROVINCE', 'CODE_PROVINCE.Code = LH_house.house_province','left');
+    $builder->join('CODE_AMPHUR', 'CAST(CODE_AMPHUR.AMP_CODE as int) = LH_house.house_district and CODE_PROVINCE.Code = CODE_AMPHUR.PROV_CODE','left');      
+    $builder->join('CODE_TAMBON', 'CAST(CODE_TAMBON.TAM_CODE as int) = LH_house.house_subdistrict and CODE_PROVINCE.Code = CODE_TAMBON.PROV_CODE and CODE_AMPHUR.AMP_CODE = CODE_TAMBON.AMP_CODE','left');      
 
     $query = $builder->get()->getRowArray();
     return $query;

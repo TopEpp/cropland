@@ -30,7 +30,7 @@ class Common extends BaseController
      
         $data = '';
         foreach ($amphur as $key => $value) {
-           $data .= "<option value='".$value['amp_code']."'>".$value['amp_name_t']."</option>";
+           $data .= "<option value='".$value['AMP_CODE']."'>".$value['AMP_T']."</option>";
         }
         
         return   $this->respond($data);
@@ -38,11 +38,13 @@ class Common extends BaseController
 
     public function tambon(){
         $amphur = $this->request->getVar('amphur');
-        $tambon = $this->model_common->getTambon($amphur);
+        $province = $this->request->getVar('province');
+        
+        $tambon = $this->model_common->getTambon($amphur,$province);
      
         $data = '';
         foreach ($tambon as $key => $value) {
-           $data .= "<option value='".$value['tam_code']."'>".$value['tam_name_t']."</option>";
+           $data .= "<option value='".$value['TAM_CODE']."'>".$value['TAM_T']."</option>";
         }
         
         return   $this->respond($data);
