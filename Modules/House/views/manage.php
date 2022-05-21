@@ -40,12 +40,23 @@
                                     <div class="form-group col-md-4">
                                         <label>ประเภทโครงการ</label>                                        
                                         <select name="interview_project" id="interview_project" class="form-control">
-                                            <option value="1">1</option>
+                                            <option value="">เลือก</option>
+                                            <?php foreach ($projects_type as $key => $value) :?>
+                                                <option <?=@$data['interview_project'] == $value['Code']?'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
+                                            <?php endforeach;?>
+                                            
                                         </select>
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>ชื่อโครงการ</label>
-                                        <input type="text" class="form-control" name="interview_project_name" value="<?=@$data['interview_project_name'];?>">
+                                        <!-- <input type="text" class="form-control" name="interview_project_name" value="<?=@$data['interview_project_name'];?>"> -->
+                                        <select name="interview_project_name" id="interview_project_name" class="form-control select2"  required="">
+                                            <option value="">เลือก</option>
+                                            <?php foreach ($projects as $key => $value) :?>
+                                                <option <?=@$data['interview_project_name'] == $value['Code']?'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Description'].'/'.$value['Name'];?></option>
+                                            <?php endforeach;?>
+                                            
+                                        </select>
                                     </div>     
                                     <div class="form-group col-md-4">
                                         <label>ปีที่สำรวจ</label>                                        
