@@ -72,11 +72,12 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                        <?php $sum = array_sum(array_column($income, 'product_sum'));?>
                                         <?php foreach ($income as $key => $value) :?>
                                                <tr>
                                                     <td><?=$value['Name'];?></td>
                                                     <td class="text-center"><?= number_format($value['product_sum']);?></td>
-                                                    <td class="text-center">0</td>
+                                                    <td class="text-center"><?=  number_format($value['product_sum']  * 100/$sum);?></td>
                                                 </tr>
                                             <?php endforeach;?>               
                                         </tbody>                                       
@@ -101,11 +102,12 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            <?php $sum = array_sum(array_column($outcome, 'product_sum'));?>
                                             <?php foreach ($chart['product_pay']['label'] as $key => $value) :?>
                                                <tr>
                                                     <td><?=$value;?></td>
                                                     <td class="text-center"><?=@$outcome[$key]['product_sum'] ? number_format($outcome[$key]['product_sum']) : 0;?></td>
-                                                    <td class="text-center">0</td>
+                                                    <td class="text-center"><?=@$outcome[$key]['product_sum'] ? number_format($outcome[$key]['product_sum']*100/$sum) : 0  ;?></td>
                                                 </tr>
                                             <?php endforeach;?>                                   
                                         </tbody>
