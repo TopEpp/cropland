@@ -33,6 +33,9 @@
                         <div class="p-2 border">
                             <br>
                             <h6>ข้อมูลเบื้องต้น</h6>
+                            <!-- check load autos -->
+                            <input type="hidden" id="auto_load" value="<?= !empty($land_code)?true:false;?>"
+
                             <form action="<?=base_url('survay/save_manage');?>"  method="post" id="form_manage" class="needs-validation" novalidate="">
                                 <input type="hidden" name="interview_id" value=<?=$interview_id;?>>
                                 <div class="row">                               
@@ -50,7 +53,7 @@
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>วันที่เก็บข้อมูล</label>
-                                        <input type="text" class="form-control" name="interview_date" id="datepicker" value="<?=@$data['interview_date'];?>">
+                                        <input type="text" class="form-control" name="interview_date" id="datepicker" value="<?=@$data['interview_date'];?>" autocomplete="off">
                                     </div>     
                                     <div class="form-group col-md-4">
                                         <label>รหัสแปลง</label>
@@ -106,6 +109,9 @@
                                          <select name="interview_person_id" id="interview_person_id" class="form-control select2-ajax-person" required="" onchange="changePerson()">
                                             <?php if(!empty($data['interview_person_id'])):?>
                                                 <option value="<?=$data['interview_person_id'];?>"><?=$data['person_name'];?></option>
+                                            <?php elseif(!empty($persons)):?>    
+                                                <option value="">ทั้งหมด</option>                                            
+                                                <option value="<?=$persons['person_id'];?>"><?=$persons['name'].$persons['person_name'].' '.$persons['person_lastname'];?></option>
                                             <?php else:?>
                                                 <option value="">ทั้งหมด</option>
                                             <?php endif;?> 
@@ -364,8 +370,21 @@
             // daysOfWeekDisabled: [0, 6],
         });
 
-        // init data address/
-        changePerson()
+      
+
+        setTimeout(() => {
+            var status = $("#auto_load").val();
+            if (status){
+                $('#interview_project').val($('#interview_project option:eq(1)').val()).trigger('change');
+                $('#interview_person_id').val($('#interview_person_id option:eq(1)').val()).trigger('change');
+                $('#interview_land_holding').val($('#interview_land_holding option:eq(1)').val()).trigger('change');
+                
+            }
+
+              // init data address/
+            changePerson()
+            
+        }, 1000);
 
     });
 
@@ -375,9 +394,10 @@
         $.ajax({
             type: "GET",
             url: domain+'common/get-land?land='+value,
-            success : function(options){
-                if (options){
-                    $("#interview_project").html(options)
+            success : function(res){
+                if (res.status){
+                    $("#interview_project").html(res.options)
+                    // $("#interview_project option:selected").val('K006');                  
                 }
                 
             }

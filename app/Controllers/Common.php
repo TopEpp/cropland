@@ -100,13 +100,20 @@ class Common extends BaseController
     public function Land(){
         $land = $this->request->getVar('land');
         $lands = $this->model_common->getLand($land);
+        $result = [];
         
-        $data = '<option value="">เลือก</option>';
-        foreach ($lands as $key => $value) {
-           $data .= "<option value='".$value['Code']."'>".$value['Description'].'/'.$value['Name']."</option>";        
+        $result['status'] = false;
+        if (!empty($lands)){
+            $data = '<option value="">เลือก</option>';
+            foreach ($lands as $key => $value) {
+               $data .= "<option value='".$value['Code']."'>".$value['Description'].'/'.$value['Name']."</option>";        
+            }
+            $result['options'] = $data;
+            $result['status'] = true ;
         }
+       
         
-        return   $this->respond($data);
+        return   $this->respond($result);
     }
 
     

@@ -66,24 +66,43 @@ class Survay extends BaseController
         $model_interview = new InterViewHouse_model();
         $model_common = new Common_model();
           
+        // find land code
+        $data['land_code'] = $this->request->getGet('land_code');
 
         $data['interview_id'] = $interview_id;
-        $data['land_code'] = @$_GET['land_code'];
-        // $data['lands'] = $model_land->getAllLand();
-        // $data['users']= $model_user->getSelectUsers();
         $data['projects'] = $this->model_api->getProject();
         $data['privileges'] = $this->model_api->getLandprivilege();
-          // $data['persons']= $model_common->getAllPersons();
-        
+        // $data['persons']= $model_common->getAllPersons();
+      
         $data['villages'] = [];
         $data['persons'] = [];
         
+        // auto load
+        if (!empty($data['land_code'])){            
+            $projects = $model_common->getLand('',$data['land_code']);            
+            if (!empty($projects)){
+                $data['projects'] = $projects;
+                if (!empty($projects[0]['land_holding'])){
+                    $data['privileges'] = $this->model_api->getLandprivilege($projects[0]['land_holding']);
+                }
+                
+                if (!empty($projects[0]['person_id'])){                    
+                    $data['persons'] = $model_common->searchPerson([],$projects[0]['person_id']);                    
+                }
+                
+            }
+
+            
+           
+        }
+      
+  
         if ($interview_id){
             
             $data['data'] = $this->model_survay->getAllSurvay($interview_id);
             $data['data']['interview_date'] = $this->date_thai->date_eng2thai($data['data']['interview_date'],543,'','','/');
             $data['villages'] = $model_common->getVillage('',$data['data']['interview_project']);            
-            $data['persons']= $model_common->getAllPersons($data['data']['interview_house_id']);
+            // $data['persons']= $model_common->getAllPersons($data['data']['interview_house_id']);
             $data['users']= $model_common->searchUser('',$data['data']['interview_user']);
     
         }

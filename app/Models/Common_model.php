@@ -197,12 +197,19 @@ class Common_model extends Model
     }
 
 
-    public function getLand($id){
+    public function getLand($id ='',$code = ''){
       
       $builder = $this->db->table('LH_land');
-      $builder->select('CODE_PROJECT.*');
-      $builder->where('LH_land.land_id',$id);
+      $builder->select('CODE_PROJECT.*,LH_land.land_holding,LH_house_land.person_id');
+      if ($id != ''){
+        $builder->where('LH_land.land_id',$id);
+      }
+      if ($code != ''){
+        $builder->where('LH_land.land_code',$code);
+      }
+      
       $builder->join('CODE_PROJECT','CODE_PROJECT.Code = LH_land.land_project');
+      $builder->join('LH_house_land','LH_house_land.land_id = LH_land.land_id');
       $query = $builder->get()->getResultArray();
       return $query;
     }
@@ -249,6 +256,7 @@ class Common_model extends Model
     $builder->join('CODE_TAMBON', 'CAST(CODE_TAMBON.TAM_CODE as int) = LH_house.house_subdistrict and CODE_PROVINCE.Code = CODE_TAMBON.PROV_CODE and CODE_AMPHUR.AMP_CODE = CODE_TAMBON.AMP_CODE','left');      
 
     $query = $builder->get()->getRowArray();
+    dd($query);
     return $query;
   }
 
