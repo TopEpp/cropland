@@ -68,7 +68,7 @@ class Survay extends BaseController
           
 
         $data['interview_id'] = $interview_id;
-    
+        $data['land_code'] = @$_GET['land_code'];
         // $data['lands'] = $model_land->getAllLand();
         // $data['users']= $model_user->getSelectUsers();
         $data['projects'] = $this->model_api->getProject();
@@ -77,7 +77,7 @@ class Survay extends BaseController
         
         $data['villages'] = [];
         $data['persons'] = [];
-      
+        
         if ($interview_id){
             
             $data['data'] = $this->model_survay->getAllSurvay($interview_id);

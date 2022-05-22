@@ -50,7 +50,8 @@
                                         <td><?=$value['project_name'];?></td>
                                         <td>
                                             <div class="buttons">
-                                                <button  onclick="landModal(<?=$value['land_id'];?>)" class="btn btn-icon btn-primary"><i class="far fa-edit"></i></button>                                    
+                                                <button  onclick="landModal(<?=$value['land_id'];?>)" class="btn btn-icon btn-primary"><i class="far fa-edit"></i></button>   
+                                                <a href="<?php echo base_url('survay/manage?land_code='.$value['land_code'])?>" class="btn btn-icon btn-primary"><i class="fas fa-file"></i></a>
                                                 <a href="#" class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></a>
                                             </div>
                                         </td>

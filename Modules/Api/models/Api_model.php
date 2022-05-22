@@ -202,41 +202,73 @@ class Api_model extends Model
     }
 
     function getProvinceId($name){
-      $builder = $this->db->table('province');
-      $builder->select('*');
-      $builder->where('pro_name_t',$name);
-      $row = $builder->get()->getRowArray();  
-      if(!empty($row['prov_code'])){
-        return $row['prov_code'];
-      }else{
-        return null;
-      }    
-    }
+      // $builder = $this->db->table('province');
+      // $builder->select('*');
+      // $builder->where('pro_name_t',$name);
+      // $row = $builder->get()->getRowArray();  
+      // if(!empty($row['prov_code'])){
+      //   return $row['prov_code'];
+      // }else{
+      //   return null;
+      // }  
 
-    function getDistrictId($code,$name){
-      $builder = $this->db->table('amphoe');
+      $builder = $this->db->table('CODE_PROVINCE');
       $builder->select('*');
-      $builder->where('prov_code',$code);
-      $builder->where('amp_name_t',$name);
-      $row = $builder->get()->getRowArray(); 
-      if(!empty($row['amp_code'])){
-        return $row['amp_code'];
+      $builder->where('Name',$name);
+      $row = $builder->get()->getRowArray();  
+      if(!empty($row['Code'])){
+        return $row['Code'];
       }else{
         return null;
       }   
     }
 
-    function getSubDistrictId($code,$name){
-      $builder = $this->db->table('tambon');
+    function getDistrictId($code,$name){
+      // $builder = $this->db->table('amphoe');
+      // $builder->select('*');
+      // $builder->where('prov_code',$code);
+      // $builder->where('amp_name_t',$name);
+      // $row = $builder->get()->getRowArray(); 
+      // if(!empty($row['amp_code'])){
+      //   return $row['amp_code'];
+      // }else{
+      //   return null;
+      // }   
+
+      $builder = $this->db->table('CODE_AMPHUR');
       $builder->select('*');
-      $builder->where('amp_code',$code);
-      $builder->where('tam_name_t',$name);
-      $row = $builder->get()->getRowArray();
-      if(!empty($row['tam_code'])){
-        return $row['tam_code'];
+      $builder->where('AMP_T',$name);
+      $builder->where('PROV_CODE',$code);
+      $row = $builder->get()->getRowArray();  
+      if(!empty($row['AMP_Code'])){
+        return $row['AMP_Code'];
       }else{
         return null;
-      }    
+      } 
+    }
+
+    function getSubDistrictId($code,$name){
+      // $builder = $this->db->table('tambon');
+      // $builder->select('*');
+      // $builder->where('amp_code',$code);
+      // $builder->where('tam_name_t',$name);
+      // $row = $builder->get()->getRowArray();
+      // if(!empty($row['tam_code'])){
+      //   return $row['tam_code'];
+      // }else{
+      //   return null;
+      // }    
+
+      $builder = $this->db->table('CODE_TAMBON');
+      $builder->select('*');
+      $builder->where('TAM_T',$name);
+      $builder->where('AMP_Code',$code);
+      $row = $builder->get()->getRowArray();  
+      if(!empty($row['TAM_Code'])){
+        return $row['TAM_Code'];
+      }else{
+        return null;
+      } 
     }
 
     function getTribeId($name){

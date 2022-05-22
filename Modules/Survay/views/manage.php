@@ -57,8 +57,10 @@
                                         <select name="interview_code" id="interview_code" class="form-control select2-ajax-land" required="" onchange="selectLand($(this))">
                                             <?php if(!empty($data['interview_code'])):?>
                                                 <option value="<?=$data['interview_code'];?>"><?=$data['land_code'];?></option>
+                                            <?php elseif(!empty($land_code)):?>
+                                                <option value="<?=$land_code;?>"><?=$land_code;?></option>
                                             <?php else:?>
-                                                <option value="">ทั้งหมด</option>
+                                                <option value="">เลือก</option>
                                             <?php endif;?>
                                            
                                         </select>      
@@ -92,7 +94,7 @@
                                             <?php if(!empty($data['interview_house_id'])):?>
                                                 <option value="<?=$data['interview_house_id'];?>"><?=$data['person_village'];?></option>
                                             <?php else:?>
-                                                <option value="">ทั้งหมด</option>
+                                                <option value="">เลือก</option>
                                             <?php endif;?>                                       
                                         </select>  
                                         <div class="invalid-feedback">

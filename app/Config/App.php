@@ -24,7 +24,7 @@ class App extends BaseConfig
      * @var string
      */
 
-    public $baseURL = 'http://hrdi.local';
+    public $baseURL = 'http://localhost/cropland/';
 
     /**
      * --------------------------------------------------------------------------
