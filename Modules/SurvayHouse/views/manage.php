@@ -7,7 +7,7 @@
             <div class="col-12 col-md-12 col-lg-12">
                 <div class="card">
                     <div class="card-header">                        
-                        <h4 class="text-dark"><a href="<?php echo base_url('house')?>">ข้อมูลครัวเรือน</a> > จัดการข้อมูลครัวเรือน</h4>
+                        <h4 class="text-dark"><a href="<?php echo base_url('survay_house')?>">ข้อมูลแบบสอบถามครัวเรือน</a> > จัดการข้อมูลครัวเรือน</h4>
                     </div>
                     <div class="card-body">
                         <?php if (session()->getFlashdata("message")):?>
@@ -20,14 +20,14 @@
                                 </div>
                             </div>
                         <?php endif;?>
-<!-- 
+
                         <div class="btn-group" role="group" aria-label="menu-nabbar">
-                            <button type="button" class="btn btn-info" onclick="location.href='<?=base_url('house/manage/'.@$house_id);?>';">ข้อมูลพื้นฐาน</button>
-                            <button type="button" class="btn btn-secondary" <?=@$house_id ? '':'disabled' ?> onclick="location.href='<?=base_url('house/members/'.@$house_id);?>';">ข้อมูลสมาชิกในครัวเรือน</button>
-                            <button type="button" class="btn btn-secondary" <?=@$house_id ? '':'disabled' ?> onclick="location.href='<?=base_url('house/jobs/'.@$house_id);?>';">ข้อมูลด้านอาชีพ</button>
-                            <button type="button" class="btn btn-secondary" <?=@$house_id ? '':'disabled' ?> onclick="location.href='<?=base_url('house/income/'.@$house_id);?>';">ข้อมูลด้านรายได้จากสวัสดิการ</button>
-                            <button type="button" class="btn btn-secondary" <?=@$house_id ? '':'disabled' ?>  onclick="location.href='<?=base_url('house/outcome/'.@$house_id);?>';">ข้อมูลด้ายรายจ่าย</button>
-                        </div> -->
+                            <button type="button" class="btn btn-info" onclick="location.href='<?=base_url('survay_house/manage/'.@$house_id);?>';">ข้อมูลพื้นฐาน</button>
+                            <button type="button" class="btn btn-secondary" <?=@$house_id ? '':'disabled' ?> onclick="location.href='<?=base_url('survay_house/members/'.@$house_id);?>';">ข้อมูลสมาชิกในครัวเรือน</button>
+                            <button type="button" class="btn btn-secondary" <?=@$house_id ? '':'disabled' ?> onclick="location.href='<?=base_url('survay_house/jobs/'.@$house_id);?>';">ข้อมูลด้านอาชีพ</button>
+                            <button type="button" class="btn btn-secondary" <?=@$house_id ? '':'disabled' ?> onclick="location.href='<?=base_url('survay_house/income/'.@$house_id);?>';">ข้อมูลด้านรายได้จากสวัสดิการ</button>
+                            <button type="button" class="btn btn-secondary" <?=@$house_id ? '':'disabled' ?>  onclick="location.href='<?=base_url('survay_house/outcome/'.@$house_id);?>';">ข้อมูลด้ายรายจ่าย</button>
+                        </div>
                         
                         <div class="p-2 border">
                             <br>                        
@@ -37,7 +37,7 @@
                                 <input type="hidden" name="house_id" value="<?=@$data['house_id'];?>">
                                 <input type="hidden" name="interview_id" value="<?=@$data['interview_id'];?>">                                
                                 <div class="row">                               
-                                    <!-- <div class="form-group col-md-4">
+                                    <div class="form-group col-md-4">
                                         <label>ประเภทโครงการ</label>                                        
                                         <select name="interview_project" id="interview_project" class="form-control">
                                             <option value="">เลือก</option>
@@ -48,7 +48,8 @@
                                         </select>
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label>ชื่อโครงการ</label>                                      
+                                        <label>ชื่อโครงการ</label>
+                                        <!-- <input type="text" class="form-control" name="interview_project_name" value="<?=@$data['interview_project_name'];?>"> -->
                                         <select name="interview_project_name" id="interview_project_name" class="form-control select2"  required="">
                                             <option value="">เลือก</option>
                                             <?php foreach ($projects as $key => $value) :?>
@@ -64,7 +65,7 @@
                                                 <option value="<?=$value;?>"><?=$value;?></option>
                                             <?php endforeach;?>
                                         </select>
-                                    </div>     -->
+                                    </div>    
                                     <div class="form-group col-md-4">
                                         <label>ชื่อหมู่บ้าน</label>
                                         <input type="text" class="form-control" name="house_moo_name" value="<?=@$data['house_moo_name'];?>">

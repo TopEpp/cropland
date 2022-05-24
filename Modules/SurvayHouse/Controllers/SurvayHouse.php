@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\House\Controllers;
+namespace Modules\SurvayHouse\Controllers;
 
 use App\Models\Common_model;
 use Modules\Api\Models\Api_model;
@@ -9,7 +9,7 @@ use App\Controllers\BaseController;
 use App\Models\InterViewHouse_model;
 use Modules\House\Models\House_model;
 
-class House extends BaseController
+class SurvayHouse extends BaseController
 {
     use ResponseTrait;
 
@@ -34,7 +34,7 @@ class House extends BaseController
         
         
         
-        return view('Modules\House\Views\index',$data);
+        return view('Modules\SurvayHouse\Views\index',$data);
     }
     
     public function manage($id = null){
@@ -58,7 +58,7 @@ class House extends BaseController
               
         }
 
-        return view('Modules\House\Views\manage',$data);
+        return view('Modules\SurvayHouse\Views\manage',$data);
     }
 
     public function saveManage(){
@@ -76,16 +76,16 @@ class House extends BaseController
             $house_id = $this->model_house->saveHouseManage($data_house);
         
             //insert interview house
-            // if ($house_id){
-            //     $data_interview = [
-            //         'interview_id' => $input['interview_id'],
-            //         'interview_project' => $input['interview_project'],
-            //         'interview_project_name' => $input['interview_project_name'],
-            //         'interview_year' => $input['interview_year'],
-            //         'interview_house' => $house_id,
-            //     ];
-            //     $this->model_interview_house->saveInterViewHouse($data_interview);
-            // }
+            if ($house_id){
+                $data_interview = [
+                    'interview_id' => $input['interview_id'],
+                    'interview_project' => $input['interview_project'],
+                    'interview_project_name' => $input['interview_project_name'],
+                    'interview_year' => $input['interview_year'],
+                    'interview_house' => $house_id,
+                ];
+                $this->model_interview_house->saveInterViewHouse($data_interview);
+            }
 
             if (!empty($input['house_id'])){
                 $session->setFlashdata("message", "แก้ไขข้อมูลเรียบร้อย");
@@ -95,7 +95,7 @@ class House extends BaseController
             
         }
      
-        return redirect()->to('house/manage/'.$house_id);
+        return redirect()->to('survay_house/manage/'.$house_id);
     }
 
     public function members($house_id ,$id = null){
@@ -105,7 +105,7 @@ class House extends BaseController
 
         $data['data'] = $this->model_house->getAllHouseMembers($house_id,$id);
 
-        return view('Modules\House\Views\members', $data);
+        return view('Modules\SurvayHouse\Views\members', $data);
     }
 
     public function saveMembers($house_id){
@@ -121,7 +121,7 @@ class House extends BaseController
             $session->setFlashdata("message", "บันทึกข้อมูลเรียบร้อย");
         }
 
-        return redirect()->to('house/members/'.$house_id);
+        return redirect()->to('survay_house/members/'.$house_id);
         
     }
 
@@ -129,7 +129,7 @@ class House extends BaseController
         $data['house_id'] = $house_id;        
         $data['data'] = $this->model_house->getAllHouseJob($house_id,$id);
   
-        return view('Modules\House\Views\jobs', $data);
+        return view('Modules\SurvayHouse\Views\jobs', $data);
     }
     
     public function saveJobs($house_id){
@@ -146,7 +146,7 @@ class House extends BaseController
             $session->setFlashdata("message", "บันทึกข้อมูลเรียบร้อย");
         }
 
-        return redirect()->to('house/jobs/'.$house_id);
+        return redirect()->to('survay_house/jobs/'.$house_id);
         
     }
 
@@ -154,7 +154,7 @@ class House extends BaseController
         $data['house_id'] = $house_id;
         $data['data'] = $this->model_house->getAllHouseIncome($house_id,$id);
         
-        return view('Modules\House\Views\income', $data);
+        return view('Modules\SurvayHouse\Views\income', $data);
     }
 
     public function saveIncome($house_id){
@@ -170,7 +170,7 @@ class House extends BaseController
             $session->setFlashdata("message", "บันทึกข้อมูลเรียบร้อย");
         }
 
-        return redirect()->to('house/income/'.$house_id);
+        return redirect()->to('survay_house/income/'.$house_id);
         
     }
 
@@ -179,7 +179,7 @@ class House extends BaseController
 
         $data['data'] = $this->model_house->getAllHouseOutcome($house_id,$id);
 
-        return view('Modules\House\Views\outcome', $data);
+        return view('Modules\SurvayHouse\Views\outcome', $data);
     }
 
     public function saveOutcome($house_id){
@@ -195,7 +195,7 @@ class House extends BaseController
             $session->setFlashdata("message", "บันทึกข้อมูลเรียบร้อย");
         }
 
-        return redirect()->to('house/outcome/'.$house_id);
+        return redirect()->to('survay_house/outcome/'.$house_id);
         
     }
 
@@ -206,7 +206,7 @@ class House extends BaseController
         $data['products'] = $this->model_api->getproduct();
         $data['data'] = $this->model_house->getPersonJobs($id);
         
-        $html =  view('Modules\House\Views\modal\jobs', $data);
+        $html =  view('Modules\SurvayHouse\Views\modal\jobs', $data);
         return $this->respond($html);
     }
 
@@ -226,7 +226,7 @@ class House extends BaseController
         }
         
 
-        $html =  view('Modules\House\Views\modal\member', $data);
+        $html =  view('Modules\SurvayHouse\Views\modal\member', $data);
         return $this->respond($html);
     }
 

@@ -70,8 +70,6 @@ $routes->group("house", ["namespace" => "Modules\House\Controllers"], function (
 
     $routes->get("load-jobdetail/(:num)", "House::jobdetails/$1");
 
-    
-
     //save data
     $routes->post("save_manage", "House::saveManage");
     $routes->post("save_members/(:num)", "House::saveMembers/$1");
@@ -83,6 +81,37 @@ $routes->group("house", ["namespace" => "Modules\House\Controllers"], function (
     $routes->post("delete_house(:any)", "House::deleteHouse$1");
     $routes->post("delete_member(:any)", "House::deleteMember$1");
     $routes->post("delete_jobs(:any)", "House::deleteJobs$1");
+
+    
+});
+
+$routes->group("survay_house", ["namespace" => "Modules\SurvayHouse\Controllers"], function ($routes) {
+	$routes->get("/", "SurvayHouse::index");
+    $routes->get("manage(:any)", "SurvayHouse::manage$1");
+    $routes->get("members/(:num)(:any)", "SurvayHouse::members/$1$2");
+    $routes->get("jobs/(:num)(:any)", "SurvayHouse::jobs/$1$2");
+    $routes->get("income/(:num)(:any)", "SurvayHouse::income/$1$2");
+    $routes->get("outcome/(:num)(:any)", "SurvayHouse::outcome/$1$2");
+
+    //load data
+    $routes->get("load-jobs/(:num)", "SurvayHouse::loadJobs/$1");
+    $routes->get("load-members/(:num)(:any)", "SurvayHouse::loadmembers/$1$2");
+    $routes->get("load-income/(:num)", "SurvayHouse::loadIncome/$1");
+    $routes->get("load-outcome/(:num)", "SurvayHouse::loadOutcome/$1");
+
+    $routes->get("load-jobdetail/(:num)", "SurvayHouse::jobdetails/$1");
+
+    //save data
+    $routes->post("save_manage", "SurvayHouse::saveManage");
+    $routes->post("save_members/(:num)", "SurvayHouse::saveMembers/$1");
+    $routes->post("save_jobs/(:num)", "SurvayHouse::saveJobs/$1");
+    $routes->post("save_income/(:num)", "SurvayHouse::saveIncome/$1");
+    $routes->post("save_outcome/(:num)", "SurvayHouse::saveOutcome/$1");
+
+    //delete
+    $routes->post("delete_house(:any)", "SurvayHouse::deleteHouse$1");
+    $routes->post("delete_member(:any)", "SurvayHouse::deleteMember$1");
+    $routes->post("delete_jobs(:any)", "SurvayHouse::deleteJobs$1");
 
     
 });

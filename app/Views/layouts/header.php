@@ -189,6 +189,10 @@
                     <!-- <i class="far fa-user"></i> Profile -->
                     ข้อมูลครัวเรือน
                     </a>
+                    <a href="<?=base_url('survay_house');?>" class="dropdown-item has-icon">
+                    <!-- <i class="far fa-user"></i> Profile -->
+                    ข้อมูลแบบสอบถามครัวเรือน
+                    </a>
                     <a href="<?=base_url('land');?>" class="dropdown-item has-icon">
                     <!-- <i class="far fa-user"></i> Profile -->
                     ข้อมูลที่ดินรายแปลง

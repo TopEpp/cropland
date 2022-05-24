@@ -8,9 +8,9 @@
             <div class="col-12 col-md-12 col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="text-dark">ข้อมูลครัวเรือน</h4>
+                        <h4 class="text-dark">ข้อมูลแบบสอบถามครัวเรือน</h4>
                         <div class="card-header-action">
-                            <a href="<?= base_url('house/manage');?>" class="btn btn-info">
+                            <a href="<?= base_url('survay_house/manage');?>" class="btn btn-info">
                                 เพิ่มข้อมูล
                             </a>
                         </div>
@@ -23,7 +23,7 @@
                                     <th with="15%" scope="col">ชื่อ-นามสกุล</th>
                                     <th with="30%" scope="col">ที่อยู่</th>
                                     <th with="10%" scope="col">จำนวนสมาชิก</th>
-                                    <!-- <th with="10%" scope="col">จำนวนที่ดิน</th> -->
+                                    <th with="10%" scope="col">จำนวนที่ดิน</th>
                                     <th with="20%" scope="col">เครื่องมือ</th>
                                 </tr>
                             </thead>
@@ -34,11 +34,10 @@
                                         <td><?=@$value['person_name'].' '.@$value['person_lastname'] ?></td>
                                         <td><?=$value['person_address'];?></td>
                                         <td class="text-center"><?=$value['total_person'];?></td>
-                                        <!-- <td> - </td> -->
+                                        <td> - </td>
                                         <td class="text-center">
                                             <div class="buttons">
-                                                <a href="<?=base_url('house/manage/'.$value['house_id']);?>" class="btn btn-icon btn-primary"><i class="far fa-edit"></i></a>
-                                                <a href="<?php echo base_url('survay_house/manage/'.$value['house_id'])?>" class="btn btn-icon btn-primary"><i class="fas fa-file"></i></a>
+                                                <a href="<?=base_url('survay_house/manage/'.$value['house_id']);?>" class="btn btn-icon btn-primary"><i class="far fa-edit"></i></a>                                    
                                                 <button onclick="deleteItem(<?=$value['house_id'];?>)" class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></button>
                                             </div>
                                         </td>
@@ -80,7 +79,7 @@
             if (willDelete) {
                 $.ajax({
                     type: "POST",
-                    url: domain+'house/delete_house/'+elm,
+                    url: domain+'survay_house/delete_house/'+elm,
                     success : function(res){
                         window.location.reload();
                     }
