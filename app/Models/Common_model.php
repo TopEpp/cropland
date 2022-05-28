@@ -38,6 +38,19 @@ class Common_model extends Model
       
     }
 
+    public function getVillages($tambon,$amphor,$province = '')
+    {
+
+      $builder = $this->db->table('CODE_VILLAGE');
+      $builder->select('VILL_CODE,VILL_T');
+      $builder->where('TAM_CODE',$tambon);
+      $builder->where('AMP_CODE',$amphor);
+      $builder->where('PROV_CODE',$province);
+      $query = $builder->get()->getResultArray();
+      return $query;
+      
+    }
+
     public function getEducation(){
       $builder = $this->db->table('LH_education');
       $builder->select('*');

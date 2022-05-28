@@ -49,6 +49,21 @@ class Common extends BaseController
         
         return   $this->respond($data);
     }
+
+    public function villages(){
+        $tambon = $this->request->getVar('tambon');
+        $amphur = $this->request->getVar('amphur');
+        $province = $this->request->getVar('province');
+        
+        $village = $this->model_common->getVillages($tambon,$amphur,$province);
+     
+        $data = '';
+        foreach ($village as $key => $value) {
+           $data .= "<option value='".$value['VILL_CODE']."'>".$value['VILL_T']."</option>";
+        }
+        
+        return   $this->respond($data);
+    }
     
     public function House(){
         $interview = $this->request->getVar('interview');

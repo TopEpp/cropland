@@ -1,23 +1,23 @@
 <?php
-namespace Modules\House\Models;
+namespace Modules\SurvayHouse\Models;
 use CodeIgniter\Model;
 
-class House_model extends Model
+class Interview_house_model extends Model
 {
-    protected $table = 'LH_house';
-    protected $primaryKey = 'house_id';
+    protected $table = 'LH_interview_house';
+    protected $primaryKey = 'interview_id';
     protected $useAutoIncrement = true;
-    protected $allowedFields = [
-                                  'house_id',
-                                  'house_number',
-                                  'house_moo',
-                                  'house_province',
-                                  'house_district',
-                                  'house_subdistrict',
-                                  'house_home',
-                                  'house_label',
-                                  'house_type',
-                                ];
+    // protected $allowedFields = [
+    //                               'house_id',
+    //                               'house_number',
+    //                               'house_moo',
+    //                               'house_province',
+    //                               'house_district',
+    //                               'house_subdistrict',
+    //                               'house_home',
+    //                               'house_label',
+    //                               'house_type',
+    //                             ];
 
     public function getAllHouse($id = '')
     { 
@@ -35,33 +35,64 @@ class House_model extends Model
         return $query;
     }
 
-    public function getAllHousePaginate($page = '',$group = '')
+    public function getAllInterviewHousePaginate($page = '',$group = '',$search = [])
     { 
         
-      $builder =  $this->table('LH_house');
-      $builder->select("LH_house.house_id,
-      (
-        count(LH_house_person.person_id)
-      ) as total_person,
-      max(LH_house_person.person_name) as person_name,
-      max(LH_house_person.person_lastname) as person_lastname,
-      
-
-       CONCAT('บ้านเลขที่ ', max(LH_house.house_number),' หมู่ที่ ',
-       max(LH_house.house_moo),' ตำบล ',max(CODE_TAMBON.TAM_T),' อำเภอ ',max(CODE_AMPHUR.AMP_T),' จังหวัด ',max(CODE_PROVINCE.Name)) as person_address
+      $builder =  $this->table('LH_interview_house');
+      $builder->select("   
+        max( CODE_PROJECT.Description) as interview_project_name,
+        max( LH_interview_house.interview_year) as interview_year,
+        max( LH_house.house_id) as house_id,
+          (
+            count(LH_house_person.person_id)
+          ) as total_person,
+        max(LH_house_person.person_name) as person_name,
+        max(LH_house_person.person_lastname) as person_lastname,
+        CONCAT('บ้านเลขที่ ', max(LH_house.house_number),' หมู่ที่ ',
+        max(LH_house.house_moo),' ',max(CODE_VILLAGE.VILL_T),' ตำบล ',max(CODE_TAMBON.TAM_T),' อำเภอ ',max(CODE_AMPHUR.AMP_T),' จังหวัด ',max(CODE_PROVINCE.Name)) as person_address
     ");
-      $builder->join('LH_interview_house', 'LH_house.house_id = LH_interview_house.interview_house','left');
+
+      $builder->join('CODE_PROJECT', 'CODE_PROJECT.Code = LH_interview_house.interview_project_name','left');
+
+      $builder->join('LH_house', 'LH_house.house_id = LH_interview_house.interview_house','left');
       $builder->join('LH_house_person', 'LH_house.house_id = LH_house_person.house_id','left');
 
       $builder->join('CODE_PROVINCE', 'CODE_PROVINCE.Code = LH_house.house_province','left');
       $builder->join('CODE_AMPHUR', 'CAST(CODE_AMPHUR.AMP_CODE as int) = LH_house.house_district and CODE_PROVINCE.Code = CODE_AMPHUR.PROV_CODE','left');      
       $builder->join('CODE_TAMBON', 'CAST(CODE_TAMBON.TAM_CODE as int) = LH_house.house_subdistrict and CODE_PROVINCE.Code = CODE_TAMBON.PROV_CODE and CODE_AMPHUR.AMP_CODE = CODE_TAMBON.AMP_CODE','left');      
-    
-      
-      $builder->groupBy('LH_house.house_id');
-      
-      $query = $builder->paginate($page,$group);     
+      $builder->join('CODE_VILLAGE', 'CAST(CODE_VILLAGE.VILL_CODE as int) = LH_house.house_home and CODE_PROVINCE.Code = CODE_VILLAGE.PROV_CODE 
+      and CODE_AMPHUR.AMP_CODE = CODE_VILLAGE.AMP_CODE
+      and CODE_TAMBON.TAM_CODE = CODE_VILLAGE.TAM_CODE
+      ','left');   
   
+     
+
+        if (!empty($search)){
+          if (!empty($search['interview_year'])){
+              $builder->where('LH_interview_house.interview_year',$search['interview_year']);
+          }
+          if (!empty($search['interview_user'])){
+              $builder->where('LH_interview_house.interview_user',$search['interview_year']);
+          }
+          if (!empty($search['interview_project'])){
+              $builder->where('LH_interview_house.interview_project_name',$search['interview_project']);
+          }
+          if (!empty($search['interview_area'])){
+              $builder->where('LH_interview_house.interview_area',$search['interview_area']);
+          }
+          // if (!empty($search['interview_house_id'])){
+          //     $builder->where('LH_interview_land.interview_house_id',$search['interview_house_id']);
+          // }
+          // if (!empty($search['interview_person_id'])){
+          //     $builder->where('LH_interview_land.interview_person_id',$search['interview_person_id']);
+          // }
+          // if (!empty($search['interview_code'])){
+          //     $builder->where('LH_interview_land.interview_code',$search['interview_code']);
+          // }
+      }
+      $builder->groupBy('LH_interview_house.interview_id');
+      $query = $builder->paginate($page,$group);     
+      
       return $query;
     }
 

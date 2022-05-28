@@ -33,7 +33,7 @@
                             <br>                        
 
                             <h6>ข้อมูลพื้นฐาน</h6>
-                            <form action="<?=base_url('house/save_manage');?>"  method="post" id="form_manage">
+                            <form action="<?=base_url('survay_house/save_manage');?>"  method="post" id="form_manage">
                                 <input type="hidden" name="house_id" value="<?=@$data['house_id'];?>">
                                 <input type="hidden" name="interview_id" value="<?=@$data['interview_id'];?>">                                
                                 <div class="row">                               
@@ -65,11 +65,7 @@
                                                 <option value="<?=$value;?>"><?=$value;?></option>
                                             <?php endforeach;?>
                                         </select>
-                                    </div>    
-                                    <div class="form-group col-md-4">
-                                        <label>ชื่อหมู่บ้าน</label>
-                                        <input type="text" class="form-control" name="house_moo_name" value="<?=@$data['house_moo_name'];?>">
-                                    </div>
+                                    </div>                                      
                                     <div class="form-group col-md-4">
                                         <label>บ้านเลขที่</label>
                                         <input type="text" class="form-control" name="house_number" value="<?=@$data['house_number'];?>">
@@ -78,6 +74,7 @@
                                         <label>หมู่ที่</label>
                                         <input type="text" class="form-control" name="house_moo" value="<?=@$data['house_moo'];?>">
                                     </div>
+                                    <div class="form-group col-md-4"></div>
                                     <div class="form-group col-md-4">
                                         <label>จังหวัด</label>                                        
                                         <select name="house_province" id="house_province" class="form-control">
@@ -109,13 +106,15 @@
                                         <label>บ้าน</label>                                        
                                         <select name="house_home" id="house_home" class="form-control">
                                             <option value=""></option>
+                                            <?php foreach ($villages as $key => $value) :?>
+                                                <option <?=@$data['house_home'] == $value['VILL_CODE'] ? 'selected':'';?>  value="<?=$value['VILL_CODE'];?>"><?=$value['VILL_T'];?></option>
+                                            <?php endforeach?>
                                         </select>
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label>กลุ่มบ้าน</label>
-                                        
+                                        <label>กลุ่มบ้าน</label>                                        
                                         <select class="form-control select2" name="house_label">
-                                        <?php foreach ($villages as $key => $value) :?>
+                                        <?php foreach ($village as $key => $value) :?>
                                             <option <?=@$data['house_label'] == $value['Code'] ? 'selected':'';?>  value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                         <?php endforeach?>
                                         </select>
@@ -177,6 +176,19 @@
                 url: domain+'common/get-tambon?amphur='+amphur+'&province='+province,
                 success : function(options){
                     $("#house_subdistrict").html(options)
+                }
+            });
+        })
+
+        $("#house_subdistrict").change(function(){
+            var tambon = $(this).val();
+            var amphur = $("#house_district").val();
+            var province = $("#house_province").val();
+            $.ajax({
+                type: "GET",
+                url: domain+'common/get-villages?amphur='+amphur+'&province='+province+'&tambon='+tambon,
+                success : function(options){
+                    $("#house_home").html(options)
                 }
             });
         })

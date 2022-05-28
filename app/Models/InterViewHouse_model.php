@@ -48,6 +48,7 @@ class InterViewHouse_model extends Model
         $query = $builder->update($data);
       
       }else{
+        
         unset($data['interview_id']);
         $query = $builder->insert($data);
       }

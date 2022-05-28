@@ -46,14 +46,16 @@ class House extends BaseController
         $data['projects_type'] = $this->model_api->getProjectType();
         
         $data['province'] = $this->model_common->getProvince();
-        $data['villages'] = $this->model_common->getVillage();
+        $data['village'] = $this->model_common->getVillage(); //กลุ่มบ้าน
         $data['amphurs'] = [];
         $data['tambons'] = [];
+        $data['villages'] = [];
        
         if ($id){
             $data['data'] = $this->model_house->getAllHouse($id);            
             $data['amphurs'] = $this->model_common->getAmphur($data['data']['house_province']);
             $data['tambons'] = $this->model_common->getTambon($data['data']['house_district'],$data['data']['house_province']);
+            $data['villages'] = $this->model_common->getVillages($data['data']['house_subdistrict'],$data['data']['house_district'],$data['data']['house_province']);
             
               
         }

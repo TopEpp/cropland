@@ -6,8 +6,11 @@ use App\Models\Common_model;
 use Modules\Api\Models\Api_model;
 use CodeIgniter\API\ResponseTrait;
 use App\Controllers\BaseController;
+use Modules\Land\Models\Land_model;
+use Modules\User\Models\User_model;
 use App\Models\InterViewHouse_model;
-use Modules\House\Models\House_model;
+use Modules\SurvayHouse\Models\Interview_house_model;
+
 
 class SurvayHouse extends BaseController
 {
@@ -20,7 +23,7 @@ class SurvayHouse extends BaseController
 
     public function __construct()
     {
-        $this->model_house = new House_model();
+        $this->model_house = new Interview_house_model();
         $this->model_api = new Api_model();
         $this->model_interview_house = new InterViewHouse_model();
         $this->model_common = new Common_model();
@@ -28,12 +31,34 @@ class SurvayHouse extends BaseController
 
     public function index(){
         $data = [];
-        $data['data'] = $this->model_house->getAllHousePaginate(10,'page');
-        $data['pager'] = $this->model_house->pager;
+        $model_user = new User_model();
+        $model_land = new Land_model();
+        
+        // /search
+        $data['search'] = $this->request->getGet();
+        if (!empty($data['search'])){
+          
+            if (!empty($data['search']['interview_user'])){                
+                $data['data_search']['user'] = $this->model_common->searchUser('',$data['search']['interview_user']);       
+            }
+            if (!empty($data['search']['interview_project'])){
+                // $builder->where('LH_interview_land.interview_project',$data['search']['interview_project']);
+            }          
+            if (!empty($data['search']['interview_house_id'])){        
+                $data['data_search']['house'] = $this->model_common->searchHouse('',$data['search']['interview_house_id']);               
+            }
+            if (!empty($data['search']['interview_person_id'])){            
+                $data['data_search']['person'] = $this->model_common->searchPerson('',$data['search']['interview_person_id']);       
+            }
+            if (!empty($data['search']['interview_code'])){
+                $data['data_search']['land'] = $this->model_common->searchLand('',$data['search']['interview_code']);  
+            }
+        }
 
+        $data['projects'] = $this->model_api->getProject();
         
-        
-        
+        $data['data'] = $this->model_house->getAllInterviewHousePaginate(10,'page',$data['search']);
+        $data['pager'] = $this->model_house->pager;
         return view('Modules\SurvayHouse\Views\index',$data);
     }
     
@@ -46,14 +71,16 @@ class SurvayHouse extends BaseController
         $data['projects_type'] = $this->model_api->getProjectType();
         
         $data['province'] = $this->model_common->getProvince();
-        $data['villages'] = $this->model_common->getVillage();
+        $data['village'] = $this->model_common->getVillage();
         $data['amphurs'] = [];
         $data['tambons'] = [];
+        $data['villages'] = [];
        
         if ($id){
             $data['data'] = $this->model_house->getAllHouse($id);            
             $data['amphurs'] = $this->model_common->getAmphur($data['data']['house_province']);
             $data['tambons'] = $this->model_common->getTambon($data['data']['house_district'],$data['data']['house_province']);
+            $data['villages'] = $this->model_common->getVillages($data['data']['house_subdistrict'],$data['data']['house_district'],$data['data']['house_province']);
             
               
         }

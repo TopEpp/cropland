@@ -168,7 +168,7 @@
 
 <div class="modal fade" tabindex="-1" role="dialog" id="FamilyModal">
     <div class="modal-dialog modal-xl" role="document">
-        <form action="<?=base_url('house/save_members/'.@$house_id);?>" method="post">
+        <form action="<?=base_url('survay_house/save_members/'.@$house_id);?>" method="post">
             <input type="hidden" name="family_id" id="family_id">
             <input type="hidden" name="person_id" id="person_id">
             <div class="modal-content">
