@@ -168,6 +168,8 @@ $routes->group("survay", ["namespace" => "Modules\Survay\Controllers"], function
 
 $routes->group("member", ["namespace" => "Modules\User\Controllers"], function ($routes) {
 	$routes->get("/", "User::index");
+    $routes->post("saveDataPermission", "User::saveDataPermission");
+    $routes->get('getPermission','User::getPermission');
 });
 
 
@@ -235,6 +237,7 @@ $routes->group("api", ["namespace" => "Modules\Api\Controllers"], function ($rou
     $routes->get("importlands", "Api::importlands");
     $routes->get("importHouse", "Api::importHouse");
     $routes->get("importPersons", "Api::importPersons");
+
 
 });
 

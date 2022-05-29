@@ -2,6 +2,7 @@
 namespace Modules\User\Controllers;
 use App\Controllers\BaseController;
 use Modules\User\Models\User_model;
+use Modules\Api\Models\Api_model;
 use CodeIgniter\API\ResponseTrait;
 class User extends BaseController
 {
@@ -20,7 +21,8 @@ class User extends BaseController
     // $data['users'] = $this->model_user->getAllUsers();
 
     // $userModel = new UserModel();
- 
+  
+    $data['search'] = $this->request->getGet();
     $data = [
         'users' => $this->model_user->paginate(10,'page'),
         'pager' => $this->model_user->pager
@@ -30,6 +32,22 @@ class User extends BaseController
     // $User->updateERPUser();
     // // $data = array();
     return view("Modules\User\Views\index",$data);
+  }
+
+  public function saveDataPermission(){
+    $this->model_api = new Api_model();
+    $input = $this->request->getVar();
+    $res =  $this->model_api->saveDataPermission($input);
+    return $res;
+  }
+
+  public function getPermission(){
+    $this->model_api = new Api_model();
+    $input = $this->request->getVar();
+    $res =  $this->model_api->getPermission($input['emp_id']);
+    // return $res;
+
+    return $this->setResponseFormat('json')->respond($res);
   }
 
   public function user_update()

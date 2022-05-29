@@ -946,6 +946,30 @@ class Api_model extends Model
         return $query;
     }
 
+    function saveDataPermission($input){
+      $emp_id = $input['emp_id'];
+      $builder_del = $this->db->table('LH_users_permission');
+      $builder_del->where('emp_id',$emp_id);
+      $builder_del->delete();
+
+      foreach ($input['permission'] as $key => $value) {
+        $builder_set = $this->db->table('LH_users_permission');
+        $builder_set->set('emp_id',$emp_id);
+        $builder_set->set('permission_id',$value);
+        $builder_set->insert();
+      }
+
+      return true;
+    }
+
+    function getPermission($emp_id){
+       $builder = $this->db->table('LH_users_permission');
+        $builder->select('*');
+        $builder = $builder->where('emp_id',$emp_id);
+        $query = $builder->get()->getResultArray();
+        return $query;
+    }
+
   
 }
 
