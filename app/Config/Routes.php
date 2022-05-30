@@ -238,6 +238,8 @@ $routes->group("api", ["namespace" => "Modules\Api\Controllers"], function ($rou
     $routes->get("importHouse", "Api::importHouse");
     $routes->get("importPersons", "Api::importPersons");
 
+    $routes->get("convUTMtoLL", "Api::convUTMtoLL");
+
 
 });
 
