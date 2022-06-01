@@ -635,7 +635,7 @@ class Api_model extends Model
         
         $builder = $this->db->table($table);
         $builder->select('*');
-        // $builder->where('active',1);
+        $builder->where('active',1);
         if ($id){
           $builder = $builder->where($key,$id);
           $query = $builder->get()->getRowArray();
@@ -683,9 +683,9 @@ class Api_model extends Model
         
         $builder = $this->db->table('CODE_PROJECTTYPE');
         $builder->select('*');
-   
+        $builder->where('active',1);
         if ($id){
-          $builder = $builder->where('Runno',$id);
+          $builder->where('Runno',$id);
           $query = $builder->get()->getRowArray();
           return $query;
         }
@@ -699,13 +699,14 @@ class Api_model extends Model
         
         $builder = $this->db->table('CODE_PROJECT');
         $builder->select('*');
+        $builder->where('active',1);
         if ($type != ''){
-          $builder = $builder->where('TypeCode',$type);
+          $builder->where('TypeCode',$type);
         }
       
    
         if ($id){
-          $builder = $builder->where('Runno',$id);
+          $builder->where('Runno',$id);
           $query = $builder->get()->getRowArray();
           return $query;
         }
@@ -721,9 +722,9 @@ class Api_model extends Model
         
         $builder = $this->db->table('CODE_DEPARTMENT');
         $builder->select('*');
-   
+        $builder->where('active',1);
         if ($id){
-          $builder = $builder->where('Code',$id);
+          $builder->where('Code',$id);
           $query = $builder->get()->getRowArray();
           return $query;
         }
@@ -737,9 +738,9 @@ class Api_model extends Model
         
         $builder = $this->db->table('CODE_CHEMICALTYPE');
         $builder->select('*');
-   
+        $builder->where('active',1);
         if ($id){
-          $builder = $builder->where('Code',$id);
+          $builder->where('Code',$id);
           $query = $builder->get()->getRowArray();
           return $query;
         }
@@ -753,13 +754,13 @@ class Api_model extends Model
         
         $builder = $this->db->table('CODE_CHEMICALBRAND');
         $builder->select('*');
-
+        $builder->where('active',1);
         if($type){
-          $builder = $builder->where('Type_id',$type);
+          $builder->where('Type_id',$type);
         }
    
         if ($id){
-          $builder = $builder->where('Code',$id);
+          $builder->where('Code',$id);
           $query = $builder->get()->getRowArray();
           return $query;
         }
@@ -773,13 +774,13 @@ class Api_model extends Model
         
         $builder = $this->db->table('CODE_CHEMICALFORMULAR');
         $builder->select('*');
-        
+        $builder->where('active',1);
         if($chem_id){
-          $builder = $builder->where('Chem_id',$chem_id);
+          $builder->where('Chem_id',$chem_id);
         }
 
         if ($id){
-          $builder = $builder->where('Code',$id);
+          $builder->where('Code',$id);
           $query = $builder->get()->getRowArray();
           return $query;
         }
@@ -793,9 +794,9 @@ class Api_model extends Model
         
         $builder = $this->db->table('CODE_MEDICALTYPE');
         $builder->select('*');
-   
+        $builder->where('active',1);
         if ($id){
-          $builder = $builder->where('Code',$id);
+          $builder->where('Code',$id);
           $query = $builder->get()->getRowArray();
           return $query;
         }
@@ -809,13 +810,13 @@ class Api_model extends Model
         
         $builder = $this->db->table('CODE_MEDICALBRAND');
         $builder->select('*');
-
+        $builder->where('active',1);
         if($type){
-          $builder = $builder->where('Description',$type);
+          $builder->where('Description',$type);
         }
    
         if ($id){
-          $builder = $builder->where('Code',$id);
+          $builder->where('Code',$id);
           $query = $builder->get()->getRowArray();
           return $query;
         }
@@ -829,9 +830,9 @@ class Api_model extends Model
         
         $builder = $this->db->table('CODE_UNIT');
         $builder->select('*');
-   
+        $builder->where('active',1);
         if ($id){
-          $builder = $builder->where('Code',$id);
+          $builder->where('Code',$id);
           $query = $builder->get()->getRowArray();
           return $query;
         }
@@ -845,9 +846,9 @@ class Api_model extends Model
         
         $builder = $this->db->table('CODE_EMPLOYTYPE');
         $builder->select('*');
-   
+        $builder->where('active',1);
         if ($id){
-          $builder = $builder->where('Code',$id);
+          $builder->where('Code',$id);
           $query = $builder->get()->getRowArray();
           return $query;
         }
@@ -861,9 +862,9 @@ class Api_model extends Model
         
         $builder = $this->db->table('CODE_LABORTYPE');
         $builder->select('*');
-   
+        $builder->where('active',1);
         if ($id){
-          $builder = $builder->where('Code',$id);
+          $builder->where('Code',$id);
           $query = $builder->get()->getRowArray();
           return $query;
         }
@@ -877,9 +878,9 @@ class Api_model extends Model
         
         $builder = $this->db->table('CODE_MARKET');
         $builder->select('*');
-   
+        $builder->where('active',1);
         if ($id){
-          $builder = $builder->where('Code',$id);
+          $builder->where('Code',$id);
           $query = $builder->get()->getRowArray();
           return $query;
         }
@@ -893,12 +894,12 @@ class Api_model extends Model
         
         $builder = $this->db->table('CODE_PROJECTVILLAGE');
         $builder->select('*');
-        $builder = $builder->where('ProvinceId',$provice);
-        $builder = $builder->where('AmphurId',$district);
-        $builder = $builder->where('TamBonId',$subdistrict);
+        $builder->where('ProvinceId',$provice);
+        $builder->where('AmphurId',$district);
+        $builder->where('TamBonId',$subdistrict);
    
         if ($id){
-          $builder = $builder->where('Code',$id);
+          $builder->where('Code',$id);
           $query = $builder->get()->getRowArray();
           return $query;
         }
@@ -912,9 +913,9 @@ class Api_model extends Model
         
         $builder = $this->db->table('CODE_HRDI_SUPPORTTYPE');
         $builder->select('*');
-   
+        $builder->where('active',1);
         if ($id){
-          $builder = $builder->where('Code',$id);
+          $builder->where('Code',$id);
           $query = $builder->get()->getRowArray();
           return $query;
         }
@@ -928,9 +929,9 @@ class Api_model extends Model
         
         $builder = $this->db->table('CODE_SUPPORT_WANTEDTYPE');
         $builder->select('*');
-   
+        $builder->where('active',1);
         if ($id){
-          $builder = $builder->where('Code',$id);
+          $builder->where('Code',$id);
           $query = $builder->get()->getRowArray();
           return $query;
         }
@@ -944,8 +945,9 @@ class Api_model extends Model
         
         $builder = $this->db->table('CODE_PRODUCTGROUP');
         $builder->select('*');
+        $builder->where('active',1);
         if ($id){
-          $builder = $builder->where('Code',$id);
+          $builder->where('Code',$id);
           $query = $builder->get()->getRowArray();
           return $query;
         }
@@ -959,8 +961,9 @@ class Api_model extends Model
         
         $builder = $this->db->table('CODE_PRODUCTTYPE');
         $builder->select('*');
+        $builder->where('active',1);
         if ($id){
-          $builder = $builder->where('Code',$id);
+          $builder->where('Code',$id);
           $query = $builder->get()->getRowArray();
           return $query;
         }
@@ -974,12 +977,13 @@ class Api_model extends Model
         
         $builder = $this->db->table('CODE_PRODUCT');
         $builder->select('*');
+        $builder->where('active',1);
         if ($type != ''){
-          $builder = $builder->where('Type_Code',$type);
+          $builder->where('Type_Code',$type);
         }
     
         if ($id){
-          $builder = $builder->where('Code',$id);
+          $builder->where('Code',$id);
           $query = $builder->get()->getRowArray();
           return $query;
         }

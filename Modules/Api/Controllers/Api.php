@@ -115,7 +115,7 @@ class Api extends BaseController
         }else if($type=='productType'){
             $data['label'] = 'การใช้ที่ดิน';
             $data['table'] = 'CODE_PRODUCTTYPE';
-            $data['input_id'] = 'Code';
+            $data['input_id'] = 'Runno';
             $data['input_name'] = 'Name';
         }else if($type=='product'){
             $data['label'] = 'พันธุ์';
