@@ -181,16 +181,21 @@ var itemPath;
 
                     if (response){
                         // conver to geo
-                     
 
                         const data = response.data;
                         let latLngs = []
-                        if (data.land_geo){
-                            var geo = JSON.parse(data.land_geo)                        
-                            var data_geo = geo[0];                         
-                            latLngs = data_geo.map(pair => ({lat: pair[0], lng: pair[1]}))
-                        }
-                     
+                  
+                        if (data.land_gps){
+                            var geo = JSON.parse(data.land_gps)                                             
+                            var data_geo = geo.coordinates                                             
+                            // latLngs = data_geo.map(pair => ({lat:pair[0], lng:pair[1]}))
+                            // var arrShape=new Array();
+                            for(var s=0;s<data_geo.length;s++){
+                                var tempPoint=data_geo[s];                                                            
+                                latLngs.push(new google.maps.LatLng(tempPoint[0], tempPoint[1]));
+                            }
+                        }     
+                                       
      
                         $("#land_code").val(data.land_code)
                         // $("#land_number").val(data.land_number)
@@ -200,10 +205,9 @@ var itemPath;
                         }
                      
                         $("#land_area").val(data.land_area)
-
                         $("#land_use").val(data.land_use)
                         // $("#land_address").val(data.land_address)
-
+                        
                         initMap(latLngs)
                         // $("#land_ownership").val(data.land_ownership)
                         // $("#land_holding").val(data.land_holding)
@@ -220,36 +224,37 @@ var itemPath;
 
     
     function initMap(geo) {        
-        const myLatLng = { lat: 18.8026962, lng: 98.9555348 };
+        const centers = geo.length;
+        
+        const myLatLng = geo[parseInt(centers/2)];
+        
         map = new google.maps.Map(document.getElementById("map"), {
             center: myLatLng,
-            zoom: 7,
-            // mapTypeId: "terrain",
+            zoom: 18,
+            mapTypeId: "terrain",
 
         });
-       
-
 
          // Construct the polygon.
-            // const bermudaTriangle = new google.maps.Polygon({
-            //     paths: geo,
-            //     strokeColor: "#FF0000",
-            //     strokeOpacity: 0.8,
-            //     strokeWeight: 2,
-            //     fillColor: "#FF0000",
-            //     fillOpacity: 0.35,
-            // });
+        const bermudaTriangle = new google.maps.Polygon({
+            paths: geo,
+            strokeColor: "#FF0000",
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: "#FF0000",
+            fillOpacity: 0.35,
+        });
 
-            // bermudaTriangle.setMap(map);
+        bermudaTriangle.setMap(map);
 
 
         //     // The marker, positioned at Uluru
-        const laaa = {lat: 428821.88619601/57.2958, lng: 1914526.84011716/57.2958};
-        console.log(laaa);
-        const marker = new google.maps.Marker({
-            position: laaa,
-            map: map,
-        });
+        // const laaa = {lat: 17.314806783196214, lng: 98.33018878827379};
+        // console.log(laaa);
+        // const marker = new google.maps.Marker({
+        //     position: laaa,
+        //     map: map,
+        // });
 
     }
 

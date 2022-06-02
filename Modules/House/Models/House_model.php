@@ -35,7 +35,7 @@ class House_model extends Model
         return $query;
     }
 
-    public function getAllHousePaginate($page = '',$group = '')
+    public function getAllHousePaginate($page = '',$group = '',$search)
     { 
         
       $builder =  $this->table('LH_house');
@@ -58,9 +58,34 @@ class House_model extends Model
       $builder->join('CODE_VILLAGE', 'CAST(CODE_VILLAGE.VILL_CODE as int) = LH_house.house_home and CODE_PROVINCE.Code = CODE_VILLAGE.PROV_CODE 
       and CODE_AMPHUR.AMP_CODE = CODE_VILLAGE.AMP_CODE
       and CODE_TAMBON.TAM_CODE = CODE_VILLAGE.TAM_CODE
-      ','left');      
+      ','left');
       
       $builder->groupBy('LH_house.house_id');
+
+      if (!empty($search)){
+        if (!empty($search['village_owner'])){
+            $builder->where('LH_house_person.person_id',$search['village_owner']);
+        }
+
+        if (!empty($search['house_no'])){
+            $builder->where('LH_house.house_number',$search['house_no']);
+        }
+
+        if (!empty($search['province'])){
+          $builder->where('LH_house.house_province',intval($search['province']));
+        }
+        if (!empty($search['amphur'])){
+          $builder->where('LH_house.house_district',intval($search['amphur']));
+        }
+        if (!empty($search['tambon'])){
+          $builder->where('LH_house.house_subdistrict',intval($search['tambon']));
+        }
+        if (!empty($search['village'])){
+          $builder->where('LH_house.house_home',intval($search['village']));
+        }
+
+    }
+      
       
       $query = $builder->paginate($page,$group);     
   

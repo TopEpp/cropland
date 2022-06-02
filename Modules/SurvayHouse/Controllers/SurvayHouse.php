@@ -34,6 +34,10 @@ class SurvayHouse extends BaseController
         $model_user = new User_model();
         $model_land = new Land_model();
         
+        $data['amphur'] = [];
+        $data['tambon'] = [];
+        $data['village'] = [];
+
         // /search
         $data['search'] = $this->request->getGet();
         if (!empty($data['search'])){
@@ -53,8 +57,19 @@ class SurvayHouse extends BaseController
             if (!empty($data['search']['interview_code'])){
                 $data['data_search']['land'] = $this->model_common->searchLand('',$data['search']['interview_code']);  
             }
+
+            if (!empty($data['search']['province'])){                
+                $data['amphur'] = $this->model_common->getAmphur($data['search']['province']);       
+            }      
+            if (!empty($data['search']['amphur'])){                
+                $data['tambon'] = $this->model_common->getTambon($data['search']['amphur'],$data['search']['province']);      
+            }      
+            if (!empty($data['search']['tambon'])){                
+                $data['village'] = $this->model_common->getVillages($data['search']['tambon'],$data['search']['amphur'],$data['search']['province']);      
+            }         
         }
 
+        $data['province'] = $this->model_common->getProvince();
         $data['projects'] = $this->model_api->getProject();
         
         $data['data'] = $this->model_house->getAllInterviewHousePaginate(10,'page',$data['search']);

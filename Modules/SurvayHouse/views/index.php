@@ -9,15 +9,15 @@
                 <div class="card">
                     <div class="card-header">
                         <h4 class="text-dark">ข้อมูลแบบสอบถามครัวเรือน</h4>
-                        <div class="card-header-action">
+                        <!-- <div class="card-header-action">
                             <a href="<?= base_url('survay_house/manage');?>" class="btn btn-info">
                                 เพิ่มข้อมูล
                             </a>
-                        </div>
+                        </div> -->
                     </div>
                     <div class="card-body">
 
-                    <h5>ค้นหาข้อมูล</h5>
+                        <h5>ค้นหาข้อมูล</h5>
                         <div>
                             <form action="" id="form-search">
                                 <div class="row">                                
@@ -61,36 +61,31 @@
                                     <div class="form-group col-md-3">
                                         <label>จังหวัด</label>                                       
                                         <select name="province" id="province" class="form-control ">                                            
-                                            <?php if(!empty($search['province'])):?>
-                                                <option value="<?=$search['province'];?>"><?=$data_search['house']['Name']?></option>
-                                            <?php else:?>
-                                                <option value="">ทั้งหมด</option>
-                                            <?php endif;?>                                          
+                                            <option value="">ทั้งหมด</option>                                       
+                                            <?php foreach ($province as $key => $value) :?>
+                                                <option <?=@$search['province'] == $value['Code'] ? 'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
+                                            <?php endforeach?>                                            
                                         </select>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label>อำเภอ</label>                                       
                                         <select name="amphur" id="amphur" class="form-control">
-                                            <?php if(!empty($search['amphur'])):?>
-                                                <option value="<?=$search['amphur'];?>"><?=$data_search['person']['person_name'].' '.$data_search['person']['person_lastname'];?></option>
-                                            <?php else:?>
-                                                <option value="">ทั้งหมด</option>
-                                            <?php endif;?>
+                                            <?php foreach ($amphur as $key => $value) :?>
+                                                <option <?=@$search['amphur'] == $value['AMP_CODE'] ? 'selected':'';?> value="<?=$value['AMP_CODE'];?>"><?=$value['AMP_T'];?></option>
+                                            <?php endforeach?> 
                                         </select>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label>ตำบล</label>                                       
                                         <select name="tambon" id="tambon" class="form-control ">                                            
-                                            <?php if(!empty($search['tambon'])):?>
-                                                <option value="<?=$search['tambon'];?>"><?=$data_search['land']['land_code'];?></option>
-                                            <?php else:?>
-                                                <option value="">ทั้งหมด</option>
-                                            <?php endif;?>                                     
+                                            <?php foreach ($tambon as $key => $value) :?>
+                                                <option <?=@$search['tambon'] == $value['TAM_CODE'] ? 'selected':'';?> value="<?=$value['TAM_CODE'];?>"><?=$value['TAM_T'];?></option>
+                                            <?php endforeach?>                                      
                                         </select>
                                     </div>
                                     <div class="col-md-12 text-right">
                                         <button type="submit" class="btn btn-info">ค้นหา</button>
-                                        <button type="button" class="btn btn-secondary" onclick="window.location.replace('<?=site_url('survay');?>');">ล้างค่า</button>
+                                        <button type="button" class="btn btn-secondary" onclick="window.location.replace('<?=site_url('survay_house');?>');">ล้างค่า</button>
                                     </div>                                    
                                 </div>
                             </form>
@@ -183,6 +178,45 @@
         });
         
     }
+
+    $(function(){
+
+        $("#province").change(function(){
+            var province = $(this).val();
+            $.ajax({
+                type: "GET",
+                url: domain+'common/get-amphur?province='+province,
+                success : function(options){
+                    $("#amphur").html(options)
+                }
+            });
+        })
+
+        $("#amphur").change(function(){
+            var amphur = $(this).val();
+            var province = $("#province").val();
+            $.ajax({
+                type: "GET",
+                url: domain+'common/get-tambon?amphur='+amphur+'&province='+province,
+                success : function(options){
+                    $("#tambon").html(options)
+                }
+            });
+        })
+
+        $("#tambon").change(function(){
+            var tambon = $(this).val();
+            var amphur = $("#amphur").val();
+            var province = $("#province").val();
+            $.ajax({
+                type: "GET",
+                url: domain+'common/get-villages?amphur='+amphur+'&province='+province+'&tambon='+tambon,
+                success : function(options){
+                    $("#village").html(options)
+                }
+            });
+        })
+    })
 </script>
 <?=$this->endSection()?>
   

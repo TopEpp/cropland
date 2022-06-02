@@ -80,16 +80,22 @@ class Interview_house_model extends Model
           if (!empty($search['interview_area'])){
               $builder->where('LH_interview_house.interview_area',$search['interview_area']);
           }
-          // if (!empty($search['interview_house_id'])){
-          //     $builder->where('LH_interview_land.interview_house_id',$search['interview_house_id']);
-          // }
-          // if (!empty($search['interview_person_id'])){
-          //     $builder->where('LH_interview_land.interview_person_id',$search['interview_person_id']);
-          // }
-          // if (!empty($search['interview_code'])){
-          //     $builder->where('LH_interview_land.interview_code',$search['interview_code']);
-          // }
+
+          if (!empty($search['province'])){
+            $builder->where('LH_house.house_province',intval($search['province']));
+          }
+          if (!empty($search['amphur'])){
+            $builder->where('LH_house.house_district',intval($search['amphur']));
+          }
+          if (!empty($search['tambon'])){
+            $builder->where('LH_house.house_subdistrict',intval($search['tambon']));
+          }
+          if (!empty($search['village'])){
+            $builder->where('LH_house.house_home',intval($search['village']));
+          }
+         
       }
+      
       $builder->groupBy('LH_interview_house.interview_id');
       $query = $builder->paginate($page,$group);     
       

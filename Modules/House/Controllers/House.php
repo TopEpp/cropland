@@ -28,7 +28,33 @@ class House extends BaseController
 
     public function index(){
         $data = [];
-        $data['data'] = $this->model_house->getAllHousePaginate(10,'page');
+
+        $data['amphur'] = [];
+        $data['tambon'] = [];
+        $data['village'] = [];
+        // /search
+        $data['search'] = $this->request->getGet();
+        if (!empty($data['search'])){
+        
+            if (!empty($data['search']['province'])){                
+                $data['amphur'] = $this->model_common->getAmphur($data['search']['province']);       
+            }      
+            if (!empty($data['search']['amphur'])){                
+                $data['tambon'] = $this->model_common->getTambon($data['search']['amphur'],$data['search']['province']);      
+            }      
+            if (!empty($data['search']['tambon'])){                
+                $data['village'] = $this->model_common->getVillages($data['search']['tambon'],$data['search']['amphur'],$data['search']['province']);      
+            }         
+
+            if (!empty($data['search']['village_owner'])){            
+                $data['data_search']['person'] = $this->model_common->searchPerson('',$data['search']['village_owner']);       
+            } 
+        }
+        //data search
+        $data['province'] = $this->model_common->getProvince();
+
+        
+        $data['data'] = $this->model_house->getAllHousePaginate(10,'page',$data['search']);
         $data['pager'] = $this->model_house->pager;
 
         

@@ -24,7 +24,7 @@ class Land_model extends Model
         
         $builder = $this->db->table('LH_land');
         $builder->select('LH_land.land_code,LH_land.land_number,LH_land.land_no,LH_land.land_area,LH_land.land_id,
-        LH_land.land_ownership,LH_house_person.person_name,LH_house_person.person_lastname,
+        LH_land.land_ownership,LH_house_person.person_name,LH_house_person.person_lastname,LH_land.land_gps,
         dbo.GetCoordinate(LH_land.land_geo) as land_geo,LH_landuse.name,CODE_PROJECT.Name as project_name');
         $builder->join('LH_landuse', 'LH_land.land_use = LH_landuse.landuse_id','left');
         $builder->join('CODE_PROJECT', 'LH_land.land_project = CODE_PROJECT.Code','left');
