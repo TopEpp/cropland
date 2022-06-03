@@ -643,7 +643,11 @@ class Api_model extends Model
         }
         
         $query = $builder->get()->getResultArray();
-        return $query;
+        $data = array();
+        foreach ($query as $value) {
+          $data[$value[$key]] = $value;
+        }
+        return $data;
     }
 
     public function saveData($data){

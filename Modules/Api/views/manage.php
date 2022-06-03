@@ -20,6 +20,7 @@
                                 <tr>
                                 <th scope="col" width="5%" style="text-align: center;">ลำดับ</th>
                                 <th scope="col" style="text-align: center;"><?php echo $label?></th>
+                                <?php if(@$type_select){ ?><th scope="col" style="text-align: center;"><?php echo $type_label?></th> <?php }?>
                                 <th scope="col" width="15%" style="text-align: center;">เครื่องมือ</th>
                                 </tr>
                             </thead>
@@ -28,6 +29,9 @@
                                     <tr>
                                         <th scope="row" style="text-align: center;"><?=$key+1;?></th>
                                         <td><?php echo $value[$input_name]?></td>
+                                        <?php if(@$type_select){ ?>
+                                        <td><?php echo @$type_select[$value[$input_type_key]][$type_name]?></td>
+                                        <?php }?>
                                         <td style="text-align: center;">
                                             <div class="buttons">
                                                 <a href="#" onclick="openForm(<?php echo $value[$input_id]?>)" class="btn btn-icon btn-primary" ><i class="far fa-edit"></i></a>
@@ -37,6 +41,9 @@
                                     </tr>
                                     <input type="hidden" id="id_<?php echo $value[$input_id]?>" value="<?php echo $value[$input_id]?>">
                                     <input type="hidden" id="name_<?php echo $value[$input_id]?>" value="<?php echo $value[$input_name]?>">
+                                    <?php if(@$type_select){ ?>
+                                    <input type="hidden" id="type_<?php echo $value[$input_id]?>" value="<?php echo $value[$input_type_key]?>">
+                                    <?php }?>
                                 <?php endforeach;?>
                                
 
@@ -63,6 +70,21 @@
       
       <!-- Modal body -->
       <div class="modal-body">
+        <?php if(@$type_select){ ?>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="name" ><?php echo $type_label?></label>
+              <select class="form-control" name="<?php echo $input_type_key?>" id="<?php echo $input_type_key?>">
+                <option value="">เลือก</option>
+              <?php foreach ($type_select as $key => $value) {?>
+                <option value="<?php echo $value[$type_id]?>"><?php echo $value[$type_name]?></option>
+              <?php  } ?>
+              </select>
+            </div>
+          </div>
+        </div>
+       <?php } ?>
         <div class="row">
           <div class="col-md-12">
             <div class="form-group">
@@ -92,15 +114,18 @@
 
 <script type="text/javascript">
     function openForm(id='') {
-        $('#name').val('');
-        $('#id').val('');
+        $('#<?php echo $input_name?>').val('');
+        $('#<?php echo $input_id?>').val('');
+        $('#<?php echo $input_type_key?>').val('');
 
         if(id){
             var id = $('#id_'+id).val();
             var name = $('#name_'+id).val();
+            var type = $('#type_'+id).val();
 
             $('#<?php echo $input_name?>').val(name);
             $('#<?php echo $input_id?>').val(id);
+            $('#<?php echo $input_type_key?>').val(type);
         }
 
         $('#modal_form').modal('show');

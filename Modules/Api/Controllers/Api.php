@@ -100,13 +100,19 @@ class Api extends BaseController
         if($type=='projectType'){
             $data['label'] = 'ประเภทโครงการ';
             $data['table'] = 'CODE_PROJECTTYPE';
-            $data['input_id'] = 'Runno';
+            $data['input_id'] = 'Code';
             $data['input_name'] = 'Name';
         }else if($type=='project'){
             $data['label'] = 'โครงการ';
             $data['table'] = 'CODE_PROJECT';
             $data['input_id'] = 'Runno';
             $data['input_name'] = 'Name';
+
+            $data['input_type_key'] = 'TypeCode';
+            $data['table_type'] = 'CODE_PROJECTTYPE';
+            $data['type_id'] = 'Code';
+            $data['type_name'] = 'Name';
+            $data['type_label'] = 'ประเภทโครงการ';
         }else if($type=='productGroup'){
             $data['label'] = 'ประเภทการใช้ประโยชน์ที่ดิน';
             $data['table'] = 'CODE_PRODUCTGROUP';
@@ -115,13 +121,25 @@ class Api extends BaseController
         }else if($type=='productType'){
             $data['label'] = 'การใช้ที่ดิน';
             $data['table'] = 'CODE_PRODUCTTYPE';
-            $data['input_id'] = 'Runno';
+            $data['input_id'] = 'Code';
             $data['input_name'] = 'Name';
+
+            $data['input_type_key'] = 'GroupCode';
+            $data['table_type'] = 'CODE_PRODUCTGROUP';
+            $data['type_id'] = 'Code';
+            $data['type_name'] = 'Name';
+            $data['type_label'] = 'ประเภทการใช้ประโยชน์ที่ดิน';
         }else if($type=='product'){
             $data['label'] = 'พันธุ์';
             $data['table'] = 'CODE_PRODUCT';
             $data['input_id'] = 'Code';
             $data['input_name'] = 'Name';
+
+             $data['input_type_key'] = 'TypeCode';
+            $data['table_type'] = 'CODE_PRODUCTTYPE';
+            $data['type_id'] = 'Code';
+            $data['type_name'] = 'Name';
+            $data['type_label'] = 'การใช้ที่ดิน';
         }else if($type=='chemicalType'){
             $data['label'] = 'ประเภทปุ๋ย';
             $data['table'] = 'CODE_CHEMICALTYPE';
@@ -243,6 +261,9 @@ class Api extends BaseController
 
 
          $data['data'] =  $this->model_api->getData( $data['table'],$data['input_id']);
+         if(!empty($data['table_type'])){
+            $data['type_select'] = $this->model_api->getData( $data['table_type'],$data['type_id']);
+         }
 
         
         return view('Modules\Api\Views\manage',$data);
