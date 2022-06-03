@@ -119,8 +119,8 @@
                                       
                                         <td class="text-center">
                                             <div class="buttons">
-                                                <a href="<?=base_url('survay_house/manage/'.$value['house_id']);?>" class="btn btn-icon btn-primary"><i class="far fa-edit"></i></a>                                    
-                                                <button onclick="deleteItem(<?=$value['house_id'];?>)" class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></button>
+                                                <a data-toggle="tooltip" title="แก้ไขข้อมูล" href="<?=base_url('survay_house/manage/'.$value['house_id']);?>" class="btn btn-icon btn-primary"><i class="far fa-edit"></i></a>                                    
+                                                <button  data-toggle="tooltip" data-placement="bottom" title="ลบข้อมูล" onclick="deleteItem(<?=$value['house_id'];?>)" class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></button>
                                             </div>
                                         </td>
                                     </tr>

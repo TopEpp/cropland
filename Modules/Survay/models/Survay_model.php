@@ -103,6 +103,14 @@ class Survay_model extends Model
         if (!empty($data['intervew_land_water_process'])){
             $data['intervew_land_water_process'] = implode(',',$data['intervew_land_water_process']);
         }
+
+        if (!empty($data['intervew_land_water_type'])){
+            $data['intervew_land_water_type'] = implode(',',$data['intervew_land_water_type']);
+        }
+
+        if (!empty($data['interview_land_use_type'])){
+            $data['interview_land_use_type'] = implode(',',$data['interview_land_use_type']);
+        }
         
         $builder = $this->db->table('LH_interview_land');
         if (!empty($data['interview_id'])){

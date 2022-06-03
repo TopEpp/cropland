@@ -11,7 +11,7 @@ $(function () {
 				return "ไม่พบข้อมูล";
 			},
 		},
-		minimumInputLength: 2,
+		minimumInputLength: 0,
 
 		ajax: {
 			url: domain + "common/search-person",
@@ -51,7 +51,7 @@ $(function () {
 				return "ไม่พบข้อมูล";
 			},
 		},
-		minimumInputLength: 2,
+		minimumInputLength: 0,
 
 		ajax: {
 			url: domain + "common/search-land",
@@ -91,7 +91,7 @@ $(function () {
 				return "ไม่พบข้อมูล";
 			},
 		},
-		minimumInputLength: 2,
+		minimumInputLength: 0,
 
 		ajax: {
 			url: domain + "common/search-user",
@@ -131,7 +131,7 @@ $(function () {
 				return "ไม่พบข้อมูล";
 			},
 		},
-		minimumInputLength: 2,
+		minimumInputLength: 0,
 
 		ajax: {
 			url: domain + "common/search-house",

@@ -33,7 +33,7 @@
                                 <!-- <th scope="col">เลขที่แปลง</th> -->
                                 <th scope="col">ขนาดพื้นที่ (ไร่)</th>
                                 <th scope="col">การใช้ประโยชน์ที่ดิน</th>
-                                <th scope="col">ผู้ถือคลอง</th>
+                                <th scope="col">ผู้ถือครอง</th>
                                 <th scope="col">พื้นที่</th>
                                 <th scope="col">เครื่องมือ</th>
                                 </tr>
@@ -50,9 +50,9 @@
                                         <td><?=$value['project_name'];?></td>
                                         <td>
                                             <div class="buttons">
-                                                <button  onclick="landModal(<?=$value['land_id'];?>)" class="btn btn-icon btn-primary"><i class="far fa-edit"></i></button>   
-                                                <a href="<?php echo base_url('survay/manage?land_code='.$value['land_code'])?>" class="btn btn-icon btn-primary"><i class="fas fa-file"></i></a>
-                                                <a href="#" class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></a>
+                                                <button  onclick="landModal(<?=$value['land_id'];?>)" class="btn btn-icon btn-primary" data-toggle="tooltip" data-placement="bottom" title="แก้ไขข้อมูล"><i class="far fa-edit"></i></button>   
+                                                <a href="<?php echo base_url('survay/manage?land_code='.$value['land_code'])?>" class="btn btn-icon btn-primary" data-toggle="tooltip" data-placement="bottom" title="ประเมินรายแปลง"><i class="fas fa-file"></i></a>
+                                                <a href="#" class="btn btn-icon btn-danger" data-toggle="tooltip" data-placement="bottom" title="ลบข้อมูล"><i class="fas fa-trash"></i></a>
                                             </div>
                                         </td>
                                     </tr>
@@ -102,7 +102,7 @@
                                     <input type="text" class="form-control" name="land_no" id="land_no">                         
                                 </div> -->
                                 <div class="form-group col-md-12">
-                                    <label>ผู้ถือคลอง</label>
+                                    <label>ผู้ถือครอง</label>
                                     <select name="land_ownership" id="land_ownership" class="form-control select2-ajax-person">
                                     </select>
                                 </div>                     

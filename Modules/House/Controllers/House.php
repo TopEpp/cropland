@@ -52,7 +52,8 @@ class House extends BaseController
         }
         //data search
         $data['province'] = $this->model_common->getProvince();
-
+        $data['projects'] = $this->model_api->getProject();
+    
         
         $data['data'] = $this->model_house->getAllHousePaginate(10,'page',$data['search']);
         $data['pager'] = $this->model_house->pager;

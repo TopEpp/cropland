@@ -34,7 +34,7 @@
                             <br>
                             <h6>ข้อมูลเบื้องต้น</h6>
                             <!-- check load autos -->
-                            <input type="hidden" id="auto_load" value="<?= !empty($land_code)?true:false;?>"
+                            <input type="hidden" id="auto_load" value="<?= !empty($land_code)?true:false;?>">
 
                             <form action="<?=base_url('survay/save_manage');?>"  method="post" id="form_manage" class="needs-validation" novalidate="">
                                 <input type="hidden" name="interview_id" value=<?=$interview_id;?>>
@@ -122,7 +122,7 @@
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>เอกสารสิทธิ์ที่ดิน</label>                                        
-                                        <select name="interview_land_holding" id="interview_land_holding" class="form-control" >
+                                        <select name="interview_land_holding" id="interview_land_holding" class="form-control select2" >
                                             <option value="">เลือก</option>
                                             <?php foreach ($privileges as $key => $value) :?>
                                                 <option  <?=@$data['interview_land_holding'] == $value['Code'] ? 'selected':'' ;?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
@@ -205,18 +205,19 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
-                                                <input type="text" class="form-control" name="interview_land_utilization_year" id="interview_land_utilization_year" value="<?=@$data['interview_land_utilization_year'];?>">
+                                                <input type="text" class="form-control" name="interview_land_utilization_year" id="interview_land_utilization_year" value="<?=@$data['interview_land_utilization_year'];?>"  placeholder="ระบุ">
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
+                                    <?php $water_type = @explode(',',$data['intervew_land_water_type']);?>
                                     <div class="form-group col-md-6">
                                         <label>แหล่งน้ำที่ใช้</label>
                                         <div class="row  mb-2">
                                             <div class="col-md-12">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" id="intervew_land_water_type1" name="intervew_land_water_type" value="1" <?=@$data['intervew_land_water_type'] == '1' ?'checked':''?> >
+                                                    <input class="form-check-input" type="checkbox" id="intervew_land_water_type1" name="intervew_land_water_type[]" value="1" <?=@in_array("1", $water_type) ?'checked':''?> >
                                                     <label class="form-check-label" for="intervew_land_water_type1">
                                                     น้ำฝน
                                                     </label>
@@ -226,14 +227,14 @@
                                         <div class="row  mb-2">
                                             <div class="col-md-6">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" id="intervew_land_water_type2" name="intervew_land_water_type" value="2" <?=@$data['intervew_land_water_type'] == '2' ?'checked':''?> >
+                                                    <input class="form-check-input" type="checkbox" id="intervew_land_water_type2" name="intervew_land_water_type[]" value="2" <?=@in_array("2", $water_type) ?'checked':''?> >
                                                     <label class="form-check-label" for="intervew_land_water_type2">
                                                     แหล่งน้ำธรรมชาติ
                                                     </label>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
-                                                <input type="text" class="form-control" value="<?=@$data['interview_land_water_value'];?>" name="interview_land_water_value">
+                                                <input type="text" class="form-control" value="<?=@$data['interview_land_water_value'];?>" name="interview_land_water_value" placeholder="ระบุ">
                                             </div>
                                         </div>
                                         <div class="row">
@@ -258,14 +259,14 @@
                                         <div class="row  mb-2">
                                             <div class="col-md-6">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" id="intervew_land_water_type3" name="intervew_land_water_type" value="3" <?=@$data['intervew_land_water_type'] == '3' ?'checked':''?>>
+                                                    <input class="form-check-input" type="checkbox" id="intervew_land_water_type3" name="intervew_land_water_type[]" value="3" <?=@in_array("3", $water_type) ?'checked':''?>>
                                                     <label class="form-check-label" for="intervew_land_water_type3">
                                                     แหล่งน้ำที่สร้างขึ้น
                                                     </label>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
-                                                <input type="text" class="form-control" value="<?=@$data['interview_land_water_self_value'];?>" name="interview_land_water_self_value">
+                                                <input type="text" class="form-control" value="<?=@$data['interview_land_water_self_value'];?>" name="interview_land_water_self_value"  placeholder="ระบุ">
                                             </div>
                                         </div>
                                         <div class="row">
@@ -289,12 +290,13 @@
                                         </div>
                                        
                                     </div>
+                                    <?php $land_use = @explode(',',$data['interview_land_use_type']);?>
                                     <div class="form-group col-md-6">
                                         <label>การใช้ที่ดิน</label>
                                         <div class="row">
                                             <div class="col-md-12  mb-2">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" id="interview_land_use_type1" name="interview_land_use_type" value="1" <?=@$data['interview_land_use_type'] == '1' ?'checked':''?>>
+                                                    <input class="form-check-input" type="checkbox" id="interview_land_use_type1" name="interview_land_use_type[]" value="1" <?=@in_array("1", $land_use) ?'checked':''?>>
                                                     <label class="form-check-label" for="interview_land_use_type1">
                                                     ทำเอง
                                                     </label>
@@ -302,7 +304,7 @@
                                             </div>
                                             <div class="col-md-12  mb-2">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" id="interview_land_use_type2" name="interview_land_use_type" value="2" <?=@$data['interview_land_use_type'] == '2' ?'checked':''?>>
+                                                    <input class="form-check-input" type="checkbox" id="interview_land_use_type2" name="interview_land_use_type[]" value="2" <?=@in_array("2", $land_use) ?'checked':''?>>
                                                     <label class="form-check-label" for="interview_land_use_type2">
                                                     ให้ผู้อื่นเช่า
                                                     </label>
@@ -315,15 +317,15 @@
                                                <label for="">ชื่อผู้เช่า</label>
                                             </div>
                                             <div class="col-md-6">
-                                                <input type="text" class="form-control" name="interview_land_renter" id="interview_land_renter" value="<?=@$data['interview_land_renter'];?>">
+                                                <input type="text" class="form-control" name="interview_land_renter" id="interview_land_renter" value="<?=@$data['interview_land_renter'];?>"  placeholder="ระบุ">
                                             </div>                                      
                                         </div>
                                         <div class="row  mb-2">
                                             <div class="col-md-3  text-right">
-                                               <label for="">ค่าเช้าต่อปี</label>
+                                               <label for="">ค่าเช่าต่อปี</label>
                                             </div>
                                             <div class="col-md-6">
-                                                <input type="text" class="form-control" name="interview_land_rentalfee" id="interview_land_rentalfee" value="<?=@$data['interview_land_rentalfee'];?>">
+                                                <input type="text" class="form-control" name="interview_land_rentalfee" id="interview_land_rentalfee" value="<?=@$data['interview_land_rentalfee'];?>"  placeholder="ระบุ">
                                             </div>                                      
                                         </div>
                                     </div>

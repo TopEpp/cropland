@@ -25,8 +25,8 @@
                             <button type="button" class="btn btn-secondary" onclick="location.href='<?=base_url('survay_house/manage/'.@$house_id);?>';">ข้อมูลพื้นฐาน</button>
                             <button type="button" class="btn btn-secondary" <?=@$house_id ? '':'disabled' ?> onclick="location.href='<?=base_url('survay_house/members/'.@$house_id);?>';">ข้อมูลสมาชิกในครัวเรือน</button>
                             <button type="button" class="btn btn-secondary" <?=@$house_id ? '':'disabled' ?> onclick="location.href='<?=base_url('survay_house/jobs/'.@$house_id);?>';">ข้อมูลด้านอาชีพ</button>
-                            <button type="button" class="btn btn-info" <?=@$house_id ? '':'disabled' ?> onclick="location.href='<?=base_url('survay_house/income/'.@$house_id);?>';">ข้อมูลด้านรายได้จากสวัสดิการ</button>
-                            <button type="button" class="btn btn-secondary" <?=@$house_id ? '':'disabled' ?>  onclick="location.href='<?=base_url('survay_house/outcome/'.@$house_id);?>';">ข้อมูลด้ายรายจ่าย</button>
+                            <button type="button" class="btn btn-info" <?=@$house_id ? '':'disabled' ?> onclick="location.href='<?=base_url('survay_house/income/'.@$house_id);?>';">ข้อมูลรายได้</button>
+                            <button type="button" class="btn btn-secondary" <?=@$house_id ? '':'disabled' ?>  onclick="location.href='<?=base_url('survay_house/outcome/'.@$house_id);?>';">ข้อมูลรายจ่าย</button>
                         </div>
                         
                         <div class="p-2 border">
@@ -120,7 +120,7 @@
                             <input type="text" class="form-control" name="income[1][income_value]">
                         </div>
                         <div class="form-group col-md-6">
-                            <label>จำนวนเดือน</label>
+                            <label>จำนวนเดือนที่ได้รับ</label>
                             <select name="income[1][income_month]" id="income[1][income_month]" class="form-control">
                                 <option value="">เลือก</option>
                                 <?php foreach ($month as $key => $value) :?>
@@ -133,7 +133,7 @@
                             <input type="text" class="form-control" name="income[2][income_value]">
                         </div>
                         <div class="form-group col-md-6">
-                            <label>จำนวนเดือน</label>
+                            <label>จำนวนเดือนที่ได้รับ</label>
                             <select name="income[2][income_month]" id="income[2][income_month]" class="form-control">
                                 <option value="">เลือก</option>
                                 <?php foreach ($month as $key => $value) :?>
@@ -146,7 +146,7 @@
                             <input type="text" class="form-control" name="income[3][income_value]">
                         </div>
                         <div class="form-group col-md-6">
-                            <label>จำนวนเดือน</label>
+                            <label>จำนวนเดือนที่ได้รับ</label>
                             <select name="income[3][income_month]" id="income[3][income_month]" class="form-control">
                                 <option value="">เลือก</option>
                                 <?php foreach ($month as $key => $value) :?>
@@ -159,7 +159,7 @@
                             <input type="text" class="form-control" name="income[4][income_value]">
                         </div>
                         <div class="form-group col-md-6">
-                            <label>จำนวนเดือน</label>
+                            <label>จำนวนเดือนที่ได้รับ</label>
                             <select name="income[4][income_month]" id="income[4][income_month]" class="form-control">
                                 <option value="">เลือก</option>
                                 <?php foreach ($month as $key => $value) :?>

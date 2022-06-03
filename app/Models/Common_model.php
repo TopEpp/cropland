@@ -318,13 +318,16 @@ class Common_model extends Model
           $builder->where(' LH_house_person.person_id', $id);   
           $query = $builder->get()->getRowArray();
           return $query;      
-       }else{
-          $builder->like(' LH_house_person.person_name', $search); 
-          $builder->orLike(' LH_house_person.person_lastname', $search);
-    
-          $query = $builder->get()->getResultArray();
-          return $query;
        }
+
+       if (!empty($search)){
+        $builder->like(' LH_house_person.person_name', $search); 
+        $builder->orLike(' LH_house_person.person_lastname', $search);
+  
+      }
+     
+        $query = $builder->get()->getResultArray();
+        return $query;
   }
 
 
@@ -337,11 +340,13 @@ class Common_model extends Model
         $builder->where('LH_land.land_id', $id);   
         $query = $builder->get()->getRowArray();
         return $query;      
-      }else{
-        $builder->like('LH_land.land_code', $search);
-        $query = $builder->get()->getResultArray();
-        return $query;
       }
+      if (!empty($search)){
+        $builder->like('LH_land.land_code', $search);
+      }
+
+      $query = $builder->get()->getResultArray();
+      return $query;
   }
 
   public function searchUser($search = '',$id = '')
@@ -352,12 +357,13 @@ class Common_model extends Model
       $builder->where('emp_id', $id);   
       $query = $builder->get()->getRowArray();
       return $query;      
-   }else{
-      $builder->like('fullname', $search);
-      $query = $builder->get()->getResultArray();
-      return $query;
    }
 
+   if (!empty($search)){
+      $builder->like('fullname', $search);   
+    }
+    $query = $builder->get()->getResultArray();
+    return $query;
   }
 
   public function searchHouse($search = '',$id = ''){
@@ -368,11 +374,15 @@ class Common_model extends Model
       $builder->where('Code', $id);   
       $query = $builder->get()->getRowArray();
       return $query;      
-    }else{
-      $builder->like('Name', $search);
-      $query = $builder->get()->getResultArray();
-      return $query;
     }
+
+    if (!empty($search)){
+      $builder->like('Name', $search);   
+    }
+
+   
+    $query = $builder->get()->getResultArray();
+    return $query;
 }
     
 
