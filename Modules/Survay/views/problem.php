@@ -53,9 +53,9 @@
                                         <tbody data-repeater-list="problems">
 
                                         <?php if(empty($data)):?>
-                                            <tr data-repeater-item data-id="">
-                                                <th scope="row">
-                                                    1
+                                            <tr data-repeater-item data-id="" class="data_list">
+                                                <th scope="row" class="text-center">
+                                                <p class="key_data">1</p>
                                                     <input type="hidden" name="problem_id">
                                                 </th>
                                                 <td>
@@ -85,7 +85,7 @@
                                                 <?php foreach ($data as $key => $value) :?>
                                                     <tr data-repeater-item data-id="<?=$value['problem_id'];?>">
                                                         <th scope="row" class="text-center">
-                                                            <?=$key+1;?>
+                                                            <p class="key_data"><?=$key+1;?></p>
                                                             <input type="hidden" name="problem_id" value="<?=$value['problem_id'];?>">
                                                         </th>
                                                         <td>
@@ -189,7 +189,7 @@
         $("#add-problems").click(function () {
 			$repeater.repeaterVal()["problems"].map(function (fields, row) {
                 $("#tableProblem tr").last().attr("data-id",'');
-			
+                $(".key_data:last").text(row + 1);
                 // $('[data-repeater-list]').empty();
                 // $('[data-repeater-item]').slice(1).empty();
 			});

@@ -51,7 +51,7 @@
                                             <?php endforeach;?>
                                         </select>
                                     </div>
-                                    <div class="form-group col-md-3">
+                                    <!-- <div class="form-group col-md-3">
                                         <label>กลุ่มบ้าน</label>                                       
                                         <select name="interview_house_id" id="interview_house_id" class="form-control select2-ajax-house">
                                             <?php if(!empty($search['interview_house_id'])):?>
@@ -82,7 +82,7 @@
                                                 <option value="">ทั้งหมด</option>
                                             <?php endif;?>                                             
                                         </select>
-                                    </div>
+                                    </div> -->
                                     <div class="col-md-12 text-right">
                                         <button type="submit" class="btn btn-info">ค้นหา</button>
                                         <button type="button" class="btn btn-secondary" onclick="window.location.replace('<?=site_url('report/survay');?>');">ล้างค่า</button>
@@ -110,6 +110,7 @@
                                         <th scope="col">รหัสแปลง</th>
                                         <th scope="col">ชื่อ-สกุล</th>
                                         <th scope="col">ประเภทบัตร</th>
+                                        <th scope="col">หมายเลขบัตร</th>
                                         <th scope="col">บ้านเลขที่</th>
                                         <th scope="col">กลุ่มบ้าน</th>
                                         <th scope="col">หมู่ที่</th>
@@ -157,13 +158,14 @@
                                                 </td>
                                                 <td><div style="width: 100px"><?=$value['person_name'];?></div></td>
                                                 <td><div style="width: 100px"><?=house_person_type($value['person_type_number']);?></div></td>
+                                                <td><div style="width: 110px"><?=$value['person_number'];?></div></td>
                                                 <td><?=$value['house_number'];?></td>
                                                 <td><div style="width: 100px"><?=$value['person_village'];?></div></td>   
                                                 <td><?=$value['house_moo'];?></td>
                                                 <td><?=$value['tam_name_t'];?></td>
                                                 <td><?=$value['amp_name_t'];?></td>
                                                 <td><?=$value['pro_name_t'];?></td>
-                                                <td><div style="width: 120px"><?=$value['land_use'];?></div></td>                                                 
+                                                <td><div style="width: 120px"><?=$value['land_detail'];?></div></td>                                                 
                                                 <td><?=$value['interview_year'];?></td>         
                                                 <td><?=$value['land_address'];?></td>     
                                                 <td><?=$value['land_possess'];?></td>

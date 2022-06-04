@@ -95,7 +95,7 @@
                                         <label>กลุ่มบ้าน</label>
                                          <select name="interview_house_id" id="interview_house_id" class="form-control select2-ajax-house" onchange="selectHouse($(this))" required="">
                                             <?php if(!empty($data['interview_house_id'])):?>
-                                                <option value="<?=$data['interview_house_id'];?>"><?=$data['person_village'];?></option>
+                                                <option value="<?=$data['interview_house_id'];?>"><?=$data['project_village'];?></option>
                                             <?php else:?>
                                                 <option value="">เลือก</option>
                                             <?php endif;?>                                       

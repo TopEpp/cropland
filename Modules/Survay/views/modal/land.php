@@ -74,9 +74,14 @@
                     </div>
                     <p>เมล็ด/กล้าพันธุ์</p>
                     <div class="row">
+                        <?php 
+                            $seed_unit = array_filter($units, function($k) {
+                                return $k['Code'] == '6' || $k['Code'] == '7';
+                            });
+                        ?>                            
                         <div class="form-group col-md-3">
                             <label>จำนวน</label>                                        
-                            <input type="text" class="form-control" name="seed_value" value="<?=@$result['data']['seed_value'];?>" required="">
+                            <input type="text" class="form-control" name="seed_value" value="<?=@$result['data']['seed_value'];?>" required="" oninput="validateDecimal(this)">
                             <div class="invalid-feedback">
                                 กรุณาระบุจำนวน
                             </div>    
@@ -85,7 +90,7 @@
                             <label>หน่วยนับ</label>                                                                    
                             <select name="seed_unit" id="seed_unit" class="form-control" required="">
                                 <option value="">เลือก</option>                                
-                                <?php foreach ($units as $key => $value) :?>
+                                <?php foreach ($seed_unit as $key => $value) :?>
                                     <option <?=@$result['data']['seed_unit'] == $value['Code'] ? 'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                 <?php endforeach?> 
                             </select>
@@ -95,7 +100,7 @@
                         </div>
                         <div class="form-group col-md-3">
                             <label>ราคาต่อหน่วย (บาท)</label>                                        
-                            <input type="text" class="form-control" name="cost_seed" value="<?=@$result['data']['cost_seed'];?>" required="">
+                            <input type="text" class="form-control" name="cost_seed" value="<?=@$result['data']['cost_seed'];?>" required="" oninput="validateDecimal(this)">
                             <div class="invalid-feedback">
                                 กรุณาระบุราคาต่อหน่วย
                             </div> 
@@ -126,6 +131,12 @@
 
                     <!-- //multi form -->
                     <h5>รายจ่าย/รอบการปลูก</h5>
+                    <?php 
+                        
+                        $pay_unit = array_filter($units, function($k) {
+                            return $k['Code'] == '6' || $k['Code'] == '11';
+                        });
+                    ?>   
                     <p>ปุ๋ย</p>
                     <div class="row repeater-dressing">
                         <div class="col-md-12">
@@ -146,7 +157,7 @@
                                     <?php if (empty($result['dressing'])):?>
                                         <tr data-repeater-item data-id="">
                                             <td>
-                                                1
+                                                <p class="dressing_key_data">1</p>
                                                 <input type="hidden" name="rec_id">
                                             </td>
                                             <td>                                            
@@ -176,7 +187,7 @@
                                             </td>
                                            
                                             <td>                                            
-                                                <input type="text" name="product_value" class="form-control label_amount" required="" onchange="priceCal($(this))">
+                                                <input type="text" name="product_value" class="form-control label_amount" required="" oninput="validateDecimal(this)" onchange="priceCal($(this))">
                                                 <div class="invalid-feedback">
                                                     กรุณาระบุจำนวน
                                                 </div>  
@@ -184,7 +195,7 @@
                                             <td>                                            
                                                 <select name="product_unit"  class="form-control" onchange="selecttype($(this));" required="">
                                                     <option value=""></option>
-                                                    <?php foreach ($units as $key => $value) :?>
+                                                    <?php foreach ($pay_unit as $key => $value) :?>
                                                         <option value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                                     <?php endforeach?> 
                                                 </select>
@@ -194,7 +205,7 @@
                                                 </div>  
                                             </td>
                                             <td>                                            
-                                                <input type="text" name="product_price" class="form-control label_price" required="" onchange="priceCal($(this))">
+                                                <input type="text" name="product_price" class="form-control label_price" required="" oninput="validateDecimal(this)" onchange="priceCal($(this))">
                                                 <div class="invalid-feedback">
                                                     กรุณาระบุราคา
                                                 </div>  
@@ -210,7 +221,8 @@
                                         <?php foreach ($result['dressing'] as $key => $product) :?>
                                             <tr data-repeater-item data-id="<?=$product['rec_id'];?>">
                                             <td>
-                                                <?=$key+1;?>
+                                                
+                                                <p class="dressing_key_data"><?=$key+1;?></p>
                                                 <input type="hidden" name="rec_id" value="<?=$product['rec_id'];?>">
                                             </td>
                                           
@@ -239,7 +251,7 @@
                                                 </div>  
                                             </td>
                                             <td>                                            
-                                                <input type="text" name="product_value" class="form-control label_amount" value="<?=$product['product_value'];?>" required="" onchange="priceCal($(this))">
+                                                <input type="text" name="product_value" class="form-control label_amount" value="<?=$product['product_value'];?>" required="" oninput="validateDecimal(this)" onchange="priceCal($(this))">
                                                 <div class="invalid-feedback">
                                                     กรุณาระบุจำนวน
                                                 </div> 
@@ -247,7 +259,7 @@
                                             <td>                                            
                                                 <select name="product_unit"  class="form-control" onchange="selecttype($(this))" required="">
                                                     <option value=""></option>
-                                                    <?php foreach ($units as $key => $value) :?>
+                                                    <?php foreach ($pay_unit as $key => $value) :?>
                                                         <option <?=$product['product_unit'] == $value['Code']? 'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                                     <?php endforeach?> 
                                                 </select>
@@ -257,7 +269,7 @@
                                                 </div>  
                                             </td>
                                             <td>                                            
-                                                <input type="text" name="product_price" class="form-control label_price" value="<?=$product['product_price'];?>" required="" onchange="priceCal($(this))">
+                                                <input type="text" name="product_price" class="form-control label_price" value="<?=$product['product_price'];?>" required="" oninput="validateDecimal(this)" onchange="priceCal($(this))">
                                                 <div class="invalid-feedback">
                                                     กรุณาระบุราคา
                                                 </div>
@@ -297,8 +309,9 @@
                                 <tbody data-repeater-list="drug">
                                 <?php if (empty($result['drug'])):?>
                                     <tr data-repeater-item data-id="">
-                                        <td>1
-                                        <input type="hidden" name="rec_id">
+                                        <td>
+                                            <p class="drug_key_data">1</p>
+                                            <input type="hidden" name="rec_id">
                                         </td>
                                         <td>                                            
                                             <select name="product_type" id="product_type" class="form-control"  onchange="selecttype($(this))" required="">                                                
@@ -324,7 +337,7 @@
                                                 </div>
                                         </td>
                                         <td>                                            
-                                            <input type="text" name="product_value" class="form-control label_amount" required="" onchange="priceCal($(this))">
+                                            <input type="text" name="product_value" class="form-control label_amount" required="" oninput="validateDecimal(this)" onchange="priceCal($(this))">
                                             <div class="invalid-feedback">
                                                     กรุณาระบุจำนวน
                                                 </div>
@@ -332,7 +345,7 @@
                                         <td>                                            
                                             <select name="product_unit" id="" class="form-control"  onchange="selecttype($(this))" required="">
                                                 <option value=""></option>
-                                                <?php foreach ($units as $key => $value) :?>
+                                                <?php foreach ($pay_unit as $key => $value) :?>
                                                     <option value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                                 <?php endforeach?>                                             
                                             </select>
@@ -342,7 +355,7 @@
                                             </div>
                                         </td>
                                         <td>                                            
-                                            <input type="text" name="product_price" class="form-control label_price" required="" onchange="priceCal($(this))">
+                                            <input type="text" name="product_price" class="form-control label_price" required="" oninput="validateDecimal(this)" onchange="priceCal($(this))">
                                             <div class="invalid-feedback">
                                                 กรุณาระบุราคา
                                             </div>
@@ -357,7 +370,8 @@
                                 <?php else:?>
                                     <?php foreach ($result['drug'] as $key => $product) :?>
                                         <tr data-repeater-item data-id="<?=$product['rec_id'];?>">
-                                        <td>1
+                                        <td>
+                                            <p class="drug_key_data"><?=$key+1;?></p>
                                             <input type="hidden" name="rec_id" value="<?=$product['rec_id'];?>">
                                         </td>
                                         <td>                                            
@@ -385,7 +399,7 @@
                                                 </div>
                                         </td>
                                         <td>                                            
-                                            <input type="text" name="product_value" class="form-control label_amount" value="<?=$product['product_value'];?>" required="" onchange="priceCal($(this))">
+                                            <input type="text" name="product_value" class="form-control label_amount" value="<?=$product['product_value'];?>" required="" oninput="validateDecimal(this)" onchange="priceCal($(this))">
                                             <div class="invalid-feedback">
                                                     กรุณาระบุจำนวน
                                                 </div>
@@ -393,7 +407,7 @@
                                         <td>                                            
                                             <select name="product_unit" id="" class="form-control"  onchange="selecttype($(this))" required="">
                                                 <option value=""></option>
-                                                <?php foreach ($units as $key => $value) :?>
+                                                <?php foreach ($pay_unit as $key => $value) :?>
                                                     <option <?=$product['product_unit'] == $value['Code'] ?'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                                 <?php endforeach?>                                             
                                             </select>
@@ -403,7 +417,7 @@
                                                 </div>
                                         </td>
                                         <td>                                            
-                                            <input type="text" name="product_price" class="form-control label_price" value="<?=$product['product_price'];?>" required="" onchange="priceCal($(this))">
+                                            <input type="text" name="product_price" class="form-control label_price" value="<?=$product['product_price'];?>" required="" oninput="validateDecimal(this)" onchange="priceCal($(this))">
                                             <div class="invalid-feedback">
                                                     กรุณาระบุราคา
                                                 </div>
@@ -441,8 +455,9 @@
                                 <tbody data-repeater-list="hormone">
                                 <?php if (empty($result['hormone'])):?>
                                         <tr data-repeater-item data-id="">
-                                            <td>1
-                                            <input type="hidden" name="rec_id">
+                                            <td>
+                                                <p class="hormone_key_data">1</p>
+                                                <input type="hidden" name="rec_id">
                                             </td>
                                             <td>                                            
                                                 <select name="product_type" id="" class="form-control" onchange="selecttype($(this))" required="">
@@ -457,7 +472,7 @@
                                                 </div>
                                             </td>
                                             <td>                                            
-                                                <input type="text" name="product_value" class="form-control label_amount" required="" onchange="priceCal($(this))">
+                                                <input type="text" name="product_value" class="form-control label_amount" required="" oninput="validateDecimal(this)" onchange="priceCal($(this))">
                                                 <div class="invalid-feedback">
                                                     กรุณาระบุจำนวน
                                                 </div>
@@ -465,7 +480,7 @@
                                             <td>                                            
                                                 <select name="product_unit" id="" class="form-control" onchange="selecttype($(this))" required="">
                                                     <option value=""></option>
-                                                    <?php foreach ($units as $key => $value) :?>
+                                                    <?php foreach ($pay_unit as $key => $value) :?>
                                                         <option value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                                     <?php endforeach?> 
                                                 </select>
@@ -475,7 +490,7 @@
                                                 </div>
                                             </td>
                                             <td>                                            
-                                                <input type="text" name="product_price" class="form-control label_price" required="" onchange="priceCal($(this))">
+                                                <input type="text" name="product_price" class="form-control label_price" required="" oninput="validateDecimal(this)" onchange="priceCal($(this))">
                                                 <div class="invalid-feedback">
                                                     กรุณาระบุราคา
                                                 </div>
@@ -490,8 +505,9 @@
                                 <?php else:?>
                                     <?php foreach ($result['hormone'] as $key => $product) :?>
                                         <tr data-repeater-item  data-id="<?=$product['rec_id'];?>">
-                                            <td>1
-                                            <input type="hidden" name="rec_id" value="<?=$product['rec_id'];?>">
+                                            <td>
+                                                <p class="hormone_key_data"><?=$key+1;?></p>
+                                                <input type="hidden" name="rec_id" value="<?=$product['rec_id'];?>">
                                             </td>
                                             <td>                                            
                                                 <select name="product_type" id="" class="form-control" onchange="selecttype($(this))" required="">
@@ -506,7 +522,7 @@
                                                 </div>
                                             </td>
                                             <td>                                            
-                                                <input type="text" name="product_value" class="form-control label_amount" value="<?=$product['product_value'];?>" required="" onchange="priceCal($(this))">
+                                                <input type="text" name="product_value" class="form-control label_amount" value="<?=$product['product_value'];?>" required="" oninput="validateDecimal(this)" onchange="priceCal($(this))">
                                                 <div class="invalid-feedback">
                                                     กรุณาระบุจำนวน
                                                 </div>
@@ -514,7 +530,7 @@
                                             <td>                                            
                                                 <select name="product_unit" id="" class="form-control" onchange="selecttype($(this))" required="">
                                                     <option value=""></option>
-                                                    <?php foreach ($units as $key => $value) :?>
+                                                    <?php foreach ($pay_unit as $key => $value) :?>
                                                         <option <?=$product['product_unit'] == $value['Code'] ?"selected":'' ;?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                                     <?php endforeach?> 
                                                 </select>
@@ -524,7 +540,7 @@
                                                 </div>
                                             </td>
                                             <td>                                            
-                                                <input type="text" name="product_price" class="form-control label_price" value="<?=$product['product_price'];?>" required="" onchange="priceCal($(this))">
+                                                <input type="text" name="product_price" class="form-control label_price" value="<?=$product['product_price'];?>" required="" oninput="validateDecimal(this)" onchange="priceCal($(this))">
                                                 <div class="invalid-feedback">
                                                     กรุณาระบุราคา
                                                 </div>
@@ -563,8 +579,9 @@
                                 <tbody data-repeater-list="staff">
                                 <?php if (empty($result['staff'])):?>
                                     <tr data-repeater-item data-id="">
-                                        <td>1
-                                        <input type="hidden" name="rec_id">
+                                        <td>
+                                            <p class="staff_key_data">1</p>
+                                            <input type="hidden" name="rec_id">
                                         </td>
                                         <td>                                            
                                             <select name="product_type"  class="form-control" onchange="selecttype($(this))" required="">
@@ -579,8 +596,7 @@
                                                 </div>
                                         </td>
                                         <td>                                            
-                                            <select name="product_branch" class="form-control" onchange="selecttype($(this))" required="">
-                                                <option value=""></option>
+                                            <select name="product_branch" class="form-control" onchange="selecttype($(this))" required="">                                                
                                                 <?php foreach ($labor_type as $key => $value) :?>
                                                     <option value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                                 <?php endforeach?> 
@@ -618,8 +634,9 @@
                                 <?php else:?>
                                     <?php foreach ($result['staff'] as $key => $product) :?>
                                         <tr data-repeater-item  data-id="<?=$product['rec_id'];?>">
-                                            <td>1
-                                            <input type="hidden" name="rec_id" value="<?=$product['rec_id'];?>">
+                                            <td>
+                                                <p class="staff_key_data"><?=$key+1;?></p>
+                                                <input type="hidden" name="rec_id" value="<?=$product['rec_id'];?>">
                                             </td>
                                             <td>                                            
                                                 <select name="product_type"  class="form-control" onchange="selecttype($(this))" required="">
@@ -634,8 +651,7 @@
                                                 </div>
                                             </td>
                                             <td>                                            
-                                                <select name="product_branch" class="form-control" onchange="selecttype($(this))" required="">
-                                                    <option value=""></option>
+                                                <select name="product_branch" class="form-control" onchange="selecttype($(this))" required="">                                                    
                                                     <?php foreach ($labor_type as $key => $value) :?>
                                                         <option <?=$product['product_branch'] == $value['Code'] ? 'selected':'' ;?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                                     <?php endforeach?> 
@@ -683,14 +699,20 @@
                     <div class="row">
                         <div class="form-group col-md-3">
                             <label>น้ำมัน</label>                                        
-                            <input type="text" class="form-control" name="cost_oil" value="<?=@$result['data']['cost_oil'];?>" >
+                            <input type="text" class="form-control" name="cost_oil" value="<?=@$result['data']['cost_oil'];?>" oninput="validateDecimal(this)" >
                         </div>
                         <div class="form-group col-md-3">
                             <label>อื่นๆ</label>                                        
-                            <input type="text" class="form-control" name="cost_other" value="<?=@$result['data']['cost_other'];?>">
+                            <input type="text" class="form-control" name="cost_other" value="<?=@$result['data']['cost_other'];?>" oninput="validateDecimal(this)">
                         </div>
                     </div>
 
+                    <?php 
+                        
+                        $product_unit = array_filter($units, function($k) {
+                            return $k['Code'] == '6' || $k['Code'] == '7' || $k['Code'] == '14';
+                        });
+                    ?>   
                     <p>ผลผลิต</p>
                     <div class="row repeater-product">
                         <div class="col-md-12">
@@ -711,8 +733,9 @@
                                 <tbody data-repeater-list="product">
                                     <?php if (empty($result['product'])):?>
                                         <tr data-repeater-item data-id="">
-                                            <td>1
-                                            <input type="hidden" name="rec_id" >
+                                            <td>
+                                                <p class="product_key_data">1</p>
+                                                <input type="hidden" name="rec_id" >
                                             </td>
                                             <td>                                            
                                                 <select name="product_type" id="" class="form-control" onchange="selecttype($(this))" required="">
@@ -729,15 +752,15 @@
                                                 </div>
                                             </td>
                                             <td>                                            
-                                                <input type="text" name="product_value" class="form-control label_amount" required="" onchange="priceCal($(this))">
+                                                <input type="text" name="product_value" class="form-control label_amount" required=""  oninput="validateDecimal(this)" onchange="priceCal($(this))">
                                                 <div class="invalid-feedback">
                                                     กรุณาระบุจำนวน
                                                 </div>
                                             </td>
                                             <td>                                                                                       
-                                                <select name="product_unit" class="form-control" onchange="selecttype($(this))" required="">
+                                                <select name="product_unit" class="form-control" onchange="selecttype($(this))"  required="">
                                                     <option value=""></option>
-                                                    <?php foreach ($units as $key => $value) :?>
+                                                    <?php foreach ($product_unit as $key => $value) :?>
                                                             <option value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                                         <?php endforeach?>
                                                 </select>
@@ -747,7 +770,7 @@
                                                 </div>
                                             </td>
                                             <td>                                            
-                                                <input type="text" name="product_price" class="form-control label_price" required="" onchange="priceCal($(this))">
+                                                <input type="text" name="product_price" class="form-control label_price" required=""  oninput="validateDecimal(this)" onchange="priceCal($(this))">
                                                 <div class="invalid-feedback">
                                                     กรุณาระบุราคา
                                                 </div>
@@ -775,8 +798,9 @@
                                     <?php else:?>
                                         <?php foreach ($result['product'] as $key => $product) :?>
                                             <tr data-repeater-item  data-id="<?=$product['rec_id'];?>">
-                                            <td>1
-                                            <input type="hidden" name="rec_id" value="<?=$product['rec_id'];?>">
+                                            <td>
+                                                <p class="product_key_data"><?=$key+1;?></p>
+                                                <input type="hidden" name="rec_id" value="<?=$product['rec_id'];?>">
                                             </td>
                                             <td>                                            
                                                 <select name="product_type" id="" class="form-control" onchange="selecttype($(this))" required="">
@@ -793,7 +817,7 @@
                                                 </div>
                                             </td>
                                             <td>                                            
-                                                <input type="text" name="product_value" class="form-control label_amount" value="<?=@$product['product_value'];?>" required="" onchange="priceCal($(this))">
+                                                <input type="text" name="product_value" class="form-control label_amount" value="<?=@$product['product_value'];?>" required="" oninput="validateDecimal(this)" onchange="priceCal($(this))">
                                                 <div class="invalid-feedback">
                                                     กรุณาระบุจำนวน
                                                 </div>
@@ -801,7 +825,7 @@
                                             <td>                                                                                       
                                                 <select name="product_unit" class="form-control" onchange="selecttype($(this))" required="">
                                                     <option value=""></option>
-                                                    <?php foreach ($units as $key => $value) :?>
+                                                    <?php foreach ($product_unit as $key => $value) :?>
                                                             <option <?=@$product['product_unit'] == $value['Code'] ? 'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                                         <?php endforeach?>
                                                 </select>
@@ -811,7 +835,7 @@
                                                 </div>
                                             </td>
                                             <td>                                            
-                                                <input type="text" name="product_price" class="form-control label_price" value="<?=@$product['product_price'];?>" required="" onchange="priceCal($(this))">
+                                                <input type="text" name="product_price" class="form-control label_price" value="<?=@$product['product_price'];?>" required=""  oninput="validateDecimal(this)" onchange="priceCal($(this))">
                                                 <div class="invalid-feedback">
                                                     กรุณาระบุราคา
                                                 </div>
@@ -871,6 +895,12 @@
                         
 <script>
 
+var validateDecimal = function(e) {
+    var t = e.value;
+    t = t.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');
+    e.value = (t.indexOf(".") >= 0) ? (t.substr(0, t.indexOf(".")) + t.substr(t.indexOf("."), 3)) : t;
+}
+
 function selectProductType(elm){
         var $option = elm.find('option:selected');
         var value = $option.val();
@@ -923,7 +953,7 @@ function selectProductType(elm){
        var price = element.closest('tr').find('.label_price').val()
        if (typeof amount !== "undefined" && typeof price !== "undefined"  ){
            var sum = amount * price;
-           element.closest('tr').find('.label_sum_price').text(sum)
+           element.closest('tr').find('.label_sum_price').text(sum.toFixed(2))
        }       
    }
 
@@ -963,8 +993,9 @@ function selectProductType(elm){
                 
             },
 
-            hide: function (deleteElement) {
-                var id = $(this).attr("data-id");
+            hide: function (deleteElement,index) {
+             
+                var id = $(this).attr("data-id");             
                 if (id !== ''){
                     swal({
                         title: 'Are you sure?',
@@ -988,6 +1019,10 @@ function selectProductType(elm){
                 }else{                    
                     $(this).slideUp(deleteElement);
                 }
+
+                var numItems = $('.dressing_key_data').length
+                $(".dressing_key_data:last").text(numItems-1);
+                
             },
             ready: function (setIndexes) {
                 // $(".select2").select2();
@@ -1038,6 +1073,9 @@ function selectProductType(elm){
                 }else{                    
                     $(this).slideUp(deleteElement);
                 }
+
+                var numItems = $('.drug_key_data').length
+                $(".drug_key_data:last").text(numItems-1);
             },
             ready: function (setIndexes) {
                 
@@ -1085,6 +1123,9 @@ function selectProductType(elm){
                 }else{                    
                     $(this).slideUp(deleteElement);
                 }
+
+                var numItems = $('.hormone_key_data').length
+                $(".hormone_key_data:last").text(numItems-1);
             },
             ready: function (setIndexes) {
                 
@@ -1132,6 +1173,8 @@ function selectProductType(elm){
                 }else{                    
                     $(this).slideUp(deleteElement);
                 }
+                var numItems = $('.staff_key_data').length
+                $(".staff_key_data:last").text(numItems-1);
             },
             ready: function (setIndexes) {
                 
@@ -1179,6 +1222,9 @@ function selectProductType(elm){
                 }else{                    
                     $(this).slideUp(deleteElement);
                 }
+
+                var numItems = $('.product_key_data').length
+                $(".product_key_data:last").text(numItems-1);
             },
             ready: function (setIndexes) {
                 
@@ -1199,31 +1245,36 @@ function selectProductType(elm){
 
         $("#add-dressing").click(function () {
 			$repeaterDressing.repeaterVal()["dressing"].map(function (fields, row) {                
-                $("#tableDressing tr").last().attr("data-id",'');              
+                $("#tableDressing tr").last().attr("data-id",'');       
+                $(".dressing_key_data:last").text(row + 1);
 			});
 		});
 
         $("#add-drug").click(function () {
 			$repeaterDrug.repeaterVal()["drug"].map(function (fields, row) {                
-                $("#tableDrug tr").last().attr("data-id",'');              
+                $("#tableDrug tr").last().attr("data-id",'');  
+                $(".drug_key_data:last").text(row + 1);            
 			});
 		});
 
         $("#add-hormone").click(function () {
 			$repeaterHormone.repeaterVal()["hormone"].map(function (fields, row) {                
-                $("#tableHormone tr").last().attr("data-id",'');              
+                $("#tableHormone tr").last().attr("data-id",'');    
+                $(".hormone_key_data:last").text(row + 1);          
 			});
 		});
 
         $("#add-staff").click(function () {
 			$repeaterStaff.repeaterVal()["staff"].map(function (fields, row) {                
-                $("#tableStaff tr").last().attr("data-id",'');              
+                $("#tableStaff tr").last().attr("data-id",'');   
+                $(".staff_key_data:last").text(row + 1);           
 			});
 		});
 
         $("#add-product").click(function () {
 			$repeaterProduct.repeaterVal()["product"].map(function (fields, row) {                
-                $("#tableProduct tr").last().attr("data-id",'');              
+                $("#tableProduct tr").last().attr("data-id",'');  
+                $(".product_key_data:last").text(row + 1);            
 			});
 		});
     });

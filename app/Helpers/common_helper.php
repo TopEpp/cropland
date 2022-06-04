@@ -20,15 +20,20 @@ function utilization_type($id){
 
 
 function land_use_type($id){
-    if ($id != ''){
-        $data = [
-            '1'=>'ทำเอง',
-            '2'=>'ให้ผู้อื่นเช่า',            
-        ];
-    
-        return $data[$id];
+    $tmp = explode(',',$id);
+    $data = [
+        '1'=>'ทำเอง',
+        '2'=>'ให้ผู้อื่นเช่า',            
+    ];
+    $res = [];
+    foreach ($tmp as $key => $value) {   
+        if (!empty($data[$value])){
+            $res[$key] = $data[$value];
+        }
+         
     }
-    return '';
+    
+    return implode(',',$res);
  
 }
 

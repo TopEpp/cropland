@@ -42,12 +42,13 @@
                                                         <th  width="5%" rowspan="2" scope="col">พื้นที่ปลูก<br/>(ไร่)</th>
                                                         <th  width="5%" rowspan="2" scope="col">อายุ<br/>(ปี)</th>
                                                         <th  width="5%" rowspan="2" scope="col">จำนวนปลูกต่อหน่วย</th>
+                                                        <th width="5%" rowspan="2" scope="col"> หน่วยปลูก</th>
                                                         <th  width="5%" rowspan="2" scope="col">ช่วงเวลา ปลูก-เก็บเกี่ยว</th>
                                                         <th  width="5%" rowspan="2" scope="col">การส่งเสริมจากสถาบันฯ</th>
                                                         <th  width="5%" rowspan="2" scope="col">ได้รับผลผลิต</th>
                                                         <th  width="10%" colspan="7" scope="col" class="text-center">รายจ่าย (บาท)/รอบการปลูก</th>
                                                         <th  width="10%" rowspan="2" scope="col" class="text-center">รวมรายจ่าย<br/>(บาท/รอบ)</th>
-                                                        <th  width="20%" colspan="6" scope="col" class="text-center">ผลผลิต/รอบการปลูก</th>                                
+                                                        <th  width="20%" colspan="8" scope="col" class="text-center">ผลผลิต/รอบการปลูก</th>                                
                                                         <th rowspan="2" width="10%"></th>
                                                     </tr>
                                                     <tr>
@@ -60,30 +61,35 @@
                                                         <th>อื่นๆ</th>
 
                                                         <th>ผลผลิต<br/>บริโภค</th>
+                                                        <th>หน่วย<br/>บริโภค</th>
                                                         <th>ลักษณะการขาย</th>
-                                                        <th>ผลผลิต</th>
-                                                        <th>ราคาขายต่อหน่วย<br/>(บาท)</th>
+                                                        <th>ผลผลิต<br/>ขาย</th>
+                                                        <th>หน่วย<br/>ขาย</th>
+                                                        <th>ราคาขายต่อหน่วย<br/>(บาท)</th>                                                        
                                                         <th>รวมรายได้<br/>(บาท)</th>
                                                         <th>ตลาด</th>                                                       
                                                     </tr>
                                                 </thead>
-                                                <tbody>     
+                                                <tbody>
+                                                    <?php $cout = 0;?>
                                                     <?php foreach ($data as $key => $value) :?>    
                                                         <?php 
                                                         $seed =$value['cost_seed'] * $value['seed_value'];
                                                         $sum_cost = $seed + $value['dressing'] + $value['drug']+ $value['hormone']+$value['staff']+$value['cost_oil']+$value['cost_other'];
                                                         $detail_hrdi = @explode(',',$value['detail_hrdi']);
                                                         $sum_market =$value['product_price'] * $value['product_value'];
+                                                        $cout = $cout + 1;
                                                         ?>                                                    
                                                         <tr>    
-                                                            <td><?=$key+1;?></td>                                                        
-                                                            <td><?=$value['product_group'];?></td>
+                                                            <td class="text-center"><?=$cout;?></td>                                                        
+                                                            <td><div style="width: 100px"><?=$value['product_type_name'];?></div></td>
                                                             <td>
-                                                                <?=$value['product_name'];?>
+                                                            <div style="width: 100px"><?=$value['product_name'];?></div>
                                                             </td>
                                                             <td><?=$value['detail_area'];?></td>                                                                                                                
                                                             <td><?=$value['detail_age'];?></td>
                                                             <td><?=$value['seed_value'];?></td>
+                                                            <td></td>
                                                             <td><?=$value['detail_start_date'];?></td>
                                                             <td><?=@in_array("1", $detail_hrdi) ?'&check;':''?></td>
                                                             <td><?=@in_array("2", $detail_hrdi) ?'&check;':''?></td>
@@ -96,12 +102,15 @@
                                                             <td><?=$value['cost_other'] ? number_format($value['cost_other']):0;?></td>
                                                             <td><?=$sum_cost ? number_format($sum_cost):0;?></td>
                                                             <td><?=$value['detail_consume'] ? number_format($value['detail_consume']):0;?></td>
-                                                            <td><?=$value['product_type'];?></td>
+                                                            <td></td>
+                                                            <td><?=$value['product_type'];?></td>                                                            
                                                             <td><?=$value['product_value'] ? number_format($value['product_value']):0;?></td>
+                                                            <td></td>
                                                             <td><?=$value['product_price'] ? number_format($value['product_price']):0;?></td>
+                                                            
                                                             <td><?=number_format($sum_market);?></td>
-                                                            <td><?=$value['product_market'];?></td>
-                                                            <td class="text-center">
+                                                            <td><div style="width: 150px"><?=$value['product_market'];?></div></td>
+                                                            <td class="text-center p-2">
                                                                 <div class="buttons">
                                                                     <a href="#"  onclick="addLand(<?=$interview_id;?>,<?=$value['detail_id'];?>)" class="btn btn-icon btn-primary"><i class="far fa-edit"></i></a>                                    
                                                                     <a href="#" class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></a>

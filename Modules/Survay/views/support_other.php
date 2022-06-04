@@ -80,9 +80,9 @@
                                                 </td>                                      
                                             </tr> -->
                                         <?php if(empty($data)):?>
-                                            <tr data-repeater-item data-id="">
-                                                <th scope="row">
-                                                    1
+                                            <tr data-repeater-item data-id="" class="data_list">
+                                                <th scope="row"  class="text-center">
+                                                    <p class="key_data">1</p>
                                                     <input type="hidden" name="support_id">
                                                 </th>
                                                 <td>
@@ -111,8 +111,8 @@
                                             <?php else:?>
                                                 <?php foreach ($data as $key => $value) :?>
                                                     <tr data-repeater-item data-id="<?=$value['support_id'];?>">
-                                                        <th scope="row">
-                                                            1
+                                                        <th scope="row" class="text-center">
+                                                            <p class="key_data"><?=$key+1;?></p>
                                                             <input type="hidden" name="support_id" value="<?=$value['support_id'];?>">
                                                         </th>
                                                         <td>
@@ -218,6 +218,7 @@
         $("#add-support").click(function () {
 			$repeater.repeaterVal()["supports"].map(function (fields, row) {
                 $("#tableSupportOther tr").last().attr("data-id",'');
+                $(".key_data:last").text(row + 1);
 				// $(".key_data:last").text(row);
                 // $(".family_key:last").attr('data-id', (row));               
                 // $(`input[name='group[${row}][family]']`).val((row))

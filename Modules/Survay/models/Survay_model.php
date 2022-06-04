@@ -35,7 +35,7 @@ class Survay_model extends Model
             LH_house.house_label,
             CONCAT('บ้านเลขที่ ', LH_house.house_number,' หมู่ที่ ',
             LH_house.house_moo,' ตำบล ',CODE_TAMBON.TAM_T,' อำเภอ ',CODE_AMPHUR.AMP_T,' จังหวัด ',CODE_PROVINCE.Name) as person_address,
-                person_village.Name as person_village
+            person_village.Name as person_village
                                 
         ");
         $builder->join('LH_land', 'LH_land.land_id = LH_interview_land.interview_code','left');
@@ -136,10 +136,12 @@ class Survay_model extends Model
         $builder->select('LH_interview_land_detail.*,
                         LH_interview_land_detail.detail_id as detail_ids,
                         CODE_PRODUCTGROUP.name as product_group,
+                        CODE_PRODUCTTYPE.name as product_type_name,                        
                         CODE_PRODUCT.name as product_name,
                         LH_interview_land_product.*');
         $builder->join('LH_interview_land_product', 'LH_interview_land_product.detail_id = LH_interview_land_detail.detail_id');
         $builder->join('CODE_PRODUCTGROUP', 'CODE_PRODUCTGROUP.Code = LH_interview_land_detail.detail_use','left');
+        $builder->join('CODE_PRODUCTTYPE', 'CODE_PRODUCTTYPE.Code = LH_interview_land_detail.detail_use_type','left');
         $builder->join('CODE_PRODUCT', 'CODE_PRODUCT.Code = LH_interview_land_detail.detail_type','left');
         $builder = $builder->where('LH_interview_land_detail.interview_id',$interview_id);
 

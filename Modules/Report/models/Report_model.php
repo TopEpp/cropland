@@ -21,12 +21,20 @@ class Report_model extends Model
             LH_house.house_label,
             LH_house.house_number,
             LH_house_person.person_type_number,
+            LH_house_person.person_number,
             LH_house.house_moo,
             CODE_TAMBON.TAM_T as tam_name_t,
             CODE_AMPHUR.AMP_T as amp_name_t,
             CODE_PROVINCE.Name as pro_name_t,
             CODE_POSSESSRIGHT.name as land_possess,
             person_village.Name as person_village,
+
+            STUFF((SELECT  ',' +CODE_PRODUCTTYPE.Name
+            FROM LH_interview_land_detail
+            join CODE_PRODUCTTYPE on CODE_PRODUCTTYPE.Code = LH_interview_land_detail.detail_use_type
+            WHERE LH_interview_land_detail.interview_id = LH_interview_land.interview_id	
+            			 
+            FOR XML PATH, TYPE).value(N'.[1]', N'varchar(max)'), 1, 2, '') as land_detail,
 
             STUFF((SELECT  ',' +LH_interview_land_support.support_detail
             FROM LH_interview_land_support
