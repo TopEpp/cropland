@@ -93,6 +93,18 @@
         <div class="row">
           <div class="col-md-12">
             <div class="form-group">
+              ประเภทผู้ใช้งาน
+              <select class="form-control" id="user_type" name="user_type" onchange="changeType(this.value)">
+                <option>เลือก</option>
+                <option value="2">ผู้ใช้งานทั่วไป</option>
+                <option value="1">ผู็ดูแลระบบ</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
              <label><input type="checkbox" name="permission[]" id="permission1" value="1" class="check_perm"> จัดการข้อมูลครัวเรือน</label><br>
              <label><input type="checkbox" name="permission[]" id="permission2" value="2" class="check_perm"> จัดการข้อมูลแบบสอบถามครัวเรือน</label><br>
              <label><input type="checkbox" name="permission[]" id="permission3" value="3" class="check_perm"> จัดการข้อมูลที่ดินรายแปลง</label><br>
@@ -122,6 +134,34 @@
 <!-- <script src="<?= base_url('public/js/script.js') ?>"></script> -->
 
 <script type="text/javascript">
+    function changeType(type){
+      if(type==1){
+        document.getElementById("permission1").checked = true;
+        document.getElementById("permission2").checked = true;
+        document.getElementById("permission3").checked = true;
+        document.getElementById("permission4").checked = true;
+        document.getElementById("permission5").checked = true;
+        document.getElementById("permission6").checked = true;
+        document.getElementById("permission7").checked = true;
+      }else if(type==2){
+        document.getElementById("permission1").checked = true;
+        document.getElementById("permission2").checked = true;
+        document.getElementById("permission3").checked = true;
+        document.getElementById("permission4").checked = true;
+        document.getElementById("permission5").checked = false;
+        document.getElementById("permission6").checked = false;
+        document.getElementById("permission7").checked = true;
+      }else{
+        document.getElementById("permission1").checked = false;
+        document.getElementById("permission2").checked = false;
+        document.getElementById("permission3").checked = false;
+        document.getElementById("permission4").checked = false;
+        document.getElementById("permission5").checked = false;
+        document.getElementById("permission6").checked = false;
+        document.getElementById("permission7").checked = false;
+      }
+    }
+
     function openForm(id='',fullname='') {
         $('#emp_id').val('');
         document.getElementById("permission1").checked = false;
