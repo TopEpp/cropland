@@ -51,8 +51,8 @@
                                         <tbody data-repeater-list="needs">
                                         <?php if(empty($data)):?>
                                             <tr data-repeater-item class="need_key" data-id="">
-                                                <th scope="row">
-                                                    1
+                                                <th scope="row" class="text-center">
+                                                    <p class="key_data">1</p>
                                                     <input type="hidden" name="need_id">
                                                 </th>
                                                 <td>
@@ -81,8 +81,8 @@
                                             <?php else:?>
                                                 <?php foreach ($data as $key => $value) :?>
                                                     <tr data-repeater-item data-id="<?=$value['need_id'];?>" class="need_key">
-                                                        <td scope="row">
-                                                            1
+                                                        <td scope="row" class="text-center">
+                                                            <p class="key_data"><?=$key+1;?></p>
                                                             <input type="hidden" name="need_id" value="<?=$value['need_id'];?>">
                                                         </td>
                                                         <td>
@@ -186,7 +186,7 @@
         $("#add-need").click(function () {
 			$repeater.repeaterVal()["needs"].map(function (fields, row) {                
                 $("#tableNeed tr").last().attr("data-id",'');
-                
+                $(".key_data:last").text(row + 1);
 				// $(".key_data:last").text(row);
                 // $("tbody tr > .need_key:last").html();             
                 // $(`input[name='group[${row}][family]']`).val((row))

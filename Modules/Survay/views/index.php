@@ -40,7 +40,7 @@
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label>โครงการ</label>                                       
-                                        <select name="interview_project" id="interview_project" class="form-control select2">
+                                        <select name="interview_project" id="interview_project" class="form-control select2" onchange="selectProject($(this))">
                                             <option value="">ทั้งหมด</option>
                                             <?php foreach ($projects as $key => $value) :?>
                                                 <option <?=@$search['interview_project'] == $value['Code']?'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Description'];?></option>
@@ -52,7 +52,7 @@
                                         <select name="interview_area" id="interview_area" class="form-control select2">
                                             <option value="">ทั้งหมด</option>
                                             <?php foreach ($projects as $key => $value) :?>
-                                                <option <?=@$search['interview_area'] == $value['Name']?'selected':'';?> value="<?=$value['Name'];?>"><?=$value['Name'];?></option>
+                                                <option <?=@$search['interview_area'] == $value['Code']?'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                             <?php endforeach;?>
                                         </select>
                                     </div>
@@ -63,6 +63,7 @@
                                                 <option value="<?=$search['interview_house_id'];?>"><?=$data_search['house']['Name']?></option>
                                             <?php else:?>
                                                 <option value="">ทั้งหมด</option>
+                                                
                                             <?php endif;?>                                          
                                         </select>
                                     </div>
@@ -129,8 +130,8 @@
                                         <td><?=$value['land_address'];?></td>
                                         <td class="text-center">
                                             <div class="buttons">
-                                                <a href="<?=base_url('survay/manage/'.$value['interview_id']);?>" class="btn btn-icon btn-primary"><i class="far fa-edit"></i></a>                                    
-                                                <button class="btn btn-icon btn-danger" onclick="deleteItem(<?=$value['interview_id'];?>)"><i class="fas fa-trash"></i></button>
+                                                <a data-toggle="tooltip" title="แก้ไขข้อมูล" href="<?=base_url('survay/manage/'.$value['interview_id']);?>" class="btn btn-icon btn-primary"><i class="far fa-edit"></i></a>                                    
+                                                <button  data-toggle="tooltip" data-placement="bottom" title="ลบข้อมูล" class="btn btn-icon btn-danger" onclick="deleteItem(<?=$value['interview_id'];?>)"><i class="fas fa-trash"></i></button>
                                             </div>
                                         </td>
                                     </tr>
@@ -180,6 +181,25 @@
             } 
         });
         
+    }
+
+    function selectProject(elm){
+        var value = elm.val();
+        let selText = $("#interview_project option:selected").text();
+        // const land = selText.split('/');
+        
+        //set land
+        $("#interview_area").val(value).trigger('change');
+        
+        $.ajax({
+            type: "GET",
+            url: domain+'common/get-village?project='+value,
+            success : function(options){
+
+                $("#interview_house_id").html(options)
+                $("#interview_house_id").select2();
+            }
+        });
     }
    
 </script>

@@ -69,6 +69,14 @@
                                             <?php endif;?>
                                         </select>
                                     </div>
+                                    <div class="form-group col-md-3">
+                                        <label>พื้นที่ดำเนินงาน</label>                                       
+                                        <select name="project_land" id="project_land" class="form-control select2">
+                                            <?php foreach ($projects as $key => $value) :?>
+                                                <option <?=@$search['project_land'] == $value['Name']?'selected':'';?> value="<?=$value['Name'];?>"><?=$value['Name'];?></option>
+                                            <?php endforeach;?>
+                                        </select>
+                                    </div>
                                     <div class="col-md-12 text-right">
                                         <button type="submit" class="btn btn-info">ค้นหา</button>
                                         <button type="button" class="btn btn-secondary" onclick="window.location.replace('<?=site_url('house');?>');">ล้างค่า</button>
@@ -98,9 +106,9 @@
                                         <!-- <td> - </td> -->
                                         <td class="text-center">
                                             <div class="buttons">
-                                                <a href="<?=base_url('house/manage/'.$value['house_id']);?>" class="btn btn-icon btn-primary"><i class="far fa-edit"></i></a>
-                                                <a href="<?php echo base_url('survay_house/manage/'.$value['house_id'])?>" class="btn btn-icon btn-primary"><i class="fas fa-file"></i></a>
-                                                <button onclick="deleteItem(<?=$value['house_id'];?>)" class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></button>
+                                                <a data-toggle="tooltip" title="แก้ไขข้อมูล" href="<?=base_url('house/manage/'.$value['house_id']);?>" class="btn btn-icon btn-primary"><i class="far fa-edit"></i></a>
+                                                <a data-toggle="tooltip" title="ประเมินครัวเรือน" href="<?php echo base_url('survay_house/manage/'.$value['house_id'])?>" class="btn btn-icon btn-primary"><i class="fas fa-file"></i></a>
+                                                <button data-toggle="tooltip" data-placement="bottom" title="ลบข้อมูล" onclick="deleteItem(<?=$value['house_id'];?>)" class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></button>
                                             </div>
                                         </td>
                                     </tr>

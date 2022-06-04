@@ -132,7 +132,7 @@
                             <input type="text" class="form-control" name="outcome[1][outcome_value]">
                         </div>
                         <div class="form-group col-md-6">
-                            <label>จำนวนเดือน</label>
+                            <label>จำนวนเดือนที่ได้รับ</label>
                             <select name="outcome[1][outcome_month]" id="outcome[1][outcome_month]" class="form-control">
                                 <option value="">เลือก</option>
                                 <?php foreach ($month as $key => $value) :?>
@@ -145,7 +145,7 @@
                             <input type="text" class="form-control" name="outcome[2][outcome_value]">
                         </div>
                         <div class="form-group col-md-6">
-                            <label>จำนวนเดือน</label>
+                            <label>จำนวนเดือนที่ได้รับ</label>
                             <select name="outcome[2][outcome_month]" id="outcome[2][outcome_month]" class="form-control">
                                 <option value="">เลือก</option>
                                 <?php foreach ($month as $key => $value) :?>
@@ -158,7 +158,7 @@
                             <input type="text" class="form-control" name="outcome[3][outcome_value]">
                         </div>
                         <div class="form-group col-md-6">
-                            <label>จำนวนเดือน</label>
+                            <label>จำนวนเดือนที่ได้รับ</label>
                             <select name="outcome[3][outcome_month]" id="outcome[3][outcome_month]" class="form-control">
                                 <option value="">เลือก</option>
                                 <?php foreach ($month as $key => $value) :?>
@@ -171,7 +171,7 @@
                             <input type="text" class="form-control" name="outcome[4][outcome_value]">
                         </div>
                         <div class="form-group col-md-6">
-                            <label>จำนวนเดือน</label>
+                            <label>จำนวนเดือนที่ได้รับ</label>
                             <select name="outcome[4][outcome_month]" id="outcome[4][outcome_month]" class="form-control">
                                 <option value="">เลือก</option>
                                 <?php foreach ($month as $key => $value) :?>
@@ -184,7 +184,7 @@
                             <input type="text" class="form-control" name="outcome[5][outcome_value]">
                         </div>
                         <div class="form-group col-md-6">
-                            <label>จำนวนเดือน</label>
+                            <label>จำนวนเดือนที่ได้รับ</label>
                             <select name="outcome[5][outcome_month]" id="outcome[5][outcome_month]" class="form-control">
                                 <option value="">เลือก</option>
                                 <?php foreach ($month as $key => $value) :?>
@@ -197,7 +197,7 @@
                             <input type="text" class="form-control" name="outcome[6][outcome_value]">
                         </div>
                         <div class="form-group col-md-6">
-                            <label>จำนวนเดือน</label>
+                            <label>จำนวนเดือนที่ได้รับ</label>
                             <select name="outcome[6][outcome_month]" id="outcome[6][outcome_month]" class="form-control">
                                 <option value="">เลือก</option>
                                 <?php foreach ($month as $key => $value) :?>
@@ -210,7 +210,7 @@
                             <input type="text" class="form-control" name="outcome[7][outcome_value]">
                         </div>
                         <div class="form-group col-md-6">
-                            <label>จำนวนเดือน</label>
+                            <label>จำนวนเดือนที่ได้รับ</label>
                             <select name="outcome[7][outcome_month]" id="outcome[7][outcome_month]" class="form-control">
                                 <option value="">เลือก</option>
                                 <?php foreach ($month as $key => $value) :?>
@@ -223,7 +223,7 @@
                             <input type="text" class="form-control" name="outcome[8][outcome_value]">
                         </div>
                         <div class="form-group col-md-6">
-                            <label>จำนวนเดือน</label>
+                            <label>จำนวนเดือนที่ได้รับ</label>
                             <select name="outcome[8][outcome_month]" id="outcome[8][outcome_month]" class="form-control">
                                 <option value="">เลือก</option>
                                 <?php foreach ($month as $key => $value) :?>
@@ -236,7 +236,7 @@
                             <input type="text" class="form-control" name="outcome[9][outcome_value]">
                         </div>
                         <div class="form-group col-md-6">
-                            <label>จำนวนเดือน</label>
+                            <label>จำนวนเดือนที่ได้รับ</label>
                             <select name="outcome[9][outcome_month]" id="outcome[9][outcome_month]" class="form-control">
                                 <option value="">เลือก</option>
                                 <?php foreach ($month as $key => $value) :?>

@@ -120,7 +120,7 @@
                             <input type="text" class="form-control" name="income[1][income_value]">
                         </div>
                         <div class="form-group col-md-6">
-                            <label>จำนวนเดือน</label>
+                            <label>จำนวนเดือนที่ได้รับ</label>
                             <select name="income[1][income_month]" id="income[1][income_month]" class="form-control">
                                 <option value="">เลือก</option>
                                 <?php foreach ($month as $key => $value) :?>
@@ -133,7 +133,7 @@
                             <input type="text" class="form-control" name="income[2][income_value]">
                         </div>
                         <div class="form-group col-md-6">
-                            <label>จำนวนเดือน</label>
+                            <label>จำนวนเดือนที่ได้รับ</label>
                             <select name="income[2][income_month]" id="income[2][income_month]" class="form-control">
                                 <option value="">เลือก</option>
                                 <?php foreach ($month as $key => $value) :?>
@@ -146,7 +146,7 @@
                             <input type="text" class="form-control" name="income[3][income_value]">
                         </div>
                         <div class="form-group col-md-6">
-                            <label>จำนวนเดือน</label>
+                            <label>จำนวนเดือนที่ได้รับ</label>
                             <select name="income[3][income_month]" id="income[3][income_month]" class="form-control">
                                 <option value="">เลือก</option>
                                 <?php foreach ($month as $key => $value) :?>
@@ -159,7 +159,7 @@
                             <input type="text" class="form-control" name="income[4][income_value]">
                         </div>
                         <div class="form-group col-md-6">
-                            <label>จำนวนเดือน</label>
+                            <label>จำนวนเดือนที่ได้รับ</label>
                             <select name="income[4][income_month]" id="income[4][income_month]" class="form-control">
                                 <option value="">เลือก</option>
                                 <?php foreach ($month as $key => $value) :?>

@@ -40,10 +40,10 @@
                                     <table class="table table-bordered" id="tableSupport">
                                         <thead>
                                             <tr>
-                                            <th scope="col">ลำดับ</th>
-                                            <th scope="col">ประเภท</th>
-                                            <th scope="col">รายละเอียด</th>
-                                            <th scope="col">
+                                            <th scope="col" width="5%">ลำดับ</th>
+                                            <th scope="col" width="30%">ประเภท</th>
+                                            <th scope="col" width="30%">รายละเอียด</th>
+                                            <th scope="col" width="30%" class="text-center">
                                                 <button type="button" class="btn btn-info" id="add-support" data-repeater-create>เพิ่มข้อมูล</button>
                                             </th>                                 
                                             </tr>
@@ -51,9 +51,9 @@
                                         <tbody data-repeater-list="supports">
                                          
                                             <?php if(empty($data)):?>
-                                            <tr data-repeater-item data-id="">
-                                                <th scope="row">
-                                                    1
+                                            <tr data-repeater-item data-id="" class="data_list">
+                                                <th scope="row" class="text-center">
+                                                    <p class="key_data">1</p>
                                                     <input type="hidden" name="support_id">
                                                 </th>
                                                 <td>
@@ -82,8 +82,8 @@
                                             <?php else:?>
                                                 <?php foreach ($data as $key => $value) :?>
                                                     <tr data-repeater-item data-id="<?=$value['support_id'];?>" class="data_list">
-                                                        <td scope="row">
-                                                            1
+                                                        <td scope="row" class="text-center">
+                                                            <p class="key_data"><?=$key+1;?></p>
                                                             <input type="hidden" name="support_id" value="<?=$value['support_id'];?>">
                                                         </td>
                                                         <td>
@@ -187,8 +187,9 @@
 
         $("#add-support").click(function () {
 			$repeater.repeaterVal()["supports"].map(function (fields, row) {
-                $("#tableSupport tr").last().attr("data-id",'');
-				// console.log($(".data_list:last").data('id'));
+                $("#tableSupport tr").last().attr("data-id",'');  
+                $(".key_data:last").text(row + 1);              
+				
                 // $(".family_key:last").attr('data-id', (row));               
                 // $(`input[name='group[${row}][family]']`).val((row))
                 // $('[data-repeater-list]').empty();
