@@ -27,16 +27,16 @@
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label>จังหวัด</label>                                       
-                                        <select name="province" id="province" class="form-control ">     
+                                        <select name="province" id="province" class="form-control select2-ajax-province">     
                                             <option value="">ทั้งหมด</option>                                       
-                                            <?php foreach ($province as $key => $value) :?>
+                                            <!-- <?php foreach ($province as $key => $value) :?>
                                                 <option <?=@$search['province'] == $value['Code'] ? 'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
-                                            <?php endforeach?>                                         
+                                            <?php endforeach?>                                          -->
                                         </select>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label>อำเภอ</label>                                       
-                                        <select name="amphur" id="amphur" class="form-control">
+                                        <select name="amphur" id="amphur" class="form-control select2-ajax-amphur">
                                             <?php foreach ($amphur as $key => $value) :?>
                                                 <option <?=@$search['amphur'] == $value['AMP_CODE'] ? 'selected':'';?> value="<?=$value['AMP_CODE'];?>"><?=$value['AMP_T'];?></option>
                                             <?php endforeach?> 
@@ -45,7 +45,7 @@
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label>ตำบล</label>                                       
-                                        <select name="tambon" id="tambon" class="form-control ">                                            
+                                        <select name="tambon" id="tambon" class="form-control select2-ajax-tambon">                                            
                                             <?php foreach ($tambon as $key => $value) :?>
                                                 <option <?=@$search['tambon'] == $value['TAM_CODE'] ? 'selected':'';?> value="<?=$value['TAM_CODE'];?>"><?=$value['TAM_T'];?></option>
                                             <?php endforeach?>                  
@@ -53,7 +53,7 @@
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label>หมู่บ้าน</label>                                       
-                                        <select name="village" id="village" class="form-control ">                                            
+                                        <select name="village" id="village" class="form-control">                                            
                                             <?php foreach ($village as $key => $value) :?>
                                                 <option <?=@$search['village'] == $value['VILL_CODE'] ? 'selected':'';?> value="<?=$value['VILL_CODE'];?>"><?=$value['VILL_T'];?></option>
                                             <?php endforeach?>                          

@@ -11,6 +11,10 @@ use App\Controllers\BaseController;
 use App\Models\InterViewHouse_model;
 use Modules\House\Models\House_model;
 
+// ini_set('memory_limit','256M'); // This also needs to be increased in some cases. Can be changed to a higher value as per need)
+ini_set('sqlsrv.ClientBufferMaxKBSize','524288'); // Setting to 512M
+ini_set('pdo_sqlsrv.client_buffer_max_kb_size','524288'); // Setting to 512M - for pdo_sqlsrv
+
 class Common extends BaseController
 {
     use ResponseTrait;
@@ -203,4 +207,34 @@ class Common extends BaseController
         $data = $this->model_common->searchHouse($search);
         return   $this->respond($data);
     }
+
+    public function searchProvince(){
+        $search = $this->request->getVar('q');
+        $data = $this->model_common->searchProvince($search);
+        return   $this->respond($data);
+    }
+
+    public function searchAmphur(){
+        $search = $this->request->getVar('q');
+        $data = $this->model_common->searchAmphur($search);
+        return   $this->respond($data);
+    }
+
+    public function searchTambon(){
+        $search = $this->request->getVar('q');
+        $data = $this->model_common->searchTambon($search);
+        return   $this->respond($data);
+    }
+
+    public function searchVillage(){
+        $search = $this->request->getVar('q');
+        $data = $this->model_common->searchVillage($search);
+        return   $this->respond($data);
+    }
+
+    
+
+    
+
+    
 }

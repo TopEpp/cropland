@@ -158,4 +158,164 @@ $(function () {
 			cache: true,
 		},
 	});
+
+	$(".select2-ajax-province").select2({
+		language: {
+			searching: function () {
+				return "กำลังโหลดข้อมูล...";
+			},
+			inputTooShort: function () {
+				return "พิมพ์ค้นหาข้อมูล";
+			},
+			noResults: function () {
+				return "ไม่พบข้อมูล";
+			},
+		},
+		minimumInputLength: 0,
+
+		ajax: {
+			url: domain + "common/search-province",
+			dataType: "json",
+			type: "GET",
+			quietMillis: 50,
+			data: function (params) {
+				return {
+					q: params.term, // search term
+				};
+			},
+			processResults: function (data) {
+				var arr = [];
+				$.each(data, function (index, value) {
+					arr.push({
+						id: value.Code,
+						text: value.Name,
+					});
+				});
+				return {
+					results: arr,
+				};
+			},
+			cache: true,
+		},
+	});
+
+	$(".select2-ajax-amphur").select2({
+		language: {
+			searching: function () {
+				return "กำลังโหลดข้อมูล...";
+			},
+			inputTooShort: function () {
+				return "พิมพ์ค้นหาข้อมูล";
+			},
+			noResults: function () {
+				return "ไม่พบข้อมูล";
+			},
+		},
+		minimumInputLength: 0,
+
+		ajax: {
+			url: domain + "common/search-amphur",
+			dataType: "json",
+			type: "GET",
+			quietMillis: 50,
+			data: function (params) {
+				return {
+					q: params.term, // search term
+				};
+			},
+			processResults: function (data) {
+				var arr = [];
+				$.each(data, function (index, value) {
+					arr.push({
+						id: value.AMP_CODE,
+						text: value.AMP_T,
+					});
+				});
+				return {
+					results: arr,
+				};
+			},
+			cache: true,
+		},
+	});
+
+	$(".select2-ajax-tambon").select2({
+		language: {
+			searching: function () {
+				return "กำลังโหลดข้อมูล...";
+			},
+			inputTooShort: function () {
+				return "พิมพ์ค้นหาข้อมูล";
+			},
+			noResults: function () {
+				return "ไม่พบข้อมูล";
+			},
+		},
+		minimumInputLength: 0,
+
+		ajax: {
+			url: domain + "common/search-tambon",
+			dataType: "json",
+			type: "GET",
+			quietMillis: 50,
+			data: function (params) {
+				return {
+					q: params.term, // search term
+				};
+			},
+			processResults: function (data) {
+				var arr = [];
+				$.each(data, function (index, value) {
+					arr.push({
+						id: value.TAM_CODE,
+						text: value.TAM_T,
+					});
+				});
+				return {
+					results: arr,
+				};
+			},
+			cache: true,
+		},
+	});
+
+	$(".select2-ajax-village").select2({
+		language: {
+			searching: function () {
+				return "กำลังโหลดข้อมูล...";
+			},
+			inputTooShort: function () {
+				return "พิมพ์ค้นหาข้อมูล";
+			},
+			noResults: function () {
+				return "ไม่พบข้อมูล";
+			},
+		},
+		minimumInputLength: 0,
+
+		ajax: {
+			url: domain + "common/search-village",
+			dataType: "json",
+			type: "GET",
+			quietMillis: 50,
+			data: function (params) {
+				return {
+					q: params.term, // search term
+				};
+			},
+			processResults: function (data) {
+				var arr = [];
+				$.each(data, function (index, value) {
+					arr.push({
+						id: value.VILL_CODE,
+						text: value.VILL_T,
+					});
+				});
+				return {
+					results: arr,
+				};
+			},
+			cache: true,
+		},
+	});
 });

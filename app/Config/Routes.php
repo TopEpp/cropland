@@ -220,7 +220,11 @@ $routes->group("common", ["namespace" => "App\Controllers"], function ($routes) 
     $routes->get("search-user", "Common::searchUser");
     $routes->get("search-house", "Common::searchHouse");
 
-    
+
+    $routes->get("search-province", "Common::searchProvince");
+    $routes->get("search-amphur", "Common::searchAmphur");
+    $routes->get("search-tambon", "Common::searchTambon");
+    $routes->get("search-village", "Common::searchVillage");
    
 });
 

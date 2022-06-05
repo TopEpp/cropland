@@ -77,7 +77,7 @@
                                     <div class="form-group col-md-4"></div>
                                     <div class="form-group col-md-4">
                                         <label>จังหวัด</label>                                        
-                                        <select name="house_province" id="house_province" class="form-control">
+                                        <select name="house_province" id="house_province" class="form-control select2-ajax-province">
                                             <option value="">เลือก</option>
                                             <?php foreach ($province as $key => $value) :?>
                                                 <option <?=@$data['house_province'] == $value['Code'] ? 'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
@@ -86,7 +86,7 @@
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>อำเภอ</label>                                        
-                                        <select name="house_district" id="house_district" class="form-control">
+                                        <select name="house_district" id="house_district" class="form-control select2-ajax-amphur">
                                             <option value="">เลือก</option>
                                             <?php foreach ($amphurs as $key => $value) :?>
                                                 <option <?=@$data['house_district'] == $value['AMP_CODE'] ? 'selected':'';?>  value="<?=$value['AMP_CODE'];?>"><?=$value['AMP_T'];?></option>
@@ -95,7 +95,7 @@
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>ตำบล</label>                                        
-                                        <select name="house_subdistrict" id="house_subdistrict" class="form-control">
+                                        <select name="house_subdistrict" id="house_subdistrict" class="form-control select2-ajax-tambon">
                                             <option value="">เลือก</option>
                                             <?php foreach ($tambons as $key => $value) :?>
                                                 <option <?=@$data['house_subdistrict'] == $value['TAM_CODE'] ? 'selected':'';?>  value="<?=$value['TAM_CODE'];?>"><?=$value['TAM_T'];?></option>
@@ -155,6 +155,8 @@
 <?=$this->section("scripts")?>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
+<!-- //load select2 ajax/ -->
+<?= script_tag('public/assets/js/modules/ajax_select2.js') ?>
 <script>
     $(function(){
         $("#house_province").change(function(){
@@ -164,6 +166,7 @@
                 url: domain+'common/get-amphur?province='+province,
                 success : function(options){
                     $("#house_district").html(options)
+                    $("#house_district").select2();
                 }
             });
         })
@@ -176,6 +179,7 @@
                 url: domain+'common/get-tambon?amphur='+amphur+'&province='+province,
                 success : function(options){
                     $("#house_subdistrict").html(options)
+                    $("#house_subdistrict").select2();
                 }
             });
         })
@@ -189,6 +193,7 @@
                 url: domain+'common/get-villages?amphur='+amphur+'&province='+province+'&tambon='+tambon,
                 success : function(options){
                     $("#house_home").html(options)
+                    $("#house_home").select2();
                 }
             });
         })
