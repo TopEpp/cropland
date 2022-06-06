@@ -173,7 +173,7 @@ class Interview_house_model extends Model
       $builder = $this->db->table('LH_house_person');
       $builder->select('
       max(LH_person_job.job_cal_type) as job_cal_type,
-      max(LH_person_job.job_salary) as job_salary,
+      sum(LH_person_job.job_salary) as job_salary,
       max(LH_person_job.job_address) as job_address,
       max(LH_jobs.name) as name,
       max(LH_house_person.person_id) as person_id,

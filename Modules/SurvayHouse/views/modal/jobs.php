@@ -39,11 +39,11 @@
                                 <td class="text-right"><?=$value['job_salary'];?></td>
                                 <td><?=$value['job_address'];?></td>
                                 <td><?=$value['job_remark'];?></td>
-                                <td>
-                                        <div class="buttons">                                    
-                                            <button type="button" onclick="editItem(<?=$value['job_id'];?>)" class="btn btn-icon btn-sm btn-primary"><i class="fas fa-edit"></i></button>
-                                            <button type="button" onclick="deleteItem(<?=$value['job_id'];?>)" class="btn btn-icon btn-sm btn-danger"><i class="fas fa-trash"></i></button>
-                                        </div>
+                                <td class="text-center">
+                                    <div class="buttons">                                    
+                                        <button type="button" onclick="editItem(<?=$value['job_id'];?>)" class="btn btn-icon btn-sm btn-primary"><i class="fas fa-edit"></i></button>
+                                        <button type="button" onclick="deleteItem(<?=$value['job_id'];?>)" class="btn btn-icon btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                    </div>
                                 </td>
                             </tr> 
                         <?php endif;?>
@@ -64,7 +64,7 @@
                     <div class="row">                               
                         <div class="form-group col-md-4">
                             <label>อาชีพ</label>                                        
-                            <select name="job_type" id="job_type" class="form-control select2-job" onchange="selectJobs($(this))" required="">
+                            <select name="job_type" id="job_type" class="form-control" onchange="selectJobs($(this))" required="">
                                 <option value="">เลือก</option>
                                 <?php foreach ($jobs as $key => $value) :?>
                                     <option value="<?=$value['jobs_id'];?>"><?=$value['name'];?></option>
@@ -89,11 +89,11 @@
 
                         <div class="form-group col-md-4 show_salary"  style="display:block">
                             <label id="label_salary">รายได้ต่อรอบ</label>                                        
-                            <input type="text" class="form-control" name="job_salary" id="job_salary">
+                            <input type="text" class="form-control" name="job_salary" id="job_salary" oninput="validateDecimal(this)">
                         </div>
                         <div class="form-group col-md-4 show_salary_month"  style="display:block">
                             <label id="label_salary_month">จำนวนรอบต่อปี</label>                                        
-                            <input type="text" class="form-control" name="job_salary_month" id="job_salary_month">
+                            <input type="text" class="form-control" name="job_salary_month" id="job_salary_month" oninput="validateDecimal(this)">
                         </div>
 
                         <div class="form-group col-md-4">
@@ -121,27 +121,42 @@
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
-                                    <th scope="col">ลำดับ</th>
-                                    <th scope="col">ชนิด</th>
-                                    <th scope="col">จำนวน</th>
-                                    <th scope="col">หน่วย</th>
-                                    <th scope="col">ต้นทุน/ปี</th>
-                                    <th scope="col">รายได้/ปี</th>
-                                    <th scope="col">หมายเหตุ</th>
+                                        <th width="5%" scope="col">ลำดับ</th>
+                                        <th width="20%" scope="col">ชนิด</th>
+                                        <th width="10%" scope="col">จำนวน</th>
+                                        <th width="10%" scope="col">หน่วย</th>
+                                        <th width="10%" scope="col">ต้นทุน/ปี</th>
+                                        <th width="10%" scope="col">รายได้/ปี</th>
+                                        <th width="10%" scope="col">หมายเหตุ</th>
                                     </tr>
                                 </thead>
                                 <tbody data-repeater-list="job-detail">
                                     <tr data-repeater-item>
                                         <th>1</th>
-                                        <td>                                             
-                                            <select name="type_id" id="type_id" class="form-control">
-                                                <option value="">เลือก</option>
-                                                <?php foreach ($products as $key => $value) :?>
-                                                    <option value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
-                                                <?php endforeach;?>
-                                            </select>
+                                        <td>       
+                                            <div class="row">
+                                                <div class="col-md-6 p-1">
+                                                    
+                                                    <select name="type_group" id="type_group" class="form-control select2-group"  required="" onchange="selectProduct($(this))">
+                                                        <option value="">เลือก</option>
+                                                        <?php foreach ($product_type as $key => $value) :?>
+                                                            <option  value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
+                                                        <?php endforeach?>              
+                                                    </select>                                                  
+                                                </div>
+                                                <div class="col-md-6 p-1">
+                                                 
+                                                    <select name="type_id" id="type_id" class="form-control " required="">
+                                                        <option value="">เลือก</option>       
+                                                        <?php foreach ($products as $key => $value) :?>
+                                                            <option value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
+                                                        <?php endforeach?>                                                               
+                                                    </select>    
+                                                                     
+                                                </div>  
+                                            </div>
                                         </td>
-                                        <td> <input type="text" class="form-control" name="detail_value"></td>
+                                        <td> <input type="text" class="form-control" name="detail_value" oninput="validateDecimal(this)"></td>
                                         <td>                                             
                                             <select name="detail_unit" id="detail_unit" class="form-control">
                                                 <option value="">เลือก</option>
@@ -149,8 +164,8 @@
                                                 <option value="โรงเรือน">โรงเรือน</option>
                                             </select>
                                         </td>
-                                        <td> <input type="text" class="form-control" name="detail_cost"></td>
-                                        <td> <input type="text" class="form-control" name="detail_income"></td>
+                                        <td> <input type="text" class="form-control" name="detail_cost" oninput="validateDecimal(this)"></td>
+                                        <td> <input type="text" class="form-control" name="detail_income" oninput="validateDecimal(this)"></td>
                                         <td> <input type="text" class="form-control" name="detail_remark"></td>
                                     </tr>
                                 </tbody>
@@ -173,9 +188,30 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
  
+    var validateDecimal = function(e) {
+        var t = e.value;
+        t = t.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');
+        e.value = (t.indexOf(".") >= 0) ? (t.substr(0, t.indexOf(".")) + t.substr(t.indexOf("."), 3)) : t;
+    }
+
+    function selectProduct(elm){        
+        var $option = elm.find('option:selected');
+        var value = $option.val();
+         $.ajax({
+            type: "GET",
+            url: domain+'common/get-product?type='+value,
+            success : function(options){
+                elm.parent().parent().find('#type_id').html(options)
+            }
+        });
+    }
+
     $(document).ready(function () {
 
-        $(".select2-job").select2();
+        // $(".select2-job").select2();
+        // $(".select2-group").select2();
+        
+    
 
         var $repeater = $('.outer-repeater').repeater({
                 initEmpty: false,
@@ -194,13 +230,26 @@
                     selector: '.inner-repeater',
                     // defaultValues: { 'inner-text-input': 'inner-default' },
                     show: function () {
-                        console.log('inner show');
+
                         $(this).slideDown();
+
+                        // $(this).children().find("select.select2-hidden-accessible").select2('destroy');
+                        // console.log($(this).children().find('select.select2-group'));
+                        // $(this).children().find('select.select2').remove()
+                        // $(this).children().find('select.select2-group').select2()
+                        // $("select[name='jobs[0][job-detail][1][type_group]']").select2();
+                        // $(this).find('select#type_id').select2()
+                        
+                     
                     },
                     hide: function (deleteElement) {
                         console.log('inner delete');
                         $(this).slideUp(deleteElement);
-                    }
+                    },  
+                    ready: function (setIndexes) {                
+                        // $(".select2-group").select2();
+                        // $("#type_id").select2();
+                    },                 
                 }]
             });
 

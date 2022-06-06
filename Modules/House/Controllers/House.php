@@ -234,6 +234,7 @@ class House extends BaseController
         $data['jobs'] = $this->model_api->getJobs();
         $data['products'] = $this->model_api->getproduct();
         $data['data'] = $this->model_house->getPersonJobs($id);
+        $data['product_type'] = $this->model_api->getProductType();
         
         $html =  view('Modules\SurvayHouse\Views\modal\jobs', $data);
         return $this->respond($html);

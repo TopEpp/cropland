@@ -55,7 +55,7 @@
                                             </td>
                                             <td><?=$value['name']?$value['name']:'-';?></td>
                                             <td><?=@$cal_type[$value['job_cal_type']] ? $cal_type[$value['job_cal_type']] :'-';?></td>
-                                            <td class="text-right"><?=$value['job_salary'] ? $value['job_salary'].'บาท':'-';?></td>
+                                            <td class="text-right"><?=$value['job_salary'] ? number_format($value['job_salary']).' บาท':'-';?></td>
                                             <td>
                                                 <?=$value['job_address']?$value['job_address']:'-';?>
                                             </td>
