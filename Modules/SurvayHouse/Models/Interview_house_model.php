@@ -180,7 +180,7 @@ class Interview_house_model extends Model
       max(LH_house_person.person_name) as person_name,
       max(LH_house_person.person_lastname) as person_lastname');
       $builder->where('LH_house_person.house_id',$house_id);
-      $builder->join('LH_person_job', 'LH_person_job.person_id = LH_house_person.person_id and job_main = 1','left');
+      $builder->join('LH_person_job', 'LH_person_job.person_id = LH_house_person.person_id','left');
       $builder->join('LH_jobs', 'LH_jobs.jobs_id = LH_person_job.job_type','left');
       $builder->groupBy('LH_house_person.house_id, LH_house_person.person_id');
       $query = $builder->get()->getResultArray();
