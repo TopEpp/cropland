@@ -90,10 +90,10 @@
                                 <tr>
                                     <th with="10%" scope="col">ลำดับ</th>
                                     <th with="15%" scope="col">ชื่อ-นามสกุล</th>
-                                    <th with="30%" scope="col">ที่อยู่</th>
+                                    <th with="25%" scope="col">ที่อยู่</th>
                                     <th with="10%" scope="col">จำนวนสมาชิก</th>
                                     <!-- <th with="10%" scope="col">จำนวนที่ดิน</th> -->
-                                    <th with="20%" scope="col">เครื่องมือ</th>
+                                    <th with="25%" scope="col">เครื่องมือ</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -104,7 +104,7 @@
                                         <td><?=$value['person_address'];?></td>
                                         <td class="text-center"><?=$value['total_person'];?></td>
                                         <!-- <td> - </td> -->
-                                        <td class="text-center">
+                                        <td class="text-center p-2">
                                             <div class="buttons">
                                                 <a data-toggle="tooltip" title="แก้ไขข้อมูล" href="<?=base_url('house/manage/'.$value['house_id']);?>" class="btn btn-icon btn-primary"><i class="far fa-edit"></i></a>
                                                 <a data-toggle="tooltip" title="ประเมินครัวเรือน" href="<?php echo base_url('survay_house/manage/'.$value['house_id'])?>" class="btn btn-icon btn-primary"><i class="fas fa-file"></i></a>

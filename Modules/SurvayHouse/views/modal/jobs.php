@@ -64,7 +64,7 @@
                     <div class="row">                               
                         <div class="form-group col-md-4">
                             <label>อาชีพ</label>                                        
-                            <select name="job_type" id="job_type" class="form-control" onchange="selectJobs($(this))">
+                            <select name="job_type" id="job_type" class="form-control select2-job" onchange="selectJobs($(this))" required="">
                                 <option value="">เลือก</option>
                                 <?php foreach ($jobs as $key => $value) :?>
                                     <option value="<?=$value['jobs_id'];?>"><?=$value['name'];?></option>
@@ -98,7 +98,7 @@
 
                         <div class="form-group col-md-4">
                             <label>สถานที่ประกอบการ</label>                                        
-                            <input type="text" class="form-control" name="job_address" id="job_address">
+                            <input type="text" class="form-control" name="job_address" id="job_address" required="">
                         </div>
                         <div class="form-group col-md-12 " id="remark_show" style="display:none">
                             <label>รายละเอียด</label>                                        
@@ -169,10 +169,13 @@
     <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
 </div>
 
+
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
  
     $(document).ready(function () {
+
+        $(".select2-job").select2();
 
         var $repeater = $('.outer-repeater').repeater({
                 initEmpty: false,

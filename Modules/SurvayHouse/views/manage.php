@@ -33,19 +33,22 @@
                             <br>                        
 
                             <h6>ข้อมูลพื้นฐาน</h6>
-                            <form action="<?=base_url('survay_house/save_manage');?>"  method="post" id="form_manage">
+                            <form action="<?=base_url('survay_house/save_manage');?>"  method="post" id="form_manage" class="needs-validation" novalidate="">
                                 <input type="hidden" name="house_id" value="<?=@$data['house_id'];?>">
                                 <input type="hidden" name="interview_id" value="<?=@$data['interview_id'];?>">                                
                                 <div class="row">                               
                                     <div class="form-group col-md-4">
                                         <label>ประเภทโครงการ</label>                                        
-                                        <select name="interview_project" id="interview_project" class="form-control">
+                                        <select name="interview_project" id="interview_project" class="form-control" required="">
                                             <option value="">เลือก</option>
                                             <?php foreach ($projects_type as $key => $value) :?>
                                                 <option <?=@$data['interview_project'] == $value['Code']?'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                             <?php endforeach;?>
                                             
                                         </select>
+                                        <div class="invalid-feedback">
+                                           กรุณาเลือกประเภทโครงการ
+                                        </div>      
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>ชื่อโครงการ</label>
@@ -57,84 +60,115 @@
                                             <?php endforeach;?>
                                             
                                         </select>
+                                        <div class="invalid-feedback">
+                                           กรุณาเลือกชื่อโครงการ
+                                        </div>  
                                     </div>     
                                     <div class="form-group col-md-4">
                                         <label>ปีที่สำรวจ</label>                                        
-                                        <select name="interview_year" id="interview_year" class="form-control">
+                                        <select name="interview_year" id="interview_year" class="form-control" required="">
                                             <?php foreach (getYear() as $key => $value) :?>
                                                 <option value="<?=$value;?>"><?=$value;?></option>
                                             <?php endforeach;?>
                                         </select>
+                                        <div class="invalid-feedback">
+                                           กรุณาเลือกปีที่สำรวจ
+                                        </div>  
                                     </div>                                      
                                     <div class="form-group col-md-4">
                                         <label>บ้านเลขที่</label>
-                                        <input type="text" class="form-control" name="house_number" value="<?=@$data['house_number'];?>">
+                                        <input type="text" class="form-control" name="house_number" value="<?=@$data['house_number'];?>" required="">
+                                        <div class="invalid-feedback">
+                                           กรุณากรอกบ้านเลขที่
+                                        </div> 
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>หมู่ที่</label>
-                                        <input type="text" class="form-control" name="house_moo" value="<?=@$data['house_moo'];?>">
+                                        <input type="text" class="form-control" name="house_moo" value="<?=@$data['house_moo'];?>" required="">
+                                        <div class="invalid-feedback">
+                                           กรุณากรอกหมู่ที่
+                                        </div> 
                                     </div>
                                     <div class="form-group col-md-4"></div>
                                     <div class="form-group col-md-4">
                                         <label>จังหวัด</label>                                        
-                                        <select name="house_province" id="house_province" class="form-control select2-ajax-province">
+                                        <select name="house_province" id="house_province" class="form-control select2-ajax-province" required="">
                                             <option value="">เลือก</option>
                                             <?php foreach ($province as $key => $value) :?>
                                                 <option <?=@$data['house_province'] == $value['Code'] ? 'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                             <?php endforeach?>
                                         </select>
+                                        <div class="invalid-feedback">
+                                           กรุณาเลือกจังหวัด
+                                        </div> 
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>อำเภอ</label>                                        
-                                        <select name="house_district" id="house_district" class="form-control select2-ajax-amphur">
+                                        <select name="house_district" id="house_district" class="form-control select2-ajax-amphur" required="">
                                             <option value="">เลือก</option>
                                             <?php foreach ($amphurs as $key => $value) :?>
                                                 <option <?=@$data['house_district'] == $value['AMP_CODE'] ? 'selected':'';?>  value="<?=$value['AMP_CODE'];?>"><?=$value['AMP_T'];?></option>
                                             <?php endforeach?>
                                         </select>
+                                        <div class="invalid-feedback">
+                                           กรุณาเลือกอำเภอ
+                                        </div> 
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>ตำบล</label>                                        
-                                        <select name="house_subdistrict" id="house_subdistrict" class="form-control select2-ajax-tambon">
+                                        <select name="house_subdistrict" id="house_subdistrict" class="form-control select2-ajax-tambon" required="">
                                             <option value="">เลือก</option>
                                             <?php foreach ($tambons as $key => $value) :?>
                                                 <option <?=@$data['house_subdistrict'] == $value['TAM_CODE'] ? 'selected':'';?>  value="<?=$value['TAM_CODE'];?>"><?=$value['TAM_T'];?></option>
                                             <?php endforeach?>
                                         </select>
+                                        <div class="invalid-feedback">
+                                           กรุณาเลือกตำบล
+                                        </div> 
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>บ้าน</label>                                        
-                                        <select name="house_home" id="house_home" class="form-control">
+                                        <select name="house_home" id="house_home" class="form-control" required="">
                                             <option value=""></option>
                                             <?php foreach ($villages as $key => $value) :?>
                                                 <option <?=@$data['house_home'] == $value['VILL_CODE'] ? 'selected':'';?>  value="<?=$value['VILL_CODE'];?>"><?=$value['VILL_T'];?></option>
                                             <?php endforeach?>
                                         </select>
+                                        <div class="invalid-feedback">
+                                           กรุณาเลือกบ้าน
+                                        </div> 
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>กลุ่มบ้าน</label>                                        
-                                        <select class="form-control select2" name="house_label">
+                                        <select class="form-control select2" name="house_label" required="">
                                         <?php foreach ($village as $key => $value) :?>
                                             <option <?=@$data['house_label'] == $value['Code'] ? 'selected':'';?>  value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                         <?php endforeach?>
                                         </select>
+                                        <div class="invalid-feedback">
+                                           กรุณาเลือกกลุ่มบ้าน
+                                        </div> 
                                         
                                       
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>ประเภทที่พักอาศัย</label>
-                                        <select name="house_type" id="house_type" class="form-control">
+                                        <select name="house_type" id="house_type" class="form-control" required="">
                                             <option value="">เลือก</option>
                                             <?php foreach ($landomner as $key => $value) :?>
                                                 <option <?=@$data['house_type'] == $value['landowner_id'] ? 'selected':'';?>  value="<?=$value['landowner_id'];?>"><?=$value['name'];?></option>
                                             <?php endforeach?>
                                         </select>
+                                        <div class="invalid-feedback">
+                                           กรุณาเลือกประเภทที่พักอาศัย
+                                        </div> 
                                     </div>          
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-12 text-right">
-                                        <button type="submit" class="btn btn-info">บันทึก</button>
+                                    <div class="col-md-12 text-right">                                       
                                         <button type="button" class="btn btn-danger" onclick="location.href='<?=base_url('house');?>';" >ยกเลิก</button>
+                                        <button type="submit" class="btn btn-info">บันทึก</button>
+                                        <button type="button" class="btn btn-primary" onclick="location.href='<?=base_url('survay_house/members/'.@$house_id);?>';" >ถัดไป</button>
                                     </div>
                                 </div>
                             </form>

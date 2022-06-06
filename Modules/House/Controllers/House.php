@@ -235,7 +235,7 @@ class House extends BaseController
         $data['products'] = $this->model_api->getproduct();
         $data['data'] = $this->model_house->getPersonJobs($id);
         
-        $html =  view('Modules\House\Views\modal\jobs', $data);
+        $html =  view('Modules\SurvayHouse\Views\modal\jobs', $data);
         return $this->respond($html);
     }
 
@@ -255,7 +255,7 @@ class House extends BaseController
         }
         
 
-        $html =  view('Modules\House\Views\modal\member', $data);
+        $html =  view('Modules\SurvayHouse\Views\modal\member', $data);
         return $this->respond($html);
     }
 

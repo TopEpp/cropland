@@ -136,8 +136,9 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12 text-right">
-                                        <button type="submit" class="btn btn-info">บันทึก</button>
+                                       
                                         <button type="button" class="btn btn-danger" onclick="location.href='<?=base_url('house');?>';" >ยกเลิก</button>
+                                        <button type="submit" class="btn btn-info">บันทึก</button>
                                     </div>
                                 </div>
                             </form>
