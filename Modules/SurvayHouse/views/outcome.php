@@ -100,6 +100,13 @@
                             </table>
                           
                         </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-12 text-right">                                                                      
+                                <button type="button" class="btn btn-secondary" onclick="location.href='<?=base_url('survay_house/income/'.@$house_id);?>';" >ย้อนกลับ</button>
+                                <button type="button" class="btn btn-primary" onclick="location.href='<?=base_url('survay_house/outcome/'.@$house_id);?>';" >ถัดไป</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -110,7 +117,7 @@
 
 <div class="modal fade" tabindex="-1" role="dialog" id="OutComeModal">
     <div class="modal-dialog modal-lg" role="document">
-        <form action="<?=base_url('survay_house/save_outcome/'.@$house_id);?>" method="post">
+        <form action="<?=base_url('survay_house/save_outcome/'.@$house_id);?>" method="post" class="needs-validation" novalidate="">
             <input type="hidden" name="interview_id" id="interview_id">
             <input type="hidden" name="person_id" id="person_id">
             <div class="modal-content">
@@ -129,7 +136,10 @@
                     <div class="row">                               
                         <div class="form-group col-md-6">
                             <label>ค่าเครื่องนุ่งห่ม</label>                                        
-                            <input type="text" class="form-control" name="outcome[1][outcome_value]">
+                            <input type="text" class="form-control" name="outcome[1][outcome_value]" required="">
+                            <div class="invalid-feedback">
+                                กรุณากรอกค่าเครื่องนุ่งห่ม
+                            </div> 
                         </div>
                         <div class="form-group col-md-6">
                             <label>จำนวนเดือนที่ได้รับ</label>
@@ -142,7 +152,10 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label>ค่าที่อยู่อาศัย</label>                                        
-                            <input type="text" class="form-control" name="outcome[2][outcome_value]">
+                            <input type="text" class="form-control" name="outcome[2][outcome_value]" required="">
+                            <div class="invalid-feedback">
+                                กรุณากรอกค่าที่อยู่อาศัย
+                            </div> 
                         </div>
                         <div class="form-group col-md-6">
                             <label>จำนวนเดือนที่ได้รับ</label>
@@ -155,7 +168,10 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label>ค่าการศึกษา</label>                                        
-                            <input type="text" class="form-control" name="outcome[3][outcome_value]">
+                            <input type="text" class="form-control" name="outcome[3][outcome_value]" required="">
+                            <div class="invalid-feedback">
+                                กรุณากรอกค่าการศึกษา
+                            </div> 
                         </div>
                         <div class="form-group col-md-6">
                             <label>จำนวนเดือนที่ได้รับ</label>
@@ -168,7 +184,10 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label>ค่ายารักษาโรค</label>                                        
-                            <input type="text" class="form-control" name="outcome[4][outcome_value]">
+                            <input type="text" class="form-control" name="outcome[4][outcome_value]" required="">
+                            <div class="invalid-feedback">
+                                กรุณากรอกค่ายารักษาโรค
+                            </div> 
                         </div>
                         <div class="form-group col-md-6">
                             <label>จำนวนเดือนที่ได้รับ</label>
@@ -181,7 +200,10 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label>ค่าน้ำมัน</label>                                        
-                            <input type="text" class="form-control" name="outcome[5][outcome_value]">
+                            <input type="text" class="form-control" name="outcome[5][outcome_value]" required="">
+                            <div class="invalid-feedback">
+                                กรุณากรอกค่าน้ำมัน
+                            </div> 
                         </div>
                         <div class="form-group col-md-6">
                             <label>จำนวนเดือนที่ได้รับ</label>
@@ -233,7 +255,10 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label>รายจ่ายในการบริโภค</label>                                        
-                            <input type="text" class="form-control" name="outcome[9][outcome_value]">
+                            <input type="text" class="form-control" name="outcome[9][outcome_value]" required="">
+                            <div class="invalid-feedback">
+                                กรุณากรอกรายจ่ายในการบริโภค
+                            </div>  
                         </div>
                         <div class="form-group col-md-6">
                             <label>จำนวนเดือนที่ได้รับ</label>

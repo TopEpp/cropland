@@ -55,7 +55,7 @@
                                             </td>
                                             <td><?=$value['name']?$value['name']:'-';?></td>
                                             <td><?=@$cal_type[$value['job_cal_type']] ? $cal_type[$value['job_cal_type']] :'-';?></td>
-                                            <td class="text-right"><?=$value['job_salary'] ? $value['job_salary'].'บาท':'-';?></td>
+                                            <td class="text-right"><?=$value['job_salary'] ? number_format($value['job_salary']).' บาท':'-';?></td>
                                             <td>
                                                 <?=$value['job_address']?$value['job_address']:'-';?>
                                             </td>
@@ -66,6 +66,12 @@
                             </table>
                           
                         </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-12 text-right">                                                                      
+                                <button type="button" class="btn btn-primary" onclick="location.href='<?=base_url('survay_house/income/'.@$house_id);?>';" >ถัดไป</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -75,7 +81,7 @@
 
 <div class="modal fade" tabindex="-1" role="dialog" id="JobModal">
     <div class="modal-dialog modal-xl" role="document">
-        <form action="<?=base_url('survay_house/save_jobs/'.@$house_id);?>" method="post">
+        <form action="<?=base_url('survay_house/save_jobs/'.@$house_id);?>" method="post" class="needs-validation" novalidate="">
             <input type="hidden" name="interview_id" id="interview_id">
             <input type="hidden" name="person_id" id="person_id">
             <!-- <input type="hidden" name="job_id" id="job_id"> -->
@@ -88,8 +94,14 @@
 
 <?=$this->endSection()?>
 
+<?=$this->section("css")?>
+<!-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> -->
+
+<?=$this->endSection()?>
+
 <?=$this->section("scripts")?>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.repeater/1.2.1/jquery.repeater.min.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> -->
 <script>
 
     function addJobs(id){

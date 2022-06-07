@@ -118,16 +118,16 @@
                                 <?php foreach ($data as $key => $value) :?>
                                     <tr>
                                         <th scope="row"><?=$key+1;?></th>
-                                        <td><?=$value['project_name'];?></td>
-                                        <td><?=$value['project_area'];?></td>
-                                        <td><?=$value['project_village'];?></td>
-                                        <td><?=$value['land_code'];?></td>
-                                        <td><?=$value['person_name'];?></td>
-                                        <td><?=$value['person_address'];?></td>
-                                        <td><?=$value['person_village'];?></td>
-                                        <td><?=$value['land_use'];?></td>
-                                        <td><?=$value['interview_year'];?></td>
-                                        <td><?=$value['land_address'];?></td>
+                                        <td><?=@$value['project_name'];?></td>
+                                        <td><?=@$value['project_area'];?></td>
+                                        <td><?=@$value['project_village'];?></td>
+                                        <td><?=@$value['land_code'];?></td>
+                                        <td><?=@$value['person_name'];?></td>
+                                        <td><?=@$value['person_address'];?></td>
+                                        <td><?=@$value['person_village'];?></td>
+                                        <td><?=@$value['land_use'];?></td>
+                                        <td><?=@$value['interview_year'];?></td>
+                                        <td><?=@$value['land_address'];?></td>
                                         <td class="text-center">
                                             <div class="buttons">
                                                 <a data-toggle="tooltip" title="แก้ไขข้อมูล" href="<?=base_url('survay/manage/'.$value['interview_id']);?>" class="btn btn-icon btn-primary"><i class="far fa-edit"></i></a>                                    

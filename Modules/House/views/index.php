@@ -27,16 +27,16 @@
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label>จังหวัด</label>                                       
-                                        <select name="province" id="province" class="form-control ">     
+                                        <select name="province" id="province" class="form-control select2-ajax-province">     
                                             <option value="">ทั้งหมด</option>                                       
-                                            <?php foreach ($province as $key => $value) :?>
+                                            <!-- <?php foreach ($province as $key => $value) :?>
                                                 <option <?=@$search['province'] == $value['Code'] ? 'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
-                                            <?php endforeach?>                                         
+                                            <?php endforeach?>                                          -->
                                         </select>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label>อำเภอ</label>                                       
-                                        <select name="amphur" id="amphur" class="form-control">
+                                        <select name="amphur" id="amphur" class="form-control select2-ajax-amphur">
                                             <?php foreach ($amphur as $key => $value) :?>
                                                 <option <?=@$search['amphur'] == $value['AMP_CODE'] ? 'selected':'';?> value="<?=$value['AMP_CODE'];?>"><?=$value['AMP_T'];?></option>
                                             <?php endforeach?> 
@@ -45,7 +45,7 @@
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label>ตำบล</label>                                       
-                                        <select name="tambon" id="tambon" class="form-control ">                                            
+                                        <select name="tambon" id="tambon" class="form-control select2-ajax-tambon">                                            
                                             <?php foreach ($tambon as $key => $value) :?>
                                                 <option <?=@$search['tambon'] == $value['TAM_CODE'] ? 'selected':'';?> value="<?=$value['TAM_CODE'];?>"><?=$value['TAM_T'];?></option>
                                             <?php endforeach?>                  
@@ -53,7 +53,7 @@
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label>หมู่บ้าน</label>                                       
-                                        <select name="village" id="village" class="form-control ">                                            
+                                        <select name="village" id="village" class="form-control">                                            
                                             <?php foreach ($village as $key => $value) :?>
                                                 <option <?=@$search['village'] == $value['VILL_CODE'] ? 'selected':'';?> value="<?=$value['VILL_CODE'];?>"><?=$value['VILL_T'];?></option>
                                             <?php endforeach?>                          
@@ -90,10 +90,10 @@
                                 <tr>
                                     <th with="10%" scope="col">ลำดับ</th>
                                     <th with="15%" scope="col">ชื่อ-นามสกุล</th>
-                                    <th with="30%" scope="col">ที่อยู่</th>
+                                    <th with="25%" scope="col">ที่อยู่</th>
                                     <th with="10%" scope="col">จำนวนสมาชิก</th>
                                     <!-- <th with="10%" scope="col">จำนวนที่ดิน</th> -->
-                                    <th with="20%" scope="col">เครื่องมือ</th>
+                                    <th with="25%" scope="col">เครื่องมือ</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -104,7 +104,7 @@
                                         <td><?=$value['person_address'];?></td>
                                         <td class="text-center"><?=$value['total_person'];?></td>
                                         <!-- <td> - </td> -->
-                                        <td class="text-center">
+                                        <td class="text-center p-2">
                                             <div class="buttons">
                                                 <a data-toggle="tooltip" title="แก้ไขข้อมูล" href="<?=base_url('house/manage/'.$value['house_id']);?>" class="btn btn-icon btn-primary"><i class="far fa-edit"></i></a>
                                                 <a data-toggle="tooltip" title="ประเมินครัวเรือน" href="<?php echo base_url('survay_house/manage/'.$value['house_id'])?>" class="btn btn-icon btn-primary"><i class="fas fa-file"></i></a>

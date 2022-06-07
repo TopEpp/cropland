@@ -383,8 +383,86 @@ class Common_model extends Model
    
     $query = $builder->get()->getResultArray();
     return $query;
-}
-    
+  }
+
+  public function searchProvince($search = '',$id = '')
+  {
+        
+      $builder = $this->db->table('CODE_PROVINCE');
+      $builder->select('Code,Name');
+      if ($id != ''){
+        $builder->where('Code', $id);   
+        $query = $builder->get()->getRowArray();
+        return $query;      
+      }
+
+      if (!empty($search)){
+        $builder->like('Name', $search);   
+      }
+
+      $query = $builder->get()->getResultArray();
+      return $query;
+  }
+
+  public function searchAmphur($search = '',$id = '')
+  {           
+      $builder = $this->db->table('CODE_AMPHUR');
+      $builder->select('AMP_CODE,AMP_T');
+      if ($id != ''){
+        $builder->where('AMP_CODE', $id);   
+        $query = $builder->get()->getRowArray();
+        return $query;      
+      }
+
+      if (!empty($search)){
+        $builder->like('AMP_T', $search);   
+      }
+
+      $query = $builder->get()->getResultArray();
+      return $query;
+  }
+
+  public function searchTambon($search = '',$id = '')
+  {        
+
+      $builder = $this->db->table('CODE_TAMBON');
+      $builder->select('TAM_CODE,TAM_T');
+      if ($id != ''){
+        $builder->where('TAM_CODE', $id);   
+        $query = $builder->get()->getRowArray();
+        return $query;      
+      }
+
+      if (!empty($search)){
+        $builder->like('TAM_T', $search);   
+      }
+
+      $query = $builder->get()->getResultArray();
+      return $query;
+  }
+
+  public function searchVillage($search = '',$id = '')
+  {        
+
+    $builder = $this->db->table('CODE_VILLAGE');
+    $builder->select('VILL_CODE,VILL_T');
+      if ($id != ''){
+        $builder->where('VILL_CODE', $id);   
+        $query = $builder->get()->getRowArray();
+        return $query;      
+      }
+
+      if (!empty($search)){
+        $builder->like('VILL_T', $search);   
+      }
+
+      $query = $builder->get()->getResultArray();
+      return $query;
+  }
+
+
+  
+
 
 }
 

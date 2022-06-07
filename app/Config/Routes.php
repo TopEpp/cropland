@@ -188,6 +188,8 @@ $routes->group("dashboard", ["namespace" => "Modules\Dashboard\Controllers"], fu
 $routes->group("report", ["namespace" => "Modules\Report\Controllers"], function ($routes) {
 	$routes->get("survay", "Report::survay");
     $routes->get("survay(:any)", "Report::survayDetail$1");
+    $routes->get("house(:any)", "Report::House$1");
+    
     // $routes->get("house-type", "Dashboard::houseType");
     // $routes->get("house-economy", "Dashboard::houseEconomy");
     // $routes->get("house-health", "Dashboard::houseHealth");
@@ -220,7 +222,11 @@ $routes->group("common", ["namespace" => "App\Controllers"], function ($routes) 
     $routes->get("search-user", "Common::searchUser");
     $routes->get("search-house", "Common::searchHouse");
 
-    
+
+    $routes->get("search-province", "Common::searchProvince");
+    $routes->get("search-amphur", "Common::searchAmphur");
+    $routes->get("search-tambon", "Common::searchTambon");
+    $routes->get("search-village", "Common::searchVillage");
    
 });
 

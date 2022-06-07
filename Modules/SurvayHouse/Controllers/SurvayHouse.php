@@ -245,6 +245,7 @@ class SurvayHouse extends BaseController
         $data = [];
         
         $data['jobs'] = $this->model_api->getJobs();
+        $data['product_type'] = $this->model_api->getProductType();
         $data['products'] = $this->model_api->getproduct();
         $data['data'] = $this->model_house->getPersonJobs($id);
         

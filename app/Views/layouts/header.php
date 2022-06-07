@@ -206,10 +206,12 @@
                     ข้อมูลแบบสอบถามที่ดินรายแปลง
                     </a>
                     <a href="<?=base_url('report/survay');?>" class="dropdown-item has-icon">                   
-                        รายงานสรุปแบบสำรวจที่ดินรายแปลง 
+                    รายงานสรุปแบบสำรวจที่ดินรายแปลง 
                    </a>
-                    <a href="<?=base_url('api');?>" class="dropdown-item has-icon">
-                 
+                   <a href="<?=base_url('report/house');?>" class="dropdown-item has-icon">                   
+                   รายงานสรุปครัวเรือน
+                   </a>
+                    <a href="<?=base_url('api');?>" class="dropdown-item has-icon">                 
                     ข้อมูลอ้างอิงแบบสอบถาม
                     </a>
                     <a href="<?=base_url('member');?>" class="dropdown-item has-icon">

@@ -23,8 +23,9 @@ class Survay_model extends Model
     public function getAllSurvay($id = '',$search = []){
 
         $builder = $this->db->table('LH_interview_land');
-        $builder->select("LH_interview_land.*,
-          
+
+        $builder->select("
+            LH_interview_land.*,          
             CODE_PROJECT.name as project_area,
             CODE_PROJECT.Description as project_name,
             CODE_PROJECTVILLAGE.Name as project_village,
@@ -36,13 +37,11 @@ class Survay_model extends Model
             CONCAT('บ้านเลขที่ ', LH_house.house_number,' หมู่ที่ ',
             LH_house.house_moo,' ตำบล ',CODE_TAMBON.TAM_T,' อำเภอ ',CODE_AMPHUR.AMP_T,' จังหวัด ',CODE_PROVINCE.Name) as person_address,
             person_village.Name as person_village
-                                
         ");
-        $builder->join('LH_land', 'LH_land.land_id = LH_interview_land.interview_code','left');
-        $builder->join('LH_landuse', 'LH_landuse.landuse_id = LH_land.land_use','left');
 
+        $builder->join('LH_land', 'LH_land.land_code = LH_interview_land.interview_code','left');
+        $builder->join('LH_landuse', 'LH_landuse.landuse_id = LH_land.land_use','left');
         $builder->join('LH_house_person', 'LH_house_person.person_id = LH_interview_land.interview_person_id','left');
-      
         $builder->join('LH_house', 'LH_house.house_id = LH_house_person.house_id','left');
         $builder->join('LH_prefix', 'LH_prefix.prefix_id = LH_house_person.person_prename','left');
         $builder->join('CODE_PROJECTVILLAGE as person_village', '
@@ -60,15 +59,19 @@ class Survay_model extends Model
         $builder->join('CODE_PROJECT', 'CODE_PROJECT.Code = LH_interview_land.interview_project','left');
         $builder->join('CODE_PROJECTVILLAGE', 'CODE_PROJECTVILLAGE.Code = LH_interview_land.interview_house_id and CODE_PROJECTVILLAGE.projectId = LH_interview_land.interview_project','left');
         // $builder->join('VIEW_agriculturist_name','VIEW_agriculturist_name.id_card = LH_interview_land.interview_user','left');
+       
+        // $query = $builder->get()->getResultArray();
 
 
         if ($id){
-          $builder = $builder->where('LH_interview_land.interview_id',$id);
-          $query = $builder->get()->getRowArray();
-          return $query;
+        
+            $builder = $builder->where('LH_interview_land.interview_id',$id);
+            $query = $builder->get()->getRowArray();
+            return $query;
         }
 
         if (!empty($search)){
+
             if (!empty($search['interview_year'])){
                 $builder->where('LH_interview_land.interview_year',$search['interview_year']);
             }
@@ -90,9 +93,11 @@ class Survay_model extends Model
             if (!empty($search['interview_code'])){
                 $builder->where('LH_interview_land.interview_code',$search['interview_code']);
             }
+
         }
-        
+     
         $query = $builder->get()->getResultArray();
+        
         return $query;
     }
 

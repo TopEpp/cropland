@@ -1,39 +1,57 @@
 <div class="row">                               
     <div class="form-group col-md-4">
         <label>รหัสประจำตัวประชาชน</label>                                        
-        <input type="text" class="form-control" name="person_number" value="<?=@$data['person_number'];?>">
+        <input type="text" class="form-control" name="person_number" value="<?=@$data['person_number'];?>" oninput="validateDecimal(this)" required="">
+        <div class="invalid-feedback">
+            กรุณากรอกรหัสประจำตัวประชาชน
+        </div>    
     </div>
     <div class="form-group col-md-2">
         <label>ชื่อ</label>      
-        <select name="person_prename" id="person_prename" class="form-control">
+        <select name="person_prename" id="person_prename" class="form-control" required="">
             <option value="">เลือก</option>
             <?php foreach ($prename as $key => $value) :?>
                 <option <?=@$data['person_prename'] == $value['prefix_id'] ? 'selected':'';?> value="<?=$value['prefix_id'];?>"><?=$value['name'];?></option>
             <?php endforeach?>
-        </select>                
+        </select>     
+        <div class="invalid-feedback">
+            กรุณากรอกคำนำหน้า
+        </div>              
     </div>
     <div class="form-group col-md-2">
         <label>&nbsp;</label>
-        <input type="text" class="form-control" name="person_name" value="<?=@$data['person_name'];?>">                            
+        <input type="text" class="form-control" name="person_name" value="<?=@$data['person_name'];?>" required="">                            
+        <div class="invalid-feedback">
+            กรุณากรอกชื่อ
+        </div>   
     </div>
     <div class="form-group col-md-4">
         <label>นามสกุล</label>                                        
-        <input type="text" class="form-control" name="person_lastname" value="<?=@$data['person_lastname'];?>">
+        <input type="text" class="form-control" name="person_lastname" value="<?=@$data['person_lastname'];?>" required="">
+        <div class="invalid-feedback">
+            กรุณากรอกนามสกุล
+        </div>   
     </div>
     <div class="form-group col-md-4">
         <label>ประเภทบัตร</label>                                        
-        <select name="person_type_number" id="person_type_number" class="form-control">
+        <select name="person_type_number" id="person_type_number" class="form-control" required="">
             <option <?=@$data['person_type_number'] == 1 ? 'selected':'';?> value="1">บัตรประชาชน</option>
             <option <?=@$data['person_type_number'] == 2 ? 'selected':'';?> value="2">บัตรต่างดาว</option>
         </select>
+        <div class="invalid-feedback">
+            กรุณากรอกประเภทบัตร
+        </div>   
     </div>
     <div class="form-group col-md-4">
         <label>สถานภาพ</label>                                        
-        <select name="person_status" id="person_status" class="form-control">
+        <select name="person_status" id="person_status" class="form-control" required="">
             <option <?=@$data['person_status'] == 1 ? 'selected':'';?> value="1">โสด</option>
             <option <?=@$data['person_status'] == 2 ? 'selected':'';?> value="2">แต่งงาน</option>
             <option <?=@$data['person_status'] == 3 ? 'selected':'';?> value="3">อย่าล้าง</option>
         </select>
+        <div class="invalid-feedback">
+            กรุณากรอกสถานภาพ
+        </div>   
     </div>
     <div class="form-group col-md-4">
         <label>สถานะครอบครัว</label>                                        
@@ -66,21 +84,27 @@
 
     <div class="form-group col-md-4">
         <label>ชนเผ่า</label>                                        
-            <select name="person_tribe" id="person_tribe" class="form-control">
+            <select name="person_tribe" id="person_tribe" class="form-control" required="">
             <option value="">เลือก</option>
             <?php foreach ($tribes as $key => $value) :?>
                 <option <?=@$data['person_tribe'] == $value['tribe_id'] ? 'selected':'';?> value="<?=$value['tribe_id'];?>"><?=$value['name'];?></option>
             <?php endforeach?>
         </select>
+        <div class="invalid-feedback">
+            กรุณากรอกชนเผ่า
+        </div>   
     </div>
     <div class="form-group col-md-4">
         <label>การศึกษา</label>                                        
-            <select name="person_educate" id="person_educate" class="form-control">
+            <select name="person_educate" id="person_educate" class="form-control" required="">
             <option value="">เลือก</option>
             <?php foreach ($educations as $key => $value) :?>
                 <option <?=@$data['person_educate'] == $value['education_id'] ? 'selected':'';?> value="<?=$value['education_id'];?>"><?=$value['name'];?></option>
             <?php endforeach?>
         </select>
+        <div class="invalid-feedback">
+            กรุณากรอกการศึกษา
+        </div>   
     </div>
     <div class="form-group col-md-4">
         <?php $read = @explode(',',$data['person_read']);?> 
@@ -149,6 +173,16 @@
 
 
 <script>
+
+    var validateDecimal = function(e) {
+        var t = e.value;
+        var max_chars = 13;
+        if(t.length > max_chars) {
+            t = t.substr(0, max_chars);
+        }
+        e.value = t.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');
+    }
+
 
     $(function () {
         $(".datepicker").datepicker({

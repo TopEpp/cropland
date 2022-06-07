@@ -2,9 +2,10 @@
     $cal_type = ['1'=>'ในภาคการเกษตร','2'=>'นอกภาคการเกษตร'];
 ?>
 
+
 <div class="modal-header">
     <h5 class="modal-title">ข้อมูลด้านอาชีพ</h5>
-    <button type="button" class="btn btn-info" data-repeater-create value="Add Inner" onclick="">เพิ่มอาชีพ</button>
+    <button type="button" class="btn btn-info" data-repeater-create id="job-add">เพิ่มอาชีพ</button>
 </div>
 <div class="modal-body">
     <div class="row">
@@ -39,11 +40,11 @@
                                 <td class="text-right"><?=$value['job_salary'];?></td>
                                 <td><?=$value['job_address'];?></td>
                                 <td><?=$value['job_remark'];?></td>
-                                <td>
-                                        <div class="buttons">                                    
-                                            <button type="button" onclick="editItem(<?=$value['job_id'];?>)" class="btn btn-icon btn-sm btn-primary"><i class="fas fa-edit"></i></button>
-                                            <button type="button" onclick="deleteItem(<?=$value['job_id'];?>)" class="btn btn-icon btn-sm btn-danger"><i class="fas fa-trash"></i></button>
-                                        </div>
+                                <td class="text-center">
+                                    <div class="buttons">                                    
+                                        <button type="button" onclick="editItem(<?=$value['job_id'];?>)" class="btn btn-icon btn-sm btn-primary"><i class="fas fa-edit"></i></button>
+                                        <button type="button" onclick="deleteItem(<?=$value['job_id'];?>)" class="btn btn-icon btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                    </div>
                                 </td>
                             </tr> 
                         <?php endif;?>
@@ -64,7 +65,7 @@
                     <div class="row">                               
                         <div class="form-group col-md-4">
                             <label>อาชีพ</label>                                        
-                            <select name="job_type" id="job_type" class="form-control" onchange="selectJobs($(this))">
+                            <select name="job_type" id="job_type" class="form-control select2" onchange="selectJobs($(this))" required="">
                                 <option value="">เลือก</option>
                                 <?php foreach ($jobs as $key => $value) :?>
                                     <option value="<?=$value['jobs_id'];?>"><?=$value['name'];?></option>
@@ -89,16 +90,16 @@
 
                         <div class="form-group col-md-4 show_salary"  style="display:block">
                             <label id="label_salary">รายได้ต่อรอบ</label>                                        
-                            <input type="text" class="form-control" name="job_salary" id="job_salary">
+                            <input type="text" class="form-control" name="job_salary" id="job_salary" oninput="validateDecimal(this)">
                         </div>
                         <div class="form-group col-md-4 show_salary_month"  style="display:block">
                             <label id="label_salary_month">จำนวนรอบต่อปี</label>                                        
-                            <input type="text" class="form-control" name="job_salary_month" id="job_salary_month">
+                            <input type="text" class="form-control" name="job_salary_month" id="job_salary_month" oninput="validateDecimal(this)">
                         </div>
 
                         <div class="form-group col-md-4">
                             <label>สถานที่ประกอบการ</label>                                        
-                            <input type="text" class="form-control" name="job_address" id="job_address">
+                            <input type="text" class="form-control" name="job_address" id="job_address" required="">
                         </div>
                         <div class="form-group col-md-12 " id="remark_show" style="display:none">
                             <label>รายละเอียด</label>                                        
@@ -115,33 +116,47 @@
                             รายละเอียด
                         </div>
                         <div class="col-md-6 text-right">
-                            <button type="button" class="btn btn-info" data-repeater-create >เพิ่มรายละเอียด</button>
+                            <button type="button" class="btn btn-info" data-repeater-create id="job-add-detail" >เพิ่มรายละเอียด</button>
                         </div>
                         <div class="col-md-12 ">
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
-                                    <th scope="col">ลำดับ</th>
-                                    <th scope="col">ชนิด</th>
-                                    <th scope="col">จำนวน</th>
-                                    <th scope="col">หน่วย</th>
-                                    <th scope="col">ต้นทุน/ปี</th>
-                                    <th scope="col">รายได้/ปี</th>
-                                    <th scope="col">หมายเหตุ</th>
+                                        <th width="5%" scope="col">ลำดับ</th>
+                                        <th width="20%" scope="col">ชนิด</th>
+                                        <th width="10%" scope="col">จำนวน</th>
+                                        <th width="10%" scope="col">หน่วย</th>
+                                        <th width="10%" scope="col">ต้นทุน/ปี</th>
+                                        <th width="10%" scope="col">รายได้/ปี</th>
+                                        <th width="10%" scope="col">หมายเหตุ</th>
                                     </tr>
                                 </thead>
                                 <tbody data-repeater-list="job-detail">
                                     <tr data-repeater-item>
                                         <th>1</th>
-                                        <td>                                             
-                                            <select name="type_id" id="type_id" class="form-control">
-                                                <option value="">เลือก</option>
-                                                <?php foreach ($products as $key => $value) :?>
-                                                    <option value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
-                                                <?php endforeach;?>
-                                            </select>
+                                        <td>       
+                                            <div class="row">
+                                                <div class="col-md-6 p-1">                                                    
+                                                    <select name="type_group" id="type_group" class="form-control select2"  required="" onchange="selectProduct($(this))">
+                                                        <option value="">เลือก</option>
+                                                        <?php foreach ($product_type as $key => $vsalue) :?>
+                                                            <option  value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
+                                                        <?php endforeach?>              
+                                                    </select>                                                  
+                                                </div>
+                                                <div class="col-md-6 p-1">
+                                                 
+                                                    <select name="type_id" id="type_id" class="form-control select2" required="">
+                                                        <option value="">เลือก</option>       
+                                                        <?php foreach ($products as $key => $value) :?>
+                                                            <option value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
+                                                        <?php endforeach?>                                                               
+                                                    </select>    
+                                                                     
+                                                </div>  
+                                            </div>
                                         </td>
-                                        <td> <input type="text" class="form-control" name="detail_value"></td>
+                                        <td> <input type="text" class="form-control" name="detail_value" oninput="validateDecimal(this)"></td>
                                         <td>                                             
                                             <select name="detail_unit" id="detail_unit" class="form-control">
                                                 <option value="">เลือก</option>
@@ -149,8 +164,8 @@
                                                 <option value="โรงเรือน">โรงเรือน</option>
                                             </select>
                                         </td>
-                                        <td> <input type="text" class="form-control" name="detail_cost"></td>
-                                        <td> <input type="text" class="form-control" name="detail_income"></td>
+                                        <td> <input type="text" class="form-control" name="detail_cost" oninput="validateDecimal(this)"></td>
+                                        <td> <input type="text" class="form-control" name="detail_income" oninput="validateDecimal(this)"></td>
                                         <td> <input type="text" class="form-control" name="detail_remark"></td>
                                     </tr>
                                 </tbody>
@@ -169,35 +184,107 @@
     <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
 </div>
 
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
+
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
 <script>
  
+    var validateDecimal = function(e) {
+        var t = e.value;
+        t = t.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');
+        e.value = (t.indexOf(".") >= 0) ? (t.substr(0, t.indexOf(".")) + t.substr(t.indexOf("."), 3)) : t;
+    }
+
+    function selectProduct(elm){        
+        var $option = elm.find('option:selected');
+        var value = $option.val();
+         $.ajax({
+            type: "GET",
+            url: domain+'common/get-product?type='+value,
+            success : function(options){
+                elm.parent().parent().find('#type_id').html(options)
+            }
+        });
+    }
+
     $(document).ready(function () {
+
+      
+        // $(".select2-group").select2();
+        
+    
 
         var $repeater = $('.outer-repeater').repeater({
                 initEmpty: false,
                 isFirstItemUndeletable: false,
                 // defaultValues: { 'text-input': 'outer-default' },
                 show: function () {
-                    console.log('outer show');
-                    $(this).slideDown();
+                    $(this).slideDown(function(){
+                        $(this).find('.select2').select2({
+                            placeholder: ''
+                        });
+                    });
                 },
                 hide: function (deleteElement) {
                     console.log('outer delete');
                     $(this).slideUp(deleteElement);
+                },
+                ready: function (setIndexes) {
+                    setTimeout(() => {
+                        $('.select2').select2({
+                            placeholder: ''
+                        });
+                    }, 1000);
                 },
                 repeaters: [{
                     isFirstItemUndeletable: false,
                     selector: '.inner-repeater',
                     // defaultValues: { 'inner-text-input': 'inner-default' },
                     show: function () {
-                        console.log('inner show');
-                        $(this).slideDown();
+
+                        $(this).slideDown(function(){
+                            $(this).find('.select2').select2({
+                                placeholder: ''
+                            });
+                        });
+                        // if ($('.select2-group').data('select2')) {
+                        //     $('.select2-group').select2("destroy"); 
+                        // }
+
+                        // $('.select2-group').select2();
+                        // $(this).children().find('.select2-group').select2('val', '');
+                        
+                        // $('.select2').remove();
+                        // $('select.select2').removeAttr('data-select2-id');
+                        // $('select.select2').select2();
+                    //     const origin = $(this).children().find('select.select2-group');
+                    //    // origin.select2('destroy');
+                    //     const cloned = origin.clone(true);
+                    //     cloned.removeAttr('data-select2-id').removeAttr('id');
+                    //     cloned.find('option').removeAttr('data-select2-id');
+                    //     origin.select2();
+                    //     cloned.select2().val(null).trigger('change');
+                        // $(this).children().find("select.select2-hidden-accessible").select2('destroy');
+                        // console.log($(this).children().find('select.select2-group'));
+                        // $(this).children().find('select.select2').remove()
+                        // $(this).children().find('select.select2-group').select2()
+                        // $("select[name='jobs[0][job-detail][1][type_group]']").select2();
+                        // $(this).find('select#type_id').select2()
+                        
+                     
                     },
                     hide: function (deleteElement) {
                         console.log('inner delete');
                         $(this).slideUp(deleteElement);
-                    }
+                    },  
+                    ready: function (setIndexes) {      
+                        setTimeout(() => {
+                            $('.select2').select2({
+                                placeholder: ''
+                            });
+                        }, 1000);
+                    },                 
                 }]
             });
 
@@ -232,16 +319,20 @@
         //     isFirstItemUndeletable: false
         // })
 
-            // $("#add-family").click(function () {
-            //     $repeater.repeaterVal()["group"].map(function (fields, row) {
-                    
-            //         $(".key_data:last").text(row);
-            //         $(".family_key:last").attr('data-id', (row));               
-            //         $(`input[name='group[${row}][family]']`).val((row))
-            //         // $('[data-repeater-list]').empty();
-            //         // $('[data-repeater-item]').slice(1).empty();
-            //     });
-            // });
+        $("#job-add").click(function () {
+            $repeater.repeaterVal()["jobs"].map(function (fields, row) {
+                // $('.select2-job').each(function(i, obj) {
+              
+                //     $( obj ).data('select2').destroy();
+                // });
+                
+                // $(".key_data:last").text(row);
+                // $(".family_key:last").attr('data-id', (row));               
+                // $(`input[name='group[${row}][family]']`).val((row))
+                // $('[data-repeater-list]').empty();
+                // $('[data-repeater-item]').slice(1).empty();
+            });
+        });
 
     });
 

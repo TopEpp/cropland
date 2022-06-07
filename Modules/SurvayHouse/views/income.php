@@ -89,6 +89,12 @@
                             </table>
                           
                         </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-12 text-right">                                                                      
+                                <button type="button" class="btn btn-primary" onclick="location.href='<?=base_url('survay_house/outcome/'.@$house_id);?>';" >ถัดไป</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -98,7 +104,7 @@
 
 <div class="modal fade" tabindex="-1" role="dialog" id="IncomeModal">
     <div class="modal-dialog modal-lg" role="document">
-        <form action="<?=base_url('survay_house/save_income/'.@$house_id);?>" method="post">
+        <form action="<?=base_url('survay_house/save_income/'.@$house_id);?>" method="post" class="needs-validation" novalidate="">
             <input type="hidden" name="interview_id" id="interview_id">
             <input type="hidden" name="person_id" id="person_id">
             <div class="modal-content">
@@ -117,7 +123,10 @@
                     <div class="row">                               
                         <div class="form-group col-md-6">
                             <label>เงินผู้สูงอายุ/เดือน</label>                                        
-                            <input type="text" class="form-control" name="income[1][income_value]">
+                            <input type="text" class="form-control" name="income[1][income_value]" required="">
+                            <div class="invalid-feedback">
+                                กรุณากรอกเงินผู้สูงอายุ/เดือน
+                            </div>  
                         </div>
                         <div class="form-group col-md-6">
                             <label>จำนวนเดือนที่ได้รับ</label>
@@ -130,7 +139,10 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label>บัตรประชารัฐ/เดือน</label>                                        
-                            <input type="text" class="form-control" name="income[2][income_value]">
+                            <input type="text" class="form-control" name="income[2][income_value]" required="">
+                            <div class="invalid-feedback">
+                                กรุณากรอกบัตรประชารัฐ/เดือน
+                            </div>
                         </div>
                         <div class="form-group col-md-6">
                             <label>จำนวนเดือนที่ได้รับ</label>
@@ -143,7 +155,10 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label>บุตรส่งเงิน</label>                                        
-                            <input type="text" class="form-control" name="income[3][income_value]">
+                            <input type="text" class="form-control" name="income[3][income_value]" required="">
+                            <div class="invalid-feedback">
+                                กรุณากรอกบุตรส่งเงิน
+                            </div>
                         </div>
                         <div class="form-group col-md-6">
                             <label>จำนวนเดือนที่ได้รับ</label>
@@ -157,6 +172,7 @@
                         <div class="form-group col-md-6">
                             <label>บัตรผู้พิการ/เดือน</label>                                        
                             <input type="text" class="form-control" name="income[4][income_value]">
+
                         </div>
                         <div class="form-group col-md-6">
                             <label>จำนวนเดือนที่ได้รับ</label>
