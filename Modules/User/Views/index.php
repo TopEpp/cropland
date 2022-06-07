@@ -50,7 +50,7 @@
                                         <td><?=$value['mbl_phn'];?></td>                                        
                                         <td class="text-center">
                                             <div class="buttons">
-                                                <a href="#" onclick="openForm(<?php echo $value['emp_id']?>,'<?php echo $value['fullname']?>')" class="btn btn-icon btn-primary"><i class="far fa-cog"></i></a>
+                                                <a href="#" onclick="openForm(<?php echo $value['emp_id']?>,'<?php echo $value['fullname']?>')" class="btn btn-icon btn-primary"><i class="fa fa-cog"></i></a>
                                             </div>
                                         </td>
                                     </tr>

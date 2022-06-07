@@ -56,7 +56,7 @@ class Report_model extends Model
             WHERE LH_interview_land_problem.interview_id = LH_interview_land.interview_id order by 	LH_interview_land_problem.problem_id	 
             FOR XML PATH, TYPE).value(N'.[1]', N'varchar(max)'), 1, 2, '') as land_problems,
         ");
-        $builder->join('LH_land', 'LH_land.land_id = LH_interview_land.interview_code');
+        $builder->join('LH_land', 'LH_land.land_code = LH_interview_land.interview_code');
         $builder->join('LH_landuse', 'LH_landuse.landuse_id = LH_land.land_use');
 
         $builder->join('LH_house_person', 'LH_house_person.person_id = LH_interview_land.interview_person_id');
@@ -134,9 +134,9 @@ class Report_model extends Model
         person_village.Name as person_village,
         LH_interview_land_product.*");
 
-        $builder->join('LH_land', 'LH_land.land_id = LH_interview_land.interview_code','left');
-        $builder->join('LH_interview_land_detail','LH_interview_land_detail.interview_id = LH_interview_land.interview_id');
-        $builder->join('LH_interview_land_product', 'LH_interview_land_product.detail_id = LH_interview_land_detail.detail_id');
+        $builder->join('LH_land', 'LH_land.land_code = LH_interview_land.interview_code','left');
+        $builder->join('LH_interview_land_detail','LH_interview_land_detail.interview_id = LH_interview_land.interview_id','left');
+        $builder->join('LH_interview_land_product', 'LH_interview_land_product.detail_id = LH_interview_land_detail.detail_id','left');
         $builder->join('CODE_PRODUCT', 'CODE_PRODUCT.Code = LH_interview_land_detail.detail_type');
 
         $builder->join('CODE_PRODUCTTYPE', 'CODE_PRODUCTTYPE.Code = CODE_PRODUCT.TypeCode');
