@@ -48,39 +48,44 @@ class Dashboard extends BaseController
         return view('Modules\Dashboard\Views\survay',$data);
     }
 
-    public function houseType(){
+    public function house(){
 
-        return view('Modules\Dashboard\Views\house_type');
+        return view('Modules\Dashboard\Views\house');
     }
+    
+    // public function houseType(){
 
-    public function houseEconomy(){
+    //     return view('Modules\Dashboard\Views\house_type');
+    // }
 
-        return view('Modules\Dashboard\Views\house_economy');
-    }
+    // public function houseEconomy(){
 
-    public function houseHealth(){
+    //     return view('Modules\Dashboard\Views\house_economy');
+    // }
 
-        return view('Modules\Dashboard\Views\house_health');
-    }
+    // public function houseHealth(){
 
-    public function houseSociety(){
+    //     return view('Modules\Dashboard\Views\house_health');
+    // }
 
-        return view('Modules\Dashboard\Views\house_society');
-    }
+    // public function houseSociety(){
 
-    public function houseLand(){
+    //     return view('Modules\Dashboard\Views\house_society');
+    // }
 
-        return view('Modules\Dashboard\Views\house_land');
-    }
+    // public function houseLand(){
 
-    public function houseProblem(){
+    //     return view('Modules\Dashboard\Views\house_land');
+    // }
 
-        return view('Modules\Dashboard\Views\house_problem');
-    }
+    // public function houseProblem(){
 
-    public function houseActivity(){
+    //     return view('Modules\Dashboard\Views\house_problem');
+    // }
 
-        return view('Modules\Dashboard\Views\house_activity');
-    }
+    // public function houseActivity(){
+
+    //     return view('Modules\Dashboard\Views\house_activity');
+    // }
 
 }

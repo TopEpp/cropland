@@ -185,6 +185,9 @@
                 <img alt="image" src="<?= base_url('public/assets/img/avatar/avatar-1.png');?>" class="rounded-circle mr-1">
                 <div class="d-sm-none d-lg-inline-block"><?php echo $session->get('name'); ?></div></a>
                 <div class="dropdown-menu dropdown-menu-right" style="width:250px">
+                    <a href="<?=base_url('dashboard/house');?>" class="dropdown-item has-icon">                   
+                   แดชบอร์ดแบบสำรวจครัวเรือน
+                   </a>
                     <a href="<?=base_url('dashboard/survay');?>" class="dropdown-item has-icon">
                    
                     แดชบอร์ดแบบสำรวจที่ดินรายแปลง

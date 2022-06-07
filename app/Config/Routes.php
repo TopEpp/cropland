@@ -175,7 +175,7 @@ $routes->group("member", ["namespace" => "Modules\User\Controllers"], function (
 
 $routes->group("dashboard", ["namespace" => "Modules\Dashboard\Controllers"], function ($routes) {
 	$routes->get("survay", "Dashboard::survay");
-    // $routes->get("house-type", "Dashboard::houseType");
+    $routes->get("house", "Dashboard::house");
     // $routes->get("house-economy", "Dashboard::houseEconomy");
     // $routes->get("house-health", "Dashboard::houseHealth");
     // $routes->get("house-society", "Dashboard::houseSociety");
