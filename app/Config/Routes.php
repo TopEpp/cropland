@@ -188,6 +188,8 @@ $routes->group("dashboard", ["namespace" => "Modules\Dashboard\Controllers"], fu
 $routes->group("report", ["namespace" => "Modules\Report\Controllers"], function ($routes) {
 	$routes->get("survay", "Report::survay");
     $routes->get("survay(:any)", "Report::survayDetail$1");
+    $routes->get("house(:any)", "Report::House$1");
+    
     // $routes->get("house-type", "Dashboard::houseType");
     // $routes->get("house-economy", "Dashboard::houseEconomy");
     // $routes->get("house-health", "Dashboard::houseHealth");

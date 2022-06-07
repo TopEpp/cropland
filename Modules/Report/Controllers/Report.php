@@ -54,4 +54,17 @@ class Report extends BaseController
         return view('Modules\Report\Views\survay_detail',$data);
     }
 
+    public function House($type = '')
+    {
+        $model_user = new User_model();
+        $model_land = new Land_model();
+        $model_common = new Common_model();
+
+        $data = [];
+        $data['type'] = $type;
+        $data['projects'] = $this->model_api->getProject();
+
+        return view('Modules\Report\Views\house',$data);
+    }
+
 }
