@@ -40,6 +40,7 @@ class Interview_house_model extends Model
         
       $builder =  $this->table('LH_interview_house');
       $builder->select("   
+        LH_interview_house.interview_id,
         max( CODE_PROJECT.Description) as interview_project_name,
         max( LH_interview_house.interview_year) as interview_year,
         max( LH_house.house_id) as house_id,
@@ -401,10 +402,10 @@ class Interview_house_model extends Model
     }
 
 
-    public function deleteHouse($id){
+    public function deleteInterview($id){
 
-      $builder = $this->db->table('LH_house');
-      $builder->where('house_id', $id);
+      $builder = $this->db->table('LH_interview_house');
+      $builder->where('interview_id', $id);
       $query = $builder->delete();
 
       return $query;

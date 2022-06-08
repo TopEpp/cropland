@@ -109,7 +109,7 @@ $routes->group("survay_house", ["namespace" => "Modules\SurvayHouse\Controllers"
     $routes->post("save_outcome/(:num)", "SurvayHouse::saveOutcome/$1");
 
     //delete
-    $routes->post("delete_house(:any)", "SurvayHouse::deleteHouse$1");
+    $routes->post("delete_interview(:any)", "SurvayHouse::deleteInterview$1");
     $routes->post("delete_member(:any)", "SurvayHouse::deleteMember$1");
     $routes->post("delete_jobs(:any)", "SurvayHouse::deleteJobs$1");
 

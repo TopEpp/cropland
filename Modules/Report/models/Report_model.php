@@ -214,4 +214,42 @@ class Report_model extends Model
         return [];
 
     }
+
+    public function getAllHouse(){
+        $builder = $this->db->table('LH_house');
+        $builder->select("
+            max(LH_house.house_number) as house_number,
+            max(LH_house.house_moo) as house_moo,
+            max(LH_house.house_moo_name) as house_moo_name,
+            max(CODE_TAMBON.TAM_T) as tam_name_t,
+            max(CODE_AMPHUR.AMP_T) as amp_name_t,
+            max(CODE_PROVINCE.Name) as pro_name_t,
+            sum(LH_land.land_area) as land_area,
+            count(LH_house_person.person_id)as person_count,
+            max(CODE_PROJECT.Name)as area,
+            (SELECT SUM(a.income_value * income_month) 
+                FROM LH_person_income a
+                WHERE a.person_id = max(LH_house_person.person_id)) as income_value,
+
+            (SELECT SUM(a.outcome_value * outcome_month) 
+                FROM LH_person_outcome a
+                WHERE a.person_id = max(LH_house_person.person_id)) as outcome_value
+        ");
+
+        $builder->join('LH_interview_house', 'LH_interview_house.interview_house = LH_house.house_id');
+     
+        $builder->join('CODE_PROJECT', 'CODE_PROJECT.Code = LH_interview_house.interview_project_name');        
+        $builder->join('LH_house_person', 'LH_house_person.house_id = LH_house.house_id','left');
+
+        $builder->join('LH_house_land', 'LH_house_land.person_id = LH_house_person.person_id','left');
+        $builder->join('LH_land', 'LH_land.land_id = LH_house_land.land_id','left');
+
+        $builder->join('CODE_PROVINCE', 'CODE_PROVINCE.Code = LH_house.house_province','left');
+        $builder->join('CODE_AMPHUR', 'CAST(CODE_AMPHUR.AMP_CODE as int) = LH_house.house_district and CODE_PROVINCE.Code = CODE_AMPHUR.PROV_CODE','left');      
+        $builder->join('CODE_TAMBON', 'CAST(CODE_TAMBON.TAM_CODE as int) = LH_house.house_subdistrict and CODE_PROVINCE.Code = CODE_TAMBON.PROV_CODE and CODE_AMPHUR.AMP_CODE = CODE_TAMBON.AMP_CODE','left'); 
+        $builder->groupBy('LH_house.house_id');
+        
+        $query = $builder->get()->getResultArray();
+        return $query;
+    }
 }

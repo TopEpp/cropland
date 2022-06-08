@@ -62,6 +62,8 @@ class Report extends BaseController
 
         $data = [];
         $data['type'] = $type;
+        $data['data'] = $this->model_report->getAllHouse(10,'page');
+        
         $data['projects'] = $this->model_api->getProject();
 
         return view('Modules\Report\Views\house',$data);

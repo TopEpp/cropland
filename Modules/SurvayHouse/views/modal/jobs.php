@@ -139,7 +139,7 @@
                                                 <div class="col-md-6 p-1">                                                    
                                                     <select name="type_group" id="type_group" class="form-control select2"  required="" onchange="selectProduct($(this))">
                                                         <option value="">เลือก</option>
-                                                        <?php foreach ($product_type as $key => $vsalue) :?>
+                                                        <?php foreach ($product_type as $key => $value) :?>
                                                             <option  value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                                         <?php endforeach?>              
                                                     </select>                                                  

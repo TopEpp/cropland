@@ -120,7 +120,7 @@
                                         <td class="text-center">
                                             <div class="buttons">
                                                 <a data-toggle="tooltip" title="แก้ไขข้อมูล" href="<?=base_url('survay_house/manage/'.$value['house_id']);?>" class="btn btn-icon btn-primary"><i class="far fa-edit"></i></a>                                    
-                                                <button  data-toggle="tooltip" data-placement="bottom" title="ลบข้อมูล" onclick="deleteItem(<?=$value['house_id'];?>)" class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></button>
+                                                <button  data-toggle="tooltip" data-placement="bottom" title="ลบข้อมูล" onclick="deleteItem(<?=$value['interview_id'];?>)" class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></button>
                                             </div>
                                         </td>
                                     </tr>
@@ -169,7 +169,7 @@
             if (willDelete) {
                 $.ajax({
                     type: "POST",
-                    url: domain+'survay_house/delete_house/'+elm,
+                    url: domain+'survay_house/delete_interview/'+elm,
                     success : function(res){
                         window.location.reload();
                     }

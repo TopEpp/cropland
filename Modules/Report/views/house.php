@@ -77,11 +77,22 @@
                                         <?php if(!empty($data)):?>
                                             <?php foreach ($data as $key => $value) :?>
                                             <tr>
+                                                <td><?=$key+1;?></td>
+                                                <td><?=$value['area'];?></td>
+                                                <td><?=$value['house_moo_name'];?></td>
+                                                <td><?=$value['house_number'];?></td>
+                                                <td><?=$value['house_moo'];?></td>
+                                                <td><?=$value['tam_name_t'];?></td>
+                                                <td><?=$value['amp_name_t'];?></td>
+                                                <td><?=$value['pro_name_t'];?></td>
+                                                <td class="text-center"><?=$value['person_count'];?></td>
                                                 <td></td>
                                                 <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
+                                                <td><?=$value['income_value'];?></td>
+                                                <td><?=$value['outcome_value'];?></td>
+                                                <td><?=$value['income_value'] - $value['outcome_value'];?></td>
+                                                
+                                                
 
                                             </tr>
                                             <?php endforeach;?>
