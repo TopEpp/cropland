@@ -136,14 +136,14 @@
                                             <tr>
                                                 <td scope="row">
                                                     <div style="width: 100px" >
-                                                        <?=$value['BasinName'];?>
+                                                        <?=@$value['BasinName'];?>
                                                     </div>
                                                 </td>
                                                 <td> 
-                                                    <div style="width: 150px" ><?=$value['project_name'];?></div>
+                                                    <div style="width: 150px" ><?=@$value['project_name'];?></div>
                                                 </td>
                                                 <td>
-                                                    <div style="width: 80px" ><?=$value['project_area'];?></div>
+                                                    <div style="width: 80px" ><?=@$value['project_area'];?></div>
                                                 </td>
                                                 <td>                                                
                                                     <div style="width: 80px" ><?=$value['project_village'];?></div>

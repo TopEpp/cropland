@@ -109,7 +109,7 @@ $routes->group("survay_house", ["namespace" => "Modules\SurvayHouse\Controllers"
     $routes->post("save_outcome/(:num)", "SurvayHouse::saveOutcome/$1");
 
     //delete
-    $routes->post("delete_house(:any)", "SurvayHouse::deleteHouse$1");
+    $routes->post("delete_interview(:any)", "SurvayHouse::deleteInterview$1");
     $routes->post("delete_member(:any)", "SurvayHouse::deleteMember$1");
     $routes->post("delete_jobs(:any)", "SurvayHouse::deleteJobs$1");
 
@@ -175,7 +175,7 @@ $routes->group("member", ["namespace" => "Modules\User\Controllers"], function (
 
 $routes->group("dashboard", ["namespace" => "Modules\Dashboard\Controllers"], function ($routes) {
 	$routes->get("survay", "Dashboard::survay");
-    // $routes->get("house-type", "Dashboard::houseType");
+    $routes->get("house", "Dashboard::house");
     // $routes->get("house-economy", "Dashboard::houseEconomy");
     // $routes->get("house-health", "Dashboard::houseHealth");
     // $routes->get("house-society", "Dashboard::houseSociety");

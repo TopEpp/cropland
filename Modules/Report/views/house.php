@@ -13,10 +13,10 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-center w-100">
                             <div class="btn-group" role="group" aria-label="menu-nabbar">
-                                <button type="button" class="btn <?=@$type == '1' || $type == '' ? 'btn-info':'btn-secondary' ?> mx-2" onclick="location.href='<?=base_url('report/house');?>';">ข้อมูลครัวเรือน</button>
-                                <button type="button" class="btn <?=@$type == '2' ? 'btn-info':'btn-secondary' ?> mx-2" onclick="location.href='<?=base_url('report/house/2');?>';">ข้อมูลด้านอาชีพ</button>
-                                <button type="button" class="btn <?=@$type == '3' ? 'btn-info':'btn-secondary' ?> mx-2" onclick="location.href='<?=base_url('report/house/3');?>';">การถือครองที่ดินของครัวเรือน</button>
-                                <button type="button" class="btn <?=@$type == '4' ? 'btn-info':'btn-secondary' ?> mx-2" onclick="location.href='<?=base_url('report/house/4');?>';">การใช้ประโยชน์และผลผลิตของครัวเรือน</button>
+                                <button type="button" class="btn <?=@$type == '1' || $type == '' ? 'btn-info':'btn-secondary' ?> mx-2" onclick="location.href='<?=base_url('report/house?interview_project='.@$search['interview_project']);?>';">ข้อมูลครัวเรือน</button>
+                                <button type="button" class="btn <?=@$type == '2' ? 'btn-info':'btn-secondary' ?> mx-2" onclick="location.href='<?=base_url('report/house/2?interview_project='.@$search['interview_project']);?>';">ข้อมูลด้านอาชีพ</button>
+                                <button type="button" class="btn <?=@$type == '3' ? 'btn-info':'btn-secondary' ?> mx-2" onclick="location.href='<?=base_url('report/house/3?interview_project='.@$search['interview_project']);?>';">การถือครองที่ดินของครัวเรือน</button>
+                                <button type="button" class="btn <?=@$type == '4' ? 'btn-info':'btn-secondary' ?> mx-2" onclick="location.href='<?=base_url('report/house/4?interview_project='.@$search['interview_project']);?>';">การใช้ประโยชน์และผลผลิตของครัวเรือน</button>
                             </div>                          
                         </div>
                       
@@ -38,7 +38,7 @@
                                 </div>
                                 <div class="col-md-12 text-right">
                                     <button type="submit" class="btn btn-info">ค้นหา</button>
-                                    <button type="button" class="btn btn-secondary" onclick="window.location.replace('<?=site_url('report/survay');?>');">ล้างค่า</button>
+                                    <button type="button" class="btn btn-secondary" onclick="window.location.replace('<?=site_url('report/house');?>');">ล้างค่า</button>
                                     <button type="button" class="btn btn-primary" onclick="generateExcel()">Export Excel</button>
                                 </div>  
                             </form>
@@ -77,11 +77,22 @@
                                         <?php if(!empty($data)):?>
                                             <?php foreach ($data as $key => $value) :?>
                                             <tr>
+                                                <td><?=$key+1;?></td>
+                                                <td><?=$value['area'];?></td>
+                                                <td><?=$value['house_moo_name'];?></td>
+                                                <td><?=$value['house_number'];?></td>
+                                                <td><?=$value['house_moo'];?></td>
+                                                <td><?=$value['tam_name_t'];?></td>
+                                                <td><?=$value['amp_name_t'];?></td>
+                                                <td><?=$value['pro_name_t'];?></td>
+                                                <td class="text-center"><?=$value['person_count'];?></td>
                                                 <td></td>
                                                 <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
+                                                <td><?=$value['income_value'];?></td>
+                                                <td><?=$value['outcome_value'];?></td>
+                                                <td><?=$value['income_value'] - $value['outcome_value'];?></td>
+                                                
+                                                
 
                                             </tr>
                                             <?php endforeach;?>
@@ -138,11 +149,19 @@
                                         <?php if(!empty($data)):?>
                                             <?php foreach ($data as $key => $value) :?>
                                             <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
+                                                <td><?=$key+1;?></td>
+                                                <td><?=$value['area'];?></td>
+                                                <td><?=$value['house_moo_name'];?></td>
+                                                <td><?=$value['house_number'];?></td>
+                                                <td><?=$value['house_moo'];?></td>
+                                                <td><?=$value['tam_name_t'];?></td>
+                                                <td><?=$value['amp_name_t'];?></td>
+                                                <td><?=$value['pro_name_t'];?></td>
+                                                <td><?=$value['person_name'];?></td>
+                                                <td><?=$value['person_number'];?></td>
+                                                <td><?=$value['job_main'];?></td>
+                                                <td><?=$value['job_second'];?></td>
+                                                
 
                                             </tr>
                                             <?php endforeach;?>
@@ -198,12 +217,21 @@
                                         <?php if(!empty($data)):?>
                                             <?php foreach ($data as $key => $value) :?>
                                             <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-
+                                                <td><?=$key+1;?></td>
+                                                <td><?=$value['area'];?></td>
+                                                <td><?=$value['house_moo_name'];?></td>
+                                                <td><?=$value['house_number'];?></td>
+                                                <td><?=$value['house_moo'];?></td>
+                                                <td><?=$value['tam_name_t'];?></td>
+                                                <td><?=$value['amp_name_t'];?></td>
+                                                <td><?=$value['pro_name_t'];?></td>
+                                                <td><?=$value['land_number'];?></td>
+                                                <td><?=$value['land_area'];?></td>
+                                                <td><?=$value['landuse'];?></td>
+                                                <td><?=$value['land_holding'];?></td>
+                                                <td><?=$value['land_resource'];?></td>
+                                                
+                                                
                                             </tr>
                                             <?php endforeach;?>
                                         <?php else:?>
@@ -260,12 +288,21 @@
                                         <?php if(!empty($data)):?>
                                             <?php foreach ($data as $key => $value) :?>
                                             <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-
+                                                <td><?=$key+1;?></td>
+                                                <td><?=$value['area'];?></td>
+                                                <td><?=$value['house_moo_name'];?></td>
+                                                <td><?=$value['house_number'];?></td>
+                                                <td><?=$value['house_moo'];?></td>
+                                                <td><?=$value['tam_name_t'];?></td>
+                                                <td><?=$value['amp_name_t'];?></td>
+                                                <td><?=$value['pro_name_t'];?></td>
+                                                <td><?=$value['land_number'];?></td>
+                                                <td><?=$value['product_type'];?></td>
+                                                <td><?=$value['product_name'];?></td>
+                                                <td class="text-right"><?=number_format($value['product_value']);?></td>
+                                                <td><?=$value['markets'];?></td>
+                                                
+                                                
                                             </tr>
                                             <?php endforeach;?>
                                         <?php else:?>
@@ -321,7 +358,7 @@
 <script>
     function generateExcel() {
         //getting data from our table
-        $('#table_with_data').tableExport({fileName: 'export-survay',
+        $('#table_with_data').tableExport({fileName: 'export-house',
             type: 'xlsx'
         });
     }

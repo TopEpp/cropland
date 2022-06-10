@@ -59,9 +59,23 @@ class Report extends BaseController
         $model_user = new User_model();
         $model_land = new Land_model();
         $model_common = new Common_model();
-
         $data = [];
+        
+        $data['search'] = $this->request->getGet();
+
+        
         $data['type'] = $type;
+        if ($type == 1 || $type == ''){
+            $data['data'] = $this->model_report->getAllHouse(10,'page',$data['search']);
+        }else if($type == 2){
+            $data['data'] = $this->model_report->getAllJobs(10,'page',$data['search']);            
+        }else if($type == 3){
+            $data['data'] = $this->model_report->getAllLand(10,'page',$data['search']);   
+        }else if($type == 4){
+            $data['data'] = $this->model_report->getAllProduct(10,'page',$data['search']);   
+        }
+        
+        
         $data['projects'] = $this->model_api->getProject();
 
         return view('Modules\Report\Views\house',$data);

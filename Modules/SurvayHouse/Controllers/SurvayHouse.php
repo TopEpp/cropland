@@ -289,8 +289,8 @@ class SurvayHouse extends BaseController
     }
 
     //delete data 
-    public function deleteHouse($id){
-        $res = $this->model_house->deleteHouse($id);
+    public function deleteInterview($id){
+        $res = $this->model_house->deleteInterview($id);
         return   $this->respond($res);
     }
 

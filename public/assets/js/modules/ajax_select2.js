@@ -67,7 +67,7 @@ $(function () {
 				var arr = [];
 				$.each(data, function (index, value) {
 					arr.push({
-						id: value.land_id,
+						id: value.land_code,
 						text: value.land_code,
 					});
 				});
