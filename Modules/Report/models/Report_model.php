@@ -215,7 +215,9 @@ class Report_model extends Model
 
     }
 
-    public function getAllHouse(){
+
+    public function getAllHouse($page = '',$group = '',$search = []){
+        
         $builder = $this->db->table('LH_house');
         $builder->select("
             max(LH_house.house_number) as house_number,
@@ -236,6 +238,10 @@ class Report_model extends Model
                 WHERE a.person_id = max(LH_house_person.person_id)) as outcome_value
         ");
 
+        if (!empty($search['interview_project'])){
+            $builder->where('LH_interview_house.interview_project_name',$search['interview_project']);
+        }
+
         $builder->join('LH_interview_house', 'LH_interview_house.interview_house = LH_house.house_id');
      
         $builder->join('CODE_PROJECT', 'CODE_PROJECT.Code = LH_interview_house.interview_project_name');        
@@ -248,6 +254,156 @@ class Report_model extends Model
         $builder->join('CODE_AMPHUR', 'CAST(CODE_AMPHUR.AMP_CODE as int) = LH_house.house_district and CODE_PROVINCE.Code = CODE_AMPHUR.PROV_CODE','left');      
         $builder->join('CODE_TAMBON', 'CAST(CODE_TAMBON.TAM_CODE as int) = LH_house.house_subdistrict and CODE_PROVINCE.Code = CODE_TAMBON.PROV_CODE and CODE_AMPHUR.AMP_CODE = CODE_TAMBON.AMP_CODE','left'); 
         $builder->groupBy('LH_house.house_id');
+        
+        $query = $builder->get()->getResultArray();
+        return $query;
+    }
+
+    public function getAllJobs($page = '',$group = '',$search = []){
+        $builder = $this->db->table('LH_house');
+        $builder->select("
+            max(LH_house.house_number) as house_number,
+            max(LH_house.house_moo) as house_moo,
+            max(LH_house.house_moo_name) as house_moo_name,
+            max(CODE_TAMBON.TAM_T) as tam_name_t,
+            max(CODE_AMPHUR.AMP_T) as amp_name_t,
+            max(CODE_PROVINCE.Name) as pro_name_t,
+            sum(LH_land.land_area) as land_area,            
+            CONCAT(max(LH_prefix.name),max(LH_house_person.person_name),' ',max(LH_house_person.person_lastname)) as person_name,
+            max(LH_house_person.person_number) as person_number,
+            max(CODE_PROJECT.Name)as area,
+
+            STUFF((SELECT  ',' +LH_jobs.name
+            FROM LH_person_job
+            join LH_jobs on LH_jobs.jobs_id = LH_person_job.job_type
+            WHERE LH_person_job.person_id = LH_house_person.person_id and LH_person_job.job_main = '1'	 
+            FOR XML PATH, TYPE).value(N'.[1]', N'varchar(max)'), 1, 2, '') as job_main,
+
+            STUFF((SELECT  ',' +LH_jobs.name
+            FROM LH_person_job
+            join LH_jobs on LH_jobs.jobs_id = LH_person_job.job_type
+            WHERE LH_person_job.person_id = LH_house_person.person_id and LH_person_job.job_main is null 
+            FOR XML PATH, TYPE).value(N'.[1]', N'varchar(max)'), 1, 2, '') as job_second,
+        ");
+
+        if (!empty($search['interview_project'])){
+            $builder->where('LH_interview_house.interview_project_name',$search['interview_project']);
+        }
+
+        $builder->join('LH_interview_house', 'LH_interview_house.interview_house = LH_house.house_id');
+     
+        $builder->join('CODE_PROJECT', 'CODE_PROJECT.Code = LH_interview_house.interview_project_name');        
+        $builder->join('LH_house_person', 'LH_house_person.house_id = LH_house.house_id','left');
+        $builder->join('LH_prefix', 'LH_prefix.prefix_id = LH_house_person.person_prename');
+
+        $builder->join('LH_house_land', 'LH_house_land.person_id = LH_house_person.person_id','left');
+        $builder->join('LH_land', 'LH_land.land_id = LH_house_land.land_id','left');
+
+        $builder->join('CODE_PROVINCE', 'CODE_PROVINCE.Code = LH_house.house_province','left');
+        $builder->join('CODE_AMPHUR', 'CAST(CODE_AMPHUR.AMP_CODE as int) = LH_house.house_district and CODE_PROVINCE.Code = CODE_AMPHUR.PROV_CODE','left');      
+        $builder->join('CODE_TAMBON', 'CAST(CODE_TAMBON.TAM_CODE as int) = LH_house.house_subdistrict and CODE_PROVINCE.Code = CODE_TAMBON.PROV_CODE and CODE_AMPHUR.AMP_CODE = CODE_TAMBON.AMP_CODE','left'); 
+        $builder->groupBy('LH_house_person.person_id');
+        
+        $query = $builder->get()->getResultArray();
+        return $query;
+    }
+
+    public function getAllLand($page = '',$group = '',$search = []){
+        $builder = $this->db->table('LH_house');
+        $builder->select("
+            max(LH_house.house_number) as house_number,
+            max(LH_house.house_moo) as house_moo,
+            max(LH_house.house_moo_name) as house_moo_name,
+            max(CODE_TAMBON.TAM_T) as tam_name_t,
+            max(CODE_AMPHUR.AMP_T) as amp_name_t,
+            max(CODE_PROVINCE.Name) as pro_name_t,
+            max(LH_land.land_area) as land_area,
+            max(LH_land.land_number) as land_number,
+            max(LH_landuse.name) as landuse,
+            max(CODE_PROJECT.Name)as area,
+            max(LH_landowner.name) as land_resource,
+            max(CODE_POSSESSRIGHT.name) as land_holding
+            
+          
+        ");
+
+        if (!empty($search['interview_project'])){
+            $builder->where('LH_interview_house.interview_project_name',$search['interview_project']);
+        }
+
+        $builder->join('LH_interview_house', 'LH_interview_house.interview_house = LH_house.house_id');
+     
+        $builder->join('CODE_PROJECT', 'CODE_PROJECT.Code = LH_interview_house.interview_project_name');        
+        $builder->join('LH_house_person', 'LH_house_person.house_id = LH_house.house_id','left');
+
+        $builder->join('LH_house_land', 'LH_house_land.person_id = LH_house_person.person_id','left');
+        $builder->join('LH_land', 'LH_land.land_id = LH_house_land.land_id','left');
+        $builder->join('LH_landuse', 'LH_landuse.landuse_id = LH_land.land_use','left');
+        $builder->join('CODE_POSSESSRIGHT', 'CODE_POSSESSRIGHT.Code = LH_land.land_holding','left');
+        $builder->join('LH_landowner', 'LH_landowner.landowner_id = LH_land.land_resource','left');
+        
+        
+
+        $builder->join('CODE_PROVINCE', 'CODE_PROVINCE.Code = LH_house.house_province','left');
+        $builder->join('CODE_AMPHUR', 'CAST(CODE_AMPHUR.AMP_CODE as int) = LH_house.house_district and CODE_PROVINCE.Code = CODE_AMPHUR.PROV_CODE','left');      
+        $builder->join('CODE_TAMBON', 'CAST(CODE_TAMBON.TAM_CODE as int) = LH_house.house_subdistrict and CODE_PROVINCE.Code = CODE_TAMBON.PROV_CODE and CODE_AMPHUR.AMP_CODE = CODE_TAMBON.AMP_CODE','left'); 
+        $builder->groupBy('LH_house.house_id');
+        
+        $query = $builder->get()->getResultArray();
+        return $query;
+    }
+
+    public function getAllProduct($page = '',$group = '',$search = []){
+        $builder = $this->db->table('LH_house');
+        $builder->select("
+            max(LH_house.house_number) as house_number,
+            max(LH_house.house_moo) as house_moo,
+            max(LH_house.house_moo_name) as house_moo_name,
+            max(CODE_TAMBON.TAM_T) as tam_name_t,
+            max(CODE_AMPHUR.AMP_T) as amp_name_t,
+            max(CODE_PROVINCE.Name) as pro_name_t,
+            max(LH_land.land_area) as land_area,
+            max(LH_land.land_number) as land_number,
+            max(CODE_PROJECT.Name)as area,
+            max(CODE_PRODUCTTYPE.Name) as product_type,
+            max(CODE_PRODUCT.Name) as product_name,
+            
+            (SELECT SUM(a.product_value * a.product_price) 
+            FROM LH_interview_land_product a
+            WHERE a.detail_id = LH_interview_land_detail.detail_id) as product_value,
+
+            STUFF((SELECT  ',' +LH_interview_land_product.product_market_label
+            FROM LH_interview_land_product
+            WHERE LH_interview_land_product.detail_id = LH_interview_land_detail.detail_id					 
+            FOR XML PATH, TYPE).value(N'.[1]', N'varchar(max)'), 1, 2, '') as markets,
+            
+        ");
+        
+        if (!empty($search['interview_project'])){
+            $builder->where('LH_interview_house.interview_project_name',$search['interview_project']);
+        }
+
+        $builder->join('LH_interview_house', 'LH_interview_house.interview_house = LH_house.house_id');      
+     
+        $builder->join('CODE_PROJECT', 'CODE_PROJECT.Code = LH_interview_house.interview_project_name');        
+        $builder->join('LH_house_person', 'LH_house_person.house_id = LH_house.house_id','left');
+
+        $builder->join('LH_interview_land', 'LH_interview_land.interview_person_id = LH_house_person.person_id','left');
+        $builder->join('LH_interview_land_detail', 'LH_interview_land_detail.interview_id = LH_interview_land.interview_id','left');
+        $builder->join('CODE_PRODUCTTYPE', 'CODE_PRODUCTTYPE.Code = LH_interview_land_detail.detail_use_type','left');
+        $builder->join('CODE_PRODUCT', 'CODE_PRODUCT.Code = LH_interview_land_detail.detail_type','left');
+
+
+        
+        $builder->join('LH_house_land', 'LH_house_land.person_id = LH_house_person.person_id','left');
+        $builder->join('LH_land', 'LH_land.land_id = LH_house_land.land_id','left');
+       
+        
+
+        $builder->join('CODE_PROVINCE', 'CODE_PROVINCE.Code = LH_house.house_province','left');
+        $builder->join('CODE_AMPHUR', 'CAST(CODE_AMPHUR.AMP_CODE as int) = LH_house.house_district and CODE_PROVINCE.Code = CODE_AMPHUR.PROV_CODE','left');      
+        $builder->join('CODE_TAMBON', 'CAST(CODE_TAMBON.TAM_CODE as int) = LH_house.house_subdistrict and CODE_PROVINCE.Code = CODE_TAMBON.PROV_CODE and CODE_AMPHUR.AMP_CODE = CODE_TAMBON.AMP_CODE','left'); 
+        $builder->groupBy('LH_interview_land_detail.detail_id');
         
         $query = $builder->get()->getResultArray();
         return $query;

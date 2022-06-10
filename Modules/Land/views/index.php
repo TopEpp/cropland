@@ -116,6 +116,25 @@
                                     </select>
                                 </div>
                                 <div class="form-group col-md-12">
+                                    <label>สิทธิถือครอง</label>                                        
+                                    <select name="land_holding" id="land_holding" class="form-control">
+                                        <option value="">เลือก</option>
+                                        <?php foreach ($landprivilege as $key => $value) :?>
+                                            <option value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
+                                        <?php endforeach?>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label>แหล่งน้ำที่ใช้ในการเกษตร</label>                                        
+                                    <select name="land_resource" id="land_resource" class="form-control">
+                                        <option value="">เลือก</option>
+                                        <?php foreach ($landowner as $key => $value) :?>
+                                            <option value="<?=$value['landowner_id'];?>"><?=$value['name'];?></option>
+                                        <?php endforeach?>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group col-md-12">
                                     <label>พื้นที่แปลงรวม (ไร่)</label>          
                                     <input type="text" class="form-control" name="land_area" id="land_area">
                                 </div>
