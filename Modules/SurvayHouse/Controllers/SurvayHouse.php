@@ -182,13 +182,21 @@ class SurvayHouse extends BaseController
         
         $person_id = $this->model_house->saveHouseJobs($input);
 
+        // if (!empty($input['job_id'])){
+        //     $session->setFlashdata("message", "แก้ไขข้อมูลเรียบร้อย");
+        // }else{
+        //     $session->setFlashdata("message", "บันทึกข้อมูลเรียบร้อย");
+        // }
+
+        // return redirect()->to('survay_house/jobs/'.$house_id);
+
         if (!empty($input['job_id'])){
-            $session->setFlashdata("message", "แก้ไขข้อมูลเรียบร้อย");
+           $message = "แก้ไขข้อมูลเรียบร้อย";
         }else{
-            $session->setFlashdata("message", "บันทึกข้อมูลเรียบร้อย");
+           $message = "บันทึกข้อมูลเรียบร้อย";
         }
 
-        return redirect()->to('survay_house/jobs/'.$house_id);
+        return $this->respond($message);
         
     }
 

@@ -2,12 +2,20 @@
     $cal_type = ['1'=>'ในภาคการเกษตร','2'=>'นอกภาคการเกษตร'];
 ?>
 
-
 <div class="modal-header">
     <h5 class="modal-title">ข้อมูลด้านอาชีพ</h5>
     <button type="button" class="btn btn-info" data-repeater-create id="job-add">เพิ่มอาชีพ</button>
 </div>
 <div class="modal-body">
+     
+    <div class="alert alert-success alert-dismissible fade">
+        <div class="alert-body">
+            <button class="close" data-dismiss="alert">
+            <span>×</span>
+            </button>
+            <p id="message_success"></p>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-12">
             <p>ชื่อ-นามสกุล : <?=$data[0]['person_name'].' '.$data[0]['person_lastname'] ?></p>
@@ -118,7 +126,7 @@
                         <div class="col-md-6 text-right">
                             <button type="button" class="btn btn-info" data-repeater-create id="job-add-detail" >เพิ่มรายละเอียด</button>
                         </div>
-                        <div class="col-md-12 ">
+                        <div class="col-md-12">
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
@@ -180,7 +188,7 @@
     
 </div>
 <div class="modal-footer bg-whitesmoke br">
-    <button type="submit" class="btn btn-primary">บันทึก</button>
+    <button type="button" onclick="saveJobs()" class="btn btn-primary">บันทึก</button>
     <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
 </div>
 
@@ -209,12 +217,8 @@
     }
 
     $(document).ready(function () {
-
       
         // $(".select2-group").select2();
-        
-    
-
         var $repeater = $('.outer-repeater').repeater({
                 initEmpty: false,
                 isFirstItemUndeletable: false,
@@ -372,9 +376,9 @@
             success : function(res){
                 if (res.data){
                     var data = res.data;
-                    
+         
                     $("#job_id").val(data.job_id)
-                    $("#job_type").val(data.job_type)
+                    $("#job_type").val(data.job_type).trigger('change');
                     $("#job_cal_type").val(data.job_cal_type)
                     if (data.job_main == 1){
                         $('#job_main').prop('checked', true);                        
@@ -394,6 +398,8 @@
     }
 
     function deleteItem(elm){
+      
+ 
         swal({
         title: 'Are you sure?',
         text: 'ยืนยันลบข้อมูลนี้!',
@@ -406,8 +412,12 @@
                 $.ajax({
                     type: "POST",
                     url: domain+'house/delete_jobs/'+elm,
-                    success : function(res){
-                        window.location.reload();
+                    success : function(response){
+
+                        $('.alert-success').removeClass('show').addClass( 'show' );
+                        $("#message_success").text('ลบข้อมูลเรียบร้อย')
+                        //refresh job
+                        loadJobs($('#person_id').val())
                     }
                 });
             } 
