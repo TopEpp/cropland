@@ -63,13 +63,13 @@
                                             <th>อ.</th>
                                             <th>จ.</th>
                                             <th>จำนวนคนในครัวเรือน</th>
-                                            <th>ใช้เพื่อการอุปโภค / บริโภคจากแหล่งใด</th>
-                                            <th>ข้อมูลด้านการออมของครัวเรือน</th>
+                                            <!-- <th>ใช้เพื่อการอุปโภค / บริโภคจากแหล่งใด</th>
+                                            <th>ข้อมูลด้านการออมของครัวเรือน</th> -->
                                             <th>ข้อมูลด้านรายได้ของครัวเรือน</th>                                            
                                             <th>ข้อมูลด้านรายจ่ายของครัวเรือน</th>
                                             <th>เปรียบเทียบรายได้</th>
-                                            <th>การเป็นสมาชิกกลุ่มของครัวเรือน</th>
-                                            <th>ข้อเสนอแนะ</th>
+                                            <!-- <th>การเป็นสมาชิกกลุ่มของครัวเรือน</th>
+                                            <th>ข้อเสนอแนะ</th> -->
 
                                         </tr>
                                     </thead>
@@ -86,8 +86,8 @@
                                                 <td><?=$value['amp_name_t'];?></td>
                                                 <td><?=$value['pro_name_t'];?></td>
                                                 <td class="text-center"><?=$value['person_count'];?></td>
-                                                <td></td>
-                                                <td></td>
+                                                <!-- <td></td>
+                                                <td></td> -->
                                                 <td><?=$value['income_value'];?></td>
                                                 <td><?=$value['outcome_value'];?></td>
                                                 <td><?=$value['income_value'] - $value['outcome_value'];?></td>
@@ -208,9 +208,9 @@
                                             <th>พื้นที่ (ไร่)</th>
                                             <th>การใช้ประโยชน์ที่ดิน</th>
                                             <th>สิทธิถือครอง</th>
-                                            <th>แหล่งน้ำที่ใช้ในการเกษตร</th>
+                                            <!-- <th>แหล่งน้ำที่ใช้ในการเกษตร</th>
                                             <th>ลักษณะการถือครอง</th>
-                                            <th>พื้นที่ตั้ง</th>
+                                            <th>พื้นที่ตั้ง</th> -->
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -229,7 +229,7 @@
                                                 <td><?=$value['land_area'];?></td>
                                                 <td><?=$value['landuse'];?></td>
                                                 <td><?=$value['land_holding'];?></td>
-                                                <td><?=$value['land_resource'];?></td>
+                                                <!-- <td><?=$value['land_resource'];?></td> -->
                                                 
                                                 
                                             </tr>
@@ -281,7 +281,7 @@
                                             <th>พันธุ์</th>
                                             <th>มูลค่ารวม (บาท)</th>
                                             <th>ช่องทางตลาด</th>
-                                            <th>การรับรอง GAP/อินทรีย์</th>                                            
+                                            <!-- <th>การรับรอง GAP/อินทรีย์</th>                                             -->
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -301,8 +301,7 @@
                                                 <td><?=$value['product_name'];?></td>
                                                 <td class="text-right"><?=number_format($value['product_value']);?></td>
                                                 <td><?=$value['markets'];?></td>
-                                                
-                                                
+
                                             </tr>
                                             <?php endforeach;?>
                                         <?php else:?>
