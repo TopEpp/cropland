@@ -8,7 +8,7 @@
                 <div class="card m-0 p-0">
                     <div class="card-header">
                         <h4 class="text-dark">รายงานสรุปโครงสร้างประชากร</h4>
-                        <div class="card-header-action w-25">
+                        <!-- <div class="cardz-header-action w-25">
                             <div class="form-group row">
                                 <label class="col-sm-4 col-form-label">หมู่บ้าน :</label>
                                 <div class="col-sm-8">
@@ -17,9 +17,52 @@
                                     </select>
                                 </div>                                  
                             </div>
-                        </div>
+                        </div> -->
                     </div>        
                     <div class="card-body">
+                    <h5>ค้นหาข้อมูล</h5>
+                        <div>
+                            <form action="">
+                                <div class="row d-flex justify-content-center w-100">                                                                 
+                                    <div class="form-group col-md-4">                                    
+                                        <label>ประเภทโครงการ</label>                                       
+                                        <select name="project_type" id="project_type" class="form-control select2">
+                                            <option value="">ทั้งหมด</option>
+                                            <?php foreach ($projects_type as $key => $value) :?>
+                                                <option <?=@$data['project_type'] == $value['Code']?'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
+                                            <?php endforeach;?>
+                                            
+                                        </select>
+                                    </div>   
+                                    <div class="form-group col-md-4">                                    
+                                        <label>โครงการ</label>                                       
+                                        <select name="project_name" id="project_name" class="form-control select2">
+                                            <option value="">ทั้งหมด</option>
+                                            <?php foreach ($projects as $key => $value) :?>
+                                                <option <?=@$search['project_name'] == $value['Code']?'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Description'];?></option>
+                                            <?php endforeach;?>
+                                        </select>
+                                    </div>  
+                                    <div class="form-group col-md-4">                                    
+                                        <label>ปีสำรวจ</label>                                       
+                                        <select name="year" id="year" class="form-control select2">
+                                            <option value="">ทั้งหมด</option>
+                                            <?php foreach (getYear() as $key => $value) :?>
+                                                <option value="<?=$value;?>"><?=$value;?></option>
+                                            <?php endforeach;?>
+                                        </select>
+                                    </div>                                  
+                                                                     
+                                </div>
+                                <div class="col-md-12 text-center">
+                                    <button type="submit" class="btn btn-info">ค้นหา</button>
+                                    <button type="button" class="btn btn-secondary" onclick="window.location.replace('<?=site_url('report/house');?>');">ล้างค่า</button>
+                                    
+                                </div>  
+                            </form>
+                        </div>
+                    
+                        <br>
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="text-center">
@@ -191,7 +234,13 @@
 </section>
 <?=$this->endSection()?>
 
+
+<?=$this->section("css")?>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<?=$this->endSection()?>
+
 <?=$this->section("scripts")?>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.esm.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/helpers.esm.min.js"></script>
@@ -206,20 +255,20 @@
                     label: '',
                     data: [40, 30, 20, 10],
                     backgroundColor: [
-                        'rgb(255, 99, 132)',
-                        'rgb(54, 162, 235)',
-                        'rgb(255, 205, 86)',
-                        'rgb(255, 200, 132)',
-                        'rgb(20, 150, 235)',
-                        'rgb(100, 205, 86)'
+                        'rgb(255, 99, 132,0.5)',
+                        'rgb(54, 162, 235,0.5)',
+                        'rgb(255, 205, 86,0.5)',
+                        'rgb(255, 200, 132,0.5)',
+                        'rgb(20, 150, 235,0.5)',
+                        'rgb(100, 205, 86,0.5)'
                     ],
                     borderColor: [
-                        'rgb(255, 99, 132)',
-                        'rgb(54, 162, 235)',
-                        'rgb(255, 205, 86)',
-                        'rgb(255, 200, 132)',
-                        'rgb(20, 150, 235)',
-                        'rgb(100, 205, 86)'
+                        'rgb(255, 99, 132,0.5)',
+                        'rgb(54, 162, 235,0.5)',
+                        'rgb(255, 205, 86,0.5)',
+                        'rgb(255, 200, 132,0.5)',
+                        'rgb(20, 150, 235,0.5)',
+                        'rgb(100, 205, 86,0.5)'
                     ],
                     borderWidth: 1
                 }]
@@ -242,20 +291,20 @@
                     label: '# of Votes',
                     data: [12, 19, 3, 5, 2, 3],
                     backgroundColor: [
-                        'rgb(255, 99, 132)',
-                        'rgb(54, 162, 235)',
-                        'rgb(255, 205, 86)',
-                        'rgb(255, 200, 132)',
-                        'rgb(20, 150, 235)',
-                        'rgb(100, 205, 86)'
+                        'rgb(255, 99, 132,0.5)',
+                        'rgb(54, 162, 235,0.5)',
+                        'rgb(255, 205, 86,0.5)',
+                        'rgb(255, 200, 132,0.5)',
+                        'rgb(20, 150, 235,0.5)',
+                        'rgb(100, 205, 86,0.5)'
                     ],
                     borderColor: [
-                        'rgb(255, 99, 132)',
-                        'rgb(54, 162, 235)',
-                        'rgb(255, 205, 86)',
-                        'rgb(255, 200, 132)',
-                        'rgb(20, 150, 235)',
-                        'rgb(100, 205, 86)'
+                        'rgb(255, 99, 132,0.5)',
+                        'rgb(54, 162, 235,0.5)',
+                        'rgb(255, 205, 86,0.5)',
+                        'rgb(255, 200, 132,0.5)',
+                        'rgb(20, 150, 235,0.5)',
+                        'rgb(100, 205, 86,0.5)'
                     ],
                     borderWidth: 1
                 }]
@@ -278,20 +327,20 @@
                     label: '# of Votes',
                     data: [30, 5, 30, 40],
                     backgroundColor: [
-                        'rgb(255, 99, 132)',
-                        'rgb(54, 162, 235)',
-                        'rgb(255, 205, 86)',
-                        'rgb(255, 200, 132)',
-                        'rgb(20, 150, 235)',
-                        'rgb(100, 205, 86)'
+                        'rgb(255, 99, 132,0.5)',
+                        'rgb(54, 162, 235,0.5)',
+                        'rgb(255, 205, 86,0.5)',
+                        'rgb(255, 200, 132,0.5)',
+                        'rgb(20, 150, 235,0.5)',
+                        'rgb(100, 205, 86,0.5)'
                     ],
                     borderColor: [
-                        'rgb(255, 99, 132)',
-                        'rgb(54, 162, 235)',
-                        'rgb(255, 205, 86)',
-                        'rgb(255, 200, 132)',
-                        'rgb(20, 150, 235)',
-                        'rgb(100, 205, 86)'
+                        'rgb(255, 99, 132,0.5)',
+                        'rgb(54, 162, 235,0.5)',
+                        'rgb(255, 205, 86,0.5)',
+                        'rgb(255, 200, 132,0.5)',
+                        'rgb(20, 150, 235,0.5)',
+                        'rgb(100, 205, 86,0.5)'
                     ],
                     borderWidth: 1
                 }]

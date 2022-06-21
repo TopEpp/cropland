@@ -50,7 +50,9 @@ class Dashboard extends BaseController
 
     public function house(){
 
-        return view('Modules\Dashboard\Views\house');
+        $data['projects_type'] = $this->model_api->getProjectType();
+        $data['projects'] = $this->model_api->getProject();
+        return view('Modules\Dashboard\Views\house',$data);
     }
     
     // public function houseType(){

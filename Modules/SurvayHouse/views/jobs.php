@@ -51,7 +51,7 @@
                                         <tr>
                                             <th scope="row" class="text-center"><?=$key+1;?></th>
                                             <td>
-                                                <a class="text-info" onclick="addJobs(<?=$value['person_id'];?>)" style="cursor: pointer;"><?=$value['person_name'].' '.$value['person_lastname'];?></a>
+                                                <a class="text-info" onclick="loadJobs(<?=$value['person_id'];?>)" style="cursor: pointer;"><?=$value['person_name'].' '.$value['person_lastname'];?></a>
                                             </td>
                                             <td><?=$value['name']?$value['name']:'-';?></td>
                                             <td><?=@$cal_type[$value['job_cal_type']] ? $cal_type[$value['job_cal_type']] :'-';?></td>
@@ -81,7 +81,8 @@
 
 <div class="modal fade" tabindex="-1" role="dialog" id="JobModal">
     <div class="modal-dialog modal-xl" role="document">
-        <form action="<?=base_url('survay_house/save_jobs/'.@$house_id);?>" method="post" >
+        <input type="hidden" id="house_id" value="<?=$house_id;?>">
+        <form action="<?=base_url('survay_house/save_jobs/'.@$house_id);?>" method="post" id="form-jobs">
             <input type="hidden" name="interview_id" id="interview_id">
             <input type="hidden" name="person_id" id="person_id">
             <!-- <input type="hidden" name="job_id" id="job_id"> -->
@@ -103,18 +104,38 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.repeater/1.2.1/jquery.repeater.min.js"></script>
 <!-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> -->
 <script>
-
-    function addJobs(id){
+    $(function(){
+        $('#JobModal').on('hidden.bs.modal', function () {
+            window.location.reload();
+        })
+    })
+    function loadJobs(id){
         $("#person_id").val(id)
         $.ajax({
             type: "GET",
             url: domain+'house/load-jobs/'+id,
             success : function(response){
+                
                 $("#item_modal").html(response)
             }
         });
         
         $("#JobModal").modal();
+    }
+
+    function saveJobs(){
+        var data = $('#form-jobs').serialize();
+        var id = $("#house_id").val()
+        $.ajax({
+            type: "POST",
+            url: domain+'survay_house/save_jobs/'+id,
+            data:data,
+            success : function(response){
+                $('.alert-success').removeClass('show').addClass( 'show' );
+                $("#message_success").text(response)
+                loadJobs($('#person_id').val())
+            }
+        }); 
     }
 </script>
 
