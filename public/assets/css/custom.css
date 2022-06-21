@@ -10,7 +10,8 @@ body {
 }
 
 .layout-3 {
-	background-image: url("../img/bg.jpg");
+	background: #bcebf3;
+	/*background-image: url("../img/bg.jpg");*/
 	background-position: center; /* Center the image */
 	background-repeat: no-repeat; /* Do not repeat the image */
 	background-size: cover; /* Resize the background image to cover the entire container */

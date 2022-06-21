@@ -19,6 +19,7 @@
                             <thead>
                                 <tr>
                                 <th scope="col" width="5%" style="text-align: center;">ลำดับ</th>
+                                <th scope="col" width="10%" style="text-align: center;">รหัสโครงการ</th>
                                 <th scope="col" style="text-align: center;"><?php echo $label?></th>
                                 <?php if(@$type_select){ ?><th scope="col" style="text-align: center;"><?php echo $type_label?></th> <?php }?>
                                 <th scope="col" width="15%" style="text-align: center;">เครื่องมือ</th>
@@ -28,17 +29,19 @@
                                 <?php $i=1; foreach ($data as $key => $value) :?>
                                     <tr>
                                         <th scope="row" style="text-align: center;"><?=$i++;?></th>
+                                        <th scope="row" style="text-align: center;"><?php echo $value['Code']?></th>
                                         <td><?php echo $value[$input_name]?></td>
                                         <?php if(@$type_select){ ?>
                                         <td><?php echo @$type_select[$value[$input_type_key]][$type_name]?></td>
                                         <?php }?>
                                         <td style="text-align: center;">
                                             <div class="buttons">
-                                                <a href="#" onclick="openForm(<?php echo $value[$input_id]?>)" class="btn btn-icon btn-primary" ><i class="far fa-edit"></i></a>
-                                                <a href="#" onclick="delData('<?php echo $table?>','<?php echo $input_id?>',<?php echo $value[$input_id]?>)" class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></a>
+                                                <a href="#" onclick="openForm('<?php echo $value[$input_id]?>')" class="btn btn-icon btn-primary" ><i class="far fa-edit"></i></a>
+                                                <a href="#" onclick="delData('<?php echo $table?>','<?php echo $input_id?>','<?php echo $value[$input_id]?>')" class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></a>
                                             </div>
                                         </td>
                                     </tr>
+                                    <input type="hidden" class="input_code" id="code_<?php echo $value[$input_id]?>" value="<?php echo $value['Code']?>">
                                     <input type="hidden" id="id_<?php echo $value[$input_id]?>" value="<?php echo $value[$input_id]?>">
                                     <input type="hidden" id="name_<?php echo $value[$input_id]?>" value="<?php echo $value[$input_name]?>">
                                     <?php if(@$type_select){ ?>
@@ -85,6 +88,14 @@
           </div>
         </div>
        <?php } ?>
+       <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="name" >รหัส<?php echo $label?></label>
+              <input class="form-control " type="text" name="Code" id="Code">
+            </div>
+          </div>
+        </div>
         <div class="row">
           <div class="col-md-12">
             <div class="form-group">
@@ -95,7 +106,7 @@
         </div>
       </div>
 
-      <input class="form-control" type="hidden" name="<?php echo $input_id?>" id="<?php echo $input_id?>" value="">
+      <!-- <input class="form-control" type="hidden" name="<?php echo $input_id?>" id="<?php echo $input_id?>" value=""> -->
       <input class="form-control" type="hidden" name="table" id="table" value="<?php echo $table?>">
       <input class="form-control" type="hidden" name="key" id="key" value="<?php echo $input_id?>">
       <!-- Modal footer -->
@@ -117,14 +128,17 @@
         $('#<?php echo $input_name?>').val('');
         $('#<?php echo $input_id?>').val('');
         $('#<?php echo $input_type_key?>').val('');
+        $('#Code').val('');
 
         if(id){
             var id = $('#id_'+id).val();
+            var code = $('#code_'+id).val();
             var name = $('#name_'+id).val();
             var type = $('#type_'+id).val();
 
             $('#<?php echo $input_name?>').val(name);
             $('#<?php echo $input_id?>').val(id);
+            $('#Code').val(code);
             $('#<?php echo $input_type_key?>').val(type);
         }
 
@@ -135,12 +149,47 @@
         if ($('#name').val() == '') {
           $.toast({
             heading: 'Warning',
-            text: 'กรุณากรอก ชื่อ',
+            text: 'กรุณากรอก ชื่อโครงการ',
             icon: 'warning',
             loaderBg : '#dd690b'
           });
           $('#name').focus();
           return false;
+        }
+
+        if ($('#Code').val() == '') {
+          $.toast({
+            heading: 'Warning',
+            text: 'กรุณากรอก รหัสโครงการ',
+            icon: 'warning',
+            loaderBg : '#dd690b'
+          });
+          $('#Code').focus();
+          return false;
+        }
+
+        var check_code = false;
+        $('.input_code').each(function(){
+            var code = $(this).val();
+            if(code==$('#Code').val()){
+              var id = $('#<?php echo $input_id?>').val();
+               if($('#Code').val()!=$('#code_'+id).val()){
+                check_code = true;
+               }
+               
+            }
+        });
+
+        if(check_code){
+          $.toast({
+              heading: 'Warning',
+              text: 'มีรหัสโครงการนี้อยู่ในระบบแล้ว',
+              icon: 'warning',
+              loaderBg : '#dd690b'
+            });
+
+          $('#Code').focus();
+           return false;
         }
 
 
