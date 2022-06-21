@@ -65,7 +65,7 @@
                     <div class="row">                               
                         <div class="form-group col-md-4">
                             <label>อาชีพ</label>                                        
-                            <select name="job_type" id="job_type" class="form-control select2" onchange="selectJobs($(this))" required="">
+                            <select name="job_type" id="job_type" class="form-control select2" onchange="selectJobs($(this))">
                                 <option value="">เลือก</option>
                                 <?php foreach ($jobs as $key => $value) :?>
                                     <option value="<?=$value['jobs_id'];?>"><?=$value['name'];?></option>
@@ -99,7 +99,7 @@
 
                         <div class="form-group col-md-4">
                             <label>สถานที่ประกอบการ</label>                                        
-                            <input type="text" class="form-control" name="job_address" id="job_address" required="">
+                            <input type="text" class="form-control" name="job_address" id="job_address">
                         </div>
                         <div class="form-group col-md-12 " id="remark_show" style="display:none">
                             <label>รายละเอียด</label>                                        
@@ -137,7 +137,7 @@
                                         <td>       
                                             <div class="row">
                                                 <div class="col-md-6 p-1">                                                    
-                                                    <select name="type_group" id="type_group" class="form-control select2"  required="" onchange="selectProduct($(this))">
+                                                    <select name="type_group" id="type_group" class="form-control select2"  onchange="selectProduct($(this))">
                                                         <option value="">เลือก</option>
                                                         <?php foreach ($product_type as $key => $value) :?>
                                                             <option  value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
@@ -146,7 +146,7 @@
                                                 </div>
                                                 <div class="col-md-6 p-1">
                                                  
-                                                    <select name="type_id" id="type_id" class="form-control select2" required="">
+                                                    <select name="type_id" id="type_id" class="form-control select2">
                                                         <option value="">เลือก</option>       
                                                         <?php foreach ($products as $key => $value) :?>
                                                             <option value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
@@ -180,7 +180,7 @@
     
 </div>
 <div class="modal-footer bg-whitesmoke br">
-    <button type="sumbit" class="btn btn-primary">บันทึก</button>
+    <button type="submit" class="btn btn-primary">บันทึก</button>
     <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
 </div>
 

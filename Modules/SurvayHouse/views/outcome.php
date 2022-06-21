@@ -136,7 +136,7 @@
                     <div class="row">                               
                         <div class="form-group col-md-6">
                             <label>ค่าเครื่องนุ่งห่ม</label>                                        
-                            <input type="text" class="form-control" name="outcome[1][outcome_value]" required="">
+                            <input type="text" class="form-control" name="outcome[1][outcome_value]" required="" oninput="validateDecimal(this)">
                             <div class="invalid-feedback">
                                 กรุณากรอกค่าเครื่องนุ่งห่ม
                             </div> 
@@ -152,7 +152,7 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label>ค่าที่อยู่อาศัย</label>                                        
-                            <input type="text" class="form-control" name="outcome[2][outcome_value]" required="">
+                            <input type="text" class="form-control" name="outcome[2][outcome_value]" required="" oninput="validateDecimal(this)">
                             <div class="invalid-feedback">
                                 กรุณากรอกค่าที่อยู่อาศัย
                             </div> 
@@ -168,7 +168,7 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label>ค่าการศึกษา</label>                                        
-                            <input type="text" class="form-control" name="outcome[3][outcome_value]" required="">
+                            <input type="text" class="form-control" name="outcome[3][outcome_value]" required="" oninput="validateDecimal(this)">
                             <div class="invalid-feedback">
                                 กรุณากรอกค่าการศึกษา
                             </div> 
@@ -184,7 +184,7 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label>ค่ายารักษาโรค</label>                                        
-                            <input type="text" class="form-control" name="outcome[4][outcome_value]" required="">
+                            <input type="text" class="form-control" name="outcome[4][outcome_value]" required="" oninput="validateDecimal(this)">
                             <div class="invalid-feedback">
                                 กรุณากรอกค่ายารักษาโรค
                             </div> 
@@ -200,7 +200,7 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label>ค่าน้ำมัน</label>                                        
-                            <input type="text" class="form-control" name="outcome[5][outcome_value]" required="">
+                            <input type="text" class="form-control" name="outcome[5][outcome_value]" required="" oninput="validateDecimal(this)">
                             <div class="invalid-feedback">
                                 กรุณากรอกค่าน้ำมัน
                             </div> 
@@ -216,7 +216,7 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label>ค่าเติมเงินมือถือ</label>                                        
-                            <input type="text" class="form-control" name="outcome[6][outcome_value]">
+                            <input type="text" class="form-control" name="outcome[6][outcome_value]" oninput="validateDecimal(this)">
                         </div>
                         <div class="form-group col-md-6">
                             <label>จำนวนเดือนที่ได้รับ</label>
@@ -229,7 +229,7 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label>ค่าทำบุญ</label>                                        
-                            <input type="text" class="form-control" name="outcome[7][outcome_value]">
+                            <input type="text" class="form-control" name="outcome[7][outcome_value]" oninput="validateDecimal(this)">
                         </div>
                         <div class="form-group col-md-6">
                             <label>จำนวนเดือนที่ได้รับ</label>
@@ -242,7 +242,7 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label>ค่าหวย/สุรา</label>                                        
-                            <input type="text" class="form-control" name="outcome[8][outcome_value]">
+                            <input type="text" class="form-control" name="outcome[8][outcome_value]" oninput="validateDecimal(this)">
                         </div>
                         <div class="form-group col-md-6">
                             <label>จำนวนเดือนที่ได้รับ</label>
@@ -255,7 +255,7 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label>รายจ่ายในการบริโภค</label>                                        
-                            <input type="text" class="form-control" name="outcome[9][outcome_value]" required="">
+                            <input type="text" class="form-control" name="outcome[9][outcome_value]" required="" oninput="validateDecimal(this)">
                             <div class="invalid-feedback">
                                 กรุณากรอกรายจ่ายในการบริโภค
                             </div>  
@@ -271,7 +271,7 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label>หมายเหตุ</label>
-                            <input type="text" class="form-control" name="outcome[10][outcome_value]">
+                            <input type="text" class="form-control" name="outcome[10][outcome_value]" oninput="validateDecimal(this)">
                             <input type="hidden" class="form-control" name="outcome[10][outcome_month]" value="1">
                         </div>
                        

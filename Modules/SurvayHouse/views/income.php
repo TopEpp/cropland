@@ -123,7 +123,7 @@
                     <div class="row">                               
                         <div class="form-group col-md-6">
                             <label>เงินผู้สูงอายุ/เดือน</label>                                        
-                            <input type="text" class="form-control" name="income[1][income_value]" required="">
+                            <input type="text" class="form-control" name="income[1][income_value]" required="" oninput="validateDecimal(this)">
                             <div class="invalid-feedback">
                                 กรุณากรอกเงินผู้สูงอายุ/เดือน
                             </div>  
@@ -139,7 +139,7 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label>บัตรประชารัฐ/เดือน</label>                                        
-                            <input type="text" class="form-control" name="income[2][income_value]" required="">
+                            <input type="text" class="form-control" name="income[2][income_value]" required="" oninput="validateDecimal(this)">
                             <div class="invalid-feedback">
                                 กรุณากรอกบัตรประชารัฐ/เดือน
                             </div>
@@ -155,7 +155,7 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label>บุตรส่งเงิน</label>                                        
-                            <input type="text" class="form-control" name="income[3][income_value]" required="">
+                            <input type="text" class="form-control" name="income[3][income_value]" required="" oninput="validateDecimal(this)">
                             <div class="invalid-feedback">
                                 กรุณากรอกบุตรส่งเงิน
                             </div>
@@ -171,7 +171,7 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label>บัตรผู้พิการ/เดือน</label>                                        
-                            <input type="text" class="form-control" name="income[4][income_value]">
+                            <input type="text" class="form-control" name="income[4][income_value]" oninput="validateDecimal(this)">
 
                         </div>
                         <div class="form-group col-md-6">
@@ -185,21 +185,21 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label>เงินช่วยเหลือภัยพิบัติ/ปี</label>                                        
-                            <input type="text" class="form-control" name="income[5][income_value]">
+                            <input type="text" class="form-control" name="income[5][income_value]" oninput="validateDecimal(this)">
                         </div>
                         <div class="form-group col-md-6">
                             <input type="hidden" class="form-control" name="income[5][income_month]" value="1">
                         </div>
                         <div class="form-group col-md-6">
                             <label>เงินค่าประกันสินค้าเกษตร/ปี</label>                                        
-                            <input type="text" class="form-control" name="income[6][income_value]">
+                            <input type="text" class="form-control" name="income[6][income_value]" oninput="validateDecimal(this)">
                         </div>
                         <div class="form-group col-md-6">
                         <input type="hidden" class="form-control" name="income[6][income_month]" value="1">
                         </div>
                         <div class="form-group col-md-6">
                             <label>อื่นๆ</label>                                        
-                            <input type="text" class="form-control" name="income[7][income_value]">
+                            <input type="text" class="form-control" name="income[7][income_value]" oninput="validateDecimal(this)">
                         </div>
                         <div class="form-group col-md-6">
                         <input type="hidden" class="form-control" name="income[7][income_month]" value="1">
@@ -220,6 +220,12 @@
 <?=$this->section("scripts")?>
 
 <script>
+    var validateDecimal = function(e) {
+        var t = e.value;
+        t = t.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');
+        e.value = (t.indexOf(".") >= 0) ? (t.substr(0, t.indexOf(".")) + t.substr(t.indexOf("."), 3)) : t;
+    }
+
     function addIncome(id){
         $("#person_id").val(id);
 
