@@ -652,6 +652,31 @@ class Api_model extends Model
 
     public function saveData($data){
 
+      if($data['table']=='CODE_PROJECT'){
+        $builder = $this->db->table($data['table']);
+        $builder->select('*');
+        $builder->where('Code',$data['Code']);
+        $query = $builder->get()->getRowArray();
+        if(!empty($query['Code'])){
+          $builder_set = $this->db->table($data['table']);
+          $builder_set->where('Code',$data['Code']);
+          $builder_set->set('Name',$data['Name']);
+          $builder_set->set('TypeCode',$data['TypeCode']);
+          $builder_set->update();
+           $id = $data[$data['key']];
+        }else{
+          $builder_set = $this->db->table($data['table']);
+          $builder_set->set('Code',$data['Code']);
+          $builder_set->set('Name',$data['Name']);
+          $builder_set->set('TypeCode',$data['TypeCode']);
+          $builder_set->insert();
+           $id = $this->db->insertID();
+        }
+
+        return $id;
+
+      }
+
       $builder = $this->db->table($data['table']);
       unset($data['table']);
 

@@ -234,10 +234,11 @@ $routes->group("api", ["namespace" => "Modules\Api\Controllers"], function ($rou
     $routes->get("/", "Api::index");
     $routes->get("manage/(:any)", "Api::manage/$1");
     $routes->post("saveData", "Api::saveData");
-    $routes->get("deleteData/(:any)/(:any)/(:num)", "Api::deleteData/$1/$2/$3");
+    $routes->get("deleteData/(:any)/(:any)/(:any)", "Api::deleteData/$1/$2/$3");
 
     $routes->get("areaTarget", "Api::areaTarget");
     $routes->get("jobs", "Api::jobs");
+    $routes->get("project", "Api::project");
 
     $routes->get("importUsers", "Api::importUsers");
     $routes->get("importlands", "Api::importlands");

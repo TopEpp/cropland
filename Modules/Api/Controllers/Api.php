@@ -286,6 +286,26 @@ class Api extends BaseController
         return view('Modules\Api\Views\areaTarget',$data);
     }
 
+    public function project(){
+        $data['label'] = 'โครงการ';
+        $data['table'] = 'CODE_PROJECT';
+        $data['input_id'] = 'Code';
+        $data['input_name'] = 'Name';
+
+        $data['input_type_key'] = 'TypeCode';
+        $data['table_type'] = 'CODE_PROJECTTYPE';
+        $data['type_id'] = 'Code';
+        $data['type_name'] = 'Name';
+        $data['type_label'] = 'ประเภทโครงการ';
+
+        $data['data'] =  $this->model_api->getData( $data['table'],$data['input_id']);
+         if(!empty($data['table_type'])){
+            $data['type_select'] = $this->model_api->getData( $data['table_type'],$data['type_id']);
+         }
+        
+        return view('Modules\Api\Views\project',$data);
+    }
+
     public function jobs(){
         $data['data'] =  $this->model_api->getJobs();
         $data['group'] =  $this->model_api->getJobsGroup();
