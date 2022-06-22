@@ -138,12 +138,14 @@
                                     <label>พื้นที่แปลงรวม (ไร่)</label>          
                                     <input type="text" class="form-control" name="land_area" id="land_area">
                                 </div>
+                                <input type="hidden" name="land_geo_loc"  id="land_geo_loc" >
                                                             
                             </div>
                         </div>      
                         
                         <div class="col-md-6">
                             <div id="map"></div>
+                           
                         </div>
                        
                         
@@ -173,17 +175,24 @@
 <?=$this->section("scripts")?>
 
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBe0nivzXjyUHEzQQCvI8kSIUx0a2dTFLA"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBe0nivzXjyUHEzQQCvI8kSIUx0a2dTFLA&libraries=drawing"></script>
 <!-- //load select2 ajax/ -->
 <?= script_tag('public/assets/js/modules/ajax_select2.js') ?>
 <script type="text/javascript">
 
-let map;
+// let map;
 let marker;
-let markers = [];
-let drawingManager;
+// let markers = [];
+// let drawingManager;
 var default_color = '#1E90FF';
 var itemPath;
+
+
+var map; // Global declaration of the map
+var iw = new google.maps.InfoWindow(); // Global declaration of the infowindow
+var lat_longs = new Array();
+var markers = new Array();
+var drawingManager;
 // $(document).ready(function() {
 //     initMap();
 // });
@@ -191,27 +200,39 @@ var itemPath;
 
     function landModal(id = ''){
         $("#land_id").val(id)
+          
+        
         if (id != ''){
 
             $.ajax({
                 type: "GET",
                 url: domain+'land/load-lands/'+id,
                 success : function(response){
-
+                    let latLngs = []
                     if (response){
                         // conver to geo
 
                         const data = response.data;
-                        let latLngs = []
-                  
+                        var geo = ''
+                        var data_geo = ''
+                        var tempPoint = [];
+
                         if (data.land_gps){
-                            var geo = JSON.parse(data.land_gps)                                             
-                            var data_geo = geo.coordinates                                             
+                            geo = JSON.parse(data.land_gps)                                             
+                            data_geo = geo.coordinates                                             
                             // latLngs = data_geo.map(pair => ({lat:pair[0], lng:pair[1]}))
                             // var arrShape=new Array();
                             for(var s=0;s<data_geo.length;s++){
-                                var tempPoint=data_geo[s];                                                            
+                                tempPoint=data_geo[s];                                                            
                                 latLngs.push(new google.maps.LatLng(tempPoint[0], tempPoint[1]));
+                            }
+                        }     
+
+                        if (data.land_geo_loc){
+                            geo = JSON.parse(data.land_geo_loc)                                            
+                            for(var s=0;s<geo.length;s++){
+                                tempPoint=geo[s];                                                            
+                                latLngs.push(new google.maps.LatLng(tempPoint.lat, tempPoint.lng));
                             }
                         }     
                                        
@@ -225,46 +246,103 @@ var itemPath;
                      
                         $("#land_area").val(data.land_area)
                         $("#land_use").val(data.land_use)
+                        data.land_geo_loc ? $("#land_geo_loc").val(data.land_geo_loc) : ''
                         // $("#land_address").val(data.land_address)
                         
-                        initMap(latLngs)
+                      
                         // $("#land_ownership").val(data.land_ownership)
                         // $("#land_holding").val(data.land_holding)
                         
                     }
+                    initMap(latLngs)
                     // $("#item_modal").html(response)
                 }
             });
         }
-      
-
+    
         $("#LandModal").modal();
+      
     }
 
     
-    function initMap(geo) {        
-        const centers = geo.length;
-        
-        const myLatLng = geo[parseInt(centers/2)];
-        
-        map = new google.maps.Map(document.getElementById("map"), {
-            center: myLatLng,
-            zoom: 18,
-            mapTypeId: "terrain",
+    function initMap(geo) {    
 
+        if (geo.length > 0){
+            const centers = geo.length;
+        
+            const myLatLng = geo[parseInt(centers/2)];
+            
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: myLatLng,
+                zoom: 18,
+                // mapTypeId: "terrain",
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+
+            });
+
+            // Construct the polygon.
+            const bermudaTriangle = new google.maps.Polygon({
+                paths: geo,
+                strokeColor: "#FF0000",
+                strokeOpacity: 0.8,
+                strokeWeight: 2,
+                fillColor: "#FF0000",
+                fillOpacity: 0.35,
+            });
+
+            bermudaTriangle.setMap(map);
+        }else{
+            // const myLatLng = geo[parseInt(centers/2)];
+            
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: { lat: 18.599395, lng: 98.705332 },
+                zoom: 10,
+                // mapTypeId: "terrain",
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+
+            });
+        }
+      
+
+        drawingManager = new google.maps.drawing.DrawingManager({
+            drawingMode: google.maps.drawing.OverlayType.POLYGON,
+            drawingControl: true,
+            drawingControlOptions: {
+                position: google.maps.ControlPosition.TOP_CENTER,
+                drawingModes: [google.maps.drawing.OverlayType.POLYGON]
+            },
+            polygonOptions: {
+                editable: true,
+                fillColor:"#FF0000",
+                strokeColor: "#FF0000",
+            }
+        });
+        drawingManager.setMap(map);
+
+        google.maps.event.addListener(drawingManager, "polygoncomplete", function(polygon) {
+            var coordinates = polygon.getPath().getArray();
+            var data = JSON.stringify(coordinates);
+            $("#land_geo_loc").val(data)
         });
 
-         // Construct the polygon.
-        const bermudaTriangle = new google.maps.Polygon({
-            paths: geo,
-            strokeColor: "#FF0000",
-            strokeOpacity: 0.8,
-            strokeWeight: 2,
-            fillColor: "#FF0000",
-            fillOpacity: 0.35,
-        });
+            // Clear the current selection when the drawing mode is changed, or when the
+    // map is clicked.
+        // google.maps.event.addListener(drawingManager, 'drawingmode_changed', clearSelection);
 
-        bermudaTriangle.setMap(map);
+        // google.maps.event.addListener(drawingManager, "mouseup", function(event) {
+        //     // $('#vertices').val(overlay.getPath().getArray());
+        //     console.log(event);
+        // });
+
+        // google.maps.event.addListener(overlay, "mouseup", function(event) {
+        //     console.log(event);
+        //     // $('#vertices').val(overlay.getPath().getArray());
+        // });
+
+        // google.maps.event.addListener(drawingManager, "overlaycomplete", function(event) {
+        //     overlayClickListener(event.overlay);
+        //     $('#vertices').val(event.overlay.getPath().getArray());
+        // });
 
 
         //     // The marker, positioned at Uluru
@@ -274,8 +352,49 @@ var itemPath;
         //     position: laaa,
         //     map: map,
         // });
-
+      
     }
+
+    function initialize() {
+        var myLatlng = new google.maps.LatLng(40.9403762, -74.1318096);
+        var myOptions = {
+            zoom: 13,
+            center: myLatlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        }
+        map = new google.maps.Map(document.getElementById("map"), myOptions);
+        drawingManager = new google.maps.drawing.DrawingManager({
+            drawingMode: google.maps.drawing.OverlayType.POLYGON,
+            drawingControl: true,
+            drawingControlOptions: {
+            position: google.maps.ControlPosition.TOP_CENTER,
+            drawingModes: [google.maps.drawing.OverlayType.POLYGON]
+            },
+            polygonOptions: {
+            editable: true
+            }
+        });
+        drawingManager.setMap(map);
+
+        google.maps.event.addListener(drawingManager, "overlaycomplete", function(event) {
+            var newShape = event.overlay;
+            newShape.type = event.type;
+        });
+
+        google.maps.event.addListener(drawingManager, "overlaycomplete", function(event) {
+            overlayClickListener(event.overlay);
+            $('#vertices').val(event.overlay.getPath().getArray());
+        });
+    }
+
+    function overlayClickListener(overlay) {
+        google.maps.event.addListener(overlay, "mouseup", function(event) {
+            // $('#vertices').val(overlay.getPath().getArray());
+            console.log(event);
+        });
+    }
+
+    // google.maps.event.addDomListener(window, 'load', initialize);
 
 </script>
 <?=$this->endSection()?>
