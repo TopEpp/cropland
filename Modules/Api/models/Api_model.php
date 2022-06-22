@@ -28,21 +28,44 @@ class Api_model extends Model
 
     function importHouse(){
       set_time_limit(2000);
+      ini_set('memory_limit', '2048M');
+
+      ini_set('memory_limit','2048M'); // This also needs to be increased in some cases. Can be changed to a higher value as per need)
+ini_set('sqlsrv.ClientBufferMaxKBSize','524288'); // Setting to 512M
+ini_set('pdo_sqlsrv.client_buffer_max_kb_size','524288');
         $builder = $this->db->table('Person');
-        $builder->select('Province_idProvince,districtName,Amphur_idAmphur,subMooName,address,moo,mooName');
+        $builder->select('address,moo,mooName,tambol,district,province');
         $builder->where('idcard <>',null);
+        $builder->where('idcard <>','0000000000000');
         $builder->where('address <>',null);
+        $builder->groupBy('address,moo,mooName,tambol,district,province');
         
+        $count=0;
         $query = $builder->get()->getResultArray();
         foreach ($query as $key => $value) {
-          $db = \Config\Database::connect();
-          $data['house_province'] = $value['Province_idProvince'];
-          $data['house_district'] = $value['Amphur_idAmphur'];
-          $data['house_subdistrict'] = $value['districtName'];
+          $count++;
+         
+          // $data['house_province'] = $value['Province_idProvince'];
+          // $data['house_district'] = $value['Amphur_idAmphur'];
+          // $data['house_subdistrict'] = $value['districtName'];
+          // echo '<pre>';
+          //  print_r($value);
+          $prov_code = $this->getProvinceId($value['province']);
+          $dis_code = $this->getDistrictId($prov_code,$value['district']);
+          $subdis_code = $this->getSubDistrictId($dis_code,$value['tambol']);
+
+          $data['house_province'] = $prov_code;
+          $data['house_district'] = $dis_code;
+          $data['house_subdistrict'] = $subdis_code;
           $data['house_number'] = $value['address'];
           $data['house_moo'] = $value['moo'];
           $data['house_moo_name'] = $value['mooName'];
-          
+
+          // print_r($data);
+
+          // if($count==10){ exit;} 
+          // exit;
+          $db = \Config\Database::connect();
           $builder_land = $this->db->table('LH_house');
           $builder_land->insert($data);
 
@@ -51,9 +74,9 @@ class Api_model extends Model
           $builder_person = $this->db->table('LH_house_person');
           $builder_person->select('LH_house_person.person_id');
           $builder_person->join('Person','Person.idcard = LH_house_person.person_number');
-          $builder_person->where('Province_idProvince',$value['Province_idProvince']);
-          $builder_person->where('Amphur_idAmphur',$value['Amphur_idAmphur']);
-          $builder_person->where('districtName',$value['districtName']);
+          $builder_person->where('province',$value['province']);
+          $builder_person->where('district',$value['district']);
+          $builder_person->where('tambol',$value['tambol']);
           $builder_person->where('address',$value['address']);
           $builder_person->where('moo',$value['moo']);
           $builder_person->where('mooName',$value['mooName']);
@@ -68,44 +91,65 @@ class Api_model extends Model
 
 
         }
+
+        echo $count;
     }
 
     function importPersons(){
       set_time_limit(2000);
+      ini_set('memory_limit', '2048M');
         $builder = $this->db->table('Person');
-        $builder->select('Prefix_idPrefix,firstName,lastName,idcard,birthday,religionName,tribeName,pos_family,EduLevel_idEduLevel');
+        $builder->select('idcard,Prefix_idPrefix,firstName,lastName');
         $builder->where('idcard <>',null);
-        
+        // $builder->limit(0,500);
+        $count=0;
         $query = $builder->get()->getResultArray();
         foreach ($query as $key => $value) {
+          $count++;
+          $data = array();
+          // $person_header = 0;
+          // if($value['pos_family']=='หัวหน้าครัวเรือน'){
+          //   $person_header = 1;
+          // }
 
-          $person_header = 0;
-          if($value['pos_family']=='หัวหน้าครัวเรือน'){
-            $person_header = 1;
+          $prename = 1;
+          if($value['Prefix_idPrefix']=='นาย'){
+            $prename = 1;
+          }else if($value['Prefix_idPrefix']=='นาง'){
+             $prename = 2;
+          }else if($value['Prefix_idPrefix']=='นางสาว'){
+             $prename = 3;
+          }else if($value['Prefix_idPrefix']=='เด็กชาย'){
+             $prename = 4;
+          }else if($value['Prefix_idPrefix']=='เด็กหญิง'){
+             $prename = 5;
           }
 
           $data['person_number'] = str_replace('-','',$value['idcard']);
-          $data['person_prename'] = $value['Prefix_idPrefix'];
+          $data['person_prename'] = $prename;
           $data['person_name'] = $value['firstName'];
           $data['person_lastname'] = $value['lastName'];
-          $data['person_birthdate'] = $value['birthday'];
-          $data['person_religion'] = $value['religionName'];
-          $data['person_header'] = $person_header;
-          $data['person_tribe'] = $this->getTribeId($value['tribeName']);
-          $data['person_educate'] = $value['EduLevel_idEduLevel'];
+          // $data['person_birthdate'] = $value['birthday'];
+          // $data['person_religion'] = $value['religionName'];
+          // $data['person_header'] = $person_header;
+          // $data['person_tribe'] = $this->getTribeId($value['tribeName']);
+          // $data['person_educate'] = $value['EduLevel_idEduLevel'];
           
           $builder_land = $this->db->table('LH_house_person');
           $builder_land->insert($data);
         }
+
+        echo 'count :: '.$count;
     }
 
     function importlands(){
         set_time_limit(2000);
+        ini_set('memory_limit', '2048M');
         $builder = $this->db->table('cropland_rak');
         $builder->select('code_total,address,tambon,amphur,province,area_rai,basin,project,id_card,landuse_56');
         // $builder->groupBy('code_total');
         $builder->orderBy('code_total');
-        $builder->limit(1000,1000);
+        // $builder->limit(1000,1000);
         $query = $builder->get()->getResultArray();
         foreach ($query as $key => $value) {
 
@@ -276,12 +320,19 @@ class Api_model extends Model
       // }else{
       //   return null;
       // }   
-
+      
+      // echo $code.'--'.$name.'<br>';
       $builder = $this->db->table('CODE_AMPHUR');
       $builder->select('*');
-      $builder->where('AMP_T',$name);
+      $builder->where('AMP_T',trim($name));
       $builder->where('PROV_CODE',$code);
-      $row = $builder->get()->getRowArray();  
+      $row = $builder->get()->getRowArray(); 
+
+      // $db = \Config\Database::connect();
+      // echo  $db->getLastQuery();
+      // echo 'row <br>';
+      // print_r($row);
+      // echo '<br>';
       if(!empty($row['AMP_Code'])){
         return $row['AMP_Code'];
       }else{
@@ -303,7 +354,7 @@ class Api_model extends Model
 
       $builder = $this->db->table('CODE_TAMBON');
       $builder->select('*');
-      $builder->where('TAM_T',$name);
+      $builder->where('TAM_T',trim($name));
       $builder->where('AMP_Code',$code);
       $row = $builder->get()->getRowArray();  
       if(!empty($row['TAM_Code'])){
