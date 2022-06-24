@@ -48,8 +48,7 @@ ini_set('pdo_sqlsrv.client_buffer_max_kb_size','524288');
           // $data['house_province'] = $value['Province_idProvince'];
           // $data['house_district'] = $value['Amphur_idAmphur'];
           // $data['house_subdistrict'] = $value['districtName'];
-          // echo '<pre>';
-          //  print_r($value);
+        
           $prov_code = $this->getProvinceId($value['province']);
           $dis_code = $this->getDistrictId($prov_code,$value['district']);
           $subdis_code = $this->getSubDistrictId($dis_code,$value['tambol']);
@@ -60,10 +59,6 @@ ini_set('pdo_sqlsrv.client_buffer_max_kb_size','524288');
           $data['house_number'] = $value['address'];
           $data['house_moo'] = $value['moo'];
           $data['house_moo_name'] = $value['mooName'];
-
-          // print_r($data);
-
-          // if($count==10){ exit;} 
           // exit;
           $db = \Config\Database::connect();
           $builder_land = $this->db->table('LH_house');
@@ -321,20 +316,14 @@ ini_set('pdo_sqlsrv.client_buffer_max_kb_size','524288');
       //   return null;
       // }   
       
-      // echo $code.'--'.$name.'<br>';
       $builder = $this->db->table('CODE_AMPHUR');
       $builder->select('*');
       $builder->where('AMP_T',trim($name));
       $builder->where('PROV_CODE',$code);
       $row = $builder->get()->getRowArray(); 
 
-      // $db = \Config\Database::connect();
-      // echo  $db->getLastQuery();
-      // echo 'row <br>';
-      // print_r($row);
-      // echo '<br>';
-      if(!empty($row['AMP_Code'])){
-        return $row['AMP_Code'];
+      if(!empty($row['AMP_CODE'])){
+        return $row['AMP_CODE'];
       }else{
         return null;
       } 
@@ -355,10 +344,10 @@ ini_set('pdo_sqlsrv.client_buffer_max_kb_size','524288');
       $builder = $this->db->table('CODE_TAMBON');
       $builder->select('*');
       $builder->where('TAM_T',trim($name));
-      $builder->where('AMP_Code',$code);
+      $builder->where('AMP_CODE',$code);
       $row = $builder->get()->getRowArray();  
-      if(!empty($row['TAM_Code'])){
-        return $row['TAM_Code'];
+      if(!empty($row['TAM_CODE'])){
+        return $row['TAM_CODE'];
       }else{
         return null;
       } 
