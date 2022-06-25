@@ -27,12 +27,10 @@ class Api_model extends Model
     }
 
     function importHouse(){
-      set_time_limit(2000);
-      ini_set('memory_limit', '2048M');
-
+      set_time_limit(20000);
       ini_set('memory_limit','2048M'); // This also needs to be increased in some cases. Can be changed to a higher value as per need)
-ini_set('sqlsrv.ClientBufferMaxKBSize','524288'); // Setting to 512M
-ini_set('pdo_sqlsrv.client_buffer_max_kb_size','524288');
+      ini_set('sqlsrv.ClientBufferMaxKBSize','524288'); // Setting to 512M
+      ini_set('pdo_sqlsrv.client_buffer_max_kb_size','524288');
         $builder = $this->db->table('Person');
         $builder->select('address,moo,mooName,tambol,district,province');
         $builder->where('idcard <>',null);
@@ -53,36 +51,48 @@ ini_set('pdo_sqlsrv.client_buffer_max_kb_size','524288');
           $dis_code = $this->getDistrictId($prov_code,$value['district']);
           $subdis_code = $this->getSubDistrictId($dis_code,$value['tambol']);
 
-          $data['house_province'] = $prov_code;
-          $data['house_district'] = $dis_code;
-          $data['house_subdistrict'] = $subdis_code;
-          $data['house_number'] = $value['address'];
-          $data['house_moo'] = $value['moo'];
-          $data['house_moo_name'] = $value['mooName'];
-          // exit;
-          $db = \Config\Database::connect();
-          $builder_land = $this->db->table('LH_house');
-          $builder_land->insert($data);
+          $builder_check = $this->db->table('LH_house');
+          $builder_check->select('house_id');
+          $builder_check->where('house_province',$prov_code);
+          $builder_check->where('house_district',$dis_code);
+          $builder_check->where('house_subdistrict',$subdis_code);
+          $builder_check->where('house_number',$value['address']);
+          $builder_check->where('house_moo',$value['moo']);
+          $builder_check->where('house_moo_name',$value['mooName']);
+          $query = $builder_check->get()->getRowArray();
+          if(empty($query['house_id'])){
+            $data['house_province'] = $prov_code;
+            $data['house_district'] = $dis_code;
+            $data['house_subdistrict'] = $subdis_code;
+            $data['house_number'] = $value['address'];
+            $data['house_moo'] = $value['moo'];
+            $data['house_moo_name'] = $value['mooName'];
+            // exit;
+            $db = \Config\Database::connect();
+            $builder_land = $this->db->table('LH_house');
+            $builder_land->insert($data);
+            $house_id = $db->insertID();
 
-          $house_id = $db->insertID();
-
-          $builder_person = $this->db->table('LH_house_person');
-          $builder_person->select('LH_house_person.person_id');
-          $builder_person->join('Person','Person.idcard = LH_house_person.person_number');
-          $builder_person->where('province',$value['province']);
-          $builder_person->where('district',$value['district']);
-          $builder_person->where('tambol',$value['tambol']);
-          $builder_person->where('address',$value['address']);
-          $builder_person->where('moo',$value['moo']);
-          $builder_person->where('mooName',$value['mooName']);
-          $query_person = $builder_person->get()->getResultArray();
-          foreach ($query_person as $key_p => $person) {
-            $builder_person_set = $this->db->table('LH_house_person');
-            $builder_person_set->where('person_id',$person['person_id']);
-            $builder_person_set->set('house_id',$house_id);
-            $builder_person_set->set('family_id',1);
-            $builder_person_set->update();
+            $builder_person = $this->db->table('LH_house_person');
+            $builder_person->select('LH_house_person.person_id');
+            $builder_person->join('Person','Person.idcard = LH_house_person.person_number');
+            $builder_person->where('province',$value['province']);
+            $builder_person->where('district',$value['district']);
+            $builder_person->where('tambol',$value['tambol']);
+            $builder_person->where('address',$value['address']);
+            $builder_person->where('moo',$value['moo']);
+            $builder_person->where('mooName',$value['mooName']);
+            $query_person = $builder_person->get()->getResultArray();
+            foreach ($query_person as $key_p => $person) {
+              $builder_person_set = $this->db->table('LH_house_person');
+              $builder_person_set->where('person_id',$person['person_id']);
+              $builder_person_set->set('house_id',$house_id);
+              $builder_person_set->set('family_id',1);
+              $builder_person_set->update();
+            }
           }
+
+         
 
 
         }
@@ -138,16 +148,20 @@ ini_set('pdo_sqlsrv.client_buffer_max_kb_size','524288');
     }
 
     function importlands(){
-        set_time_limit(2000);
-        ini_set('memory_limit', '2048M');
-        $builder = $this->db->table('cropland_rak');
+        set_time_limit(20000);
+        ini_set('memory_limit','2048M'); // This also needs to be increased in some cases. Can be changed to a higher value as per need)
+        ini_set('sqlsrv.ClientBufferMaxKBSize','524288'); // Setting to 512M
+        ini_set('pdo_sqlsrv.client_buffer_max_kb_size','524288'); 
+
+        $builder = $this->db->table('cropland_xtd');
         $builder->select('code_total,address,tambon,amphur,province,area_rai,basin,project,id_card,landuse_56');
         // $builder->groupBy('code_total');
         $builder->orderBy('code_total');
         // $builder->limit(1000,1000);
+         $count=0;
         $query = $builder->get()->getResultArray();
         foreach ($query as $key => $value) {
-
+           $count++;
           $data['land_code'] = $value['code_total'];
           $data['land_basin'] = $this->getBasinId($value['basin']);
           $prov_code = $this->getProvinceId($value['province']);
@@ -161,6 +175,7 @@ ini_set('pdo_sqlsrv.client_buffer_max_kb_size','524288');
           $data['land_project'] = $this->getProjectId($value['project']);
           $data['land_use'] = $this->getLandUseId($value['landuse_56']);
           $data['land_area'] = $value['area_rai'];
+          // $data['land_geo'] = $value['ogr_geometry'];
           
           // echo '<pre>';
           // print_r($data); echo '<br>';
@@ -168,6 +183,8 @@ ini_set('pdo_sqlsrv.client_buffer_max_kb_size','524288');
           $builder_land = $this->db->table('LH_land');
           $builder_land->insert($data);
         }
+
+        echo 'count : '.$count;
     }
 
     function updatePersonLand(){
@@ -204,12 +221,17 @@ ini_set('pdo_sqlsrv.client_buffer_max_kb_size','524288');
     }
 
     function updateLandGeo(){
+      set_time_limit(20000);
+        ini_set('memory_limit','2048M'); // This also needs to be increased in some cases. Can be changed to a higher value as per need)
+        ini_set('sqlsrv.ClientBufferMaxKBSize','524288'); // Setting to 512M
+        ini_set('pdo_sqlsrv.client_buffer_max_kb_size','524288'); 
+        
       $builder = $this->db->table('LH_land');
         $builder->select('land_id, dbo.geomToGeoJSON(land_geo) as land_geo ');
         // $builder->limit(3);
         $query = $builder->get()->getResultArray();
         foreach ($query as $key => $value) {
-          echo '<pre>';
+          // echo '<pre>';
 
           $geo = json_decode($value['land_geo']);
           // print_r($geo); 
@@ -228,7 +250,7 @@ ini_set('pdo_sqlsrv.client_buffer_max_kb_size','524288');
             // print_r($new_co);
 
            $polygon = (object) ['type' => 'Polygon','coordinates'=>$new_co];
-           print_r(json_encode($polygon));
+           // print_r(json_encode($polygon));
 
            $builder_update = $this->db->table('LH_land');
            $builder_update->set('land_gps',json_encode($polygon));
