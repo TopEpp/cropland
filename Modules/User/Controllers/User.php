@@ -28,7 +28,7 @@ class User extends BaseController
     $data = [
         'users' => $this->model_user->orLike('fullname', $filter)->paginate(10,'page'),
         'pager' => $this->model_user->pager,
-        'search' => $search
+        'filter' => $filter
     ];    
 
     return view("Modules\User\Views\index",$data);

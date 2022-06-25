@@ -16,7 +16,7 @@
                                 <div class="row d-flex justify-content-center w-100">                                                                 
                                     <div class="form-group col-md-4">                                    
                                         <label>ชื่อ - นามสกุล</label>                                        
-                                        <input type="text" class="form-control" name="name" id="name" value="">
+                                        <input type="text" class="form-control" name="name" id="name" value="<?=$filter;?>">
                                     </div>                                                                     
                                 </div>
                                 <div class="col-md-12 text-right">
