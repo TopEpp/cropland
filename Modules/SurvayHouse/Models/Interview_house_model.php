@@ -63,8 +63,7 @@ class Interview_house_model extends Model
       $builder->join('CODE_TAMBON', 'CAST(CODE_TAMBON.TAM_CODE as int) = LH_house.house_subdistrict and CODE_PROVINCE.Code = CODE_TAMBON.PROV_CODE and CODE_AMPHUR.AMP_CODE = CODE_TAMBON.AMP_CODE','left');      
       $builder->join('CODE_VILLAGE', 'CAST(CODE_VILLAGE.VILL_CODE as varchar(50)) = LH_house.house_home and CODE_PROVINCE.Code = CODE_VILLAGE.PROV_CODE 
       and CODE_AMPHUR.AMP_CODE = CODE_VILLAGE.AMP_CODE
-      and CODE_TAMBON.TAM_CODE = CODE_VILLAGE.TAM_CODE
-      ','left');   
+      and CODE_TAMBON.TAM_CODE = CODE_VILLAGE.TAM_CODE','left');   
   
      
 
@@ -181,7 +180,7 @@ class Interview_house_model extends Model
       max(LH_house_person.person_name) as person_name,
       max(LH_house_person.person_lastname) as person_lastname');
       $builder->where('LH_house_person.house_id',$house_id);
-      $builder->join('LH_person_job', 'LH_person_job.person_id = LH_house_person.person_id','left');
+      $builder->join('LH_person_job', 'LH_person_job.person_id = LH_house_person.person_id and job_main="1"','left');
       $builder->join('LH_jobs', 'LH_jobs.jobs_id = LH_person_job.job_type','left');
       $builder->groupBy('LH_house_person.house_id, LH_house_person.person_id');
       $query = $builder->get()->getResultArray();
