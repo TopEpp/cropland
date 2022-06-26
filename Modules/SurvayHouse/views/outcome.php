@@ -40,7 +40,9 @@
                                         <th rowspan="2" scope="col">ลำดับ</th>
                                         <th rowspan="2" scope="col">ชื่อ-นามสกุล</th>
                                         <th colspan="8" class="text-center" scope="col">รายจ่ายการอุปโภค</th>
+                                        <th rowspan="2" scope="col">รายจ่ายในการอุปโภค</th>
                                         <th rowspan="2" scope="col">รายจ่ายในการบริโภค</th>
+                                        <th rowspan="2" scope="col">รายจ่ายรวม</th>
                                         <th rowspan="2" scope="col">หมายเหตุ</th>
                                     </tr>
                                     <tr>
@@ -58,21 +60,38 @@
                                     <?php $cout = 1;?>
                                     <?php foreach ($data as $key => $value) :?>
                                         <?php if (!empty($value['person_id'])):?>
+                                            <?php 
+                                                $val1 = @$value[1]['outcome_value'] * @$value[1]['outcome_month'];
+                                                $val2 = @$value[2]['outcome_value'] * @$value[2]['outcome_month'];
+                                                $val3 = @$value[3]['outcome_value'] * @$value[3]['outcome_month'];
+                                                $val4 = @$value[4]['outcome_value'] * @$value[4]['outcome_month'];
+                                                $val5 = @$value[5]['outcome_value'] * @$value[5]['outcome_month'];
+                                                $val6 = @$value[6]['outcome_value'] * @$value[6]['outcome_month'];
+                                                $val7 = @$value[7]['outcome_value'] * @$value[7]['outcome_month'];
+                                                $val8 = @$value[8]['outcome_value'] * @$value[8]['outcome_month'];
+                                                $val9 = @$value[9]['outcome_value'] * @$value[9]['outcome_month'];
+                                                $val10 = @$value[10]['outcome_value'];
+                                                $sum = $val1+$val2+$val3+$val4+$val5+$val6+$val7+$val8+$val8;
+                                    
+                                            ?>
                                             <tr>
                                                 <th scope="row"><?=$cout;?></th>
                                                 <td>
                                                     <a class="text-info" onclick="addOutcome(<?=$value['person_id'];?>)" style="cursor: pointer;"><?=$value['person_name'].' '.$value['person_lastname'];?></a>
                                                 </td>
-                                                <td><?=@$value[1]['outcome_value'] * @$value[1]['outcome_month'];?></td>
-                                                <td><?=@$value[2]['outcome_value'] * @$value[2]['outcome_month'];;?></td>
-                                                <td><?=@$value[3]['outcome_value'] * @$value[3]['outcome_month'];;?></td>
-                                                <td><?=@$value[4]['outcome_value'] * @$value[4]['outcome_month'];;?></td>
-                                                <td><?=@$value[5]['outcome_value'] * @$value[5]['outcome_month'];;?></td>
-                                                <td><?=@$value[6]['outcome_value'] * @$value[6]['outcome_month'];;?></td>
-                                                <td><?=@$value[7]['outcome_value'] * @$value[7]['outcome_month'];;?></td>
-                                                <td><?=@$value[8]['outcome_value'] * @$value[8]['outcome_month'];;?></td>
-                                                <td><?=@$value[9]['outcome_value'] * @$value[9]['outcome_month'];;?></td>
-                                                <td><?=@$value[10]['outcome_value'] * @$value[10]['outcome_month'];;?></td>
+                                                <td><?=@number_format($val1);?></td>
+                                                <td><?=@number_format($val2);?></td>
+                                                <td><?=@number_format($val3);?></td>
+                                                <td><?=@number_format($val4);?></td>
+                                                <td><?=@number_format($val5);?></td>
+                                                <td><?=@number_format($val6);?></td>
+                                                <td><?=@number_format($val7);?></td>
+                                                <td><?=@number_format($val8);?></td>                                        )        
+                                                <td><?=$sum;?></td>
+                                                <td><?=@number_format($val9);?></td>
+                                                <td><?= number_format($sum+$val9);?></td>                                                                                                
+                                                <td><?=@number_format($val10);?></td>
+                                                
                                             </tr>
                                         <?php else:?>
                                             <tr>
@@ -80,6 +99,8 @@
                                                 <td>
                                                     <a class="text-info" onclick="addOutcome(<?=$value['person_id'];?>)" style="cursor: pointer;"><?=$value['person_name'].' '.$value['person_lastname'];?></a>
                                                 </td>
+                                                <td>-</td>
+                                                <td>-</td>
                                                 <td>-</td>
                                                 <td>-</td>
                                                 <td>-</td>
