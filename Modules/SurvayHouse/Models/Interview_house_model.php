@@ -61,7 +61,7 @@ class Interview_house_model extends Model
       $builder->join('CODE_PROVINCE', 'CODE_PROVINCE.Code = LH_house.house_province','left');
       $builder->join('CODE_AMPHUR', 'CAST(CODE_AMPHUR.AMP_CODE as int) = LH_house.house_district and CODE_PROVINCE.Code = CODE_AMPHUR.PROV_CODE','left');      
       $builder->join('CODE_TAMBON', 'CAST(CODE_TAMBON.TAM_CODE as int) = LH_house.house_subdistrict and CODE_PROVINCE.Code = CODE_TAMBON.PROV_CODE and CODE_AMPHUR.AMP_CODE = CODE_TAMBON.AMP_CODE','left');      
-      $builder->join('CODE_VILLAGE', 'CAST(CODE_VILLAGE.VILL_CODE as int) = LH_house.house_home and CODE_PROVINCE.Code = CODE_VILLAGE.PROV_CODE 
+      $builder->join('CODE_VILLAGE', 'CAST(CODE_VILLAGE.VILL_CODE as varchar(50)) = LH_house.house_home and CODE_PROVINCE.Code = CODE_VILLAGE.PROV_CODE 
       and CODE_AMPHUR.AMP_CODE = CODE_VILLAGE.AMP_CODE
       and CODE_TAMBON.TAM_CODE = CODE_VILLAGE.TAM_CODE
       ','left');   
