@@ -12,21 +12,20 @@
                     <div class="card-body">
                         <h5>ค้นหาข้อมูล</h5>
                         <div>
-                            <form action="" id="form-search">
-                                <div class="row">                                
-                                    <div class="form-group col-md-3">
-                                        <label>ชื่อ - นามสกุล</label>
-                                        
-                                        <input type="text" class="form-control" name="name" id="name" value="">
-                                    </div>
-                                   
-                                    <div class="col-md-9 text-right" style="padding-top: 25px;">
-                                        <button type="submit" class="btn btn-info">ค้นหา</button>
-                                        <button type="button" class="btn btn-secondary" onclick="window.location.replace('<?=site_url('survay');?>');">ล้างค่า</button>
-                                    </div>                                    
+                            <form action="">
+                                <div class="row d-flex justify-content-center w-100">                                                                 
+                                    <div class="form-group col-md-4">                                    
+                                        <label>ชื่อ - นามสกุล</label>                                        
+                                        <input type="text" class="form-control" name="name" id="name" value="<?=$filter;?>">
+                                    </div>                                                                     
                                 </div>
+                                <div class="col-md-12 text-right">
+                                  <button type="submit" class="btn btn-info">ค้นหา</button>
+                                  <button type="button" class="btn btn-secondary" onclick="window.location.replace('<?=site_url('member');?>');">ล้างค่า</button>
+                                </div>  
                             </form>
                         </div>
+                      
                       </div>
                         <br>
 
