@@ -57,7 +57,8 @@
                                                             <th scope="col">ชื่อ-นามสกุล</th>
                                                             <th scope="col">การศึกษา</th>
                                                             <th scope="col">สถานะครอบครัว</th>
-                                                            <th scope="col">เครื่องมือ</th>
+                                                            <th scope="col">แก้ไขข้อมูล</th>
+                                                            <th scope="col">ลบข้อมูล</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -85,12 +86,14 @@
                                                             <table class="table table-bordered" id="myTable<?=$keys;?>">
                                                                 <thead class="bg-info">
                                                                     <tr>
-                                                                    <th scope="col">ลำดับ</th>
-                                                                    <th scope="col">รหัสประจำตัวประชาชน</th>
-                                                                    <th scope="col">ชื่อ-นามสกุล</th>
-                                                                    <th scope="col">การศึกษา</th>
-                                                                    <th scope="col">สถานะครอบครัว</th>
-                                                                    <th scope="col">เครื่องมือ</th>
+                                                                        <th scope="col" width="5%">ลำดับ</th>
+                                                                        <th scope="col" width="10%">ชื่อ-นามสกุล</th>
+                                                                        <th scope="col" width="10%">เลขบัตรประชาชน</th>                                                                    
+                                                                        <th scope="col" width="10%">อายุ</th>
+                                                                        <th scope="col" width="10%">ชนเผ่า</th>
+                                                                        <th scope="col" width="10%">สถานะทางครอบครัว</th>
+                                                                        <th scope="col" width="5%">แก้ไขข้อมูล</th>
+                                                                        <th scope="col" width="5%">ลบข้อมูล</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
@@ -98,15 +101,16 @@
                                                                     <?php foreach ($value as $key => $val) :?>                                                                       
                                                                          <tr>
                                                                             <th class="text-center" scope="row"><?=$cout;?></th>
-                                                                            <td><?=$val['person_number'];?></td>
                                                                             <td><?=$val['name'].''.$val['person_name'].' '.$val['person_lastname'];?></td>
+                                                                            <td><?=$val['person_number'];?></td>
+                                                                            <td></td>
                                                                             <td><?=$val['education_name'];?></td>
                                                                             <td><?=$val['person_header'] ? 'หัวหน้าครอบครัว':'';?></td>
-                                                                            <td>
-                                                                                <div class="buttons">
-                                                                                    <button data-id="<?=$keys;?>" onclick="editFimaly('<?=$house_id;?>',$(this),<?=$val['person_id'];?>)" class="btn btn-icon btn-primary btn-sm"><i class="far fa-edit"></i></button>                                    
-                                                                                    <button onclick="deleteItem(<?=$val['person_id'];?>)" class="btn btn-icon btn-danger btn-sm"><i class="fas fa-trash"></i></button>
-                                                                                </div>
+                                                                            <td class="text-center">
+                                                                                <button data-id="<?=$keys;?>" onclick="editFimaly('<?=$house_id;?>',$(this),<?=$val['person_id'];?>)" class="btn btn-icon btn-primary btn-sm"><i class="far fa-edit"></i></button>
+                                                                            </td>
+                                                                            <td class="text-center">
+                                                                                <button onclick="deleteItem(<?=$val['person_id'];?>)" class="btn btn-icon btn-danger btn-sm"><i class="fas fa-trash"></i></button>
                                                                             </td>
                                                                         </tr>
                                                                         <?php $cout = $cout+1;?>

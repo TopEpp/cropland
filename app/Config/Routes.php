@@ -205,7 +205,11 @@ $routes->group("report", ["namespace" => "Modules\Report\Controllers"], function
 $routes->group("common", ["namespace" => "App\Controllers"], function ($routes) {
     $routes->get("get-amphur", "Common::amphur");
     $routes->get("get-tambon", "Common::tambon");
+    $routes->get("get-projects", "Common::Projects"); //หมู่บ้าน
     $routes->get("get-villages", "Common::Villages"); //หมู่บ้าน
+    $routes->get("get-projectVillages", "Common::projectVillages"); //หมู่บ้าน
+    $routes->get("get-projectAddress", "Common::projectAddress"); //หมู่บ้าน
+    
     $routes->get("get-house", "Common::House");
     $routes->get("get-person", "Common::Person");
     $routes->get("get-village", "Common::Village"); //กลุ่มบ้าน

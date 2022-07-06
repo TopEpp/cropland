@@ -82,7 +82,7 @@ class SurvayHouse extends BaseController
         $data = [];
         $data['house_id'] = $id;
         $data['landomner'] = $this->model_api->getLandOwner();
-        $data['projects'] = $this->model_api->getProject();
+        $data['projects'] = $this->model_common->getProject();
         $data['projects_type'] = $this->model_api->getProjectType();
         
         $data['province'] = $this->model_common->getProvince();

@@ -39,7 +39,7 @@
                                 <div class="row">                               
                                     <div class="form-group col-md-4">
                                         <label>ประเภทโครงการ</label>                                        
-                                        <select name="interview_project" id="interview_project" class="form-control" required="">
+                                        <select name="interview_project" id="interview_project" class="form-control select2" required="">
                                             <option value="">เลือก</option>
                                             <?php foreach ($projects_type as $key => $value) :?>
                                                 <option <?=@$data['interview_project'] == $value['Code']?'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
@@ -56,25 +56,27 @@
                                         <select name="interview_project_name" id="interview_project_name" class="form-control select2"  required="">
                                             <option value="">เลือก</option>
                                             <?php foreach ($projects as $key => $value) :?>
-                                                <option <?=@$data['interview_project_name'] == $value['Code']?'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Description'].'/'.$value['Name'];?></option>
+                                                <option <?=@$data['interview_project_name'] == $value['Code']?'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                             <?php endforeach;?>
                                             
                                         </select>
                                         <div class="invalid-feedback">
                                            กรุณาเลือกชื่อโครงการ
                                         </div>  
-                                    </div>     
+                                    </div>
                                     <div class="form-group col-md-4">
-                                        <label>ปีที่สำรวจ</label>                                        
-                                        <select name="interview_year" id="interview_year" class="form-control" required="">
-                                            <?php foreach (getYear() as $key => $value) :?>
-                                                <option value="<?=$value;?>"><?=$value;?></option>
-                                            <?php endforeach;?>
+                                        <label>ชื่อหมู่บ้าน</label>                                        
+                                        <select name="house_home" id="house_home" class="form-control" required="">
+                                            <option value=""></option>
+                                            <?php foreach ($villages as $key => $value) :?>
+                                                <option <?=@$data['house_home'] == $value['VILL_CODE'] ? 'selected':'';?>  value="<?=$value['VILL_CODE'];?>"><?=$value['VILL_T'];?></option>
+                                            <?php endforeach?>
                                         </select>
                                         <div class="invalid-feedback">
-                                           กรุณาเลือกปีที่สำรวจ
-                                        </div>  
-                                    </div>                                      
+                                           กรุณาเลือกชื่อหมู่บ้าน
+                                        </div> 
+                                    </div>
+                                                                       
                                     <div class="form-group col-md-4">
                                         <label>บ้านเลขที่</label>
                                         <input type="text" class="form-control" name="house_number" value="<?=@$data['house_number'];?>" required="">
@@ -82,14 +84,8 @@
                                            กรุณากรอกบ้านเลขที่
                                         </div> 
                                     </div>
-                                    <div class="form-group col-md-4">
-                                        <label>หมู่ที่</label>
-                                        <input type="text" class="form-control" name="house_moo" value="<?=@$data['house_moo'];?>" required="">
-                                        <div class="invalid-feedback">
-                                           กรุณากรอกหมู่ที่
-                                        </div> 
-                                    </div>
-                                    <div class="form-group col-md-4"></div>
+                                  
+                                    
                                     <div class="form-group col-md-4">
                                         <label>จังหวัด</label>                                        
                                         <select name="house_province" id="house_province" class="form-control select2-ajax-province" required="">
@@ -126,31 +122,19 @@
                                            กรุณาเลือกตำบล
                                         </div> 
                                     </div>
+                                   
                                     <div class="form-group col-md-4">
-                                        <label>บ้าน</label>                                        
-                                        <select name="house_home" id="house_home" class="form-control" required="">
-                                            <option value=""></option>
-                                            <?php foreach ($villages as $key => $value) :?>
-                                                <option <?=@$data['house_home'] == $value['VILL_CODE'] ? 'selected':'';?>  value="<?=$value['VILL_CODE'];?>"><?=$value['VILL_T'];?></option>
-                                            <?php endforeach?>
+                                        <label>ปีที่สำรวจ</label>                                        
+                                        <select name="interview_year" id="interview_year" class="form-control" required="">
+                                            <?php foreach (getYear() as $key => $value) :?>
+                                                <option value="<?=$value;?>"><?=$value;?></option>
+                                            <?php endforeach;?>
                                         </select>
                                         <div class="invalid-feedback">
-                                           กรุณาเลือกบ้าน
-                                        </div> 
-                                    </div>
-                                    <div class="form-group col-md-4">
-                                        <label>กลุ่มบ้าน</label>                                        
-                                        <select class="form-control select2" name="house_label" required="">
-                                        <?php foreach ($village as $key => $value) :?>
-                                            <option <?=@$data['house_label'] == $value['Code'] ? 'selected':'';?>  value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
-                                        <?php endforeach?>
-                                        </select>
-                                        <div class="invalid-feedback">
-                                           กรุณาเลือกกลุ่มบ้าน
-                                        </div> 
-                                        
-                                      
-                                    </div>
+                                           กรุณาเลือกปีที่สำรวจ
+                                        </div>  
+                                    </div>  
+                                    
                                     <div class="form-group col-md-4">
                                         <label>ประเภทที่พักอาศัย</label>
                                         <select name="house_type" id="house_type" class="form-control" required="">
@@ -218,16 +202,62 @@
             });
         })
 
-        $("#house_subdistrict").change(function(){
-            var tambon = $(this).val();
-            var amphur = $("#house_district").val();
-            var province = $("#house_province").val();
+        // $("#house_subdistrict").change(function(){
+        //     var tambon = $(this).val();
+        //     var amphur = $("#house_district").val();
+        //     var province = $("#house_province").val();
+        //     $.ajax({
+        //         type: "GET",
+        //         url: domain+'common/get-villages?amphur='+amphur+'&province='+province+'&tambon='+tambon,
+        //         success : function(options){
+        //             // $("#house_home").html(options)
+        //             // $("#house_home").select2();
+        //         }
+        //     });
+        // })
+
+        $("#interview_project").change(function(){
+            var project_type = $(this).val();
             $.ajax({
                 type: "GET",
-                url: domain+'common/get-villages?amphur='+amphur+'&province='+province+'&tambon='+tambon,
+                url: domain+'common/get-projects?project_type='+project_type,
+                success : function(options){
+                    $("#interview_project_name").html(options)
+                    $("#interview_project_name").select2();
+                }
+            });
+        })
+
+        $("#interview_project_name").change(function(){
+            var project = $(this).val();
+            $.ajax({
+                type: "GET",
+                url: domain+'common/get-projectVillages?project='+project,
                 success : function(options){
                     $("#house_home").html(options)
                     $("#house_home").select2();
+                }
+            });
+        })
+
+        $("#house_home").change(function(){
+            var village = $(this).val();
+            var project=  $("#interview_project_name").val()
+            var type=  $("#interview_project").val()
+            $.ajax({
+                type: "GET",
+                url: domain+'common/get-projectAddress?village='+village+'&project='+project+'&type='+type,
+                success : function(res){
+                    $(".select2-ajax-province").val(res.PROVINCE_ID).trigger("change");
+
+                    setTimeout(() => {
+                        $(".select2-ajax-amphur").val(res.AMPHUR_ID).trigger("change");
+                    }, 1000);
+
+                    setTimeout(() => {
+                        $(".select2-ajax-tambon").val(res.AMPHUR_ID).trigger("change");
+                    }, 1000);
+                  
                 }
             });
         })
