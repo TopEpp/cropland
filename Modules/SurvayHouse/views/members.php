@@ -103,8 +103,8 @@
                                                                             <th class="text-center" scope="row"><?=$cout;?></th>
                                                                             <td><?=$val['name'].''.$val['person_name'].' '.$val['person_lastname'];?></td>
                                                                             <td><?=$val['person_number'];?></td>
-                                                                            <td></td>
-                                                                            <td><?=$val['education_name'];?></td>
+                                                                            <td> <?= $val['person_birthdate'] ? calculate_age($val['person_birthdate'])['Y'] :'' ?> </td>
+                                                                            <td><?=$val['tribe_name'];?></td>
                                                                             <td><?=$val['person_header'] ? 'หัวหน้าครอบครัว':'';?></td>
                                                                             <td class="text-center">
                                                                                 <button data-id="<?=$keys;?>" onclick="editFimaly('<?=$house_id;?>',$(this),<?=$val['person_id'];?>)" class="btn btn-icon btn-primary btn-sm"><i class="far fa-edit"></i></button>

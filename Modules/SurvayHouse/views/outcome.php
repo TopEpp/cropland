@@ -37,13 +37,14 @@
                             <table class="table table-bordered">
                                 <thead  class="bg-info">
                                     <tr>
-                                        <th rowspan="2" scope="col">ลำดับ</th>
-                                        <th rowspan="2" scope="col">ชื่อ-นามสกุล</th>
-                                        <th colspan="8" class="text-center" scope="col">รายจ่ายการอุปโภค</th>
-                                        <th rowspan="2" scope="col">รายจ่ายในการอุปโภค</th>
-                                        <th rowspan="2" scope="col">รายจ่ายในการบริโภค</th>
-                                        <th rowspan="2" scope="col">รายจ่ายรวม</th>
-                                        <th rowspan="2" scope="col">หมายเหตุ</th>
+                                        <th width="5%" rowspan="2" scope="col">ลำดับ</th>
+                                        <th width="15%" rowspan="2" scope="col">ชื่อ-นามสกุล</th>
+                                        <th width="30%" colspan="8" class="text-center" scope="col">รายจ่ายการอุปโภค</th>
+                                        <th width=8%" rowspan="2" scope="col">รายจ่ายในการอุปโภค</th>
+                                        <th width=8%" rowspan="2" scope="col">รายจ่ายในการบริโภค</th>
+                                        <th width="8%" rowspan="2" scope="col">รายจ่ายรวม</th>
+                                        <th width="8%" rowspan="2" scope="col">หมายเหตุ</th>
+                                        <th width="5%" rowspan="2" scope="col">เพิ่มข้อมูลรายได้</th>
                                     </tr>
                                     <tr>
                                         <th>ค่าเครื่องนุ่มห่ม</th>
@@ -54,6 +55,7 @@
                                         <th>ค่าเติมเงินมือถือ</th>
                                         <th>ค่าทำบุญ</th>
                                         <th>ค่าหวย/สุรา</th>
+                                        
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -71,13 +73,13 @@
                                                 $val8 = @$value[8]['outcome_value'] * @$value[8]['outcome_month'];
                                                 $val9 = @$value[9]['outcome_value'] * @$value[9]['outcome_month'];
                                                 $val10 = @$value[10]['outcome_value'];
-                                                $sum = $val1+$val2+$val3+$val4+$val5+$val6+$val7+$val8+$val8;
+                                                $sum = $val1+$val2+$val3+$val4+$val5+$val6+$val7+$val8+$val9;
                                     
                                             ?>
                                             <tr>
                                                 <th scope="row"><?=$cout;?></th>
                                                 <td>
-                                                    <a class="text-info" onclick="addOutcome(<?=$value['person_id'];?>)" style="cursor: pointer;"><?=$value['person_name'].' '.$value['person_lastname'];?></a>
+                                                    <?=$value['person_name'].' '.$value['person_lastname'];?>
                                                 </td>
                                                 <td><?=@number_format($val1);?></td>
                                                 <td><?=@number_format($val2);?></td>
@@ -86,18 +88,21 @@
                                                 <td><?=@number_format($val5);?></td>
                                                 <td><?=@number_format($val6);?></td>
                                                 <td><?=@number_format($val7);?></td>
-                                                <td><?=@number_format($val8);?></td>                                        )        
+                                                <td><?=@number_format($val8);?></td>  
                                                 <td><?=$sum;?></td>
                                                 <td><?=@number_format($val9);?></td>
                                                 <td><?= number_format($sum+$val9);?></td>                                                                                                
-                                                <td><?=@number_format($val10);?></td>
+                                                <td><?=$val10;?></td>
+                                                <td  class="text-center">                                                
+                                                    <button  data-toggle="tooltip" data-placement="bottom" title="เพิ่มข้อมูล" onclick="addOutcome(<?=$value['person_id'];?>)" class="btn btn-icon btn-info"><i class="fas fa-plus"></i></button>
+                                                </td>
                                                 
                                             </tr>
                                         <?php else:?>
                                             <tr>
                                                 <th scope="row"><?=$cout;?></th>
                                                 <td>
-                                                    <a class="text-info" onclick="addOutcome(<?=$value['person_id'];?>)" style="cursor: pointer;"><?=$value['person_name'].' '.$value['person_lastname'];?></a>
+                                                    <?=$value['person_name'].' '.$value['person_lastname'];?>
                                                 </td>
                                                 <td>-</td>
                                                 <td>-</td>
@@ -111,7 +116,9 @@
                                                 <td>-</td>
                                                 <td>-</td>
                                                 <td>-</td>
-                                                
+                                                <td  class="text-center">                                                
+                                                    <button  data-toggle="tooltip" data-placement="bottom" title="เพิ่มข้อมูล" onclick="addOutcome(<?=$value['person_id'];?>)" class="btn btn-icon btn-info"><i class="fas fa-plus"></i></button>
+                                                </td>                                                
                                             </tr>
                                         <?php endif;?>
                                         <?php $cout = $cout+1;?>
@@ -163,7 +170,7 @@
                             </div> 
                         </div>
                         <div class="form-group col-md-6">
-                            <label>จำนวนเดือนที่ได้รับ</label>
+                            <label>จำนวนเดือนที่ได้รับ/ปี</label>
                             <select name="outcome[1][outcome_month]" id="outcome[1][outcome_month]" class="form-control">
                                 <option value="">เลือก</option>
                                 <?php foreach ($month as $key => $value) :?>
@@ -179,7 +186,7 @@
                             </div> 
                         </div>
                         <div class="form-group col-md-6">
-                            <label>จำนวนเดือนที่ได้รับ</label>
+                            <label>จำนวนเดือนที่ได้รับ/ปี</label>
                             <select name="outcome[2][outcome_month]" id="outcome[2][outcome_month]" class="form-control">
                                 <option value="">เลือก</option>
                                 <?php foreach ($month as $key => $value) :?>
@@ -195,7 +202,7 @@
                             </div> 
                         </div>
                         <div class="form-group col-md-6">
-                            <label>จำนวนเดือนที่ได้รับ</label>
+                            <label>จำนวนเดือนที่ได้รับ/ปี</label>
                             <select name="outcome[3][outcome_month]" id="outcome[3][outcome_month]" class="form-control">
                                 <option value="">เลือก</option>
                                 <?php foreach ($month as $key => $value) :?>
@@ -211,7 +218,7 @@
                             </div> 
                         </div>
                         <div class="form-group col-md-6">
-                            <label>จำนวนเดือนที่ได้รับ</label>
+                            <label>จำนวนเดือนที่ได้รับ/ปี</label>
                             <select name="outcome[4][outcome_month]" id="outcome[4][outcome_month]" class="form-control">
                                 <option value="">เลือก</option>
                                 <?php foreach ($month as $key => $value) :?>
@@ -227,7 +234,7 @@
                             </div> 
                         </div>
                         <div class="form-group col-md-6">
-                            <label>จำนวนเดือนที่ได้รับ</label>
+                            <label>จำนวนเดือนที่ได้รับ/ปี</label>
                             <select name="outcome[5][outcome_month]" id="outcome[5][outcome_month]" class="form-control">
                                 <option value="">เลือก</option>
                                 <?php foreach ($month as $key => $value) :?>
@@ -240,7 +247,7 @@
                             <input type="text" class="form-control" name="outcome[6][outcome_value]" oninput="validateDecimal(this)">
                         </div>
                         <div class="form-group col-md-6">
-                            <label>จำนวนเดือนที่ได้รับ</label>
+                            <label>จำนวนเดือนที่ได้รับ/ปี</label>
                             <select name="outcome[6][outcome_month]" id="outcome[6][outcome_month]" class="form-control">
                                 <option value="">เลือก</option>
                                 <?php foreach ($month as $key => $value) :?>
@@ -253,7 +260,7 @@
                             <input type="text" class="form-control" name="outcome[7][outcome_value]" oninput="validateDecimal(this)">
                         </div>
                         <div class="form-group col-md-6">
-                            <label>จำนวนเดือนที่ได้รับ</label>
+                            <label>จำนวนเดือนที่ได้รับ/ปี</label>
                             <select name="outcome[7][outcome_month]" id="outcome[7][outcome_month]" class="form-control">
                                 <option value="">เลือก</option>
                                 <?php foreach ($month as $key => $value) :?>
@@ -266,7 +273,7 @@
                             <input type="text" class="form-control" name="outcome[8][outcome_value]" oninput="validateDecimal(this)">
                         </div>
                         <div class="form-group col-md-6">
-                            <label>จำนวนเดือนที่ได้รับ</label>
+                            <label>จำนวนเดือนที่ได้รับ/ปี</label>
                             <select name="outcome[8][outcome_month]" id="outcome[8][outcome_month]" class="form-control">
                                 <option value="">เลือก</option>
                                 <?php foreach ($month as $key => $value) :?>
@@ -282,7 +289,7 @@
                             </div>  
                         </div>
                         <div class="form-group col-md-6">
-                            <label>จำนวนเดือนที่ได้รับ</label>
+                            <label>จำนวนเดือนที่ได้รับ/ปี</label>
                             <select name="outcome[9][outcome_month]" id="outcome[9][outcome_month]" class="form-control">
                                 <option value="">เลือก</option>
                                 <?php foreach ($month as $key => $value) :?>

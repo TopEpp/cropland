@@ -69,3 +69,23 @@ function house_person_type($id){
     }
     return '';
 }
+
+function calculate_age($birthday){
+    
+    if($birthday!=""){
+        $today = new DateTime();
+        $diff = $today->diff(new DateTime($birthday));
+        if ($diff->y)
+        {
+            return  array('Y'=>$diff->y,'M'=>$diff->m,'D'=>$diff->d);
+        }
+        elseif ($diff->m)
+        {
+            return array('Y'=>0,'M'=>$diff->m,'D'=>$diff->d);
+        }
+        else
+        {
+            return array('Y'=>0,'M'=>0,'D'=>$diff->d);
+        }
+    }
+}
