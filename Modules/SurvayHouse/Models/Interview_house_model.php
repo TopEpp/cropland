@@ -26,7 +26,7 @@ class Interview_house_model extends Model
         $builder->select('*');
         $builder->join('LH_interview_house', 'LH_house.house_id = LH_interview_house.interview_house','left');
         if ($id){
-          $builder = $builder->where('house_id',$id);
+          $builder = $builder->where('interview_id',$id);
           $query = $builder->get()->getRowArray();
           return $query;
         }
@@ -123,10 +123,13 @@ class Interview_house_model extends Model
       
     }
 
-    public function getAllHouseMembers($house_id,$person_id = '',$data = array()){    
-        $builder = $this->db->table('LH_house_person');
+    public function getAllHouseMembers($house_id,$person_id = '',$data = array()){
+
+        $builder = $this->db->table('LH_interview_house');
         $builder->select('LH_house_person.*,LH_prefix.name,LH_tribe.name as tribe_name');
-        $builder->where('house_id',$house_id);
+        $builder->where('LH_interview_house.interview_id',$house_id);
+        $builder->join('LH_house', 'LH_house.house_id = LH_interview_house.interview_house','left');
+        $builder->join('LH_house_person', 'LH_house_person.house_id = LH_house.house_id','left');
         $builder->join('LH_prefix', 'LH_prefix.prefix_id = LH_house_person.person_prename','left');
         $builder->join('LH_tribe', 'LH_tribe.tribe_id = LH_house_person.person_tribe','left');
         $query = $builder->get()->getResultArray();
@@ -170,7 +173,8 @@ class Interview_house_model extends Model
 
     public function getAllHouseJob($house_id,$person_id,$data = array()){
 
-      $builder = $this->db->table('LH_house_person');
+
+      $builder = $this->db->table('LH_interview_house');
       $builder->select('
       max(LH_person_job.job_cal_type) as job_cal_type,
       sum(LH_person_job.job_salary) as job_salary,
@@ -179,7 +183,9 @@ class Interview_house_model extends Model
       max(LH_house_person.person_id) as person_id,
       max(LH_house_person.person_name) as person_name,
       max(LH_house_person.person_lastname) as person_lastname');
-      $builder->where('LH_house_person.house_id',$house_id);
+      $builder->where('LH_interview_house.interview_id',$house_id);
+      $builder->join('LH_house', 'LH_house.house_id = LH_interview_house.interview_house','left');
+      $builder->join('LH_house_person', 'LH_house_person.house_id = LH_house.house_id','left');     
       $builder->join('LH_person_job', 'LH_person_job.person_id = LH_house_person.person_id and job_main="1"','left');
       $builder->join('LH_jobs', 'LH_jobs.jobs_id = LH_person_job.job_type','left');
       $builder->groupBy('LH_house_person.house_id, LH_house_person.person_id');
@@ -259,9 +265,11 @@ class Interview_house_model extends Model
 
     public function getAllHouseIncome($house_id,$person_id,$data = array()){
 
-      $builder = $this->db->table('LH_house_person');
+      $builder = $this->db->table('LH_interview_house');
       $builder->select('LH_person_income.*,LH_house_person.person_id as person,LH_house_person.person_name,LH_house_person.person_lastname');
-      $builder->where('LH_house_person.house_id',$house_id);
+      $builder->where('LH_interview_house.interview_id',$house_id);
+      $builder->join('LH_house', 'LH_house.house_id = LH_interview_house.interview_house','left');
+      $builder->join('LH_house_person', 'LH_house_person.house_id = LH_house.house_id','left');
       $builder->join('LH_person_income', 'LH_person_income.person_id = LH_house_person.person_id','left');
       $query = $builder->get()->getResultArray();
         // dd($query);
@@ -312,9 +320,12 @@ class Interview_house_model extends Model
 
     public function getAllHouseOutcome($house_id,$person_id,$data = array()){
 
-      $builder = $this->db->table('LH_house_person');
+
+      $builder = $this->db->table('LH_interview_house');
       $builder->select('LH_person_outcome.*,LH_house_person.person_id as person,LH_house_person.person_name,LH_house_person.person_lastname');
-      $builder->where('house_id',$house_id);
+      $builder->where('LH_interview_house.interview_id',$house_id);
+      $builder->join('LH_house', 'LH_house.house_id = LH_interview_house.interview_house','left');
+      $builder->join('LH_house_person', 'LH_house_person.house_id = LH_house.house_id','left');
       $builder->join('LH_person_outcome', 'LH_person_outcome.person_id = LH_house_person.person_id','left');
       $query = $builder->get()->getResultArray();
         
@@ -433,6 +444,17 @@ class Interview_house_model extends Model
       $builder->where('job_id', $id);
       $query = $builder->get()->getRowArray();
       return $query;
+    }
+
+    public function DuplicateHouse($data){
+        
+      $builder = $this->db->table('LH_house');
+      $builder->where('house_home',$data['house_home']);
+      $builder->where('house_number',$data['house_number']);
+      $builder->where('house_province',$data['house_province']);
+      $builder->where('house_district',$data['house_district']);
+      $builder->where('house_subdistrict',$data['house_subdistrict']);
+      return $query = $builder->countAllResults();
     }
 
     

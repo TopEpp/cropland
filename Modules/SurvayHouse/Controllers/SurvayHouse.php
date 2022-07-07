@@ -105,7 +105,7 @@ class SurvayHouse extends BaseController
 
     public function saveManage(){
         $input = $this->request->getPost();
-           
+        
         $session = session();
         
         if (!empty($input)){
@@ -119,6 +119,7 @@ class SurvayHouse extends BaseController
         
             //insert interview house
             if ($house_id){
+
                 $data_interview = [
                     'interview_id' => $input['interview_id'],
                     'interview_project' => $input['interview_project'],
@@ -126,10 +127,12 @@ class SurvayHouse extends BaseController
                     'interview_year' => $input['interview_year'],
                     'interview_house' => $house_id,
                 ];
-                $this->model_interview_house->saveInterViewHouse($data_interview);
+
+                $interview_id = $this->model_interview_house->saveInterViewHouse($data_interview);
+
             }
 
-            if (!empty($input['house_id'])){
+            if (!empty($input['interview_id'])){
                 $session->setFlashdata("message", "แก้ไขข้อมูลเรียบร้อย");
             }else{
                 $session->setFlashdata("message", "บันทึกข้อมูลเรียบร้อย");
@@ -137,7 +140,7 @@ class SurvayHouse extends BaseController
             
         }
      
-        return redirect()->to('survay_house/manage/'.$house_id);
+        return redirect()->to('survay_house/manage/'.$interview_id);
     }
 
     public function members($house_id ,$id = null){
@@ -309,6 +312,12 @@ class SurvayHouse extends BaseController
 
     public function deleteJobs($id){
         $res = $this->model_house->deleteJobs($id);
+        return   $this->respond($res);
+    }
+
+    public function DuplicateHouse(){
+        $input = $this->request->getPost();
+        $res = $this->model_house->DuplicateHouse($input);
         return   $this->respond($res);
     }
 

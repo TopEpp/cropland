@@ -113,6 +113,8 @@ $routes->group("survay_house", ["namespace" => "Modules\SurvayHouse\Controllers"
     $routes->post("delete_member(:any)", "SurvayHouse::deleteMember$1");
     $routes->post("delete_jobs(:any)", "SurvayHouse::deleteJobs$1");
 
+    $routes->post("get-duplicateHouse", "SurvayHouse::DuplicateHouse"); //หมู่บ้าน
+
     
 });
 
@@ -208,7 +210,7 @@ $routes->group("common", ["namespace" => "App\Controllers"], function ($routes) 
     $routes->get("get-projects", "Common::Projects"); //หมู่บ้าน
     $routes->get("get-villages", "Common::Villages"); //หมู่บ้าน
     $routes->get("get-projectVillages", "Common::projectVillages"); //หมู่บ้าน
-    $routes->get("get-projectAddress", "Common::projectAddress"); //หมู่บ้าน
+    $routes->get("get-projectAddress", "Common::projectAddress"); //หมู่บ้าน 
     
     $routes->get("get-house", "Common::House");
     $routes->get("get-person", "Common::Person");

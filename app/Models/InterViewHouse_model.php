@@ -42,7 +42,7 @@ class InterViewHouse_model extends Model
       
       $builder = $this->db->table('LH_interview_house');
       if (!empty($data['interview_id'])){
-        // $interview_id = $data['interview_id'];
+        $interview_id = $data['interview_id'];
         $builder->where('interview_id',$data['interview_id']);
         unset($data['interview_id']);
         $query = $builder->update($data);
@@ -51,8 +51,9 @@ class InterViewHouse_model extends Model
         
         unset($data['interview_id']);
         $query = $builder->insert($data);
+        $interview_id = $this->db->insertID();
       }
-      return $query;
+      return $interview_id;
       
     }
 

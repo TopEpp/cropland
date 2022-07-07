@@ -119,7 +119,7 @@
                                         <td class="text-center"><?=$value['total_person'];?></td>
                                       
                                         <td class="text-center">
-                                            <a data-toggle="tooltip" title="แก้ไขข้อมูล" href="<?=base_url('survay_house/manage/'.$value['house_id']);?>" class="btn btn-icon btn-primary"><i class="far fa-edit"></i></a>
+                                            <a data-toggle="tooltip" title="แก้ไขข้อมูล" href="<?=base_url('survay_house/manage/'.$value['interview_id']);?>" class="btn btn-icon btn-primary"><i class="far fa-edit"></i></a>
                                         </td>
                                         <td class="text-center">
                                             <button  data-toggle="tooltip" data-placement="bottom" title="ลบข้อมูล" onclick="deleteItem(<?=$value['interview_id'];?>)" class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></button>

@@ -151,7 +151,7 @@
                                 <div class="row">
                                     <div class="col-md-12 text-right">                                       
                                         <button type="button" class="btn btn-danger" onclick="location.href='<?=base_url('house');?>';" >ยกเลิก</button>
-                                        <button type="submit" class="btn btn-info">บันทึก</button>
+                                        <button type="submit" class="btn btn-info" onclick="saveData($(this));">บันทึก</button>
                                         <button type="button" class="btn btn-primary" onclick="location.href='<?=base_url('survay_house/members/'.@$house_id);?>';" >ถัดไป</button>
                                     </div>
                                 </div>
@@ -175,6 +175,8 @@
 
 <!-- //load select2 ajax/ -->
 <?= script_tag('public/assets/js/modules/ajax_select2.js') ?>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 <script>
     $(function(){
         $("#house_province").change(function(){
@@ -262,6 +264,35 @@
             });
         })
     })
+
+    function saveData(elm){
+        elm.preventDefault();
+        $.ajax({
+            type: "GET",
+            url: domain+'survay_house/get-duplicateHouse',
+            type: "POST",
+            data:$('#form_manage').serialize(),
+            success : function(res){
+                if (res > 0){
+                    swal({
+                        title: 'พบบ้านเลขที่ซ้ำในระบบ?',
+                        text: 'ยืนยันข้อมูลนี้!',
+                        icon: 'warning',
+                        buttons: true,
+                        dangerMode: true,
+                    })
+                    .then((success) => {
+                        return false;
+                    });
+                }
+                return true;
+                
+            }
+        });
+
+    
+    }
 </script>
+
 <?=$this->endSection()?>
   
