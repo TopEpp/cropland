@@ -25,11 +25,11 @@
                         <?php endif;?>
                         
                         <div class="btn-group" role="group" aria-label="menu-nabbar">
-                        <button type="button" class="btn btn-secondary" onclick="location.href='<?=base_url('survay_house/manage/'.@$house_id);?>';">ข้อมูลพื้นฐาน</button>
-                            <button type="button" class="btn btn-info" <?=@$house_id ? '':'disabled' ?> onclick="location.href='<?=base_url('survay_house/members/'.@$house_id);?>';">ข้อมูลสมาชิกในครัวเรือน</button>
-                            <button type="button" class="btn btn-secondary" <?=@$house_id ? '':'disabled' ?> onclick="location.href='<?=base_url('survay_house/jobs/'.@$house_id);?>';">ข้อมูลด้านอาชีพ</button>
-                            <button type="button" class="btn btn-secondary" <?=@$house_id ? '':'disabled' ?> onclick="location.href='<?=base_url('survay_house/income/'.@$house_id);?>';">ข้อมูลรายได้</button>
-                            <button type="button" class="btn btn-secondary" <?=@$house_id ? '':'disabled' ?>  onclick="location.href='<?=base_url('survay_house/outcome/'.@$house_id);?>';">ข้อมูลรายจ่าย</button>
+                        <button type="button" class="btn btn-secondary" onclick="location.href='<?=base_url('survay_house/manage/'.$interview_id.'/'.@$house_id);?>';">ข้อมูลพื้นฐาน</button>
+                            <button type="button" class="btn btn-info" <?=@$house_id ? '':'disabled' ?> onclick="location.href='<?=base_url('survay_house/members/'.$interview_id.'/'.@$house_id);?>';">ข้อมูลสมาชิกในครัวเรือน</button>
+                            <button type="button" class="btn btn-secondary" <?=@$house_id ? '':'disabled' ?> onclick="location.href='<?=base_url('survay_house/jobs/'.$interview_id.'/'.@$house_id);?>';">ข้อมูลด้านอาชีพ</button>
+                            <button type="button" class="btn btn-secondary" <?=@$house_id ? '':'disabled' ?> onclick="location.href='<?=base_url('survay_house/income/'.$interview_id.'/'.@$house_id);?>';">ข้อมูลรายได้</button>
+                            <button type="button" class="btn btn-secondary" <?=@$house_id ? '':'disabled' ?>  onclick="location.href='<?=base_url('survay_house/outcome/'.$interview_id.'/'.@$house_id);?>';">ข้อมูลรายจ่าย</button>
                         </div>
                         
                         <div class="p-2 border">
@@ -176,9 +176,9 @@
 
 <div class="modal fade" tabindex="-1" role="dialog" id="FamilyModal">
     <div class="modal-dialog modal-xl" role="document">
-        <form action="<?=base_url('survay_house/save_members/'.@$house_id);?>" method="post" class="needs-validation" novalidate="">
+        <form action="<?=base_url('survay_house/save_members/'.@$interview_id.'/'.@$house_id);?>" method="post" class="needs-validation" novalidate="">
             <input type="hidden" name="family_id" id="family_id">
-            <input type="hidden" name="person_id" id="person_id">
+            <input type="hidden" name="person_id" id="person_id">    
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">ข้อมูลสมาชิกครัวเรือน</h5>
@@ -189,7 +189,7 @@
                 <div class="modal-body">
                     <div id="item_modal" />                   
                 </div>
-                <div class="modal-footer bg-whitesmoke br">
+                <div class="modal-footer br">
                     <button type="sumbit" class="btn btn-primary">บันทึก</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
                 </div>
@@ -201,6 +201,7 @@
 
 <?=$this->section("css")?>
 <?= link_tag('public/assets/datepicker/css/datepicker.css') ?>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <?=$this->endSection()?>
 
 
@@ -210,6 +211,7 @@
 <?= script_tag('public/assets/datepicker/js/locales/bootstrap-datepicker.th.js') ?>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.repeater/1.2.1/jquery.repeater.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
     // var $repeater = '';
     $(document).ready(function () {

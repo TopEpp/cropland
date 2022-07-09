@@ -2,10 +2,6 @@
     $cal_type = ['1'=>'ในภาคการเกษตร','2'=>'นอกภาคการเกษตร'];
 ?>
 
-<div class="modal-header">
-    <h5 class="modal-title">ข้อมูลด้านอาชีพ</h5>
-    <button type="button" class="btn btn-info" data-repeater-create id="job-add">เพิ่มอาชีพ</button>
-</div>
 <div class="modal-body">
      
     <div class="alert alert-success alert-dismissible fade">
@@ -21,47 +17,6 @@
             <p>ชื่อ-นามสกุล : <?=$data[0]['person_name'].' '.$data[0]['person_lastname'] ?></p>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-12">
-        <h6>ข้อมูลด้านอาชีพ</h6>
-            <table class="table table-bordered">
-                <thead class="bg-info">
-                    <tr>
-                        <th scope="col">ลำดับ</th>
-                        <th scope="col">อาชีพ</th>
-                        <th scope="col">รายละเอียด</th>
-                        <th scope="col">ประเภท</th>
-                        <th scope="col">รายได้</th>
-                        <th scope="col">สถานประกอบการ</th>
-                        <th scope="col">หมายเหตุ</th>
-                        <th scope="col">เครื่องมือ</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($data as $key => $value) :?>
-                        <?php if (!empty($value['jobs_id'])):?>
-                            <tr>
-                                <td class="text-center"><?=$key+1;?></td>
-                                <td><?=$value['name'];?></td>
-                                <td><?=$value['job_descript'];?></td>
-                                <td><?=@$cal_type[$value['job_cal_type']];?></td>
-                                <td class="text-right"><?=$value['job_salary'];?></td>
-                                <td><?=$value['job_address'];?></td>
-                                <td><?=$value['job_remark'];?></td>
-                                <td class="text-center">
-                                    <div class="buttons">                                    
-                                        <button type="button" onclick="editItem(<?=$value['job_id'];?>)" class="btn btn-icon btn-sm btn-primary"><i class="fas fa-edit"></i></button>
-                                        <button type="button" onclick="deleteItem(<?=$value['job_id'];?>)" class="btn btn-icon btn-sm btn-danger"><i class="fas fa-trash"></i></button>
-                                    </div>
-                                </td>
-                            </tr> 
-                        <?php endif;?>
-                    <?php endforeach;?>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <hr>
     <div class="row">
         <div class="col-md-12" data-repeater-list="jobs">
                 <div class="card" data-repeater-item>
@@ -81,61 +36,75 @@
                             </select>
                         </div>
                         <div class="form-group col-md-4">
-                            <label>&nbsp;</label>                                        
+                            <label>อาชีพหลัก</label>                                        
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="job_main" name="job_main" value="1">
+                                <input class="form-check-input" type="radio" id="job_main" name="job_main" value="1">
                                 <label class="form-check-label" for="job_main">
-                                อาชีพหลัก
+                                ใช่
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" id="job_main" name="job_main" value="2">
+                                <label class="form-check-label" for="job_main">
+                                ไม่ใช่
                                 </label>
                             </div>
                         </div>
                         <div class="form-group col-md-4">
-                            <label>&nbsp;</label>                                        
+                            <label>รูปแบบรายได้</label>                                        
                             <div id="text_cal_type"></div>
-                            <!-- <p>ประเภท : ในภาคการเกษตร</p> -->
-                            <input type="hidden" name="job_cal_type" id="job_cal_type">
+                            <select name="job_cal_type" id="job_cal_type" class="form-control">
+                                <option value="1">รายได้ไม่ประจำ</option>
+                                <option value="2">รายได้ประจำ</option>
+                            </select>
+                            
                         </div>
 
-                        <div class="form-group col-md-4 show_salary"  style="display:block">
-                            <label id="label_salary">รายได้ต่อรอบ</label>                                        
+                        <div class="form-group col-md-4"  style="display:block">
+                            <label id="label_salary">จำนวนเงิน</label>                                        
                             <input type="text" class="form-control" name="job_salary" id="job_salary" oninput="validateDecimal(this)">
                         </div>
-                        <div class="form-group col-md-4 show_salary_month"  style="display:block">
-                            <label id="label_salary_month">จำนวนรอบต่อปี</label>                                        
+                        <div class="form-group col-md-4"  style="display:block">
+                            <label id="label_salary_month">จำนวนครั้ง/เดือน</label>                                        
                             <input type="text" class="form-control" name="job_salary_month" id="job_salary_month" oninput="validateDecimal(this)">
+                        </div>
+                        <div class="form-group col-md-4"  style="display:block">
+                            <label id="job_salary_year">จำนวนครั้ง/ปี</label>                                        
+                            <input type="text" class="form-control" name="job_salary_year" id="job_salary_year" oninput="validateDecimal(this)">
                         </div>
 
                         <div class="form-group col-md-4">
                             <label>สถานที่ประกอบการ</label>                                        
-                            <input type="text" class="form-control" name="job_address" id="job_address">
-                        </div>
-                        <div class="form-group col-md-12 " id="remark_show" style="display:none">
-                            <label>รายละเอียด</label>                                        
-                            <input type="text" class="form-control" name="job_remark" id="job_remark">
-                        </div>
+                            <!-- <input type="text" class="form-control" name="job_address" id="job_address"> -->
+                            <select name="job_address" id="job_address" class="form-control">
+                                <option value="1">ในหมู่บ้าน</option>
+                                <option value="2">นอกหมู่บ้าน</option>
+                            </select>
+                        </div>                        
                         <div class="form-group col-md-12">
                             <label>หมายเหตุ</label>                                        
-                            <input type="text" class="form-control" name="job_descript" id="job_descript">
+                            <input type="text" class="form-control" name="job_remark" id="job_remark">
                         </div>
                     </div>
                     
                     <div class="row inner-repeater" style="display:none">
                         <div class="col-md-6">
-                            รายละเอียด
+                            กรอกข้อมูลด้านอาชีพ : อาชีพเกษตร
                         </div>
                         <div class="col-md-6 text-right">
-                            <button type="button" class="btn btn-info" data-repeater-create id="job-add-detail" >เพิ่มรายละเอียด</button>
+                            <button type="button" class="btn btn-info" data-repeater-create id="job-add-detail" >เพิ่มข้อมูลการปลูกพืช</button>
                         </div>
                         <div class="col-md-12">
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
                                         <th width="5%" scope="col">ลำดับ</th>
-                                        <th width="20%" scope="col">ชนิด</th>
+                                        <th width="20%" scope="col">ประเภทพืชที่ปลูก</th>
+                                        <th width="10%" scope="col">ชนิดพืชที่ปลูก</th>
                                         <th width="10%" scope="col">จำนวน</th>
                                         <th width="10%" scope="col">หน่วย</th>
-                                        <th width="10%" scope="col">ต้นทุน/ปี</th>
-                                        <th width="10%" scope="col">รายได้/ปี</th>
+                                        <th width="10%" scope="col">ต้นทุนบาท/ปี</th>
+                                        <th width="10%" scope="col">รายได้บาท/ปี</th>
                                         <th width="10%" scope="col">หมายเหตุ</th>
                                     </tr>
                                 </thead>
@@ -143,26 +112,20 @@
                                     <tr data-repeater-item>
                                         <th>1</th>
                                         <td>       
-                                            <div class="row">
-                                                <div class="col-md-6 p-1">                                                    
-                                                    <select name="type_group" id="type_group" class="form-control select2"  onchange="selectProduct($(this))">
-                                                        <option value="">เลือก</option>
-                                                        <?php foreach ($product_type as $key => $value) :?>
-                                                            <option  value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
-                                                        <?php endforeach?>              
-                                                    </select>                                                  
-                                                </div>
-                                                <div class="col-md-6 p-1">
-                                                 
-                                                    <select name="type_id" id="type_id" class="form-control select2">
-                                                        <option value="">เลือก</option>       
-                                                        <?php foreach ($products as $key => $value) :?>
-                                                            <option value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
-                                                        <?php endforeach?>                                                               
-                                                    </select>    
-                                                                     
-                                                </div>  
-                                            </div>
+                                            <select name="type_group" id="type_group" class="form-control select2"  onchange="selectProduct($(this))">
+                                                <option value="">เลือก</option>
+                                                <?php foreach ($product_type as $key => $value) :?>
+                                                    <option  value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
+                                                <?php endforeach?>              
+                                            </select> 
+                                        </td>
+                                        <td>       
+                                            <select name="type_id" id="type_id" class="form-control select2">
+                                                <option value="">เลือก</option>       
+                                                <?php foreach ($products as $key => $value) :?>
+                                                    <option value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
+                                                <?php endforeach?>                                                               
+                                            </select> 
                                         </td>
                                         <td> <input type="text" class="form-control" name="detail_value" oninput="validateDecimal(this)"></td>
                                         <td>                                             
@@ -188,7 +151,7 @@
     
 </div>
 <div class="modal-footer bg-whitesmoke br">
-    <button type="button" onclick="saveJobs()" class="btn btn-primary">บันทึก</button>
+    <button type="button" onclick="saveJobs('create')" class="btn btn-primary">บันทึก</button>
     <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
 </div>
 
@@ -209,7 +172,7 @@
         var value = $option.val();
          $.ajax({
             type: "GET",
-            url: domain+'common/get-product?type='+value,
+            url: domain+'common/get-product_type?group='+value,
             success : function(options){
                 elm.parent().parent().find('#type_id').html(options)
             }
@@ -344,28 +307,28 @@
         var id = elm.val();
 
         if (id == 1 || id == 2 || id == 3){
-            $("#job_cal_type").val(1)
-            $("#text_cal_type").html('<p>ประเภท : ในภาคการเกษตร</p>')
-            $("#remark_show").hide();
-            $(".show_salary_month").show();
-            $(".show_salary").show();
+            // $("#job_cal_type").val(1)
+            // $("#text_cal_type").html('<p>ประเภท : ในภาคการเกษตร</p>')
+            // $("#remark_show").hide();
+            // $(".show_salary_month").show();
+            // $(".show_salary").show();
             $(".inner-repeater").show();
         }else if (id == 6){
-            $("#job_cal_type").val(2)
-            $("#text_cal_type").html('<p>ประเภท : นอกภาคการเกษตร</p>')
-            $("#remark_show").show();
-            $(".show_salary_month").show();
-            $(".show_salary").show();
-            $("#label_salary").text('รายได้ต่อครั้ง');
-            $("#label_salary_month").text('จำนวนครั้งต่อเดือน');
+            // $("#job_cal_type").val(2)
+            // $("#text_cal_type").html('<p>ประเภท : นอกภาคการเกษตร</p>')
+            // $("#remark_show").show();
+            // $(".show_salary_month").show();
+            // $(".show_salary").show();
+            // $("#label_salary").text('รายได้ต่อครั้ง');
+            // $("#label_salary_month").text('จำนวนครั้งต่อเดือน');
             $(".inner-repeater").hide();
         }else{
-            $("#job_cal_type").val(2)
-            $(".show_salary_month").show();
-            $(".show_salary").hide();        
-            $("#label_salary_month").text('รายได้ต่อเดือน');
-            $("#text_cal_type").html('<p>ประเภท : นอกภาคการเกษตร</p>')
-            $("#remark_show").hide();
+            // $("#job_cal_type").val(2)
+            // $(".show_salary_month").show();
+            // $(".show_salary").hide();        
+            // $("#label_salary_month").text('รายได้ต่อเดือน');
+            // $("#text_cal_type").html('<p>ประเภท : นอกภาคการเกษตร</p>')
+            // $("#remark_show").hide();
         }
     }
 

@@ -1,3 +1,4 @@
+
 <div class="row">                               
     <div class="form-group col-md-4">
         <label>รหัสประจำตัวประชาชน</label>                                        
@@ -137,24 +138,34 @@
         </div>                            
     </div>
     <div class="form-group col-md-4">
-        <label>ที่อยู่ปัจจุบัน (กรณีไม่ได้อาศัยที่บ้าน)</label>                                        
-        <input type="text" class="form-control" name="person_address"  value="<?=@$data['person_address'];?>">
+        <label class="d-block">ที่อยู่ปัจจุบัน (กรณีไม่ได้อาศัยที่บ้าน)</label>                                        
+        
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" id="person_address"name="person_address" value="1" <?=@$data['person_address'] == 1 ? 'checked':'';?>>
+            <label class="form-check-label" for="person_address">อาศัยอยู่</label>
+        </div> 
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" id="person_address"name="person_address" value="2" <?=@$data['person_address'] == 2 ? 'checked':'';?>>
+            <label class="form-check-label" for="person_address">ไม่ได้อาศัย</label>
+        </div>   
     </div>
     <div class="form-group col-md-4">
+    <?php $person_medical = explode(',',@$data['person_medical']);?>
         <label>สิทธิการรักษาพยาบาล</label>                                        
-            <select name="person_medical" id="person_medical" class="form-control">
+            <select name="person_medical[]" id="person_medical" class="form-control js-multiple" multiple="multiple">
             <option value="">เลือก</option>
             <?php foreach ($publichealth as $key => $value) :?>
-                <option <?=@$data['person_medical'] == $value['publichealth_id'] ? 'selected':'';?> value="<?=$value['publichealth_id'];?>"><?=$value['name'];?></option>
-            <?php endforeach?>                                
+                <option <?=@in_array($value['publichealth_id'], $person_medical) ?'selected':''?> value="<?=$value['publichealth_id'];?>"><?=$value['name'];?></option>
+            <?php endforeach?>                      
         </select>
     </div>
     <div class="form-group col-md-4">
+        <?php $person_hospital = explode(',',@$data['person_hospital']);?>
         <label>สถานพยาบาล</label>                                        
-            <select name="person_medical" id="person_medical" class="form-control">
+            <select name="person_hospital[]" id="person_hospital" class="form-control js-multiple" multiple="multiple">
             <option value="">เลือก</option>
             <?php foreach ($hospital as $key => $value) :?>
-                <option <?=@$data['person_medical'] == $value['hospital_id'] ? 'selected':'';?> value="<?=$value['hospital_id'];?>"><?=$value['name'];?></option>
+                <option <?=@in_array($value['hospital_id'], $person_hospital) ?'selected':''?> value="<?=$value['hospital_id'];?>"><?=$value['name'];?></option>
             <?php endforeach?>           
         </select>
     </div>
@@ -192,6 +203,7 @@
 
             // daysOfWeekDisabled: [0, 6],
         });
+        $('.js-multiple').select2();
     });
     
     

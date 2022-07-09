@@ -230,13 +230,23 @@ class House extends BaseController
 
     public function loadJobs($id){
         $data = [];
+        $type = $this->request->getGet('type');
         
+
         $data['jobs'] = $this->model_api->getJobs();
-        $data['products'] = $this->model_api->getproduct();
+        // $data['products'] = $this->model_api->getproduct();
         $data['data'] = $this->model_house->getPersonJobs($id);
-        $data['product_type'] = $this->model_api->getProductType();
+        // $data['product_type'] = $this->model_api->getProductType();
+        $data['product_type'] = $this->model_api->getProductGroup();
+        $data['products'] = $this->model_api->getProductType();
+
+
+        if ($type == 'create'){
+            $html =  view('Modules\SurvayHouse\Views\modal\jobs_create', $data);
+        }else{
+            $html =  view('Modules\SurvayHouse\Views\modal\jobs_edit', $data);
+        }
         
-        $html =  view('Modules\SurvayHouse\Views\modal\jobs', $data);
         return $this->respond($html);
     }
 

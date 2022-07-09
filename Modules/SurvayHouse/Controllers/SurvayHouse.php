@@ -73,14 +73,17 @@ class SurvayHouse extends BaseController
         $data['projects'] = $this->model_api->getProject();
         
         $data['data'] = $this->model_house->getAllInterviewHousePaginate(10,'page',$data['search']);
+        
         $data['pager'] = $this->model_house->pager;
         return view('Modules\SurvayHouse\Views\index',$data);
     }
     
-    public function manage($id = null){
+    public function manage($interview_id = null,$house_id = null){
         
         $data = [];
-        $data['house_id'] = $id;
+        $data['house_id'] = $house_id;
+        $data['interview_id'] = $interview_id;
+
         $data['landomner'] = $this->model_api->getLandOwner();
         $data['projects'] = $this->model_common->getProject();
         $data['projects_type'] = $this->model_api->getProjectType();
@@ -91,8 +94,8 @@ class SurvayHouse extends BaseController
         $data['tambons'] = [];
         $data['villages'] = [];
        
-        if ($id){
-            $data['data'] = $this->model_house->getAllHouse($id);            
+        if ($interview_id){
+            $data['data'] = $this->model_house->getAllHouse($interview_id);            
             $data['amphurs'] = $this->model_common->getAmphur($data['data']['house_province']);
             $data['tambons'] = $this->model_common->getTambon($data['data']['house_district'],$data['data']['house_province']);
             $data['villages'] = $this->model_common->getVillages($data['data']['house_subdistrict'],$data['data']['house_district'],$data['data']['house_province']);
@@ -140,23 +143,23 @@ class SurvayHouse extends BaseController
             
         }
      
-        return redirect()->to('survay_house/manage/'.$interview_id);
+        return redirect()->to('survay_house/manage/'.$interview_id.'/'.$house_id);
     }
 
-    public function members($house_id ,$id = null){
+    public function members($interview_id ,$house_id = null, $id = null){
         $data = [];
+        $data = $this->model_house->getAllHouseMembers($interview_id,$id);                
+        $data['interview_id'] = $interview_id;    
         $data['house_id'] = $house_id;    
         
-
-        $data['data'] = $this->model_house->getAllHouseMembers($house_id,$id);
-
         return view('Modules\SurvayHouse\Views\members', $data);
     }
 
-    public function saveMembers($house_id){
+    public function saveMembers($interview_id,$house_id){
         $input = $this->request->getPost();
+        
         $session = session();
-        $input['house_id'] = $house_id;
+        $input['house_id'] = $house_id;        
         $input['person_birthdate'] = $this->date_thai->date_thai2eng($input['person_birthdate'],-543);
         $person_id = $this->model_house->saveHouseMember($input);
 
@@ -166,13 +169,14 @@ class SurvayHouse extends BaseController
             $session->setFlashdata("message", "บันทึกข้อมูลเรียบร้อย");
         }
 
-        return redirect()->to('survay_house/members/'.$house_id);
+        return redirect()->to('survay_house/members/'.$interview_id.'/'.$house_id);
         
     }
 
-    public function jobs($house_id ,$id = null){
-        $data['house_id'] = $house_id;        
-        $data['data'] = $this->model_house->getAllHouseJob($house_id,$id);
+    public function jobs($interview_id,$house_id ,$id = null){
+        $data['house_id'] = $house_id;    
+        $data['interview_id'] = $interview_id;    
+        $data['datas'] = $this->model_house->getAllHouseJob($interview_id,$id);
   
         return view('Modules\SurvayHouse\Views\jobs', $data);
     }
@@ -203,17 +207,20 @@ class SurvayHouse extends BaseController
         
     }
 
-    public function income($house_id ,$id = null){
+    public function income($interview_id ,$house_id = null,$id = null){
         $data['house_id'] = $house_id;
-        $data['data'] = $this->model_house->getAllHouseIncome($house_id,$id);
+        $data['interview_id'] = $interview_id;    
+        $data['datas'] = $this->model_house->getAllHouseIncome($house_id,$id);
         
         return view('Modules\SurvayHouse\Views\income', $data);
     }
 
-    public function saveIncome($house_id){
+    public function saveIncome($interview_id,$house_id){
         $input = $this->request->getPost();
+        
         $session = session();
         $input['house_id'] = $house_id;
+        $input['interview_id'] = $interview_id;
         
         $person_id = $this->model_house->saveHouseIncome($input);
 
@@ -223,23 +230,23 @@ class SurvayHouse extends BaseController
             $session->setFlashdata("message", "บันทึกข้อมูลเรียบร้อย");
         }
 
-        return redirect()->to('survay_house/income/'.$house_id);
+        return redirect()->to('survay_house/income/'.$interview_id.'/'.$house_id);
         
     }
 
-    public function outcome($house_id ,$id = null){
+    public function outcome($interview_id ,$house_id = null,$id = null){
         $data['house_id'] = $house_id;
-
-        $data['data'] = $this->model_house->getAllHouseOutcome($house_id,$id);
+        $data['interview_id'] = $interview_id;    
+        $data['datas'] = $this->model_house->getAllHouseOutcome($house_id,$id);
 
         return view('Modules\SurvayHouse\Views\outcome', $data);
     }
 
-    public function saveOutcome($house_id){
+    public function saveOutcome($interview_id,$house_id){
         $input = $this->request->getPost();
         $session = session();
         $input['house_id'] = $house_id;
-       
+        $input['interview_id'] = $interview_id;
         $person_id = $this->model_house->saveHouseOutcome($input);
 
         if (!empty($input['person_id'])){
@@ -248,19 +255,20 @@ class SurvayHouse extends BaseController
             $session->setFlashdata("message", "บันทึกข้อมูลเรียบร้อย");
         }
 
-        return redirect()->to('survay_house/outcome/'.$house_id);
+        return redirect()->to('survay_house/outcome/'.$interview_id.'/'.$house_id);
         
     }
 
     public function loadJobs($id){
         $data = [];
         
+        
         $data['jobs'] = $this->model_api->getJobs();
-        $data['product_type'] = $this->model_api->getProductType();
-        $data['products'] = $this->model_api->getproduct();
+        $data['product_type'] = $this->model_api->getProductGroup();
+        $data['products'] = $this->model_api->getProductType();
         $data['data'] = $this->model_house->getPersonJobs($id);
         
-        $html =  view('Modules\SurvayHouse\Views\modal\jobs', $data);
+        $html =  view('Modules\SurvayHouse\Views\modal\jobs_edit', $data);
         return $this->respond($html);
     }
 

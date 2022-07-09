@@ -87,11 +87,11 @@ $routes->group("house", ["namespace" => "Modules\House\Controllers"], function (
 
 $routes->group("survay_house", ["namespace" => "Modules\SurvayHouse\Controllers"], function ($routes) {
 	$routes->get("/", "SurvayHouse::index");
-    $routes->get("manage(:any)", "SurvayHouse::manage$1");
-    $routes->get("members/(:num)(:any)", "SurvayHouse::members/$1$2");
-    $routes->get("jobs/(:num)(:any)", "SurvayHouse::jobs/$1$2");
-    $routes->get("income/(:num)(:any)", "SurvayHouse::income/$1$2");
-    $routes->get("outcome/(:num)(:any)", "SurvayHouse::outcome/$1$2");
+    $routes->get("manage(:any)(:any)", "SurvayHouse::manage$1$2");
+    $routes->get("members/(:num)/(:num)(:any)", "SurvayHouse::members/$1/$2$3");
+    $routes->get("jobs/(:num)/(:num)(:any)", "SurvayHouse::jobs/$1/$2$3");
+    $routes->get("income/(:num)/(:num)(:any)", "SurvayHouse::income/$1/$2$3");
+    $routes->get("outcome/(:num)/(:num)(:any)", "SurvayHouse::outcome/$1/$2$3");
 
     //load data
     $routes->get("load-jobs/(:num)", "SurvayHouse::loadJobs/$1");
@@ -103,10 +103,10 @@ $routes->group("survay_house", ["namespace" => "Modules\SurvayHouse\Controllers"
 
     //save data
     $routes->post("save_manage", "SurvayHouse::saveManage");
-    $routes->post("save_members/(:num)", "SurvayHouse::saveMembers/$1");
+    $routes->post("save_members/(:num)/(:num)", "SurvayHouse::saveMembers/$1/$2");
     $routes->post("save_jobs/(:num)", "SurvayHouse::saveJobs/$1");
-    $routes->post("save_income/(:num)", "SurvayHouse::saveIncome/$1");
-    $routes->post("save_outcome/(:num)", "SurvayHouse::saveOutcome/$1");
+    $routes->post("save_income/(:num)/(:num)", "SurvayHouse::saveIncome/$1/$2");
+    $routes->post("save_outcome/(:num)/(:num)", "SurvayHouse::saveOutcome/$1/$2");
 
     //delete
     $routes->post("delete_interview(:any)", "SurvayHouse::deleteInterview$1");
