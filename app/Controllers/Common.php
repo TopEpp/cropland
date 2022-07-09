@@ -27,6 +27,7 @@ class Common extends BaseController
         $this->model_common = new Common_model();
     }
 
+
     public function amphur(){
         $province = $this->request->getVar('province');
         
@@ -68,6 +69,45 @@ class Common extends BaseController
         
         return   $this->respond($data);
     }
+
+    //new load house tamplate 
+    public function Projects(){
+        $project_type = $this->request->getVar('project_type');
+        $result = $this->model_common->getProject($project_type);
+     
+        $data = '';
+        $data .= "<option value=''>เลือก</option>";
+        foreach ($result as $key => $value) {
+           $data .= "<option value='".$value['Code']."'>".$value['Name']."</option>";
+        }
+        
+        return   $this->respond($data);
+    }
+
+    public function projectVillages(){
+        $project = $this->request->getVar('project');
+        
+        $village = $this->model_common->getProjectVillages($project);
+     
+        $data = '';
+        $data .= "<option value=''>เลือก</option>";
+        foreach ($village as $key => $value) {
+           $data .= "<option value='".$value['Code']."'>".$value['Name']."</option>";
+        }
+        
+        return   $this->respond($data);
+    }
+
+    public function projectAddress(){
+        $village = $this->request->getVar('village');
+        $project = $this->request->getVar('project');
+        $type = $this->request->getVar('type');
+        
+        $address = $this->model_common->getProjectAddress($village,$project,$type);
+        return   $this->respond($address);
+    }
+
+    
     
     public function House(){
         $interview = $this->request->getVar('interview');
@@ -130,12 +170,10 @@ class Common extends BaseController
             $result['options'] = $data;
             $result['status'] = true ;
         }
-       
         
         return   $this->respond($result);
     }
 
-    
 
     public function personAddress(){
         $person = $this->request->getVar('person');

@@ -192,13 +192,12 @@
                    
                     แดชบอร์ดแบบสำรวจที่ดินรายแปลง
                     </a>
-                    <a href="<?=base_url('house');?>" class="dropdown-item has-icon">
-                    <!-- <i class="far fa-user"></i> Profile -->
+                    <!-- <a href="<?=base_url('house');?>" class="dropdown-item has-icon">                    
                     ข้อมูลครัวเรือน
-                    </a>
+                    </a> -->
                     <a href="<?=base_url('survay_house');?>" class="dropdown-item has-icon">
                     <!-- <i class="far fa-user"></i> Profile -->
-                    ข้อมูลแบบสอบถามครัวเรือน
+                    ระบบบันทึกข้อมูลครัวเรือน
                     </a>
                     <a href="<?=base_url('land');?>" class="dropdown-item has-icon">
                     <!-- <i class="far fa-user"></i> Profile -->

@@ -9,11 +9,11 @@
                 <div class="card">
                     <div class="card-header">
                         <h4 class="text-dark">ข้อมูลแบบสอบถามครัวเรือน</h4>
-                        <!-- <div class="card-header-action">
+                        <div class="card-header-action">
                             <a href="<?= base_url('survay_house/manage');?>" class="btn btn-info">
                                 เพิ่มข้อมูล
                             </a>
-                        </div> -->
+                        </div>
                     </div>
                     <div class="card-body">
 
@@ -104,7 +104,8 @@
                                     <th width="10%" scope="col">จำนวนสมาชิก</th>
                                     <!-- <th width="10%" scope="col">จำนวนที่ดิน</th> -->
                                     
-                                    <th width="10%" scope="col">เครื่องมือ</th>
+                                    <th width="5%" scope="col">แก้ไข</th>
+                                    <th width="5%" scope="col">ลบ</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -118,10 +119,10 @@
                                         <td class="text-center"><?=$value['total_person'];?></td>
                                       
                                         <td class="text-center">
-                                            <div class="buttons">
-                                                <a data-toggle="tooltip" title="แก้ไขข้อมูล" href="<?=base_url('survay_house/manage/'.$value['house_id']);?>" class="btn btn-icon btn-primary"><i class="far fa-edit"></i></a>                                    
-                                                <button  data-toggle="tooltip" data-placement="bottom" title="ลบข้อมูล" onclick="deleteItem(<?=$value['interview_id'];?>)" class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></button>
-                                            </div>
+                                            <a data-toggle="tooltip" title="แก้ไขข้อมูล" href="<?=base_url('survay_house/manage/'.$value['interview_id'].'/'.$value['house_id']);?>" class="btn btn-icon btn-primary"><i class="far fa-edit"></i></a>
+                                        </td>
+                                        <td class="text-center">
+                                            <button  data-toggle="tooltip" data-placement="bottom" title="ลบข้อมูล" onclick="deleteItem(<?=$value['interview_id'];?>)" class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></button>
                                         </td>
                                     </tr>
                                 <?php endforeach;?>

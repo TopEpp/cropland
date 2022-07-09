@@ -461,6 +461,48 @@ class Common_model extends Model
   }
 
 
+  public function getProject($type = ''){
+
+    $builder = $this->db->table('vLinkAreaDetail_growerCrops');
+    $builder->select('max(target_name) as Name,target_code_gis as Code');
+    $builder->where('target_code_gis !=', null);         
+    if ($type != ''){      
+      $builder->where('target_area_type_id', $type);         
+    }
+    $builder->groupBy('target_code_gis');
+  
+    $query = $builder->get()->getResultArray();
+    return $query;
+    
+  }
+
+  public function getProjectVillages($project = ''){
+
+    $builder = $this->db->table('vLinkAreaDetail_growerCrops');
+    $builder->select('VILLAGE_NAME_THA as Name,VILLAGE_ID as Code');    
+    if ($project != ''){      
+      $builder->where('target_code_gis', $project);         
+    }    
+  
+    $query = $builder->get()->getResultArray();
+    return $query;
+
+  }
+
+  public function getProjectAddress($village = '',$project = '',$type= ''){
+
+    $builder = $this->db->table('vLinkAreaDetail_growerCrops');
+    $builder->select('PROVINCE_ID,TAMBOL_ID,AMPHUR_ID');    
+    if ($village != ''){      
+      
+      $builder->where('VILLAGE_ID', $village);
+      $builder->where('target_code_gis', $project);
+      $builder->where('target_area_type_id', $type);  
+    }    
+  
+    $query = $builder->get()->getRowArray();
+    return $query;
+  }
   
 
 

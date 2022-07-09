@@ -25,45 +25,53 @@
                         <?php endif;?>
                         
                         <div class="btn-group" role="group" aria-label="menu-nabbar">
-                            <button type="button" class="btn btn-secondary" onclick="location.href='<?=base_url('survay_house/manage/'.@$house_id);?>';">ข้อมูลพื้นฐาน</button>
-                            <button type="button" class="btn btn-secondary" <?=@$house_id ? '':'disabled' ?> onclick="location.href='<?=base_url('survay_house/members/'.@$house_id);?>';">ข้อมูลสมาชิกในครัวเรือน</button>
-                            <button type="button" class="btn btn-info" <?=@$house_id ? '':'disabled' ?> onclick="location.href='<?=base_url('survay_house/jobs/'.@$house_id);?>';">ข้อมูลด้านอาชีพ</button>
-                            <button type="button" class="btn btn-secondary" <?=@$house_id ? '':'disabled' ?> onclick="location.href='<?=base_url('survay_house/income/'.@$house_id);?>';">ข้อมูลรายได้</button>
-                            <button type="button" class="btn btn-secondary" <?=@$house_id ? '':'disabled' ?>  onclick="location.href='<?=base_url('survay_house/outcome/'.@$house_id);?>';">ข้อมูลรายจ่าย</button>
+                            <button type="button" class="btn btn-secondary" onclick="location.href='<?=base_url('survay_house/manage/'.$interview_id.'/'.@$house_id);?>';">ข้อมูลพื้นฐาน</button>
+                            <button type="button" class="btn btn-secondary" <?=@$house_id ? '':'disabled' ?> onclick="location.href='<?=base_url('survay_house/members/'.$interview_id.'/'.@$house_id);?>';">ข้อมูลสมาชิกในครัวเรือน</button>
+                            <button type="button" class="btn btn-info" <?=@$house_id ? '':'disabled' ?> onclick="location.href='<?=base_url('survay_house/jobs/'.$interview_id.'/'.@$house_id);?>';">ข้อมูลด้านอาชีพ</button>
+                            <button type="button" class="btn btn-secondary" <?=@$house_id ? '':'disabled' ?> onclick="location.href='<?=base_url('survay_house/income/'.$interview_id.'/'.@$house_id);?>';">ข้อมูลรายได้</button>
+                            <button type="button" class="btn btn-secondary" <?=@$house_id ? '':'disabled' ?>  onclick="location.href='<?=base_url('survay_house/outcome/'.$interview_id.'/'.@$house_id);?>';">ข้อมูลรายจ่าย</button>
                         </div>
                         
                         <div class="p-2 border">
                             <br>
                             <h6>ข้อมูลด้านอาชีพ</h6>
-                            <table class="table table-bordered">
-                                <thead class="bg-info">
-                                    <tr>
-                                    <th scope="col">ลำดับ</th>
-                                    <th scope="col">ชื่อ-นามสกุล</th>
-                                    <th scope="col">อาชีพหลัก</th>
-                                    <th scope="col">ประเภท</th>
-                                    <th scope="col">รายได้ / ปี</th>
-                                    <th scope="col">สถานประกอบการ</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php foreach ($data as $key => $value) :?>
+                            <br>
+                            <?php foreach ($datas as $keys => $data) :?>
+                                <h5>ครอบครัว <span class="key_data"><?=$keys;?></span></h5>
+                                <table class="table table-bordered">
+                                    <thead class="bg-info">
                                         <tr>
-                                            <th scope="row" class="text-center"><?=$key+1;?></th>
-                                            <td>
-                                                <a class="text-info" onclick="loadJobs(<?=$value['person_id'];?>)" style="cursor: pointer;"><?=$value['person_name'].' '.$value['person_lastname'];?></a>
-                                            </td>
-                                            <td><?=$value['name']?$value['name']:'-';?></td>
-                                            <td><?=@$cal_type[$value['job_cal_type']] ? $cal_type[$value['job_cal_type']] :'-';?></td>
-                                            <td class="text-right"><?=$value['job_salary'] ? number_format($value['job_salary']).' บาท':'-';?></td>
-                                            <td>
-                                                <?=$value['job_address']?$value['job_address']:'-';?>
-                                            </td>
+                                        <th scope="col">ลำดับ</th>
+                                        <th scope="col">ชื่อ-นามสกุล</th>
+                                        <th scope="col">เพิ่มข้อมูลด้านอาชีพ</th>
+                                        <th scope="col">ดูข้อมูล</th>
+                                        <th scope="col">จำนวนอาชีพที่ประกอบ</th>
+                                        <th scope="col">รวมรายได้บาท/ปี</th>
                                         </tr>
-                                    <?php endforeach;?>
+                                    </thead>
+                                    <tbody>
+                                        <?php $cout = 1;?>
+                                        <?php foreach ($data as $key => $value) :?>
+                                            <tr>
+                                                <th scope="row" class="text-center"><?=$cout;?></th>
+                                                <td>
+                                                    <?=$value['person_name'].' '.$value['person_lastname'];?>
+                                                </td>
+                                                <td  class='text-center'> 
+                                                    <button  data-toggle="tooltip" data-placement="bottom" title="เพิ่มข้อมูล" onclick="loadJobs(<?=$value['person_id'];?>)" class="btn btn-icon btn-info"><i class="fas fa-plus"></i></button>
+                                                </td>
+                                                <td class='text-center'> 
+                                                    <button  data-toggle="tooltip" data-placement="bottom" title="ดูรายละเอียด" onclick="loadJobsEdit(<?=$value['person_id'];?>)" class="btn btn-icon btn-primary"><i class="fas fa-eye"></i></button>
+                                                </td>                                               
+                                                <td class="text-right"><?=$value['job_count'];?></td>
+                                                <td class="text-right"><?=$value['job_salary'] ? number_format($value['job_salary']).' บาท':'-';?></td>
+                                            </tr>
+                                            <?php $cout = $cout + 1;?>
+                                        <?php endforeach;?>
 
-                                </tbody>
-                            </table>
+                                    </tbody>
+                                </table>
+                            <?php endforeach;?>
                           
                         </div>
                         <br>
@@ -83,7 +91,7 @@
     <div class="modal-dialog modal-xl" role="document">
         <input type="hidden" id="house_id" value="<?=$house_id;?>">
         <form action="<?=base_url('survay_house/save_jobs/'.@$house_id);?>" method="post" id="form-jobs">
-            <input type="hidden" name="interview_id" id="interview_id">
+            <input type="hidden" name="interview_id" id="interview_id" value="<?=$interview_id;?>">
             <input type="hidden" name="person_id" id="person_id">
             <!-- <input type="hidden" name="job_id" id="job_id"> -->
             <div class="modal-content outer-repeater">
@@ -109,11 +117,11 @@
             window.location.reload();
         })
     })
-    function loadJobs(id){
+    function loadJobsEdit(id){
         $("#person_id").val(id)
         $.ajax({
             type: "GET",
-            url: domain+'house/load-jobs/'+id,
+            url: domain+'house/load-jobs/'+id+'?type=edit',
             success : function(response){
                 
                 $("#item_modal").html(response)
@@ -123,7 +131,20 @@
         $("#JobModal").modal();
     }
 
-    function saveJobs(){
+    function loadJobs(id){
+        $("#person_id").val(id)
+        $.ajax({
+            type: "GET",
+            url: domain+'house/load-jobs/'+id+'?type=create',
+            success : function(response){                
+                $("#item_modal").html(response)
+            }
+        });
+        
+        $("#JobModal").modal();
+    }
+
+    function saveJobs(type){
         var data = $('#form-jobs').serialize();
         var id = $("#house_id").val()
         $.ajax({
@@ -131,9 +152,16 @@
             url: domain+'survay_house/save_jobs/'+id,
             data:data,
             success : function(response){
-                $('.alert-success').removeClass('show').addClass( 'show' );
-                $("#message_success").text(response)
-                loadJobs($('#person_id').val())
+                if (type == 'create'){
+                    window.location.reload();
+                }else{
+
+                    $('.alert-success').removeClass('show').addClass( 'show' );
+                    $("#message_success").text(response)
+                    loadJobsEdit($('#person_id').val())
+                }
+               
+               
             }
         }); 
     }
