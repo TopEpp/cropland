@@ -35,26 +35,29 @@
                         <th scope="col">รายได้</th>
                         <th scope="col">สถานประกอบการ</th>
                         <th scope="col">หมายเหตุ</th>
-                        <th scope="col">เครื่องมือ</th>
+                        <th scope="col">แก้ไขข้อมูล</th>
+                        <th scope="col">ลบข้อมูล</th>
                     </tr>
                 </thead>
                 <tbody>
+                    <?php $cout = 1;?>
                     <?php foreach ($data as $key => $value) :?>
                         <?php if (!empty($value['jobs_id'])):?>
                             <tr>
-                                <td class="text-center"><?=$key+1;?></td>
+                                <td class="text-center"><?=$cout;?></td>
                                 <td><?=$value['name'];?></td>                                
                                 <td><?=@$cal_type[$value['job_cal_type']];?></td>
                                 <td class="text-right"><?=$value['job_salary'];?></td>
                                 <td><?=$cal_address[$value['job_address']];?></td>
                                 <td><?=$value['job_remark'];?></td>
                                 <td class="text-center">
-                                    <div class="buttons">                                    
-                                        <button type="button" onclick="editItem(<?=$value['job_id'];?>)" class="btn btn-icon btn-sm btn-primary"><i class="fas fa-edit"></i></button>
-                                        <button type="button" onclick="deleteItem(<?=$value['job_id'];?>)" class="btn btn-icon btn-sm btn-danger"><i class="fas fa-trash"></i></button>
-                                    </div>
+                                    <button type="button" onclick="editItem(<?=$value['job_id'];?>)" class="btn btn-icon btn-sm btn-primary"><i class="fas fa-edit"></i></button>
+                                </td>
+                                <td class="text-center">
+                                    <button type="button" onclick="deleteItem(<?=$value['job_id'];?>)" class="btn btn-icon btn-sm btn-danger"><i class="fas fa-trash"></i></button>
                                 </td>
                             </tr> 
+                            <?php $cout =$cout+ 1;?>
                         <?php endif;?>
                     <?php endforeach;?>
                 </tbody>
@@ -132,61 +135,8 @@
                         </div>
                     </div>
                     
-                    <div class="row inner-repeater" style="display:none">
-                        <div class="col-md-6">
-                            กรอกข้อมูลด้านอาชีพ : อาชีพเกษตร
-                        </div>
-                        <div class="col-md-6 text-right">
-                            <button type="button" class="btn btn-info" data-repeater-create id="job-add-detail" >เพิ่มข้อมูลการปลูกพืช</button>
-                        </div>
-                        <div class="col-md-12">
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th width="5%" scope="col">ลำดับ</th>
-                                        <th width="20%" scope="col">ประเภทพืชที่ปลูก</th>
-                                        <th width="10%" scope="col">ชนิดพืชที่ปลูก</th>
-                                        <th width="10%" scope="col">จำนวน</th>
-                                        <th width="10%" scope="col">หน่วย</th>
-                                        <th width="10%" scope="col">ต้นทุนบาท/ปี</th>
-                                        <th width="10%" scope="col">รายได้บาท/ปี</th>
-                                        <th width="10%" scope="col">หมายเหตุ</th>
-                                    </tr>
-                                </thead>
-                                <tbody data-repeater-list="job-detail">
-                                    <tr data-repeater-item>
-                                        <th>1</th>
-                                        <td>       
-                                            <select name="type_group" id="type_group" class="form-control select2"  onchange="selectProduct($(this))">
-                                                <option value="">เลือก</option>
-                                                <?php foreach ($product_type as $key => $value) :?>
-                                                    <option  value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
-                                                <?php endforeach?>              
-                                            </select> 
-                                        </td>
-                                        <td>       
-                                            <select name="type_id" id="type_id" class="form-control select2">
-                                                <option value="">เลือก</option>       
-                                                <?php foreach ($products as $key => $value) :?>
-                                                    <option value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
-                                                <?php endforeach?>                                                               
-                                            </select> 
-                                        </td>
-                                        <td> <input type="text" class="form-control" name="detail_value" oninput="validateDecimal(this)"></td>
-                                        <td>                                             
-                                            <select name="detail_unit" id="detail_unit" class="form-control">
-                                                <option value="">เลือก</option>
-                                                <option value="ไร่">ไร่</option>
-                                                <option value="โรงเรือน">โรงเรือน</option>
-                                            </select>
-                                        </td>
-                                        <td> <input type="text" class="form-control" name="detail_cost" oninput="validateDecimal(this)"></td>
-                                        <td> <input type="text" class="form-control" name="detail_income" oninput="validateDecimal(this)"></td>
-                                        <td> <input type="text" class="form-control" name="detail_remark"></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                    <div class="inner-repeater" style="display:none">
+                        <div id="item_detail_modal" />
                     </div>
                 </div>
             </div>
@@ -224,129 +174,129 @@
         });
     }
 
-    $(document).ready(function () {
+    // $(document).ready(function () {
       
-        // $(".select2-group").select2();
-        var $repeater = $('.outer-repeater').repeater({
-                initEmpty: false,
-                isFirstItemUndeletable: false,
-                // defaultValues: { 'text-input': 'outer-default' },
-                show: function () {
-                    $(this).slideDown(function(){
-                        $(this).find('.select2').select2({
-                            placeholder: ''
-                        });
-                    });
-                },
-                hide: function (deleteElement) {
-                    console.log('outer delete');
-                    $(this).slideUp(deleteElement);
-                },
-                ready: function (setIndexes) {
-                    setTimeout(() => {
-                        $('.select2').select2({
-                            placeholder: ''
-                        });
-                    }, 1000);
-                },
-                repeaters: [{
-                    isFirstItemUndeletable: false,
-                    selector: '.inner-repeater',
-                    // defaultValues: { 'inner-text-input': 'inner-default' },
-                    show: function () {
+    //     // $(".select2-group").select2();
+    //     var $repeater = $('.outer-repeater').repeater({
+    //             initEmpty: false,
+    //             isFirstItemUndeletable: false,
+    //             // defaultValues: { 'text-input': 'outer-default' },
+    //             show: function () {
+    //                 $(this).slideDown(function(){
+    //                     $(this).find('.select2').select2({
+    //                         placeholder: ''
+    //                     });
+    //                 });
+    //             },
+    //             hide: function (deleteElement) {
+    //                 console.log('outer delete');
+    //                 $(this).slideUp(deleteElement);
+    //             },
+    //             ready: function (setIndexes) {
+    //                 setTimeout(() => {
+    //                     $('.select2').select2({
+    //                         placeholder: ''
+    //                     });
+    //                 }, 1000);
+    //             },
+    //             repeaters: [{
+    //                 isFirstItemUndeletable: false,
+    //                 selector: '.inner-repeater',
+    //                 // defaultValues: { 'inner-text-input': 'inner-default' },
+    //                 show: function () {
 
-                        $(this).slideDown(function(){
-                            $(this).find('.select2').select2({
-                                placeholder: ''
-                            });
-                        });
-                        // if ($('.select2-group').data('select2')) {
-                        //     $('.select2-group').select2("destroy"); 
-                        // }
+    //                     $(this).slideDown(function(){
+    //                         $(this).find('.select2').select2({
+    //                             placeholder: ''
+    //                         });
+    //                     });
+    //                     // if ($('.select2-group').data('select2')) {
+    //                     //     $('.select2-group').select2("destroy"); 
+    //                     // }
 
-                        // $('.select2-group').select2();
-                        // $(this).children().find('.select2-group').select2('val', '');
+    //                     // $('.select2-group').select2();
+    //                     // $(this).children().find('.select2-group').select2('val', '');
                         
-                        // $('.select2').remove();
-                        // $('select.select2').removeAttr('data-select2-id');
-                        // $('select.select2').select2();
-                    //     const origin = $(this).children().find('select.select2-group');
-                    //    // origin.select2('destroy');
-                    //     const cloned = origin.clone(true);
-                    //     cloned.removeAttr('data-select2-id').removeAttr('id');
-                    //     cloned.find('option').removeAttr('data-select2-id');
-                    //     origin.select2();
-                    //     cloned.select2().val(null).trigger('change');
-                        // $(this).children().find("select.select2-hidden-accessible").select2('destroy');
-                        // console.log($(this).children().find('select.select2-group'));
-                        // $(this).children().find('select.select2').remove()
-                        // $(this).children().find('select.select2-group').select2()
-                        // $("select[name='jobs[0][job-detail][1][type_group]']").select2();
-                        // $(this).find('select#type_id').select2()
+    //                     // $('.select2').remove();
+    //                     // $('select.select2').removeAttr('data-select2-id');
+    //                     // $('select.select2').select2();
+    //                 //     const origin = $(this).children().find('select.select2-group');
+    //                 //    // origin.select2('destroy');
+    //                 //     const cloned = origin.clone(true);
+    //                 //     cloned.removeAttr('data-select2-id').removeAttr('id');
+    //                 //     cloned.find('option').removeAttr('data-select2-id');
+    //                 //     origin.select2();
+    //                 //     cloned.select2().val(null).trigger('change');
+    //                     // $(this).children().find("select.select2-hidden-accessible").select2('destroy');
+    //                     // console.log($(this).children().find('select.select2-group'));
+    //                     // $(this).children().find('select.select2').remove()
+    //                     // $(this).children().find('select.select2-group').select2()
+    //                     // $("select[name='jobs[0][job-detail][1][type_group]']").select2();
+    //                     // $(this).find('select#type_id').select2()
                         
                      
-                    },
-                    hide: function (deleteElement) {
-                        console.log('inner delete');
-                        $(this).slideUp(deleteElement);
-                    },  
-                    ready: function (setIndexes) {      
-                        setTimeout(() => {
-                            $('.select2').select2({
-                                placeholder: ''
-                            });
-                        }, 1000);
-                    },                 
-                }]
-            });
+    //                 },
+    //                 hide: function (deleteElement) {
+    //                     console.log('inner delete');
+    //                     $(this).slideUp(deleteElement);
+    //                 },  
+    //                 ready: function (setIndexes) {      
+    //                     setTimeout(() => {
+    //                         $('.select2').select2({
+    //                             placeholder: ''
+    //                         });
+    //                     }, 1000);
+    //                 },                 
+    //             }]
+    //         });
 
-        // var $repeater1 = $('.repeater1').repeater({
-        //     initEmpty: false,
-        //     defaultValues: {
-        //         // 'family': '1'
-        //     },
-        //     // repeaters: [{
-        //     //     selector: '.inner-list',
-        //     //     // repeaters: [{ 
-        //     //     //     selector: '.deep-inner-repeater' 
-        //     //     // }]
-        //     // }],
+    //     // var $repeater1 = $('.repeater1').repeater({
+    //     //     initEmpty: false,
+    //     //     defaultValues: {
+    //     //         // 'family': '1'
+    //     //     },
+    //     //     // repeaters: [{
+    //     //     //     selector: '.inner-list',
+    //     //     //     // repeaters: [{ 
+    //     //     //     //     selector: '.deep-inner-repeater' 
+    //     //     //     // }]
+    //     //     // }],
             
-        //     show: function () {
-        //         $(this).slideDown();
-        //         // $('#myTable tr:last').remove();
+    //     //     show: function () {
+    //     //         $(this).slideDown();
+    //     //         // $('#myTable tr:last').remove();
                 
-        //     },
+    //     //     },
 
-        //     hide: function (deleteElement) {
-        //         if(confirm('Are you sure you want to delete this element?')) {
-        //             $(this).slideUp(deleteElement);
-        //         }
-        //     },
-        //     ready: function (setIndexes) {
+    //     //     hide: function (deleteElement) {
+    //     //         if(confirm('Are you sure you want to delete this element?')) {
+    //     //             $(this).slideUp(deleteElement);
+    //     //         }
+    //     //     },
+    //     //     ready: function (setIndexes) {
                 
-        //         // console.log(setIndexes);
-        //         // $dragAndDrop.on('drop', setIndexes);
-        //     },
-        //     isFirstItemUndeletable: false
-        // })
+    //     //         // console.log(setIndexes);
+    //     //         // $dragAndDrop.on('drop', setIndexes);
+    //     //     },
+    //     //     isFirstItemUndeletable: false
+    //     // })
 
-        $("#job-add").click(function () {
-            $repeater.repeaterVal()["jobs"].map(function (fields, row) {
-                // $('.select2-job').each(function(i, obj) {
+    //     $("#job-add").click(function () {
+    //         $repeater.repeaterVal()["jobs"].map(function (fields, row) {
+    //             // $('.select2-job').each(function(i, obj) {
               
-                //     $( obj ).data('select2').destroy();
-                // });
+    //             //     $( obj ).data('select2').destroy();
+    //             // });
                 
-                // $(".key_data:last").text(row);
-                // $(".family_key:last").attr('data-id', (row));               
-                // $(`input[name='group[${row}][family]']`).val((row))
-                // $('[data-repeater-list]').empty();
-                // $('[data-repeater-item]').slice(1).empty();
-            });
-        });
+    //             // $(".key_data:last").text(row);
+    //             // $(".family_key:last").attr('data-id', (row));               
+    //             // $(`input[name='group[${row}][family]']`).val((row))
+    //             // $('[data-repeater-list]').empty();
+    //             // $('[data-repeater-item]').slice(1).empty();
+    //         });
+    //     });
 
-    });
+    // });
 
     function selectJobs(elm){
         var id = elm.val();
@@ -382,6 +332,7 @@
             type: "GET",
             url: domain+'house/load-jobdetail/'+elm,
             success : function(res){
+                                
                 if (res.data){
                     var data = res.data;
                     
@@ -402,9 +353,11 @@
                     // $("#job_descript").val(data.job_descript)
                     $("#job_remark").val(data.job_remark)
 
-                    $("#form_edit").show();
-                    
+                    $("#item_detail_modal").html(res.html)
+
+                    $("#form_edit").show();                    
                     $('#data_save').prop('disabled', false);
+                    
                 }else{
                     $("#form_edit").hide();
                     $('#data_save').prop('disabled', true);
@@ -416,8 +369,6 @@
     }
 
     function deleteItem(elm){
-      
- 
         swal({
         title: 'Are you sure?',
         text: 'ยืนยันลบข้อมูลนี้!',

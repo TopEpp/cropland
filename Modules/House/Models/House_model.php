@@ -422,6 +422,11 @@ class House_model extends Model
       $builder = $this->db->table('LH_person_job');
       $builder->where('job_id', $id);
       $query = $builder->get()->getRowArray();
+      
+      $builder = $this->db->table('LH_person_job_detail');
+      $builder->where('job_id', $id);
+      $detail = $builder->get()->getResultArray();
+      $query['detail'] = $detail;
       return $query;
     }
 

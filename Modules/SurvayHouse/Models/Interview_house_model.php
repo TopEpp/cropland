@@ -213,9 +213,8 @@ class Interview_house_model extends Model
       // }else{
         
         
-        if (!empty($data['jobs'])){
-          $jobs = $data['jobs'];
-          foreach ($jobs as $key => $job) {
+        if (!empty($data)){
+          $job = $data;          
 
             $data_set = [
               'interview_id'=>$data['interview_id'],
@@ -239,6 +238,7 @@ class Interview_house_model extends Model
               $builder->insert($data_set);
               $job_id = $db->insertID();
             }
+            
           
 
             // insert detail
@@ -251,18 +251,24 @@ class Interview_house_model extends Model
                   'person_id '=>$data['person_id'],
                   'job_id '=>$job_id,
                   'type_id' => $detail['type_id'],
+                  'type_group' => $detail['type_group'],                  
                   'detail_value' => $detail['detail_value'],
                   'detail_unit' => $detail['detail_unit'],
                   'detail_cost' => $detail['detail_cost'],
                   'detail_income' => $detail['detail_income'],
                   'detail_remark'=> $detail['detail_remark'],
                 ];
-                
                 $builder_detail = $db->table('LH_person_job_detail');
-                $builder_detail->insert($data_detail);
+                if (!empty($detail['detail_id'])){
+                  $builder_detail->where('detail_id',$detail['detail_id']);
+                  $builder_detail->update($data_detail);
+                }else{                 
+                  $builder_detail->insert($data_detail);
+                }
+               
               }
             }
-          }
+          
 
         // }
      
