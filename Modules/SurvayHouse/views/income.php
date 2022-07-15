@@ -118,7 +118,7 @@
                         <br>
                         <div class="row">
                             <div class="col-md-12 text-right">                                                                      
-                                <button type="button" class="btn btn-primary" onclick="location.href='<?=base_url('survay_house/outcome/'.@$house_id);?>';" >ถัดไป</button>
+                                <button type="button" class="btn btn-primary" onclick="location.href='<?=base_url('survay_house/outcome/'.$interview_id.'/'.@$house_id);?>';" >ถัดไป</button>
                             </div>
                         </div>
                     </div>

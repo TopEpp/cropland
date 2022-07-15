@@ -39,9 +39,10 @@ class Interview_house_model extends Model
     { 
         
       $builder =  $this->table('LH_interview_house');
+      // max( CODE_PROJECT.Description) as interview_project_name,
       $builder->select("   
         LH_interview_house.interview_id,
-        max( CODE_PROJECT.Description) as interview_project_name,
+        max( vLinkAreaDetail_growerCrops.target_name) as interview_project_name,
         max( LH_interview_house.interview_year) as interview_year,
         max( LH_house.house_id) as house_id,
           (
@@ -53,7 +54,8 @@ class Interview_house_model extends Model
         max(LH_house.house_moo),' ',max(CODE_VILLAGE.VILL_T),' ตำบล ',max(CODE_TAMBON.TAM_T),' อำเภอ ',max(CODE_AMPHUR.AMP_T),' จังหวัด ',max(CODE_PROVINCE.Name)) as person_address
     ");
 
-      $builder->join('CODE_PROJECT', 'CODE_PROJECT.Code = LH_interview_house.interview_project_name','left');
+      // $builder->join('CODE_PROJECT', 'CODE_PROJECT.Code = LH_interview_house.interview_project_name','left');
+      $builder->join('vLinkAreaDetail_growerCrops', 'vLinkAreaDetail_growerCrops.target_code_gis = LH_interview_house.interview_project_name','left');
 
       $builder->join('LH_house', 'LH_house.house_id = LH_interview_house.interview_house','left');
       $builder->join('LH_house_person', 'LH_house.house_id = LH_house_person.house_id','left');
@@ -134,10 +136,13 @@ class Interview_house_model extends Model
         $builder->join('LH_tribe', 'LH_tribe.tribe_id = LH_house_person.person_tribe','left');
         $query = $builder->get()->getResultArray();
         
+        $data = [];
         foreach ($query as $key => $value) {
-          $data['house_id'] = $value['house_id'];
-          $data['data'][$value['family_id']][$value['person_id']] = $value;          
-        }
+          if (!empty($value['house_id'])){
+            $data['house_id'] = $value['house_id'];
+            $data['data'][$value['family_id']][$value['person_id']] = $value;     
+          }              
+        }                
         return $data;
       
     }
@@ -189,18 +194,24 @@ class Interview_house_model extends Model
       $builder->where('LH_interview_house.interview_id',$interview_id);
       $builder->join('LH_house', 'LH_house.house_id = LH_interview_house.interview_house','left');
       $builder->join('LH_house_person', 'LH_house_person.house_id = LH_house.house_id','left');     
-      $builder->join('LH_person_job', 'LH_person_job.person_id = LH_house_person.person_id and job_main="1"','left');      
+      $builder->join('LH_person_job', 'LH_person_job.person_id = LH_house_person.person_id','left');      
       $builder->groupBy('LH_house_person.house_id, LH_house_person.person_id');
       $query = $builder->get()->getResultArray();
       $tmp = [];
+      
       foreach ($query as $key => $value) {
-        $tmp[$value['family_id']][$value['person_id']] = $value;
+        if (!empty($value['person_id'])){
+
+          $tmp[$value['family_id']][$value['person_id']] = $value;
+
+        }
+       
       }
 
       return $tmp;
     }
 
-    public function saveHouseJobs($data){
+    public function saveHouseJobs($data,$type = ''){
       
       $db = \Config\Database::connect();
       $builder = $db->table('LH_person_job');
@@ -214,7 +225,12 @@ class Interview_house_model extends Model
         
         
         if (!empty($data)){
-          $job = $data;          
+          if ($type =='create'){
+            $job = $data['jobs'][0];  
+          }else{
+            $job = $data;
+          }
+                 
 
             $data_set = [
               'interview_id'=>$data['interview_id'],
@@ -295,11 +311,14 @@ class Interview_house_model extends Model
       
       $tmp = [];
       foreach ($query as $key => $value) {
-        $tmp[$value['family_id']][$value['person']]['person_id'] = $value['person'];
-        $tmp[$value['family_id']][$value['person']]['person_name'] = $value['person_name'];
-        $tmp[$value['family_id']][$value['person']]['person_lastname'] = $value['person_lastname'];
-        $tmp[$value['family_id']][$value['person']][$value['income_type']]['income_value'] = $value['income_value'];
-        $tmp[$value['family_id']][$value['person']][$value['income_type']]['income_month'] = $value['income_month'];
+        if (!empty($value['person'])){
+          $tmp[$value['family_id']][$value['person']]['person_id'] = $value['person'];
+          $tmp[$value['family_id']][$value['person']]['person_name'] = $value['person_name'];
+          $tmp[$value['family_id']][$value['person']]['person_lastname'] = $value['person_lastname'];
+          $tmp[$value['family_id']][$value['person']][$value['income_type']]['income_value'] = $value['income_value'];
+          $tmp[$value['family_id']][$value['person']][$value['income_type']]['income_month'] = $value['income_month'];
+        }
+      
       }
       
       return $tmp;
@@ -354,12 +373,13 @@ class Interview_house_model extends Model
         
       $tmp = [];
       foreach ($query as $key => $value) {
-        
-         $tmp[$value['family_id']][$value['person']]['person_id'] = $value['person'];
-         $tmp[$value['family_id']][$value['person']]['person_name'] = $value['person_name'];
-         $tmp[$value['family_id']][$value['person']]['person_lastname'] = $value['person_lastname'];
-         $tmp[$value['family_id']][$value['person']][$value['outcome_type']]['outcome_value'] = $value['outcome_value'];
-         $tmp[$value['family_id']][$value['person']][$value['outcome_type']]['outcome_month'] = $value['outcome_month'];
+        if (!empty($value['person'])){
+          $tmp[$value['family_id']][$value['person']]['person_id'] = $value['person'];
+          $tmp[$value['family_id']][$value['person']]['person_name'] = $value['person_name'];
+          $tmp[$value['family_id']][$value['person']]['person_lastname'] = $value['person_lastname'];
+          $tmp[$value['family_id']][$value['person']][$value['outcome_type']]['outcome_value'] = $value['outcome_value'];
+          $tmp[$value['family_id']][$value['person']][$value['outcome_type']]['outcome_month'] = $value['outcome_month'];
+        }
       }
     
       return $tmp;
@@ -403,12 +423,11 @@ class Interview_house_model extends Model
     public function getPersonJobs($person_id){
       $builder = $this->db->table('LH_house_person');
       $builder->select('LH_jobs.*,LH_person_job.*,LH_house_person.person_name,LH_house_person.person_lastname');
-      $builder->where('LH_house_person.person_id',$person_id);
-    
+      $builder->where('LH_house_person.person_id',$person_id);    
       $builder->join('LH_person_job', 'LH_house_person.person_id = LH_person_job.person_id','left');
       $builder->join('LH_jobs', 'LH_jobs.jobs_id = LH_person_job.job_type','left');
       $query = $builder->get()->getResultArray();
-
+      
       return $query;
     }
 

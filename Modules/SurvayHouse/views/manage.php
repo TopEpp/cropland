@@ -152,7 +152,7 @@
                                     <div class="col-md-12 text-right">                                       
                                         <button type="button" class="btn btn-danger" onclick="location.href='<?=base_url('house');?>';" >ยกเลิก</button>
                                         <button type="submit" class="btn btn-info" onclick="saveData($(this));">บันทึก</button>
-                                        <button type="button" class="btn btn-primary" onclick="location.href='<?=base_url('survay_house/members/'.@$house_id);?>';" >ถัดไป</button>
+                                        <button type="button" class="btn btn-primary" <?=!$interview_id ?'disabled':'' ?> onclick="location.href='<?=base_url('survay_house/members/'.$interview_id.'/'.@$house_id);?>';" >ถัดไป</button>
                                     </div>
                                 </div>
                             </form>

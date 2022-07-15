@@ -163,7 +163,7 @@
                                 </div>                                                                       
                                 <div class="row">
                                     <div class="col-md-12 text-right">                                                                             
-                                        <button type="button" class="btn btn-primary" onclick="location.href='<?=base_url('survay_house/jobs/'.@$house_id);?>';" >ถัดไป</button>
+                                        <button type="button" class="btn btn-primary" onclick="location.href='<?=base_url('survay_house/jobs/'.$interview_id.'/'.@$house_id);?>';" >ถัดไป</button>
                                     </div>
                                 </div>
                         </div>
@@ -175,7 +175,7 @@
 </section>
 
 <div class="modal fade" tabindex="-1" role="dialog" id="FamilyModal">
-    <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <form action="<?=base_url('survay_house/save_members/'.@$interview_id.'/'.@$house_id);?>" method="post" class="needs-validation" novalidate="">
             <input type="hidden" name="family_id" id="family_id">
             <input type="hidden" name="person_id" id="person_id">    

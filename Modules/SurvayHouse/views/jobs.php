@@ -77,7 +77,7 @@
                         <br>
                         <div class="row">
                             <div class="col-md-12 text-right">                                                                      
-                                <button type="button" class="btn btn-primary" onclick="location.href='<?=base_url('survay_house/income/'.@$house_id);?>';" >ถัดไป</button>
+                                <button type="button" class="btn btn-primary" onclick="location.href='<?=base_url('survay_house/income/'.$interview_id.'/'.@$house_id);?>';" >ถัดไป</button>
                             </div>
                         </div>
                     </div>
@@ -149,7 +149,7 @@
         var id = $("#house_id").val()
         $.ajax({
             type: "POST",
-            url: domain+'survay_house/save_jobs/'+id,
+            url: domain+'survay_house/save_jobs/'+id+'?type='+type,
             data:data,
             success : function(response){
                 if (type == 'create'){

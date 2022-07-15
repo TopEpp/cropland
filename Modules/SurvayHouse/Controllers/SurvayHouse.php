@@ -183,11 +183,12 @@ class SurvayHouse extends BaseController
     
     public function saveJobs($house_id){
         $input = $this->request->getPost();
+        $type = $this->request->getGet('type');
         
         $session = session();
         $input['house_id'] = $house_id;
         
-        $person_id = $this->model_house->saveHouseJobs($input);
+        $person_id = $this->model_house->saveHouseJobs($input,$type);
 
         // if (!empty($input['job_id'])){
         //     $session->setFlashdata("message", "แก้ไขข้อมูลเรียบร้อย");
