@@ -321,6 +321,13 @@
 
 <?=$this->section("scripts")?>
 <script>
+    
+     var validateDecimal = function(e) {
+        var t = e.value;
+        t = t.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');
+        e.value = (t.indexOf(".") >= 0) ? (t.substr(0, t.indexOf(".")) + t.substr(t.indexOf("."), 3)) : t;
+    }
+
     function addOutcome(id){
         $("#person_id").val(id)
 
