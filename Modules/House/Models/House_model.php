@@ -84,6 +84,10 @@ class House_model extends Model
           $builder->where('LH_house.house_home',intval($search['village']));
         }
 
+        if (!empty($search['project_land'])){
+          $builder->where('LH_house.house_moo_name',intval($search['project_land']));
+        }
+
     }
       
       

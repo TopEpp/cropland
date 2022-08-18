@@ -225,38 +225,47 @@ class Api_model extends Model
         ini_set('memory_limit','2048M'); // This also needs to be increased in some cases. Can be changed to a higher value as per need)
         ini_set('sqlsrv.ClientBufferMaxKBSize','524288'); // Setting to 512M
         ini_set('pdo_sqlsrv.client_buffer_max_kb_size','524288'); 
-        
+
       $builder = $this->db->table('LH_land');
         $builder->select('land_id, dbo.geomToGeoJSON(land_geo) as land_geo ');
-        // $builder->limit(3);
+        $builder->where('land_id >=','6000');
+        // $builder->where('land_id <','6000');
+        // $builder->where('land_id <>','914');
+
+        $count=0;
         $query = $builder->get()->getResultArray();
         foreach ($query as $key => $value) {
           // echo '<pre>';
 
           $geo = json_decode($value['land_geo']);
           // print_r($geo); 
-          $new_co = array();
-          if(!empty($geo)){
-            $coordinates = $geo->coordinates;
-            
-            foreach ($coordinates[0] as $key => $co) {
-              $UTM_ZONE = 47;
-              $latlng = $this->ToLL($UTM_ZONE, $co[1], $co[0]);
 
-               $new_co[$key][0] = $latlng['lat'];
-               $new_co[$key][1] = $latlng['lon'];
+          if($geo->type == 'Polygon'){
+            $count++;
+            $new_co = array();
+            if(!empty($geo)){
+              $coordinates = $geo->coordinates;
+              
+              foreach ($coordinates[0] as $key => $co) {
+                $UTM_ZONE = 47;
+                $latlng = $this->ToLL($UTM_ZONE, $co[1], $co[0]);
+
+                 $new_co[$key][0] = $latlng['lat'];
+                 $new_co[$key][1] = $latlng['lon'];
+              }
+
+              // print_r($new_co);
+
+             $polygon = (object) ['type' => 'Polygon','coordinates'=>$new_co];
+             // print_r(json_encode($polygon));
+
+             $builder_update = $this->db->table('LH_land');
+             $builder_update->set('land_gps',json_encode($polygon));
+             $builder_update->where('land_id',$value['land_id']);
+             $builder_update->update();
+
             }
-
-            // print_r($new_co);
-
-           $polygon = (object) ['type' => 'Polygon','coordinates'=>$new_co];
-           // print_r(json_encode($polygon));
-
-           $builder_update = $this->db->table('LH_land');
-           $builder_update->set('land_gps',json_encode($polygon));
-           $builder_update->where('land_id',$value['land_id']);
-           $builder_update->update();
-
+          
           }
 
           // $polygon = new stdClass();
@@ -265,6 +274,8 @@ class Api_model extends Model
           
          
         }
+
+        echo $count;
     }
 
     function getLandUseId($name){
