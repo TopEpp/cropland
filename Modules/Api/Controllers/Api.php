@@ -324,25 +324,31 @@ class Api extends BaseController
         $this->model_api->importUsers($data);
     }
 
-    public function importlands(){
-        $User = new User_model();
+    
 
-        $this->model_api->importlands();
+    
+
+    public function importPersons(){ ##### 1 ######
+        $User = new User_model();
+        // $this->model_api->importPersons();
     }
 
-    public function importHouse(){
+    public function importHouse(){ ##### 2 ######
         $User = new User_model();
         $this->model_api->importHouse();
     }
 
-    public function importPersons(){
+    public function importlands(){ ##### 3 ######
         $User = new User_model();
-        // $this->model_api->importPersons();
+        $this->model_api->importlands();
+    }
 
+    public function updatePersonLand(){ ##### 4 ######
+        $User = new User_model();
         $this->model_api->updatePersonLand();
     }
 
-    public function convUTMtoLL(){
+    public function convUTMtoLL(){ ##### 5 ######
         // $UTM_ZONE = '47';
         // $UTMY = '428821.88619601';
         // $UTMX = '1914526.84011716';
