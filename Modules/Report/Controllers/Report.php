@@ -40,7 +40,9 @@ class Report extends BaseController
             }
         }
 
-        $data['projects'] = $this->model_api->getProject();
+        $data['projects_type'] = $this->model_api->getProjectType();
+        $data['projects'] = $model_common->getProject();
+
         $data['basins'] = $model_common->getBasin();
 
         $data['data'] = $this->model_report->getAllSurvay($data['search']);
@@ -76,7 +78,9 @@ class Report extends BaseController
         }
         
         
-        $data['projects'] = $this->model_api->getProject();
+        
+        $data['projects_type'] = $this->model_api->getProjectType();
+        $data['projects'] = $model_common->getProject();
 
         return view('Modules\Report\Views\house',$data);
     }

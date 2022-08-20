@@ -13,10 +13,10 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-center w-100">
                             <div class="btn-group" role="group" aria-label="menu-nabbar">
-                                <button type="button" class="btn <?=@$type == '1' || $type == '' ? 'btn-info':'btn-secondary' ?> mx-2" onclick="location.href='<?=base_url('report/house?interview_project='.@$search['interview_project']);?>';">ข้อมูลครัวเรือน</button>
-                                <button type="button" class="btn <?=@$type == '2' ? 'btn-info':'btn-secondary' ?> mx-2" onclick="location.href='<?=base_url('report/house/2?interview_project='.@$search['interview_project']);?>';">ข้อมูลด้านอาชีพ</button>
-                                <button type="button" class="btn <?=@$type == '3' ? 'btn-info':'btn-secondary' ?> mx-2" onclick="location.href='<?=base_url('report/house/3?interview_project='.@$search['interview_project']);?>';">การถือครองที่ดินของครัวเรือน</button>
-                                <button type="button" class="btn <?=@$type == '4' ? 'btn-info':'btn-secondary' ?> mx-2" onclick="location.href='<?=base_url('report/house/4?interview_project='.@$search['interview_project']);?>';">การใช้ประโยชน์และผลผลิตของครัวเรือน</button>
+                                <button type="button" class="btn <?=@$type == '1' || $type == '' ? 'btn-info':'btn-secondary' ?> mx-2" onclick="location.href='<?=base_url('report/house?interview_type='.@$search['interview_type'].'&interview_project='.@$search['interview_project']);?>';">ข้อมูลครัวเรือน</button>
+                                <button type="button" class="btn <?=@$type == '2' ? 'btn-info':'btn-secondary' ?> mx-2" onclick="location.href='<?=base_url('report/house/2?interview_type='.@$search['interview_type'].'&interview_project='.@$search['interview_project']);?>';">ข้อมูลด้านอาชีพ</button>
+                                <button type="button" class="btn <?=@$type == '3' ? 'btn-info':'btn-secondary' ?> mx-2" onclick="location.href='<?=base_url('report/house/3?interview_type='.@$search['interview_type'].'&interview_project='.@$search['interview_project']);?>';">การถือครองที่ดินของครัวเรือน</button>
+                                <button type="button" class="btn <?=@$type == '4' ? 'btn-info':'btn-secondary' ?> mx-2" onclick="location.href='<?=base_url('report/house/4??interview_type='.@$search['interview_type'].'&interview_project='.@$search['interview_project']);?>';">การใช้ประโยชน์และผลผลิตของครัวเรือน</button>
                             </div>                          
                         </div>
                       
@@ -24,13 +24,22 @@
                         <h5>ค้นหาข้อมูล</h5>
                         <div>
                             <form action="">
-                                <div class="row d-flex justify-content-center w-100">                                                                 
+                                <div class="row d-flex justify-content-center w-100">    
                                     <div class="form-group col-md-4">                                    
-                                        <label>โครงการ</label>                                       
+                                        <label>ประเภทโครงการ</label>                                       
+                                        <select name="interview_type" id="interview_type" class="form-control select2">
+                                            <option value="">เลือก</option>
+                                            <?php foreach ($projects_type as $key => $value) :?>
+                                                <option <?=@$search['interview_type'] == $value['Code']?'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
+                                            <?php endforeach;?>
+                                        </select>
+                                    </div>                                                                
+                                    <div class="form-group col-md-4">                                    
+                                        <label>ชื่อโครงการ</label>                                       
                                         <select name="interview_project" id="interview_project" class="form-control select2">
                                             <option value="">เลือก</option>
                                             <?php foreach ($projects as $key => $value) :?>
-                                                <option <?=@$search['interview_project'] == $value['Code']?'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Description'];?></option>
+                                                <option <?=@$search['interview_project'] == $value['Code']?'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                             <?php endforeach;?>
                                         </select>
                                     </div>                                   
@@ -44,14 +53,14 @@
                             </form>
                         </div>
                     
-                        
+                    
                         <br>
                         <?php if ($type == '1' || $type == ''):?>
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="table_with_data">
                                     <thead class="bg-info">
                                         <tr>
-                                        <th colspan="17" class="text-center">ข้อมูลรายครัวเรือน</th>
+                                            <th colspan="15" class="text-center">ข้อมูลรายครัวเรือน</th>
                                         </tr>
                                         <tr>
                                             <th>ลำดับ</th>
@@ -63,13 +72,11 @@
                                             <th>อ.</th>
                                             <th>จ.</th>
                                             <th>จำนวนคนในครัวเรือน</th>
-                                            <!-- <th>ใช้เพื่อการอุปโภค / บริโภคจากแหล่งใด</th>
-                                            <th>ข้อมูลด้านการออมของครัวเรือน</th> -->
+                                    
                                             <th>ข้อมูลด้านรายได้ของครัวเรือน</th>                                            
                                             <th>ข้อมูลด้านรายจ่ายของครัวเรือน</th>
                                             <th>เปรียบเทียบรายได้</th>
-                                            <!-- <th>การเป็นสมาชิกกลุ่มของครัวเรือน</th>
-                                            <th>ข้อเสนอแนะ</th> -->
+                                           
 
                                         </tr>
                                     </thead>
@@ -113,10 +120,6 @@
                                                 <td>ประปาหมู่บ้าน</td>
                                                 <td>500</td>
                                                 <td>50000</td>
-                                                <td>5350</td>
-                                                <td>44650</td>
-                                                <td></td>
-                                                <td></td>
                                             </tr>  
                                         <?php endif;?>
                                     
@@ -251,9 +254,9 @@
                                                 <td>7</td>
                                                 <td>ไม้ผล</td>
                                                 <td>ไม่มีเอกสารสิทธิ์</td>
-                                                <td>ของตนเอง</td>
+                                                <!-- <td>ของตนเอง</td>
                                                 <td>แหล่งน้ำธรรมชาติ</td>
-                                                <td>นอกเขตป่า</td>
+                                                <td>นอกเขตป่า</td> -->
                                             </tr>   
                                         <?php endif;?>
                                     
@@ -319,7 +322,7 @@
                                                 <td></td>
                                                 <td>24000</td>
                                                 <td>บริโภค</td>
-                                                <td>ไม่ได้รับการรับรอง</td>
+                                                <!-- <td>ไม่ได้รับการรับรอง</td> -->
                                             </tr>                                            
                                             <!-- <tr>
                                                 <td colspan="18" class="text-center">ไม่พบข้อมูล</td>
@@ -361,6 +364,21 @@
             type: 'xlsx'
         });
     }
+    
+    $(function(){
+        //search
+        $("#interview_type").change(function(){
+            var project_type = $(this).val();
+            $.ajax({
+                type: "GET",
+                url: domain+'common/get-projects?project_type='+project_type,
+                success : function(options){
+                    $("#interview_project").html(options)
+                    $("#interview_project").select2();
+                }
+            });
+        })
+    });
 </script>
 
 <?=$this->endSection()?>

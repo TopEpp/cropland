@@ -10,8 +10,8 @@ class Report_model extends Model
         $builder = $this->db->table('LH_interview_land');
         $builder->select("LH_interview_land.*,
             LH_users.fullname as user_name,
-            CODE_PROJECT.name as project_area,
-            CODE_PROJECT.Description as project_name,
+            vLinkAreaDetail_growerCrops.target_name as project_area,
+            vLinkAreaDetail_growerCrops.target_area_type_title as project_name,
             CODE_PROJECTVILLAGE.Name as project_village,
             CODE_PROJECTVILLAGE.BasinName,
             LH_land.land_address,
@@ -75,7 +75,9 @@ class Report_model extends Model
         $builder->join('CODE_AMPHUR', 'CAST(CODE_AMPHUR.AMP_CODE as int) = LH_house.house_district and CODE_PROVINCE.Code = CODE_AMPHUR.PROV_CODE','left');      
         $builder->join('CODE_TAMBON', 'CAST(CODE_TAMBON.TAM_CODE as int) = LH_house.house_subdistrict and CODE_PROVINCE.Code = CODE_TAMBON.PROV_CODE and CODE_AMPHUR.AMP_CODE = CODE_TAMBON.AMP_CODE','left');      
         
-        $builder->join('CODE_PROJECT', 'CODE_PROJECT.Code = LH_interview_land.interview_project');
+        // $builder->join('CODE_PROJECT', 'CODE_PROJECT.Code = LH_interview_land.interview_project');
+        $builder->join('vLinkAreaDetail_growerCrops', 'vLinkAreaDetail_growerCrops.target_code_gis = LH_interview_land.interview_project','left');        
+
         $builder->join('CODE_PROJECTVILLAGE', 'CODE_PROJECTVILLAGE.Code = LH_interview_land.interview_house_id and CODE_PROJECTVILLAGE.projectId = LH_interview_land.interview_project');
         $builder->join('LH_users','LH_users.emp_id = LH_interview_land.interview_user','left');
         $builder->join('CODE_POSSESSRIGHT', 'CODE_POSSESSRIGHT.Code = LH_interview_land.interview_land_holding ','left');
@@ -89,20 +91,21 @@ class Report_model extends Model
                 $builder->where('CODE_PROJECTVILLAGE.BasinName',$search['interview_basin']);
             }
             if (!empty($search['interview_project'])){
-                $builder->where('LH_interview_land.interview_project',$search['interview_project']);
+                $builder->where('vLinkAreaDetail_growerCrops.target_code_gis',$search['interview_project']);
             }
-            if (!empty($search['interview_area'])){
-                $builder->where('LH_interview_land.interview_area',$search['interview_area']);
+            if (!empty($search['interview_type'])){
+                $builder->where('vLinkAreaDetail_growerCrops.target_area_type_id',$search['interview_type']);
+                // $builder->where('LH_interview_land.interview_area',$search['interview_area']);
             }
-            if (!empty($search['interview_house_id'])){
-                $builder->where('LH_interview_land.interview_house_id',$search['interview_house_id']);
-            }
-            if (!empty($search['interview_person_id'])){
-                $builder->where('LH_interview_land.interview_person_id',$search['interview_person_id']);
-            }
-            if (!empty($search['interview_code'])){
-                $builder->where('LH_interview_land.interview_code',$search['interview_code']);
-            }
+            // if (!empty($search['interview_house_id'])){
+            //     $builder->where('LH_interview_land.interview_house_id',$search['interview_house_id']);
+            // }
+            // if (!empty($search['interview_person_id'])){
+            //     $builder->where('LH_interview_land.interview_person_id',$search['interview_person_id']);
+            // }
+            // if (!empty($search['interview_code'])){
+            //     $builder->where('LH_interview_land.interview_code',$search['interview_code']);
+            // }
         }
 
 
@@ -228,7 +231,7 @@ class Report_model extends Model
             max(CODE_PROVINCE.Name) as pro_name_t,
             sum(LH_land.land_area) as land_area,
             count(LH_house_person.person_id)as person_count,
-            max(CODE_PROJECT.Name)as area,
+            max(vLinkAreaDetail_growerCrops.target_name)as area,
             (SELECT SUM(a.income_value * income_month) 
                 FROM LH_person_income a
                 WHERE a.person_id = max(LH_house_person.person_id)) as income_value,
@@ -239,12 +242,16 @@ class Report_model extends Model
         ");
 
         if (!empty($search['interview_project'])){
-            $builder->where('LH_interview_house.interview_project_name',$search['interview_project']);
+            $builder->where('vLinkAreaDetail_growerCrops.target_code_gis',$search['interview_project']);
+        }
+        if (!empty($search['interview_type'])){
+            $builder->where('vLinkAreaDetail_growerCrops.target_area_type_id',$search['interview_type']);
         }
 
         $builder->join('LH_interview_house', 'LH_interview_house.interview_house = LH_house.house_id');
      
-        $builder->join('CODE_PROJECT', 'CODE_PROJECT.Code = LH_interview_house.interview_project_name');        
+        // $builder->join('CODE_PROJECT', 'CODE_PROJECT.Code = LH_interview_house.interview_project_name');        
+        $builder->join('vLinkAreaDetail_growerCrops', 'vLinkAreaDetail_growerCrops.target_code_gis = LH_interview_house.interview_project_name');        
         $builder->join('LH_house_person', 'LH_house_person.house_id = LH_house.house_id','left');
 
         $builder->join('LH_house_land', 'LH_house_land.person_id = LH_house_person.person_id','left');
@@ -271,7 +278,7 @@ class Report_model extends Model
             sum(LH_land.land_area) as land_area,            
             CONCAT(max(LH_prefix.name),max(LH_house_person.person_name),' ',max(LH_house_person.person_lastname)) as person_name,
             max(LH_house_person.person_number) as person_number,
-            max(CODE_PROJECT.Name)as area,
+            max(vLinkAreaDetail_growerCrops.target_name)as area,
 
             STUFF((SELECT  ',' +LH_jobs.name
             FROM LH_person_job
@@ -287,12 +294,16 @@ class Report_model extends Model
         ");
 
         if (!empty($search['interview_project'])){
-            $builder->where('LH_interview_house.interview_project_name',$search['interview_project']);
+            $builder->where('vLinkAreaDetail_growerCrops.target_code_gis',$search['interview_project']);
+        }
+        if (!empty($search['interview_type'])){
+            $builder->where('vLinkAreaDetail_growerCrops.target_area_type_id',$search['interview_type']);
         }
 
         $builder->join('LH_interview_house', 'LH_interview_house.interview_house = LH_house.house_id');
      
-        $builder->join('CODE_PROJECT', 'CODE_PROJECT.Code = LH_interview_house.interview_project_name');        
+        // $builder->join('CODE_PROJECT', 'CODE_PROJECT.Code = LH_interview_house.interview_project_name');        
+        $builder->join('vLinkAreaDetail_growerCrops', 'vLinkAreaDetail_growerCrops.target_code_gis = LH_interview_house.interview_project_name');        
         $builder->join('LH_house_person', 'LH_house_person.house_id = LH_house.house_id','left');
         $builder->join('LH_prefix', 'LH_prefix.prefix_id = LH_house_person.person_prename');
 
@@ -320,7 +331,7 @@ class Report_model extends Model
             max(LH_land.land_area) as land_area,
             max(LH_land.land_number) as land_number,
             max(LH_landuse.name) as landuse,
-            max(CODE_PROJECT.Name)as area,
+            max(vLinkAreaDetail_growerCrops.target_name)as area,
             max(LH_landowner.name) as land_resource,
             max(CODE_POSSESSRIGHT.name) as land_holding
             
@@ -328,12 +339,16 @@ class Report_model extends Model
         ");
 
         if (!empty($search['interview_project'])){
-            $builder->where('LH_interview_house.interview_project_name',$search['interview_project']);
+            $builder->where('vLinkAreaDetail_growerCrops.target_code_gis',$search['interview_project']);
+        }
+        if (!empty($search['interview_type'])){
+            $builder->where('vLinkAreaDetail_growerCrops.target_area_type_id',$search['interview_type']);
         }
 
         $builder->join('LH_interview_house', 'LH_interview_house.interview_house = LH_house.house_id');
      
-        $builder->join('CODE_PROJECT', 'CODE_PROJECT.Code = LH_interview_house.interview_project_name');        
+        // $builder->join('CODE_PROJECT', 'CODE_PROJECT.Code = LH_interview_house.interview_project_name');        
+        $builder->join('vLinkAreaDetail_growerCrops', 'vLinkAreaDetail_growerCrops.target_code_gis = LH_interview_house.interview_project_name');        
         $builder->join('LH_house_person', 'LH_house_person.house_id = LH_house.house_id','left');
 
         $builder->join('LH_house_land', 'LH_house_land.person_id = LH_house_person.person_id','left');
@@ -364,7 +379,7 @@ class Report_model extends Model
             max(CODE_PROVINCE.Name) as pro_name_t,
             max(LH_land.land_area) as land_area,
             max(LH_land.land_number) as land_number,
-            max(CODE_PROJECT.Name)as area,
+            max(vLinkAreaDetail_growerCrops.target_name)as area,
             max(CODE_PRODUCTTYPE.Name) as product_type,
             max(CODE_PRODUCT.Name) as product_name,
             
@@ -380,12 +395,16 @@ class Report_model extends Model
         ");
         
         if (!empty($search['interview_project'])){
-            $builder->where('LH_interview_house.interview_project_name',$search['interview_project']);
+            $builder->where('vLinkAreaDetail_growerCrops.target_code_gis',$search['interview_project']);
+        }
+        if (!empty($search['interview_type'])){
+            $builder->where('vLinkAreaDetail_growerCrops.target_area_type_id',$search['interview_type']);
         }
 
         $builder->join('LH_interview_house', 'LH_interview_house.interview_house = LH_house.house_id');      
      
-        $builder->join('CODE_PROJECT', 'CODE_PROJECT.Code = LH_interview_house.interview_project_name');        
+        // $builder->join('CODE_PROJECT', 'CODE_PROJECT.Code = LH_interview_house.interview_project_name');        
+        $builder->join('vLinkAreaDetail_growerCrops', 'vLinkAreaDetail_growerCrops.target_code_gis = LH_interview_house.interview_project_name');        
         $builder->join('LH_house_person', 'LH_house_person.house_id = LH_house.house_id','left');
 
         $builder->join('LH_interview_land', 'LH_interview_land.interview_person_id = LH_house_person.person_id','left');

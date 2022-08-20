@@ -34,20 +34,20 @@
                                         </select>
                                     </div>
                                     <div class="form-group col-md-3">
-                                        <label>โครงการ</label>                                       
-                                        <select name="interview_project" id="interview_project" class="form-control select2">
-                                            <option value="">เลือก</option>
-                                            <?php foreach ($projects as $key => $value) :?>
-                                                <option <?=@$search['interview_project'] == $value['Code']?'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Description'];?></option>
+                                        <label>ประเภทโครงการ</label>                                       
+                                        <select name="interview_type" id="interview_type" class="form-control select2">
+                                            <option value="">ทั้งหมด</option>
+                                            <?php foreach ($projects_type as $key => $value) :?>
+                                                    <option <?=@$search['interview_type'] == $value['Code']?'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                             <?php endforeach;?>
                                         </select>
                                     </div>
                                     <div class="form-group col-md-3">
-                                        <label>พื้นที่</label>                                       
-                                        <select name="interview_area" id="interview_area" class="form-control select2">
-                                            <option value="">เลือก</option>
+                                        <label>ชื่อโครงการ</label>                                       
+                                        <select name="interview_project" id="interview_project" class="form-control select2">
+                                            <option value="">ทั้งหมด</option>
                                             <?php foreach ($projects as $key => $value) :?>
-                                                <option <?=@$search['interview_area'] == $value['Name']?'selected':'';?> value="<?=$value['Name'];?>"><?=$value['Name'];?></option>
+                                                <option <?=@$search['interview_project'] == $value['Code']?'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                             <?php endforeach;?>
                                         </select>
                                     </div>
@@ -222,6 +222,22 @@
             type: 'xlsx'
         });
     }
+
+    $(function(){
+        //search
+        $("#interview_type").change(function(){
+            var project_type = $(this).val();
+            $.ajax({
+                type: "GET",
+                url: domain+'common/get-projects?project_type='+project_type,
+                success : function(options){
+                    $("#interview_project").html(options)
+                    $("#interview_project").select2();
+                }
+            });
+        })
+    });
+
 </script>
 
 <?=$this->endSection()?>

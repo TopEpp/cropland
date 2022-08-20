@@ -133,14 +133,23 @@
                                 <form action="" method="get">
                                     <div class="row">
                                         <div class="form-group col-md-12">
-                                            <label>โครงการ :</label>                                        
-                                            <select name="project_name" id="project_name" class="form-control">
+                                            <label>ประเภทโครงการ :</label>                                        
+                                            <select name="project_type" id="project_type" class="form-control">
                                                 <option value="">ทั้งหมด</option>
-                                                <?php foreach ($projects as $key => $value) :?>
-                                                    <option <?=@$search['interview_project'] == $value['Code']?'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Description'];?></option>
+                                                <?php foreach ($projects_type as $key => $value) :?>
+                                                    <option <?=@$data['project_type'] == $value['Code']?'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                                 <?php endforeach;?>
                                             </select>
                                         </div>
+                                        <div class="form-group col-md-12">
+                                            <label>ชื่อโครงการ :</label>                                        
+                                            <select name="project_name" id="project_name" class="form-control">
+                                                <option value="">ทั้งหมด</option>
+                                                <?php foreach ($projects as $key => $value) :?>
+                                                    <option <?=@$search['interview_project_name'] == $value['Code']?'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
+                                                <?php endforeach;?>
+                                            </select>
+                                        </div>   
                                         <div class="form-group col-md-12">
                                             <label>จังหวัด :</label>                                        
                                             <select name="province" id="province" class="form-control">
@@ -162,12 +171,7 @@
                                                 <option value="">ทั้งหมด</option>
                                             </select>
                                         </div>                     
-                                        <div class="form-group col-md-12">
-                                            <label>พื้นที่ :</label>                                        
-                                            <select name="area" id="area" class="form-control">
-                                                <option value="">ทั้งหมด</option>
-                                            </select>
-                                        </div>                                                                                          
+                                                                                                                              
                                     </div>
 
                                     <div class="col-md-12 text-right">
@@ -214,6 +218,19 @@
     var data_price = <?= json_encode($chart['product_price']['data']);?>;
     var data_pay = <?= json_encode($chart['product_pay']['data']);?>;
     $(function(){
+
+        //search
+        $("#project_type").change(function(){
+            var project_type = $(this).val();
+            $.ajax({
+                type: "GET",
+                url: domain+'common/get-projects?project_type='+project_type,
+                success : function(options){
+                    $("#project_name").html(options)
+                    $("#project_name").select2();
+                }
+            });
+        })
         
         // const ctx = document.getElementById('myChart');
         // const myChart = new Chart(ctx, {

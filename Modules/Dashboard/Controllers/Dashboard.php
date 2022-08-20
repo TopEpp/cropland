@@ -19,7 +19,10 @@ class Dashboard extends BaseController
     }
 
     public function survay(){
-        $data['projects'] = $this->model_api->getProject();
+        $data['projects_type'] = $this->model_api->getProjectType();
+        $data['projects'] = $this->model_common->getProject();
+
+        // $data['projects'] = $this->model_api->getProject();
         $data['landuse'] =  $this->model_api->getLandUse();
         $data['province'] = $this->model_common->getProvince();
 
@@ -51,7 +54,7 @@ class Dashboard extends BaseController
     public function house(){
 
         $data['projects_type'] = $this->model_api->getProjectType();
-        $data['projects'] = $this->model_api->getProject();
+        $data['projects'] = $this->model_common->getProject();
         return view('Modules\Dashboard\Views\house',$data);
     }
     

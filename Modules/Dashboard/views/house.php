@@ -7,17 +7,7 @@
             <div class="col-12 col-md-12 col-lg-12">
                 <div class="card m-0 p-0">
                     <div class="card-header">
-                        <h4 class="text-dark">รายงานสรุปโครงสร้างประชากร</h4>
-                        <!-- <div class="cardz-header-action w-25">
-                            <div class="form-group row">
-                                <label class="col-sm-4 col-form-label">หมู่บ้าน :</label>
-                                <div class="col-sm-8">
-                                    <select name="" id="" class="form-control">
-                                        <option value="">เลือก</option>
-                                    </select>
-                                </div>                                  
-                            </div>
-                        </div> -->
+                        <h4 class="text-dark">รายงานสรุปโครงสร้างประชากร</h4>                     
                     </div>        
                     <div class="card-body">
                     <h5>ค้นหาข้อมูล</h5>
@@ -39,7 +29,7 @@
                                         <select name="project_name" id="project_name" class="form-control select2">
                                             <option value="">ทั้งหมด</option>
                                             <?php foreach ($projects as $key => $value) :?>
-                                                <option <?=@$search['project_name'] == $value['Code']?'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Description'];?></option>
+                                                <option <?=@$search['interview_project_name'] == $value['Code']?'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                             <?php endforeach;?>
                                         </select>
                                     </div>  
@@ -246,6 +236,21 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/helpers.esm.min.js"></script>
 <script>
     $(function(){
+
+        
+        //search
+        $("#project_type").change(function(){
+            var project_type = $(this).val();
+            $.ajax({
+                type: "GET",
+                url: domain+'common/get-projects?project_type='+project_type,
+                success : function(options){
+                    $("#project_name").html(options)
+                    $("#project_name").select2();
+                }
+            });
+        })
+
         const ctx = document.getElementById('myChart');
         const myChart = new Chart(ctx, {
             type: 'pie',
