@@ -337,7 +337,7 @@ class Common_model extends Model
       $builder = $this->db->table('LH_land');
       $builder->select('LH_land.land_id,LH_land.land_code');
       if ($id != ''){
-        $builder->where('LH_land.land_id', $id);   
+        $builder->where('LH_land.land_code', $id);   
         $query = $builder->get()->getRowArray();
         return $query;      
       }

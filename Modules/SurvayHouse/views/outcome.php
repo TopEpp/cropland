@@ -321,7 +321,7 @@
 
 <?=$this->section("scripts")?>
 <script>
-    
+     
      var validateDecimal = function(e) {
         var t = e.value;
         t = t.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');

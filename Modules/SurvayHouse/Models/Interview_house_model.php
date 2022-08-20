@@ -77,10 +77,11 @@ class Interview_house_model extends Model
               $builder->where('LH_interview_house.interview_user',$search['interview_year']);
           }
           if (!empty($search['interview_project'])){
-              $builder->where('LH_interview_house.interview_project_name',$search['interview_project']);
+              $builder->where('vLinkAreaDetail_growerCrops.target_area_type_id',$search['interview_project']);
           }
-          if (!empty($search['interview_area'])){
-              $builder->where('LH_interview_house.interview_area',$search['interview_area']);
+          if (!empty($search['interview_project_name'])){
+              
+              $builder->where('vLinkAreaDetail_growerCrops.target_code_gis',$search['interview_project_name']);
           }
 
           if (!empty($search['province'])){

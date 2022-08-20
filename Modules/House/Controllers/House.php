@@ -58,8 +58,7 @@ class House extends BaseController
         $data['data'] = $this->model_house->getAllHousePaginate(10,'page',$data['search']);
         $data['pager'] = $this->model_house->pager;
 
-        
-        
+    
         
         return view('Modules\House\Views\index',$data);
     }

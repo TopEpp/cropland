@@ -69,8 +69,10 @@ class SurvayHouse extends BaseController
             }         
         }
 
+
         $data['province'] = $this->model_common->getProvince();
-        $data['projects'] = $this->model_api->getProject();
+        $data['projects'] = $this->model_common->getProject();
+        $data['projects_type'] = $this->model_api->getProjectType();
         
         $data['data'] = $this->model_house->getAllInterviewHousePaginate(10,'page',$data['search']);
         
