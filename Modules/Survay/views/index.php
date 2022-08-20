@@ -42,8 +42,8 @@
                                         <label>โครงการ</label>                                       
                                         <select name="interview_project" id="interview_project" class="form-control select2" onchange="selectProject($(this))">
                                             <option value="">ทั้งหมด</option>
-                                            <?php foreach ($projects as $key => $value) :?>
-                                                <option <?=@$search['interview_project'] == $value['Code']?'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Description'];?></option>
+                                            <?php foreach ($projects_type as $key => $value) :?>
+                                                <option <?=@$search['interview_project'] == $value['Code']?'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                             <?php endforeach;?>
                                         </select>
                                     </div>
@@ -160,7 +160,21 @@
 
 <script>
 
-   
+    $(function(){
+          //search
+          $("#project_type").change(function(){
+            var project_type = $(this).val();
+            $.ajax({
+                type: "GET",
+                url: domain+'common/get-projects?project_type='+project_type,
+                success : function(options){
+                    $("#project_name").html(options)
+                    $("#project_name").select2();
+                }
+            });
+        })
+    })
+
     function deleteItem(elm){
         swal({
         title: 'Are you sure?',
@@ -185,21 +199,32 @@
 
     function selectProject(elm){
         var value = elm.val();
-        let selText = $("#interview_project option:selected").text();
-        // const land = selText.split('/');
-        
-        //set land
-        $("#interview_area").val(value).trigger('change');
-        
+
+        var project_type = value
         $.ajax({
             type: "GET",
-            url: domain+'common/get-village?project='+value,
+            url: domain+'common/get-projects?project_type='+project_type,
             success : function(options){
-
-                $("#interview_house_id").html(options)
-                $("#interview_house_id").select2();
+                $("#interview_area").html(options)
+                $("#interview_area").select2();
             }
         });
+
+        // let selText = $("#interview_project option:selected").text();
+        // // const land = selText.split('/');
+        
+        // //set land
+        // $("#interview_area").val(value).trigger('change');
+        
+        // $.ajax({
+        //     type: "GET",
+        //     url: domain+'common/get-village?project='+value,
+        //     success : function(options){
+
+        //         $("#interview_house_id").html(options)
+        //         $("#interview_house_id").select2();
+        //     }
+        // });
     }
    
 </script>

@@ -26,8 +26,8 @@ class Survay_model extends Model
 
         $builder->select("
             LH_interview_land.*,          
-            CODE_PROJECT.name as project_area,
-            CODE_PROJECT.Description as project_name,
+            vLinkAreaDetail_growerCrops.target_name as project_area,
+            vLinkAreaDetail_growerCrops.target_area_type_title as project_name,
             CODE_PROJECTVILLAGE.Name as project_village,
             LH_land.land_address,
             LH_land.land_code,
@@ -56,7 +56,9 @@ class Survay_model extends Model
         $builder->join('CODE_TAMBON', 'CAST(CODE_TAMBON.TAM_CODE as int) = LH_house.house_subdistrict and CODE_PROVINCE.Code = CODE_TAMBON.PROV_CODE and CODE_AMPHUR.AMP_CODE = CODE_TAMBON.AMP_CODE','left');      
                       
         
-        $builder->join('CODE_PROJECT', 'CODE_PROJECT.Code = LH_interview_land.interview_project','left');
+        // $builder->join('CODE_PROJECT', 'CODE_PROJECT.Code = LH_interview_land.interview_project','left');
+        $builder->join('vLinkAreaDetail_growerCrops', 'vLinkAreaDetail_growerCrops.target_code_gis = LH_interview_land.interview_project','left');        
+        
         $builder->join('CODE_PROJECTVILLAGE', 'CODE_PROJECTVILLAGE.Code = LH_interview_land.interview_house_id and CODE_PROJECTVILLAGE.projectId = LH_interview_land.interview_project','left');
         // $builder->join('VIEW_agriculturist_name','VIEW_agriculturist_name.id_card = LH_interview_land.interview_user','left');
        
@@ -79,10 +81,10 @@ class Survay_model extends Model
                 $builder->where('LH_interview_land.interview_user',$search['interview_year']);
             }
             if (!empty($search['interview_project'])){
-                $builder->where('LH_interview_land.interview_project',$search['interview_project']);
+                $builder->where('vLinkAreaDetail_growerCrops.target_area_type_id',$search['interview_project']);
             }
             if (!empty($search['interview_area'])){
-                $builder->where('LH_interview_land.interview_area',$search['interview_area']);
+                $builder->where('vLinkAreaDetail_growerCrops.target_code_gis',$search['interview_area']);
             }
             if (!empty($search['interview_house_id'])){
                 $builder->where('LH_interview_land.interview_house_id',$search['interview_house_id']);

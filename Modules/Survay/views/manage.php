@@ -75,8 +75,9 @@
                                         <label>โครงการ</label>                      
                                         <select name="interview_project" id="interview_project" class="form-control select2" onchange="selectProject($(this))" required="">
                                             <option value="">เลือก</option>
-                                            <?php foreach ($projects as $key => $value) :?>
-                                                <option <?=@$data['interview_project'] == $value['Code']?'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Description'].'/'.$value['Name'];?></option>
+                                            <?php foreach ($projects_type as $key => $value) :?>
+                                                <!-- <option <?=@$data['interview_project'] == $value['Code']?'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Description'].'/'.$value['Name'];?></option> -->
+                                                <option <?=@$data['interview_project'] == $value['Code']?'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                             <?php endforeach;?>
                                             
                                         </select>
@@ -86,7 +87,13 @@
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>พื้นที่</label>
-                                        <input type="text" name="interview_area" id="interview_area" class="form-control" value="<?=@$data['interview_area'];?>" required="">                                    
+                                        <!-- <input type="text" name="interview_area" id="interview_area" class="form-control" value="<?=@$data['interview_area'];?>" required="">                                     -->
+                                        <select name="interview_area" id="interview_area" class="form-control select2">
+                                            <option value="">ทั้งหมด</option>
+                                            <?php foreach ($projects as $key => $value) :?>
+                                                <option <?=@$data['interview_area'] == $value['Code']?'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
+                                            <?php endforeach;?>
+                                        </select>
                                         <div class="invalid-feedback">
                                            กรุณาระบุพื้นที่
                                         </div> 
@@ -409,11 +416,22 @@
     
     function selectProject(elm){
         var value = elm.val();
-        let selText = $("#interview_project option:selected").text();
-        const land = selText.split('/');
+
+        var project_type = value
+        $.ajax({
+            type: "GET",
+            url: domain+'common/get-projects?project_type='+project_type,
+            success : function(options){
+                $("#interview_area").html(options)
+                $("#interview_area").select2();
+            }
+        });
         
-        //set land
-        $("#interview_area").val(land[1])
+        // let selText = $("#interview_project option:selected").text();
+        // const land = selText.split('/');
+        
+        // //set land
+        // $("#interview_area").val(land[1])
         
         $.ajax({
             type: "GET",

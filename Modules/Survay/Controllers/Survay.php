@@ -52,7 +52,8 @@ class Survay extends BaseController
             }
         }
 
-        $data['projects'] = $this->model_api->getProject();
+        $data['projects_type'] = $this->model_api->getProjectType();
+        $data['projects'] = $model_common->getProject();
 
         $data['data'] = $this->model_survay->getAllSurvay('',$data['search']);
         return view('Modules\Survay\Views\index',$data);
@@ -70,7 +71,10 @@ class Survay extends BaseController
         $data['land_code'] = $this->request->getGet('land_code');
 
         $data['interview_id'] = $interview_id;
-        $data['projects'] = $this->model_api->getProject();
+        
+        $data['projects_type'] = $this->model_api->getProjectType();
+        $data['projects'] = $model_common->getProject();
+
         $data['privileges'] = $this->model_api->getLandprivilege();
         // $data['persons']= $model_common->getAllPersons();
       
