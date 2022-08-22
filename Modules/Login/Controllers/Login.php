@@ -158,5 +158,10 @@ class Login extends BaseController
       $session->destroy();
       return redirect()->to('login');
     }
+
+    public function main(){
+      $data = [];
+      return view('Modules\Login\Views\main',$data);
+    }
 }
 

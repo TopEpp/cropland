@@ -54,6 +54,8 @@ if (file_exists(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php')) {
 }
 
 
+$routes->get("/main", "Login::main");
+
 $routes->group("house", ["namespace" => "Modules\House\Controllers"], function ($routes) {
 	$routes->get("/", "House::index");
     $routes->get("manage(:any)", "House::manage$1");
