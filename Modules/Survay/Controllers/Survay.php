@@ -103,7 +103,7 @@ class Survay extends BaseController
   
         if ($interview_id){
             
-            $data['data'] = $this->model_survay->getAllSurvay($interview_id);
+            $data['data'] = $this->model_survay->getSurvay($interview_id);
             
             $data['data']['interview_date'] = $this->date_thai->date_eng2thai($data['data']['interview_date'],543,'','','/');
             $data['villages'] = $model_common->getVillage('',$data['data']['interview_project']);            

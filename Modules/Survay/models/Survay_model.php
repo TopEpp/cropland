@@ -25,18 +25,18 @@ class Survay_model extends Model
         $builder = $this->db->table('LH_interview_land');
 
         $builder->select("
-            LH_interview_land.*,          
-            vLinkAreaDetail_growerCrops.target_name as project_area,
-            vLinkAreaDetail_growerCrops.target_area_type_title as project_name,
-            CODE_PROJECTVILLAGE.Name as project_village,
-            LH_land.land_address,
-            LH_land.land_code,
-            LH_landuse.name as land_use,
-            CONCAT(LH_prefix.name,LH_house_person.person_name,' ',LH_house_person.person_lastname) as person_name,
-            LH_house.house_label,
-            CONCAT('บ้านเลขที่ ', LH_house.house_number,' หมู่ที่ ',
-            LH_house.house_moo,' ตำบล ',CODE_TAMBON.TAM_T,' อำเภอ ',CODE_AMPHUR.AMP_T,' จังหวัด ',CODE_PROVINCE.Name) as person_address,
-            person_village.Name as person_village
+            LH_interview_land.interview_id,
+            max(vLinkAreaDetail_growerCrops.target_name) as project_area,
+            max(vLinkAreaDetail_growerCrops.target_area_type_title) as project_name,
+            max(CODE_PROJECTVILLAGE.Name) as project_village,
+            max(LH_land.land_address) as land_address,
+            max(LH_land.land_code) as land_code,
+            max(LH_landuse.name) as land_use,
+            CONCAT(max(LH_prefix.name),max(LH_house_person.person_name),' ',max(LH_house_person.person_lastname)) as person_name,
+            max(LH_house.house_label) as house_label,
+            CONCAT('บ้านเลขที่ ', max(LH_house.house_number),' หมู่ที่ ',
+            max(LH_house.house_moo),' ตำบล ',max(CODE_TAMBON.TAM_T),' อำเภอ ',max(CODE_AMPHUR.AMP_T),' จังหวัด ',max(CODE_PROVINCE.Name)) as person_address,
+            max(person_village.Name) as person_village
         ");
 
         $builder->join('LH_land', 'LH_land.land_code = LH_interview_land.interview_code','left');
@@ -57,13 +57,13 @@ class Survay_model extends Model
                       
         
         // $builder->join('CODE_PROJECT', 'CODE_PROJECT.Code = LH_interview_land.interview_project','left');
-        $builder->join('vLinkAreaDetail_growerCrops', 'vLinkAreaDetail_growerCrops.target_code_gis = LH_interview_land.interview_project','left');        
+        $builder->join('vLinkAreaDetail_growerCrops', 'vLinkAreaDetail_growerCrops.target_code_gis = LH_interview_land.interview_area','left');        
         
         $builder->join('CODE_PROJECTVILLAGE', 'CODE_PROJECTVILLAGE.Code = LH_interview_land.interview_house_id and CODE_PROJECTVILLAGE.projectId = LH_interview_land.interview_project','left');
         // $builder->join('VIEW_agriculturist_name','VIEW_agriculturist_name.id_card = LH_interview_land.interview_user','left');
        
         // $query = $builder->get()->getResultArray();
-
+        $builder->groupBy('LH_interview_land.interview_id');
 
         if ($id){
         
@@ -100,6 +100,33 @@ class Survay_model extends Model
      
         $query = $builder->get()->getResultArray();
         
+        return $query;
+    }
+
+    public function getSurvay($interview_id){
+        $builder = $this->db->table('LH_interview_land');
+        $builder->where('LH_interview_land.interview_id',$interview_id);
+        $builder->select("
+            LH_interview_land.*,
+            person_village.Name as project_village,
+            CONCAT((LH_prefix.name),(LH_house_person.person_name),' ',(LH_house_person.person_lastname)) as person_name,
+            (LH_land.land_address) as land_address,
+            (LH_land.land_code) as land_code,
+        ");
+
+        $builder->join('LH_land', 'LH_land.land_code = LH_interview_land.interview_code','left');
+        $builder->join('LH_landuse', 'LH_landuse.landuse_id = LH_land.land_use','left');
+        $builder->join('LH_house_person', 'LH_house_person.person_id = LH_interview_land.interview_person_id','left');
+        $builder->join('LH_house', 'LH_house.house_id = LH_house_person.house_id','left');
+        $builder->join('LH_prefix', 'LH_prefix.prefix_id = LH_house_person.person_prename','left');
+        $builder->join('CODE_PROJECTVILLAGE as person_village', '
+        person_village.Code = LH_house.house_label 
+        and person_village.ProvinceId = LH_house.house_province 
+        and person_village.AmphurId = LH_house.house_district
+        and person_village.TamBonId = LH_house.house_subdistrict
+        ','left');
+             
+        $query = $builder->get()->getRowArray();        
         return $query;
     }
 

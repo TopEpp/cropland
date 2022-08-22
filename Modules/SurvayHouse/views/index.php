@@ -60,6 +60,15 @@
                                         </select>
                                     </div>
                                     <div class="form-group col-md-3">
+                                        <label>ชื่อหมู่บ้าน</label>                                
+                                        <select name="house_home" id="house_home" class="form-control select2">
+                                            <option value="">ทั้งหมด</option>
+                                            <?php foreach ($villages as $key => $value) :?>
+                                                <option <?=@$search['house_home'] == $value['VILL_CODE'] ? 'selected':'';?>  value="<?=$value['VILL_CODE'];?>"><?=$value['VILL_T'];?></option>
+                                            <?php endforeach;?>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-3">
                                         <label>จังหวัด</label>                                       
                                         <select name="province" id="province" class="form-control ">                                            
                                             <option value="">ทั้งหมด</option>                                       
@@ -191,6 +200,18 @@
                 success : function(options){
                     $("#interview_project_name").html(options)
                     $("#interview_project_name").select2();
+                }
+            });
+        })
+
+        $("#interview_project_name").change(function(){
+            var project = $(this).val();
+            $.ajax({
+                type: "GET",
+                url: domain+'common/get-projectVillages?project='+project,
+                success : function(options){
+                    $("#house_home").html(options)
+                    $("#house_home").select2();
                 }
             });
         })
