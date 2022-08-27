@@ -229,7 +229,9 @@ var drawingManager;
                         }     
 
                         if (data.land_geo_loc){
-                            geo = JSON.parse(data.land_geo_loc)                                            
+                            geo = JSON.parse(data.land_geo_loc)  
+                                                                  
+                            // var data_geo = geo.coordinates                                             
                             for(var s=0;s<geo.length;s++){
                                 tempPoint=geo[s];                                                            
                                 latLngs.push(new google.maps.LatLng(tempPoint.lat, tempPoint.lng));

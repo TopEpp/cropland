@@ -228,11 +228,9 @@ class Api_model extends Model
 
       $builder = $this->db->table('LH_land');
         $builder->select('land_id, dbo.geomToGeoJSON(land_geo) as land_geo ');
-        $builder->where('land_id >=','6000');
-        // $builder->where('land_id <','6000');
+        $builder->where('land_id >=','3000');
+        $builder->where('land_id <','3200');
         // $builder->where('land_id <>','914');
-
-        $count=0;
         $query = $builder->get()->getResultArray();
         foreach ($query as $key => $value) {
           // echo '<pre>';
@@ -241,7 +239,6 @@ class Api_model extends Model
           // print_r($geo); 
 
           if($geo->type == 'Polygon'){
-            $count++;
             $new_co = array();
             if(!empty($geo)){
               $coordinates = $geo->coordinates;
@@ -274,8 +271,6 @@ class Api_model extends Model
           
          
         }
-
-        echo $count;
     }
 
     function getLandUseId($name){

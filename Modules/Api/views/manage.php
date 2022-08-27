@@ -3,6 +3,17 @@
 <?=$this->section("content")?>
 <section class="section">
     <div class="section-body">
+        <div class="row" style="margin-bottom:15px">
+            <div class="col-md-12" style="text-align: center;">
+                <a href="<?= base_url('api');?>" class="btn btn-info" style="width: 200px;">ข้อมูลอ้างอิงแบบสอบถาม</a>
+                <a href="<?= base_url('member');?>" class="btn btn-info" style="width: 200px;">ข้อมูลผู้ใช้งาน</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="section-body">
         <div class="row">
             <div class="col-12 col-md-12 col-lg-12">
                 <div class="card">

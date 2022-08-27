@@ -257,3 +257,8 @@ $routes->group("api", ["namespace" => "Modules\Api\Controllers"], function ($rou
 
 });
 
+$routes->group("main", ["namespace" => "Modules\Main\Controllers"], function ($routes) {
+    $routes->get("/", "Main::index");
+
+});
+

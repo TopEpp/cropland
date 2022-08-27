@@ -3,7 +3,7 @@
     <div class="navbar-brand">
         <img src="https://www.hrdi.or.th/public/images/about/logos/Hrdi-logo-a.png" alt="logo" width="40px">
     </div>
-    <a href="<?=base_url('/');?>" class="navbar-brand sidebar-gone-hide">
+    <a href="<?=base_url('/main');?>" class="navbar-brand sidebar-gone-hide">
         ระบบศูนย์กลางข้อมูลชุมชนต้นแบบ<br/>
         เพื่อการจัดการบนพื้นที่สูง
     </a>
@@ -185,26 +185,23 @@
                 <img alt="image" src="<?= base_url('public/assets/img/avatar/avatar-1.png');?>" class="rounded-circle mr-1">
                 <div class="d-sm-none d-lg-inline-block"><?php echo $session->get('name'); ?></div></a>
                 <div class="dropdown-menu dropdown-menu-right" style="width:250px">
-                    <a href="<?=base_url('dashboard/house');?>" class="dropdown-item has-icon">                   
+                    <!-- <a href="<?=base_url('dashboard/house');?>" class="dropdown-item has-icon">                   
                    แดชบอร์ดแบบสำรวจครัวเรือน
                    </a>
                     <a href="<?=base_url('dashboard/survay');?>" class="dropdown-item has-icon">
                    
                     แดชบอร์ดแบบสำรวจที่ดินรายแปลง
                     </a>
-                    <!-- <a href="<?=base_url('house');?>" class="dropdown-item has-icon">                    
-                    ข้อมูลครัวเรือน
-                    </a> -->
                     <a href="<?=base_url('survay_house');?>" class="dropdown-item has-icon">
-                    <!-- <i class="far fa-user"></i> Profile -->
+                    
                     ระบบบันทึกข้อมูลครัวเรือน
                     </a>
                     <a href="<?=base_url('land');?>" class="dropdown-item has-icon">
-                    <!-- <i class="far fa-user"></i> Profile -->
+                   
                     ข้อมูลที่ดินรายแปลง
                     </a>
                     <a href="<?=base_url('survay');?>" class="dropdown-item has-icon">
-                    <!-- <i class="far fa-user"></i> Profile -->
+                    
                     ข้อมูลแบบสอบถามที่ดินรายแปลง
                     </a>
                     <a href="<?=base_url('report/survay');?>" class="dropdown-item has-icon">                   
@@ -220,7 +217,7 @@
                  
                     จัดการข้อมูลสิทธิ์ผู้ใช้งาน
                     </a>
-                    
+                     -->
                     
                     <!-- <a href="<?=base_url('dashboard/house-land');?>" class="dropdown-item has-icon">
                    

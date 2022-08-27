@@ -4,6 +4,18 @@
 
 <section class="section">
     <div class="section-body">
+        <div class="row" style="margin-bottom:15px">
+            <div class="col-md-12" style="text-align: center;">
+                <a href="<?= base_url('survay_house');?>" class="btn btn-info" style="width: 200px;">ข้อมูลแบบสอบถามครัวเรือน</a>
+                <a href="<?= base_url('dashboard/house');?>" class="btn btn-info" style="width: 200px;">แดชบอร์ดแบบสำรวจครัวเรือน</a>
+                <a href="<?= base_url('report/house');?>" class="btn btn-info" style="width: 200px;">รายงานสรุปครัวเรือน</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="section-body">
         <div class="row">
             <div class="col-12 col-md-12 col-lg-12">
                 <div class="card">
@@ -56,15 +68,6 @@
                                             <option value="">ทั้งหมด</option>
                                             <?php foreach ($projects as $key => $value) :?>
                                                 <option <?=@$search['interview_project_name'] == $value['Code']?'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
-                                            <?php endforeach;?>
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-md-3">
-                                        <label>ชื่อหมู่บ้าน</label>                                
-                                        <select name="house_home" id="house_home" class="form-control select2">
-                                            <option value="">ทั้งหมด</option>
-                                            <?php foreach ($villages as $key => $value) :?>
-                                                <option <?=@$search['house_home'] == $value['VILL_CODE'] ? 'selected':'';?>  value="<?=$value['VILL_CODE'];?>"><?=$value['VILL_T'];?></option>
                                             <?php endforeach;?>
                                         </select>
                                     </div>
@@ -200,18 +203,6 @@
                 success : function(options){
                     $("#interview_project_name").html(options)
                     $("#interview_project_name").select2();
-                }
-            });
-        })
-
-        $("#interview_project_name").change(function(){
-            var project = $(this).val();
-            $.ajax({
-                type: "GET",
-                url: domain+'common/get-projectVillages?project='+project,
-                success : function(options){
-                    $("#house_home").html(options)
-                    $("#house_home").select2();
                 }
             });
         })

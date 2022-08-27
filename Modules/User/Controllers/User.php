@@ -18,19 +18,19 @@ class User extends BaseController
 
   public function index()
   {
+    // $data['users'] = $this->model_user->getAllUsers();
 
-    $search = $this->request->getGet();
-    $filter = "";
-    if(isset($search) && isset($search['name'])){
-       $filter = $search['name'];
-    }
-    
+    // $userModel = new UserModel();
+  
+    $data['search'] = $this->request->getGet();
     $data = [
-        'users' => $this->model_user->orLike('fullname', $filter)->paginate(10,'page'),
-        'pager' => $this->model_user->pager,
-        'filter' => $filter
+        'users' => $this->model_user->paginate(10,'page'),
+        'pager' => $this->model_user->pager
     ];    
-
+    // $data['user'] = $User->getUserGroupOrg();
+    // $data['org'] = $User->getTreeOrg();
+    // $User->updateERPUser();
+    // // $data = array();
     return view("Modules\User\Views\index",$data);
   }
 

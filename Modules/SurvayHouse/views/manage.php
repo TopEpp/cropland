@@ -3,6 +3,18 @@
 <?=$this->section("content")?>
 <section class="section">
     <div class="section-body">
+        <div class="row" style="margin-bottom:15px">
+            <div class="col-md-12" style="text-align: center;">
+                <a href="<?= base_url('survay_house');?>" class="btn btn-info" style="width: 200px;">ข้อมูลแบบสอบถามครัวเรือน</a>
+                <a href="<?= base_url('dashboard/house');?>" class="btn btn-info" style="width: 200px;">แดชบอร์ดแบบสำรวจครัวเรือน</a>
+                <a href="<?= base_url('report/house');?>" class="btn btn-info" style="width: 200px;">รายงานสรุปครัวเรือน</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="section-body">
         <div class="row">
             <div class="col-12 col-md-12 col-lg-12">
                 <div class="card">
@@ -150,7 +162,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12 text-right">                                       
-                                        <button type="button" class="btn btn-danger" onclick="location.href='<?=base_url('survay_house');?>';" >ยกเลิก</button>
+                                        <button type="button" class="btn btn-danger" onclick="location.href='<?=base_url('house');?>';" >ยกเลิก</button>
                                         <button type="submit" class="btn btn-info" onclick="saveData($(this));">บันทึก</button>
                                         <button type="button" class="btn btn-primary" <?=!$interview_id ?'disabled':'' ?> onclick="location.href='<?=base_url('survay_house/members/'.$interview_id.'/'.@$house_id);?>';" >ถัดไป</button>
                                     </div>
