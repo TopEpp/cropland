@@ -1,13 +1,26 @@
 <?=$this->extend("layouts/main")?>
 
 <?=$this->section("content")?>
+
+<section class="section">
+    <div class="section-body">
+        <div class="row" style="margin-bottom:15px">
+            <div class="col-md-12" style="text-align: center;">
+                <a href="<?= base_url('survay');?>" class="btn btn-info" style="width: 240px;">ข้อมูลแบบสำรวจที่ดินรายแปลง</a>
+                <a href="<?= base_url('dashboard/survay');?>" class="btn btn-info" style="width: 240px;">แดชบอร์ดแบบสำรวจที่ดินรายแปลง</a>
+                <a href="<?= base_url('report/survay');?>" class="btn btn-info" style="width: 240px;">รายงานสรุปแบบสำรวจที่ดินรายแปลง</a>
+            </div>
+        </div>
+    </div>
+</section>
+
 <section class="section">
     <div class="section-body">
         <div class="row">
             <div class="col-12 col-md-12 col-lg-12">
                 <div class="card">
                     <div class="card-header">                        
-                        <h4 class="text-dark"><a href="<?php echo base_url('survay')?>">ข้อมูลแบบสอบถาม</a> > จัดการข้อมูลแบบสอบถาม</h4>
+                        <h4 class="text-dark"><a href="<?php echo base_url('survay')?>">ข้อมูลแบบสำรวจ</a> > จัดการข้อมูลแบบสอบถาม</h4>
                     </div>
                     <div class="card-body">
                         <?php if (session()->getFlashdata("message")):?>

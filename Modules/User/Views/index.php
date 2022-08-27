@@ -3,6 +3,17 @@
 <?=$this->section("content")?>
 <section class="section">
     <div class="section-body">
+        <div class="row" style="margin-bottom:15px">
+            <div class="col-md-12" style="text-align: center;">
+                <a href="<?= base_url('api');?>" class="btn btn-info" style="width: 200px;">ข้อมูลอ้างอิงแบบสอบถาม</a>
+                <a href="<?= base_url('user');?>" class="btn btn-info" style="width: 200px;">ข้อมูลผู้ใช้งาน</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="section-body">
         <div class="row">
             <div class="col-12 col-md-12 col-lg-12">
                 <div class="card">
@@ -12,20 +23,21 @@
                     <div class="card-body">
                         <h5>ค้นหาข้อมูล</h5>
                         <div>
-                            <form action="">
-                                <div class="row d-flex justify-content-center w-100">                                                                 
-                                    <div class="form-group col-md-4">                                    
-                                        <label>ชื่อ - นามสกุล</label>                                        
-                                        <input type="text" class="form-control" name="name" id="name" value="<?=$filter;?>">
-                                    </div>                                                                     
+                            <form action="" id="form-search">
+                                <div class="row">                                
+                                    <div class="form-group col-md-3">
+                                        <label>ชื่อ - นามสกุล</label>
+                                        
+                                        <input type="text" class="form-control" name="name" id="name" value="">
+                                    </div>
+                                   
+                                    <div class="col-md-9 text-right" style="padding-top: 25px;">
+                                        <button type="submit" class="btn btn-info">ค้นหา</button>
+                                        <button type="button" class="btn btn-secondary" onclick="window.location.replace('<?=site_url('survay');?>');">ล้างค่า</button>
+                                    </div>                                    
                                 </div>
-                                <div class="col-md-12 text-right">
-                                  <button type="submit" class="btn btn-info">ค้นหา</button>
-                                  <button type="button" class="btn btn-secondary" onclick="window.location.replace('<?=site_url('member');?>');">ล้างค่า</button>
-                                </div>  
                             </form>
                         </div>
-                      
                       </div>
                         <br>
 

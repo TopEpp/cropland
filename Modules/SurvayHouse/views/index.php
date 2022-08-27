@@ -4,6 +4,18 @@
 
 <section class="section">
     <div class="section-body">
+        <div class="row" style="margin-bottom:15px">
+            <div class="col-md-12" style="text-align: center;">
+                <a href="<?= base_url('survay_house');?>" class="btn btn-info" style="width: 200px;">ข้อมูลแบบสอบถามครัวเรือน</a>
+                <a href="<?= base_url('dashboard/house');?>" class="btn btn-info" style="width: 200px;">แดชบอร์ดแบบสำรวจครัวเรือน</a>
+                <a href="<?= base_url('report/house');?>" class="btn btn-info" style="width: 200px;">รายงานสรุปครัวเรือน</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="section-body">
         <div class="row">
             <div class="col-12 col-md-12 col-lg-12">
                 <div class="card">
@@ -60,17 +72,18 @@
                                         </select>
                                     </div>
                                     <div class="form-group col-md-3">
-                                        <label>ชื่อหมู่บ้าน</label>                                
-                                        <select name="house_home" id="house_home" class="form-control select2">
+                                        <label>ชื่อหมู่บ้าน</label>                                        
+                                        <select name="house_home" id="house_home" class="form-control" required="">
                                             <option value="">ทั้งหมด</option>
                                             <?php foreach ($villages as $key => $value) :?>
-                                                <option <?=@$search['house_home'] == $value['VILL_CODE'] ? 'selected':'';?>  value="<?=$value['VILL_CODE'];?>"><?=$value['VILL_T'];?></option>
-                                            <?php endforeach;?>
+                                                <option <?=@$data['house_home'] == $value['Code'] ? 'selected':'';?>  value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
+                                            <?php endforeach?>
                                         </select>
+                                       
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label>จังหวัด</label>                                       
-                                        <select name="province" id="province" class="form-control ">                                            
+                                        <select name="province" id="province" class="form-control select2-ajax-province">                                            
                                             <option value="">ทั้งหมด</option>                                       
                                             <?php foreach ($province as $key => $value) :?>
                                                 <option <?=@$search['province'] == $value['Code'] ? 'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
@@ -79,7 +92,7 @@
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label>อำเภอ</label>                                       
-                                        <select name="amphur" id="amphur" class="form-control">
+                                        <select name="amphur" id="amphur" class="form-control select2-ajax-amphur">
                                             <?php foreach ($amphur as $key => $value) :?>
                                                 <option <?=@$search['amphur'] == $value['AMP_CODE'] ? 'selected':'';?> value="<?=$value['AMP_CODE'];?>"><?=$value['AMP_T'];?></option>
                                             <?php endforeach?> 
@@ -87,7 +100,7 @@
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label>ตำบล</label>                                       
-                                        <select name="tambon" id="tambon" class="form-control ">                                            
+                                        <select name="tambon" id="tambon" class="form-control select2-ajax-tambon">                                            
                                             <?php foreach ($tambon as $key => $value) :?>
                                                 <option <?=@$search['tambon'] == $value['TAM_CODE'] ? 'selected':'';?> value="<?=$value['TAM_CODE'];?>"><?=$value['TAM_T'];?></option>
                                             <?php endforeach?>                                      
@@ -215,6 +228,30 @@
                 }
             });
         })
+
+        $("#house_home").change(function(){
+            var village = $(this).val();
+            var project=  $("#interview_project_name").val()
+            var type=  $("#interview_project").val()
+            $.ajax({
+                type: "GET",
+                url: domain+'common/get-projectAddress?village='+village+'&project='+project+'&type='+type,
+                success : function(res){
+                    $(".select2-ajax-province").val(res.PROVINCE_ID).trigger("change");
+
+                    setTimeout(() => {
+                        $(".select2-ajax-amphur").val(res.AMPHUR_ID).trigger("change");
+                    }, 1000);
+
+                    setTimeout(() => {
+                        $(".select2-ajax-tambon").val(res.AMPHUR_ID).trigger("change");
+                    }, 1000);
+                  
+                }
+            });
+        })
+
+
 
         $("#province").change(function(){
             var province = $(this).val();

@@ -101,7 +101,8 @@ class Common extends BaseController
     public function projectAddress(){
         $village = $this->request->getVar('village');
         $project = $this->request->getVar('project');
-        $type = $this->request->getVar('type');
+        $type = $this->request->getVar('type'); 
+        
         
         $address = $this->model_common->getProjectAddress($village,$project,$type);
         return   $this->respond($address);

@@ -27,13 +27,13 @@ class Login extends BaseController
       ];
       $session = session();
       $session->set($ses_data);
-      return redirect()->to('/house');
+      return redirect()->to('/main');
 
 
       //connect to server
 
       // if($this->loginAD($username,$password)){
-      //   return redirect()->to('/house');
+      //   return redirect()->to('/main');
       // }else{
       //   return redirect()->to('/login');
       // }

@@ -3,6 +3,18 @@
 <?=$this->section("content")?>
 <section class="section">
     <div class="section-body">
+        <div class="row" style="margin-bottom:15px">
+            <div class="col-md-12" style="text-align: center;">
+                <a href="<?= base_url('survay_house');?>" class="btn btn-info" style="width: 200px;">ข้อมูลแบบสอบถามครัวเรือน</a>
+                <a href="<?= base_url('dashboard/house');?>" class="btn btn-info" style="width: 200px;">แดชบอร์ดแบบสำรวจครัวเรือน</a>
+                <a href="<?= base_url('report/house');?>" class="btn btn-info" style="width: 200px;">รายงานสรุปครัวเรือน</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="section-body">
         <div class="row">
             <div class="col-12 col-md-12 col-lg-12">
                 <div class="card">
@@ -65,7 +77,7 @@
                                         </div>  
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label>ชื่อหมู่บ้าน</label>                                        
+                                        <label>ชื่อหมู่บ้าน</label>
                                         <select name="house_home" id="house_home" class="form-control" required="">
                                             <option value=""></option>
                                             <?php foreach ($villages as $key => $value) :?>

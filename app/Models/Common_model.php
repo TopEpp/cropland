@@ -493,8 +493,7 @@ class Common_model extends Model
 
     $builder = $this->db->table('vLinkAreaDetail_growerCrops');
     $builder->select('PROVINCE_ID,TAMBOL_ID,AMPHUR_ID');    
-    if ($village != ''){      
-      
+    if ($village != ''){            
       $builder->where('VILLAGE_ID', $village);
       $builder->where('target_code_gis', $project);
       $builder->where('target_area_type_id', $type);  

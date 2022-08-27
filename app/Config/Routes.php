@@ -54,8 +54,6 @@ if (file_exists(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php')) {
 }
 
 
-$routes->get("/main", "Login::main");
-
 $routes->group("house", ["namespace" => "Modules\House\Controllers"], function ($routes) {
 	$routes->get("/", "House::index");
     $routes->get("manage(:any)", "House::manage$1");
@@ -256,6 +254,11 @@ $routes->group("api", ["namespace" => "Modules\Api\Controllers"], function ($rou
 
     $routes->get("convUTMtoLL", "Api::convUTMtoLL");
 
+
+});
+
+$routes->group("main", ["namespace" => "Modules\Main\Controllers"], function ($routes) {
+    $routes->get("/", "Main::index");
 
 });
 

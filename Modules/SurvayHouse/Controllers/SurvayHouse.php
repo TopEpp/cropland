@@ -37,6 +37,7 @@ class SurvayHouse extends BaseController
         $data['amphur'] = [];
         $data['tambon'] = [];
         $data['village'] = [];
+        $data['villages'] = [];
 
         // /search
         $data['search'] = $this->request->getGet();
@@ -66,10 +67,16 @@ class SurvayHouse extends BaseController
             }      
             if (!empty($data['search']['tambon'])){                
                 $data['village'] = $this->model_common->getVillages($data['search']['tambon'],$data['search']['amphur'],$data['search']['province']);      
-            }         
+            } 
+             if (!empty($data['search']['house_home'])){                                
+                $data['villages'] = $this->model_common->getProjectVillages($data['search']['interview_project_name']);       
+                // $address = $this->model_common->getProjectAddress($data['search']['house_home'],$data['search']['interview_project_name'],$data['search']['interview_project']);
+
+                
+            }                                   
         }
 
-        $data['villages'] = [];
+
         $data['province'] = $this->model_common->getProvince();
         $data['projects'] = $this->model_common->getProject();
         $data['projects_type'] = $this->model_api->getProjectType();
