@@ -186,7 +186,6 @@ class SurvayHouse extends BaseController
         $data['house_id'] = $house_id;    
         $data['interview_id'] = $interview_id;    
         $data['datas'] = $this->model_house->getAllHouseJob($interview_id,$id);
-  
         return view('Modules\SurvayHouse\Views\jobs', $data);
     }
     

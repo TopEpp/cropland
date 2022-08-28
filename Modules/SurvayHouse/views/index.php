@@ -120,10 +120,11 @@
                             <thead class="bg-info">
                                 <tr>
                                     <th width="5%" scope="col">ลำดับ</th>
+                                    <th width="15%" scope="col">ประเภทโครงการ</th>
                                     <th width="15%" scope="col">ชื่อโครงการ</th>
                                     <th width="10%" scope="col">ปีที่สำรวจ</th>
                                     <th width="15%" scope="col">ชื่อ-นามสกุล</th>
-                                    <th width="30%" scope="col">ที่อยู่</th>
+                                    <th width="25%" scope="col">ที่อยู่</th>
                                     <th width="10%" scope="col">จำนวนสมาชิก</th>
                                     <!-- <th width="10%" scope="col">จำนวนที่ดิน</th> -->
                                     
@@ -135,6 +136,7 @@
                                 <?php foreach ($data as $key => $value) :?>
                                     <tr>
                                         <th class="text-center" scope="row"><?=$key+1;?></th>
+                                        <td><?=@$value['interview_project'];?></td>
                                         <td><?=@$value['interview_project_name'];?></td>
                                         <td><?=@$value['interview_year'];?></td>
                                         <td><?=@$value['person_name'].' '.@$value['person_lastname'] ?></td>

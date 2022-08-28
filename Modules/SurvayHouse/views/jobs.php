@@ -64,7 +64,7 @@
                                                     <button  data-toggle="tooltip" data-placement="bottom" title="ดูรายละเอียด" onclick="loadJobsEdit(<?=$value['person_id'];?>)" class="btn btn-icon btn-primary"><i class="fas fa-eye"></i></button>
                                                 </td>                                               
                                                 <td class="text-right"><?=$value['job_count'];?></td>
-                                                <td class="text-right"><?=$value['job_salary'] ? number_format($value['job_salary']).' บาท':'-';?></td>
+                                                <td class="text-right"><?=$value['job_salary'] ? number_format($value['job_salary'] * $value['job_salary_year'] ? $value['job_salary_year'] :1).' บาท':'-';?></td>
                                             </tr>
                                             <?php $cout = $cout + 1;?>
                                         <?php endforeach;?>

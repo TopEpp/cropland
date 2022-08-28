@@ -76,7 +76,9 @@ class Report_model extends Model
         $builder->join('CODE_TAMBON', 'CAST(CODE_TAMBON.TAM_CODE as int) = LH_house.house_subdistrict and CODE_PROVINCE.Code = CODE_TAMBON.PROV_CODE and CODE_AMPHUR.AMP_CODE = CODE_TAMBON.AMP_CODE','left');      
         
         // $builder->join('CODE_PROJECT', 'CODE_PROJECT.Code = LH_interview_land.interview_project');
-        $builder->join('vLinkAreaDetail_growerCrops', 'vLinkAreaDetail_growerCrops.target_code_gis = LH_interview_land.interview_project','left');        
+        $builder->join('vLinkAreaDetail_growerCrops', 'vLinkAreaDetail_growerCrops.target_code_gis = LH_interview_house.interview_project_name and 
+        vLinkAreaDetail_growerCrops.target_area_type_id = LH_interview_house.interview_project and
+        vLinkAreaDetail_growerCrops.VILLAGE_ID = LH_house.house_home');    
 
         $builder->join('CODE_PROJECTVILLAGE', 'CODE_PROJECTVILLAGE.Code = LH_interview_land.interview_house_id and CODE_PROJECTVILLAGE.projectId = LH_interview_land.interview_project');
         $builder->join('LH_users','LH_users.emp_id = LH_interview_land.interview_user','left');
@@ -251,8 +253,11 @@ class Report_model extends Model
         $builder->join('LH_interview_house', 'LH_interview_house.interview_house = LH_house.house_id');
      
         // $builder->join('CODE_PROJECT', 'CODE_PROJECT.Code = LH_interview_house.interview_project_name');        
-        $builder->join('vLinkAreaDetail_growerCrops', 'vLinkAreaDetail_growerCrops.target_code_gis = LH_interview_house.interview_project_name');        
+      
         $builder->join('LH_house_person', 'LH_house_person.house_id = LH_house.house_id','left');
+        $builder->join('vLinkAreaDetail_growerCrops', 'vLinkAreaDetail_growerCrops.target_code_gis = LH_interview_house.interview_project_name and 
+        vLinkAreaDetail_growerCrops.target_area_type_id = LH_interview_house.interview_project and
+        vLinkAreaDetail_growerCrops.VILLAGE_ID = LH_house.house_home');  
 
         $builder->join('LH_house_land', 'LH_house_land.person_id = LH_house_person.person_id','left');
         $builder->join('LH_land', 'LH_land.land_id = LH_house_land.land_id','left');
@@ -303,8 +308,11 @@ class Report_model extends Model
         $builder->join('LH_interview_house', 'LH_interview_house.interview_house = LH_house.house_id');
      
         // $builder->join('CODE_PROJECT', 'CODE_PROJECT.Code = LH_interview_house.interview_project_name');        
-        $builder->join('vLinkAreaDetail_growerCrops', 'vLinkAreaDetail_growerCrops.target_code_gis = LH_interview_house.interview_project_name');        
+     
         $builder->join('LH_house_person', 'LH_house_person.house_id = LH_house.house_id','left');
+        $builder->join('vLinkAreaDetail_growerCrops', 'vLinkAreaDetail_growerCrops.target_code_gis = LH_interview_house.interview_project_name and 
+        vLinkAreaDetail_growerCrops.target_area_type_id = LH_interview_house.interview_project and
+        vLinkAreaDetail_growerCrops.VILLAGE_ID = LH_house.house_home');  
         $builder->join('LH_prefix', 'LH_prefix.prefix_id = LH_house_person.person_prename');
 
         $builder->join('LH_house_land', 'LH_house_land.person_id = LH_house_person.person_id','left');
@@ -404,8 +412,11 @@ class Report_model extends Model
         $builder->join('LH_interview_house', 'LH_interview_house.interview_house = LH_house.house_id');      
      
         // $builder->join('CODE_PROJECT', 'CODE_PROJECT.Code = LH_interview_house.interview_project_name');        
-        $builder->join('vLinkAreaDetail_growerCrops', 'vLinkAreaDetail_growerCrops.target_code_gis = LH_interview_house.interview_project_name');        
+          
         $builder->join('LH_house_person', 'LH_house_person.house_id = LH_house.house_id','left');
+        $builder->join('vLinkAreaDetail_growerCrops', 'vLinkAreaDetail_growerCrops.target_code_gis = LH_interview_house.interview_project_name and 
+        vLinkAreaDetail_growerCrops.target_area_type_id = LH_interview_house.interview_project and
+        vLinkAreaDetail_growerCrops.VILLAGE_ID = LH_house.house_home');  
 
         $builder->join('LH_interview_land', 'LH_interview_land.interview_person_id = LH_house_person.person_id','left');
         $builder->join('LH_interview_land_detail', 'LH_interview_land_detail.interview_id = LH_interview_land.interview_id','left');

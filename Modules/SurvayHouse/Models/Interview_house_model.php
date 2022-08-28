@@ -40,8 +40,9 @@ class Interview_house_model extends Model
         
       $builder =  $this->table('LH_interview_house');
       // max( CODE_PROJECT.Description) as interview_project_name,
-      $builder->select("   
+      $builder->select("
         LH_interview_house.interview_id,
+        max( vLinkAreaDetail_growerCrops.target_area_type_title) as interview_project,
         max( vLinkAreaDetail_growerCrops.target_name) as interview_project_name,
         max( LH_interview_house.interview_year) as interview_year,
         max( LH_house.house_id) as house_id,
@@ -55,10 +56,14 @@ class Interview_house_model extends Model
     ");
 
       // $builder->join('CODE_PROJECT', 'CODE_PROJECT.Code = LH_interview_house.interview_project_name','left');
-      $builder->join('vLinkAreaDetail_growerCrops', 'vLinkAreaDetail_growerCrops.target_code_gis = LH_interview_house.interview_project_name','left');
+    
 
       $builder->join('LH_house', 'LH_house.house_id = LH_interview_house.interview_house','left');
       $builder->join('LH_house_person', 'LH_house.house_id = LH_house_person.house_id','left');
+
+      $builder->join('vLinkAreaDetail_growerCrops', 'vLinkAreaDetail_growerCrops.target_code_gis = LH_interview_house.interview_project_name and 
+      vLinkAreaDetail_growerCrops.target_area_type_id = LH_interview_house.interview_project and
+      vLinkAreaDetail_growerCrops.VILLAGE_ID = LH_house.house_home');
 
       $builder->join('CODE_PROVINCE', 'CODE_PROVINCE.Code = LH_house.house_province','left');
       $builder->join('CODE_AMPHUR', 'CAST(CODE_AMPHUR.AMP_CODE as int) = LH_house.house_district and CODE_PROVINCE.Code = CODE_AMPHUR.PROV_CODE','left');      
@@ -190,6 +195,7 @@ class Interview_house_model extends Model
       count(LH_person_job.job_id) as job_count,
       max(LH_house_person.family_id) as family_id,      
       max(LH_house_person.person_id) as person_id,
+      max(LH_person_job.job_salary_year) as job_salary_year,
       max(LH_house_person.person_name) as person_name,
       max(LH_house_person.person_lastname) as person_lastname');
       $builder->where('LH_interview_house.interview_id',$interview_id);
