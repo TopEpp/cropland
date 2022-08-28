@@ -16,6 +16,18 @@
 
 <section class="section">
     <div class="section-body">
+        <div class="row" style="margin-bottom:15px">
+            <div class="col-md-12" style="text-align: center;">
+                <a href="<?= base_url('survay_house');?>" class="btn btn-info" style="width: 200px;">ข้อมูลแบบสอบถามครัวเรือน</a>
+                <a href="<?= base_url('dashboard/house');?>" class="btn btn-info" style="width: 200px;">แดชบอร์ดแบบสำรวจครัวเรือน</a>
+                <a href="<?= base_url('report/house');?>" class="btn btn-info" style="width: 200px;">รายงานสรุปครัวเรือน</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="section-body">
         <div class="row">
             <div class="col-12 col-md-12 col-lg-12">
                 <div class="card m-0 p-0">
@@ -26,36 +38,35 @@
                     <h5>ค้นหาข้อมูล</h5>
                         <div>
                             <form action="">
-                                <div class="row d-flex justify-content-center w-100">                                                                 
+                                <div class="row d-flex justify-content-center w-100">
+                                    <div class="form-group col-md-4">                                    
+                                        <label>ปีสำรวจ</label>                                       
+                                        <select name="year" id="year" class="form-control select2">
+                                            <option value="">ทั้งหมด</option>
+                                            <?php foreach (getYear() as $key => $value) :?>
+                                                <option <?php if($value==$search['year']){ echo 'selected="selected"';}?>  value="<?=$value;?>"><?=$value;?></option>
+                                            <?php endforeach;?>
+                                        </select>
+                                    </div>                                                                   
                                     <div class="form-group col-md-4">                                    
                                         <label>ประเภทโครงการ</label>                                       
                                         <select name="project_type" id="project_type" class="form-control select2">
                                             <option value="">ทั้งหมด</option>
                                             <?php foreach ($projects_type as $key => $value) :?>
-                                                <option <?=@$data['project_type'] == $value['Code']?'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
+                                                <option <?=@$search['project_type'] == $value['Code']?'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                             <?php endforeach;?>
                                             
                                         </select>
                                     </div>   
                                     <div class="form-group col-md-4">                                    
-                                        <label>โครงการ</label>                                       
+                                        <label>ชื่อโครงการ</label>                                       
                                         <select name="project_name" id="project_name" class="form-control select2">
                                             <option value="">ทั้งหมด</option>
                                             <?php foreach ($projects as $key => $value) :?>
                                                 <option <?=@$search['interview_project_name'] == $value['Code']?'selected':'';?> value="<?=$value['Code'];?>"><?=$value['Name'];?></option>
                                             <?php endforeach;?>
                                         </select>
-                                    </div>  
-                                    <div class="form-group col-md-4">                                    
-                                        <label>ปีสำรวจ</label>                                       
-                                        <select name="year" id="year" class="form-control select2">
-                                            <option value="">ทั้งหมด</option>
-                                            <?php foreach (getYear() as $key => $value) :?>
-                                                <option value="<?=$value;?>"><?=$value;?></option>
-                                            <?php endforeach;?>
-                                        </select>
-                                    </div>                                  
-                                                                     
+                                    </div>                 
                                 </div>
                                 <div class="col-md-12 text-center">
                                     <button type="submit" class="btn btn-info">ค้นหา</button>
@@ -67,165 +78,31 @@
                     
                         <br>
                         <div class="row">
+                            <div class="col-md-8">
+                                <div class="text-center" style="height:400px; border: 1px solid #ccc; border-radius: 10px; padding:25px;">
+                                    <h6>สรุปข้อมูลด้านรายได้ จำแนกตามประเภท</h6>
+                                    <canvas id="chart_income"  height="400px" style="height:400px !important ;"></canvas>
+                                </div>
+                            </div>
                             <div class="col-md-4">
-                                <div class="text-center">
+                                <div class="text-center" style="border: 1px solid #ccc; border-radius: 10px; padding:25px;">
                                     <h6>จำนวนประชากร จำแนกตามเพศ</h6>
-                                    <canvas id="myChart" width="400" height="400"></canvas>
+                                    <canvas id="myChart" height="400px" style="height:400px !important ;"></canvas>
                                 </div>
-                                <div class="mt-2">
-                                    <table class="table table-bordered">
-                                        <thead class="bg-info">
-                                            <tr>
-                                                <th colspan="3" class="text-center">จำนวนประชากร</th>
-                                            </tr>
-                                            <tr>
-                                                <th>เพศ</th>
-                                                <th>จำนวน(คน)</th>
-                                                <th>อัตราส่วน</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>ชาย</td>
-                                                <td class="text-center">0</td>
-                                                <td class="text-center">0</td>
-                                            </tr>
-                                            <tr>
-                                                <td>หญิง</td>
-                                                <td class="text-center">0</td>
-                                                <td class="text-center">0</td>
-                                            </tr>       
-                                            <tr>
-                                                <td>ด.ช.</td>
-                                                <td class="text-center">0</td>
-                                                <td class="text-center">0</td>
-                                            </tr>       
-                                            <tr>
-                                                <td>ด.ญ.</td>
-                                                <td class="text-center">0</td>
-                                                <td class="text-center">0</td>
-                                            </tr>       
-                                            <tr>
-                                                <td>ไม่ระบุ</td>
-                                                <td class="text-center">0</td>
-                                                <td class="text-center">0</td>
-                                            </tr>                                              
-                                        </tbody>
-                                        <tfooter>
-                                            <tr>
-                                                <td>รวม</td>
-                                                <td>263</td>
-                                            </tr>
-                                        </tfooter>
-                                    </table>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="text-center" style="height:400px; border: 1px solid #ccc; border-radius: 10px; padding:25px;">
+                                    <h6>สรุปข้อมูลด้านรายจ่าย จำแนกตามประเภท</h6>
+                                    <canvas id="chart_outcome"  height="400px" style="height:400px !important ;"></canvas>
                                 </div>
                             </div>
                             <div class="col-md-4">
-                            <div class="text-center">
-                                    <h6>โครงสร้างประชากร จำแนกตามช่วงอายุ</h6>
-                                    <canvas id="myChart1" width="400" height="400"></canvas>
-                                </div>
-                                <div class="mt-2">
-                                    <table class="table table-bordered">
-                                        <thead class="bg-info">
-                                            <tr>
-                                                <th colspan="3" class="text-center">จำนวนประชากร</th>
-                                            </tr>
-                                            <tr>
-                                                <th>ช่วงอายุ</th>
-                                                <th>จำนวน(คน)</th>
-                                                <th>อัตราส่วน</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>วัยสูงอายุ (มากกว่า 60 ปี)</td>
-                                                <td>0</td>
-                                                <td>0</td>
-                                            </tr>
-                                            <tr>
-                                                <td>วัยแรงงาน (15 - 59 ปี)</td>
-                                                <td>0</td>
-                                                <td>0</td>
-                                            </tr>
-                                            <tr>
-                                                <td>วัยเด็ก (0 - 14 ปี)	</td>
-                                                <td>0</td>
-                                                <td>0</td>
-                                            </tr>
-                                            <tr>
-                                                <td>ไม่ระบุ</td>
-                                                <td>0</td>
-                                                <td>0</td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>                                           
-                                                                       
-                                        </tbody>
-                                        <tfooter>
-                                            <tr>
-                                                <td>รวม</td>
-                                                <td>263</td>
-                                            </tr>
-                                        </tfooter>
-                                    </table>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                            <div class="text-center">
-                                    <h6>โครงสร้างประชากร จำแนกตามชนเผ่า</h6>
-                                    <canvas id="myChart2" width="400" height="400"></canvas>
-                                </div>
-                                <div class="mt-2">
-                                    <table class="table table-bordered">
-                                        <thead class="bg-info">
-                                            <tr>
-                                                <th colspan="3" class="text-center">จำนวนประชากร</th>
-                                            </tr>
-                                            <tr>
-                                                <th>ชนเผ่า</th>
-                                                <th>จำนวน(คน)</th>
-                                                <th>อัตราส่วน</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>กะเหรี่ยง</td>
-                                                <td>0</td>
-                                                <td>0</td>
-                                            </tr>
-                                            <tr>
-                                                <td>ลีชู ลีซอ</td>
-                                                <td>0</td>
-                                                <td>0</td>
-                                            </tr>
-                                            <tr>
-                                                <td>ไทยพื้นราบ</td>
-                                                <td>0</td>
-                                                <td>0</td>
-                                            </tr>                                         
-                                            <tr>
-                                                <td>ไม่ระบุ</td>
-                                                <td>0</td>
-                                                <td>0</td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                           
-                                        </tbody>
-                                        <tfooter>
-                                            <tr>
-                                                <td>รวม</td>
-                                                <td>250</td>
-                                            </tr>
-                                        </tfooter>
-                                    </table>
+                                <div class="text-center" style="border: 1px solid #ccc; border-radius: 10px; padding:25px;">
+                                    <h6>สรุปข้อมูลเปรียบเทียบรายรับ รายจ่าย</h6>
+                                    <canvas id="chart_sum"  height="400px"></canvas>
                                 </div>
                             </div>
                         </div>
@@ -264,18 +141,137 @@
             });
         })
 
+        const ctx1 = document.getElementById('chart_income');
+        ctx1.height = 500;
+        const chart_income = new Chart(ctx1, {
+            type: 'bar',
+            data: {
+                labels: ['เงินผู้สูงอายุ','บัตรประชารัฐ','บุตรส่งเงิน','บัตรผู้พิการ','เงินช่วยเหลือภัยพิบัติ','เงินค่าประกันสินค้าเกษตร','อื่นๆ'],
+                datasets: [{
+                    label: 'จำนวน (บาท)',
+                    data: [<?php echo @$sum_income[1]?>,
+                            <?php echo @$sum_income[2]?>,
+                            <?php echo @$sum_income[3]?>,
+                            <?php echo @$sum_income[4]?>,
+                            <?php echo @$sum_income[5]?>,
+                            <?php echo @$sum_income[6]?>,
+                            <?php echo @$sum_income[7]?>],
+                    backgroundColor: [
+                        'rgba(155, 81, 224, 1)',
+                        'rgba(0, 122, 255, 1)',
+                        'rgba(118, 214, 132, 1)',
+                        'rgba(243, 130, 90, 1)',
+                        'rgba(32, 213, 206, 1)',
+                        'rgba(234, 84, 85, 1)'
+                    ],
+                    borderColor: [
+                        'rgba(155, 81, 224, 1)',
+                        'rgba(0, 122, 255, 1)',
+                        'rgba(118, 214, 132, 1)',
+                        'rgba(243, 130, 90, 1)',
+                        'rgba(32, 213, 206, 1)',
+                        'rgba(234, 84, 85, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                    display: false
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: {
+                        display: false
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            display: false
+                        }                        
+                    },                   
+                }
+            }
+        });
+
+        const ctx_out = document.getElementById('chart_outcome');
+        const chart_outcome = new Chart(ctx_out, {
+            type: 'bar',
+            data: {
+                labels: ['ค่าเครื่องนุ่มห่ม','ค่าที่อยู่อาศัย','ค่าการศึกษา','ค่ายารักษาโรค','ค่าน้ำมัน','ค่าเติมเงินมือถือ','ค่าทำบุญ','ค่าหวย/สุรา','รายจ่ายในการอุปโภค','รายจ่ายในการบริโภค'],
+                datasets: [{
+                    label: 'จำนวน (บาท)',
+                    data: [<?php echo @$sum_outcome[1]?>,
+                            <?php echo @$sum_outcome[2]?>,
+                            <?php echo @$sum_outcome[3]?>,
+                            <?php echo @$sum_outcome[4]?>,
+                            <?php echo @$sum_outcome[5]?>,
+                            <?php echo @$sum_outcome[6]?>,
+                            <?php echo @$sum_outcome[7]?>,
+                            <?php echo @$sum_outcome[8]?>,
+                            <?php echo @$sum_outcome[9]?>,
+                            <?php echo @$sum_outcome[10]?>,],
+                    backgroundColor: [
+                        'rgba(155, 81, 224, 1)',
+                        'rgba(0, 122, 255, 1)',
+                        'rgba(118, 214, 132, 1)',
+                        'rgba(243, 130, 90, 1)',
+                        'rgba(32, 213, 206, 1)',
+                        'rgba(234, 84, 85, 1)'
+                    ],
+                    borderColor: [
+                        'rgba(155, 81, 224, 1)',
+                        'rgba(0, 122, 255, 1)',
+                        'rgba(118, 214, 132, 1)',
+                        'rgba(243, 130, 90, 1)',
+                        'rgba(32, 213, 206, 1)',
+                        'rgba(234, 84, 85, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                    display: false
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: {
+                        display: false
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            display: false
+                        }                        
+                    },                   
+                }
+            }
+        });
+
+
         const ctx = document.getElementById('myChart');
         const myChart = new Chart(ctx, {
             type: 'pie',
             data: {
-                labels: ['ชาย', 'หญิง', 'เด็กหญิง', 'เด็กชาย'],
+                labels: ['ชาย', 'หญิง', 'ไม่ระบุ'],
                 datasets: [{
                     label: '',
-                    data: [40, 30, 20, 10],
+                    data: [<?php echo $sum_gender['sum_m']?>, <?php echo $sum_gender['sum_f']?>, <?php echo $sum_gender['sum_0']?>],
                     backgroundColor: [
                         'rgb(255, 99, 132,0.5)',
                         'rgb(54, 162, 235,0.5)',
-                        'rgb(255, 205, 86,0.5)',
+                        'rgb(200, 205, 86,0.5)',
                         'rgb(255, 200, 132,0.5)',
                         'rgb(20, 150, 235,0.5)',
                         'rgb(100, 205, 86,0.5)'
@@ -283,7 +279,7 @@
                     borderColor: [
                         'rgb(255, 99, 132,0.5)',
                         'rgb(54, 162, 235,0.5)',
-                        'rgb(255, 205, 86,0.5)',
+                        'rgb(200, 205, 86,0.5)',
                         'rgb(255, 200, 132,0.5)',
                         'rgb(20, 150, 235,0.5)',
                         'rgb(100, 205, 86,0.5)'
@@ -292,6 +288,8 @@
                 }]
             },
             options: {
+                // responsive: true,
+                // maintainAspectRatio: false
                 // scales: {
                 //     y: {
                 //         beginAtZero: true
@@ -300,50 +298,14 @@
             }
         });
 
-        const ctx1 = document.getElementById('myChart1');
-        const myChart1 = new Chart(ctx1, {
-            type: 'pie',
-            data: {
-                labels: ['วัยสูงอายุ (มากกว่า 60 ปี)', 'วัยแรงงาน (15 - 59 ปี)', 'วัยเด็ก (0 - 14 ปี)', 'ไม่ระบุ'],
-                datasets: [{
-                    label: '# of Votes',
-                    data: [12, 19, 3, 5, 2, 3],
-                    backgroundColor: [
-                        'rgb(255, 99, 132,0.5)',
-                        'rgb(54, 162, 235,0.5)',
-                        'rgb(255, 205, 86,0.5)',
-                        'rgb(255, 200, 132,0.5)',
-                        'rgb(20, 150, 235,0.5)',
-                        'rgb(100, 205, 86,0.5)'
-                    ],
-                    borderColor: [
-                        'rgb(255, 99, 132,0.5)',
-                        'rgb(54, 162, 235,0.5)',
-                        'rgb(255, 205, 86,0.5)',
-                        'rgb(255, 200, 132,0.5)',
-                        'rgb(20, 150, 235,0.5)',
-                        'rgb(100, 205, 86,0.5)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                // scales: {
-                //     y: {
-                //         beginAtZero: true
-                //     }
-                // }
-            }
-        });
-
-        const ctx2 = document.getElementById('myChart2');
+        const ctx2 = document.getElementById('chart_sum');
         const myChart2 = new Chart(ctx2, {
             type: 'pie',
             data: {
-                labels: ['กะเหรี่ยง', 'ลีชู ลีซอ', 'ไทยพื้นราบ', 'ไม่ระบุ'],
+                labels: ['รายรับ', 'รายจ่าย'],
                 datasets: [{
-                    label: '# of Votes',
-                    data: [30, 5, 30, 40],
+                    label: 'จำนวน (บาท)',
+                    data: [<?php echo array_sum($sum_income)?>,<?php echo array_sum($sum_outcome)?>],
                     backgroundColor: [
                         'rgb(255, 99, 132,0.5)',
                         'rgb(54, 162, 235,0.5)',
@@ -364,6 +326,8 @@
                 }]
             },
             options: {
+                // responsive: true,
+                // maintainAspectRatio: false
                 // scales: {
                 //     y: {
                 //         beginAtZero: true
@@ -371,7 +335,9 @@
                 // }
             }
         });
-    })
+
+        
+    });
 
 </script>
 <?=$this->endSection()?>
