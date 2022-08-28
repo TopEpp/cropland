@@ -52,9 +52,17 @@ class Dashboard extends BaseController
     }
 
     public function house(){
+        $data['search'] = $this->request->getGet();
+        if(empty($data['search']['year'])){
+            $data['search']['year'] = date('Y')+543;
+        }
 
         $data['projects_type'] = $this->model_api->getProjectType();
         $data['projects'] = $this->model_common->getProject();
+
+        $data['sum_gender'] = $this->model_dashboard->getSumGender($data['search']);
+        $data['sum_income'] = $this->model_dashboard->getSumIncome($data['search']);
+        $data['sum_outcome'] = $this->model_dashboard->getSumOutcome($data['search']);
         return view('Modules\Dashboard\Views\house',$data);
     }
     

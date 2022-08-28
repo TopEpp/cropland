@@ -4,6 +4,75 @@ use CodeIgniter\Model;
 
 class Dashboard_model extends Model
 {
+    function getSumGender($search){
+        $builder = $this->db->table('LH_house_person');
+        $builder->select('SUM(CASE WHEN LH_house_person.person_prename=1 OR LH_house_person.person_prename=4 THEN 1 ELSE 0 END) as sum_m,
+                          SUM(CASE WHEN LH_house_person.person_prename=2 OR LH_house_person.person_prename=3 OR LH_house_person.person_prename=5 THEN 1 ELSE 0 END) as sum_f,
+                          SUM(CASE WHEN LH_house_person.person_prename=6 THEN 1 ELSE 0 END) as sum_o');
+        $builder->join('LH_house', 'LH_house.house_id = LH_house_person.house_id','left');
+        $builder->join('LH_interview_house', 'LH_house.house_id = LH_interview_house.interview_house');
+        $builder->where('LH_interview_house.interview_year',$search['year']);
+        if(!empty($search['project_type'])){
+            $builder->where('LH_interview_house.interview_project',$search['project_type']);
+        }
+
+        if(!empty($search['project_name'])){
+            $builder->where('LH_interview_house.interview_project_name',$search['project_name']);
+        }
+
+        $query = $builder->get()->getRowArray();
+        
+        return $query;
+    }
+
+    function getSumIncome($search){
+        $data = array();
+        $builder = $this->db->table('LH_house_person');
+        $builder->select('LH_person_income.income_type, SUM(LH_person_income.income_value*LH_person_income.income_month) AS income_value');
+        $builder->join('LH_house', 'LH_house.house_id = LH_house_person.house_id','left');
+        $builder->join('LH_interview_house', 'LH_house.house_id = LH_interview_house.interview_house');
+        $builder->join('LH_person_income', 'LH_person_income.person_id = LH_house_person.person_id','left');
+        $builder->where('LH_interview_house.interview_year',$search['year']);
+        if(!empty($search['project_type'])){
+            $builder->where('LH_interview_house.interview_project',$search['project_type']);
+        }
+
+        if(!empty($search['project_name'])){
+            $builder->where('LH_interview_house.interview_project_name',$search['project_name']);
+        }
+        $builder->groupBy('income_type');
+        $query = $builder->get()->getResultArray();
+        foreach($query as $row){
+            $data[$row['income_type']] = $row['income_value'];
+        }
+
+        return $data;
+    }
+
+    function getSumOutcome($search){
+        $data = array();
+        $builder = $this->db->table('LH_house_person');
+        $builder->select('LH_person_outcome.outcome_type, 
+                            SUM(LH_person_outcome.outcome_value*LH_person_outcome.outcome_month) AS outcome_value');
+        $builder->join('LH_house', 'LH_house.house_id = LH_house_person.house_id','left');
+        $builder->join('LH_interview_house', 'LH_house.house_id = LH_interview_house.interview_house');
+        $builder->join('LH_person_outcome', 'LH_person_outcome.person_id = LH_house_person.person_id','left');
+        $builder->where('LH_interview_house.interview_year',$search['year']);
+        if(!empty($search['project_type'])){
+            $builder->where('LH_interview_house.interview_project',$search['project_type']);
+        }
+
+        if(!empty($search['project_name'])){
+            $builder->where('LH_interview_house.interview_project_name',$search['project_name']);
+        }
+        $builder->groupBy('outcome_type');
+        $query = $builder->get()->getResultArray();
+        foreach($query as $row){
+            $data[$row['outcome_type']] = $row['outcome_value'];
+        }
+
+        return $data;
+    }
   
     public function getIncome(){
 
