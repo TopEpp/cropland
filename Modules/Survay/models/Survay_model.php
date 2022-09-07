@@ -21,7 +21,7 @@ class Survay_model extends Model
                                 ];
 
     public function getAllSurvay($id = '',$search = []){
-
+        
         $builder = $this->db->table('LH_interview_land');
 
         $builder->select("
@@ -60,8 +60,7 @@ class Survay_model extends Model
         // $builder->join('vLinkAreaDetail_growerCrops', 'vLinkAreaDetail_growerCrops.target_code_gis = LH_interview_land.interview_area','left');        
 
         $builder->join('vLinkAreaDetail_growerCrops', 'vLinkAreaDetail_growerCrops.target_code_gis = LH_interview_land.interview_area and 
-        vLinkAreaDetail_growerCrops.target_area_type_id = LH_interview_house.interview_project and
-        vLinkAreaDetail_growerCrops.VILLAGE_ID = LH_house.house_home');  
+        vLinkAreaDetail_growerCrops.target_area_type_id = LH_interview_land.interview_project');  
         
         $builder->join('CODE_PROJECTVILLAGE', 'CODE_PROJECTVILLAGE.Code = LH_interview_land.interview_house_id and CODE_PROJECTVILLAGE.projectId = LH_interview_land.interview_project','left');
         // $builder->join('VIEW_agriculturist_name','VIEW_agriculturist_name.id_card = LH_interview_land.interview_user','left');
