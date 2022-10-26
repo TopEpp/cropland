@@ -17,17 +17,17 @@
 <section class="section">
     <div class="section-body">
         <div class="row">
-            <div class="col-12 col-md-12 col-lg-12">              
+            <div class="col-12 col-md-12 col-lg-12">
                 <div class="card">
                     <div class="card-header">
                         <h4 class="text-dark">รายงานแบบสอบถามข้อมูลที่ดินรายแปลง</h4>
-                      
+
                     </div>
                     <div class="card-body">
                         <h5>ค้นหาข้อมูล</h5>
                         <div>
                             <form action="">
-                                <div class="row">                                
+                                <div class="row">
                                     <div class="form-group col-md-3">
                                         <label>ปีสำรวจ</label>
                                         <select name="interview_year" id="interview_year" class="form-control select2">
@@ -38,7 +38,7 @@
                                         </select>
                                     </div>
                                     <div class="form-group col-md-3">
-                                        <label>ลุ่มน้ำหลัก</label>                                       
+                                        <label>ลุ่มน้ำหลัก</label>
                                         <select name="interview_basin" id="interview_basin" class="form-control select2">
                                             <option value="">เลือก</option>
                                             <?php foreach ($basins as $key => $value) :?>
@@ -47,7 +47,7 @@
                                         </select>
                                     </div>
                                     <div class="form-group col-md-3">
-                                        <label>ประเภทโครงการ</label>                                       
+                                        <label>ประเภทโครงการ</label>
                                         <select name="interview_type" id="interview_type" class="form-control select2">
                                             <option value="">ทั้งหมด</option>
                                             <?php foreach ($projects_type as $key => $value) :?>
@@ -56,7 +56,7 @@
                                         </select>
                                     </div>
                                     <div class="form-group col-md-3">
-                                        <label>ชื่อโครงการ</label>                                       
+                                        <label>ชื่อโครงการ</label>
                                         <select name="interview_project" id="interview_project" class="form-control select2">
                                             <option value="">ทั้งหมด</option>
                                             <?php foreach ($projects as $key => $value) :?>
@@ -65,52 +65,53 @@
                                         </select>
                                     </div>
                                     <!-- <div class="form-group col-md-3">
-                                        <label>กลุ่มบ้าน</label>                                       
+                                        <label>กลุ่มบ้าน</label>
                                         <select name="interview_house_id" id="interview_house_id" class="form-control select2-ajax-house">
                                             <?php if(!empty($search['interview_house_id'])):?>
                                                 <option value="<?=$search['interview_house_id'];?>"><?=$data_search['house']['Name']?></option>
                                             <?php else:?>
                                                 <option value="">ทั้งหมด</option>
-                                            <?php endif;?>    
-                                           
+                                            <?php endif;?>
+
                                         </select>
                                     </div>
                                     <div class="form-group col-md-3">
-                                        <label>ชื่อเจ้าของแปลง</label>                                       
+                                        <label>ชื่อเจ้าของแปลง</label>
                                         <select name="interview_person_id" id="interview_person_id" class="form-control select2-ajax-person">
                                          <?php if(!empty($search['interview_person_id'])):?>
                                                 <option value="<?=$search['interview_person_id'];?>"><?=$data_search['person']['person_name'].' '.$data_search['person']['person_lastname'];?></option>
                                             <?php else:?>
                                                 <option value="">ทั้งหมด</option>
-                                            <?php endif;?>    
-                                           
+                                            <?php endif;?>
+
                                         </select>
                                     </div>
                                     <div class="form-group col-md-3">
-                                        <label>รหัสแปลง</label>                                       
+                                        <label>รหัสแปลง</label>
                                         <select name="interview_code" id="interview_code" class="form-control select2-ajax-land">
                                             <?php if(!empty($search['interview_code'])):?>
                                                 <option value="<?=$search['interview_code'];?>"><?=$data_search['land']['land_code']?></option>
                                             <?php else:?>
                                                 <option value="">ทั้งหมด</option>
-                                            <?php endif;?>                                             
+                                            <?php endif;?>
                                         </select>
                                     </div> -->
                                     <div class="col-md-12 text-right">
                                         <button type="submit" class="btn btn-info">ค้นหา</button>
                                         <button type="button" class="btn btn-secondary" onclick="window.location.replace('<?=site_url('report/survay');?>');">ล้างค่า</button>
                                         <button type="button" class="btn btn-primary" onclick="generateExcel()">Export Excel</button>
-                                    </div>                                    
+                                    </div>
                                 </div>
                             </form>
                         </div>
-                      
+
+
                         <div class="row">
-                            <div class="col-md-2">จำนวนแปลง 2 แปลง</div>
-                            <div class="col-md-2">จำนวนเกษตรกร 1 ราย</div>
-                            <div class="col-md-2">พื้นที่แปลงรวม 15 ไร่</div>
+                            <div class="col-md-2">จำนวนแปลง <?= count(array_count_values(array_column($data, 'land_code')));?> แปลง</div>
+                            <div class="col-md-2">จำนวนเกษตรกร <?= count(array_count_values(array_column($data, 'person_id')));?> ราย</div>
+                            <div class="col-md-2">พื้นที่แปลงรวม <?= array_sum(array_column($data, 'land_address'));?> ไร่</div>
                         </div>
-                        
+
                         <br>
                         <div class="table-responsive">
                             <table class="table table-bordered" id="table_with_data">
@@ -152,13 +153,13 @@
                                                         <?=@$value['BasinName'];?>
                                                     </div>
                                                 </td>
-                                                <td> 
+                                                <td>
                                                     <div style="width: 150px" ><?=@$value['project_name'];?></div>
                                                 </td>
                                                 <td>
                                                     <div style="width: 80px" ><?=@$value['project_area'];?></div>
                                                 </td>
-                                                <td>                                                
+                                                <td>
                                                     <div style="width: 80px" ><?=$value['project_village'];?></div>
                                                 </td>
                                                 <td>
@@ -167,20 +168,20 @@
                                                             <?=$value['land_code'];?>
                                                         </a>
                                                     </div>
-                                                
+
                                                 </td>
                                                 <td><div style="width: 100px"><?=$value['person_name'];?></div></td>
                                                 <td><div style="width: 100px"><?=house_person_type($value['person_type_number']);?></div></td>
                                                 <td><div style="width: 110px"><?=$value['person_number'];?></div></td>
                                                 <td><?=$value['house_number'];?></td>
-                                                <td><div style="width: 100px"><?=$value['person_village'];?></div></td>   
+                                                <td><div style="width: 100px"><?=$value['person_village'];?></div></td>
                                                 <td><?=$value['house_moo'];?></td>
                                                 <td><?=$value['tam_name_t'];?></td>
                                                 <td><?=$value['amp_name_t'];?></td>
                                                 <td><?=$value['pro_name_t'];?></td>
-                                                <td><div style="width: 120px"><?=$value['land_detail'];?></div></td>                                                 
-                                                <td><?=$value['interview_year'];?></td>         
-                                                <td><?=$value['land_address'];?></td>     
+                                                <td><div style="width: 120px"><?=$value['land_detail'];?></div></td>
+                                                <td><?=$value['interview_year'];?></td>
+                                                <td><?=$value['land_address'];?></td>
                                                 <td><?=$value['land_possess'];?></td>
                                                 <td><div style="width: 100px"><?=utilization_type($value['interview_land_utilization_type']);?></div></td>
                                                 <td><div style="width: 50px"><?=land_use_type($value['interview_land_use_type']);?></div></td>
@@ -189,10 +190,10 @@
                                                 <td><div style="width: 100px"><?=$value['land_supports'];?></div></td>
                                                 <td><div style="width: 100px"><?=$value['land_support_org'];?></div></td>
                                                 <td><div style="width: 100px"><?=$value['land_needs'];?></div></td>
-                                                <td><div style="width: 100px"><?=$value['land_problems'];?></div></td>    
+                                                <td><div style="width: 100px"><?=$value['land_problems'];?></div></td>
 
-                                                
-                    
+
+
                                             </tr>
                                         <?php endforeach;?>
                                     <?php else:?>
@@ -200,7 +201,7 @@
                                             <td colspan="18" class="text-center">ไม่พบข้อมูล</td>
                                         </tr>
                                     <?php endif;?>
-                                
+
                                 </tbody>
                             </table>
                         </div>
@@ -254,5 +255,3 @@
 </script>
 
 <?=$this->endSection()?>
-  
-
